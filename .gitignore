@@ -1,0 +1,10 @@
+/bin
+/out
+/build
+/run
+/.idea/workspace.xml
+/.idea/dictionaries
+/eclipse
+/.gradle
+/*.iml
+/*.ipr

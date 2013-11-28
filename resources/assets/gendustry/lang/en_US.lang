@@ -1,0 +1,109 @@
+tile.gendustry.mutagen.name=Mutagen
+tile.gendustry.mutagen.producer.name=Mutagen Producer
+tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.apiary.name=Industrial Apiary
+tile.gendustry.imprinter.name=Genetic Imprinter
+tile.gendustry.sampler.name=Genetic Sampler
+
+item.gendustry.mutagen.bucket.name=Mutagen Bucket
+item.gendustry.mutagen.can.name=Mutagen Can
+
+item.gendustry.MutagenTank.name=Mutagen Tank
+item.gendustry.BeeReceptacle.name=Bee Receptacle
+item.gendustry.PowerModule.name=Power Module
+item.gendustry.GeneticsProcessor.name=Genetics Processor
+item.gendustry.UpgradeFrame.name=Upgrade Frame
+item.gendustry.ClimateModule.name=Climate Control Module
+item.gendustry.Labware.name=Genetics Labware
+item.gendustry.GeneSample.name=Gene Sample
+item.gendustry.GeneTemplate.name=Genetic Template
+item.gendustry.GeneSampleBlank.name=Blank Gene Sample
+item.gendustry.Waste.name=Genetic Waste
+item.gendustry.grafter.name=Industrial Grafter
+
+gendustry.upgrades.prod.name=Production Upgrade
+gendustry.upgrades.life.name=Lifespan Upgrade
+gendustry.upgrades.flowering.name=Flowering Upgrade
+gendustry.upgrades.territory.name=Territory Upgrade
+gendustry.upgrades.sealing.name=Seal Upgrade
+gendustry.upgrades.light.name=Light Upgrade
+gendustry.upgrades.sky.name=Open Sky Upgrade
+gendustry.upgrades.hell.name=Hell Upgrade
+gendustry.upgrades.auto.name=Automation Upgrade
+gendustry.upgrades.humidifier.name=Humidifier Upgrade
+gendustry.upgrades.dryer.name=Dryer Upgrade
+gendustry.upgrades.heater.name=Heater Upgrade
+gendustry.upgrades.sieve.name=Sieve Upgrade
+gendustry.upgrades.cooler.name=Cooler Upgrade
+
+fluid.gendustry.mutagen=Mutagen
+
+gendustry.label.charges=Charges: %s
+
+gendustry.label.empty=Empty
+gendustry.label.breeding=Breeding
+gendustry.label.working=Working
+gendustry.label.maxinstall=Maximum Installed:
+gendustry.label.temperature=Temperature: %s
+gendustry.label.humidity=Humidity: %s
+gendustry.label.energy=Energy Required: %s MJ/t
+gendustry.label.lifespan=Lifespan Modifier: %s
+gendustry.label.flowering=Flowering Chance: %s
+gendustry.label.production=Production Modifier: %s
+gendustry.label.territory=Territory: %s
+
+gendustry.label.mod.automated=* Automation
+gendustry.label.mod.hellish=* Hell Environment Simulation
+gendustry.label.mod.sealed=* Rain Protection
+gendustry.label.mod.selflighted=* Internal Lighting
+gendustry.label.mod.sky=* Open Sky Simulation
+gendustry.label.mod.energy=* Energy Consumption
+gendustry.label.mod.lifespan=* Lifespan
+gendustry.label.mod.flowering=* Flowering and Pollination
+gendustry.label.mod.geneticDecay=* Genetic Decay
+gendustry.label.mod.mutation=* Mutation Chance
+gendustry.label.mod.production=* Production
+gendustry.label.mod.territory=* Territory
+gendustry.label.mod.sieve=* Pollen Collection
+gendustry.label.mod.temperature=* Temperature
+gendustry.label.mod.humidity=* Humidity
+
+gendustry.error.power=Not enough power
+
+gendustry.label.sample.rootBees=Taken from a Bee
+gendustry.label.sample.rootTrees=Taken from a Sapling
+gendustry.label.sample.rootButterflies=Taken from a Butterfly
+
+gendustry.label.template.rootBees=Can be applied to a Bee
+gendustry.label.template.rootTrees=Can be applied to a Sapling
+gendustry.label.template.rootButterflies=Can be applied to a Butterfly
+gendustry.label.template.blank=Gene Samples can be added
+
+gendustry.chromosome.FLOWER_PROVIDER=Flowers
+gendustry.chromosome.GIRTH=Girth
+gendustry.chromosome.SPEED=Speed
+gendustry.chromosome.YIELD=Yield
+gendustry.chromosome.HEIGHT=Height
+gendustry.chromosome.GROWTH=Growth
+gendustry.chromosome.FLOWERING=Flowering
+gendustry.chromosome.METABOLISM=Metabolism
+gendustry.chromosome.LIFESPAN=Lifespan
+gendustry.chromosome.TERRITORY=Territory
+gendustry.chromosome.FERTILITY=Fertility
+gendustry.chromosome.SIZE=Size
+gendustry.chromosome.HUMIDITY=Humidity
+gendustry.chromosome.SPECIES=Species
+gendustry.chromosome.FIRE_RESIST=Fire resist
+gendustry.chromosome.TEMPERATURE_TOLERANCE=Temperature tolerance
+gendustry.chromosome.HUMIDITY_TOLERANCE=Humidity tolerance
+gendustry.chromosome.PLANT=Plant
+gendustry.chromosome.EFFECT=Effect
+gendustry.chromosome.CAVE_DWELLING=Cave dwelling
+gendustry.chromosome.MATURATION=Maturation
+gendustry.chromosome.NOCTURNAL=Nocturnal
+gendustry.chromosome.TOLERANT_FLYER=Tolerant flyer
+gendustry.chromosome.FRUITS=Fruits
+gendustry.chromosome.SAPPINESS=Sappiness
+
+gendustry.allele.false=False
+gendustry.allele.true=True

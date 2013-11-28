@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="lib" pattern="file[gendustry]:bdlib//*" />
+</component>

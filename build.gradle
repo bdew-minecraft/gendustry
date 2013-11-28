@@ -1,0 +1,135 @@
+buildscript {
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            name = "bdew"
+            url = "http://jenkins.bdew.net/maven"
+        }
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+apply plugin: 'scala'
+
+version = "0.9.0"
+ext.bdlibver = "0.9.0.2"
+
+if (project.hasProperty('buildnum')) {
+    project.version = project.version + '.' + project.buildnum
+} else {
+    project.version = "0-SNAPSHOT"
+    ext.bdlibver = "0-SNAPSHOT"
+    repositories.mavenLocal()
+}
+
+group = "net.bdew"
+archivesBaseName = "gendustry"
+
+minecraft {
+    version = "1.6.4-9.11.1.964"
+}
+
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "bdew"
+        url = "http://jenkins.bdew.net/maven"
+    }
+}
+
+dependencies {
+    compile "net.bdew:bdlib:" + bdlibver
+    compile "net.bdew.gendustry:gendustry-deps:1.0.0.+"
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+sourceSets {
+    main {
+        scala {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'resources'
+        }
+    }
+    processed {
+        scala {
+            srcDir 'build/stage'
+        }
+    }
+}
+
+def myTokens = [GendustryVer: project.version, BdLibVer: project.bdlibver]
+
+task stage(type: Sync) {
+    from sourceSets.main.scala
+    into 'build/stage'
+    inputs.property "tokens", myTokens
+    stage.filter(ReplaceTokens, tokens: myTokens)
+}
+
+processResources {
+    inputs.property "tokens", myTokens
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        filter(ReplaceTokens, tokens: myTokens)
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+
+compileScala {
+    source = sourceSets.processed.scala
+    dependsOn stage
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+}
+
+jar {
+    appendix = 'universal'
+}
+
+artifacts {
+    archives sourceJar
+    archives deobfJar
+}
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact deobfJar
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "file://var/www/maven"
+        }
+    }
+}
