@@ -28,6 +28,7 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
   val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
   val rfPerCharge = cfg.getInt("RfPerCharge")
   val maxCharge = cfg.getInt("Charges") * rfPerCharge
+  val aoe = cfg.getInt("AOE")
 
   setUnlocalizedName(Gendustry.modId + ".grafter")
   setMaxStackSize(1)
@@ -51,7 +52,7 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
   }
 
   def updateDamage(stack: ItemStack) {
-    setDamage(stack, Misc.clamp((100 * (1 - getCharge(stack).toFloat / maxCharge)).round.toInt, 1, 100))
+    setDamage(stack, Misc.clamp((100 * (1 - getCharge(stack).toFloat / maxCharge)).round, 1, 100))
   }
 
   def stackWithCharge(charge: Int): ItemStack = {
@@ -71,7 +72,6 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
 
   override def onBlockDestroyed(stack: ItemStack, world: World, blockId: Int, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
     if (Block.blocksList(blockId).blockMaterial == Material.leaves) {
-      val aoe = 2
       if (!world.isRemote && player.isInstanceOf[EntityPlayer]) {
         for (dx <- -1 * aoe to aoe;
              dy <- -1 * aoe to aoe;
@@ -89,6 +89,8 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
     }
     return false
   }
+
+  override def hitEntity(stack: ItemStack, target: EntityLivingBase, player: EntityLivingBase): Boolean = false
 
   override def addInformation(stack: ItemStack, player: EntityPlayer, l: util.List[_], par4: Boolean) = {
     import scala.collection.JavaConverters._
