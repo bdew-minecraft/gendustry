@@ -23,6 +23,8 @@ import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
 import java.util
 import net.minecraft.creativetab.CreativeTabs
+import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.minecraft.client.renderer.texture.IconRegister
 
 class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Array.empty[Block]) with IEnergyContainerItem with IToolGrafter {
   val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
@@ -72,7 +74,7 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
 
   override def onBlockDestroyed(stack: ItemStack, world: World, blockId: Int, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
     if (Block.blocksList(blockId).blockMaterial == Material.leaves) {
-      if (!world.isRemote && player.isInstanceOf[EntityPlayer]) {
+      if (!world.isRemote && player.isInstanceOf[EntityPlayer] && !player.isSneaking) {
         for (dx <- -1 * aoe to aoe;
              dy <- -1 * aoe to aoe;
              dz <- -1 * aoe to aoe
@@ -122,4 +124,9 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
   def getMaxEnergyStored(container: ItemStack): Int = maxCharge
 
   def getSaplingModifier(stack: ItemStack, world: World, player: EntityPlayer, x: Int, y: Int, z: Int): Float = if (getCharge(stack) > rfPerCharge) 100 else 0
+
+  @SideOnly(Side.CLIENT)
+  override def registerIcons(reg: IconRegister) {
+    itemIcon = reg.registerIcon(Gendustry.modId + ":grafter")
+  }
 }

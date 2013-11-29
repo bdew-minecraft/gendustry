@@ -36,9 +36,10 @@ object Items {
 
   def regItem[T <: SimpleItem](item: T): T = regItem(item, item.name)
 
-  def regItem[T <: Item](item: T, name: String): T = {
+  def regItem[T <: Item](item: T, name: String, addStack: Boolean = true): T = {
     GameRegistry.registerItem(item, name)
-    GameRegistry.registerCustomItemStack(name, new ItemStack(item))
+    if (addStack)
+      GameRegistry.registerCustomItemStack(name, new ItemStack(item))
     return item
   }
 
@@ -54,7 +55,8 @@ object Items {
 
     upgradeItem = regItem(new ItemApiaryUpgrade(cfg.getItem("ApiaryUpgrade", Ids.itemIds.next()).getInt), "ApiaryUpgrade")
 
-    grafter = regItem(new IndustrialGrafter(cfg.getItem("IndustrialGrafter", Ids.itemIds.next()).getInt), "IndustrialGrafter")
+    grafter = regItem(new IndustrialGrafter(cfg.getItem("IndustrialGrafter", Ids.itemIds.next()).getInt), "IndustrialGrafter", false)
+    GameRegistry.registerCustomItemStack("IndustrialGrafter", grafter.stackWithCharge(0))
 
     regSimpleItem(cfg, "MutagenTank")
     regSimpleItem(cfg, "BeeReceptacle")
