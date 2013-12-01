@@ -23,11 +23,11 @@ object Upgrades {
   case class Upgrade(id: Int, name: String, maxNum: Int, mods: Seq[(ApiaryModifiers, Int) => Unit]) {
     def mod(v: ApiaryModifiers, num: Int) {
       val n = if (num > maxNum) maxNum else num
-      mods.foreach(_(v,n))
+      mods.foreach(_(v, n))
     }
   }
 
-  def makeMod(upg:String, n: String, e: EntryModifier): ModFunc = {
+  def makeMod(upg: String, n: String, e: EntryModifier): ModFunc = {
     val calc: (Float, Int) => Float = e match {
       case EntryModifierAdd(v) => (x, n) => x + v * n
       case EntryModifierSub(v) => (x, n) => x - v * n
@@ -48,7 +48,7 @@ object Upgrades {
     }
   }
 
-  def makeBoolMod(upg:String, n: String, b: Boolean): ModFunc = n match {
+  def makeBoolMod(upg: String, n: String, b: Boolean): ModFunc = n match {
     case "sealed" => (a, n) => a.isSealed = b
     case "selfLighted" => (a, n) => a.isSelfLighted = b
     case "sunlightSimulated" => (a, n) => a.isSunlightSimulated = b
@@ -69,7 +69,7 @@ object Upgrades {
         case (pname, v) => sys.error("Unknown upgrade modifier '%s' - %s in upgrade '%s'".format(pname, v, name))
       })
       map += id -> Upgrade(id, name, max, mods.toSeq)
-      GameRegistry.registerCustomItemStack("upgrade."+name, new ItemStack(Items.upgradeItem, 1, id))
+      GameRegistry.registerCustomItemStack("upgrade." + name, new ItemStack(Items.upgradeItem, 1, id))
     }
   }
 }

@@ -16,9 +16,6 @@ import net.minecraft.inventory.Container
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraftforge.common.Configuration
 import net.bdew.gendustry.gui.GuiProvider
-import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
-import net.bdew.gendustry.config.Ids
-import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 
 class MachineApiary(cfg: Configuration) extends PoweredMachine(cfg, "IndustrialApiary") with GuiProvider {

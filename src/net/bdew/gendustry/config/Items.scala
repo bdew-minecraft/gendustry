@@ -44,7 +44,7 @@ object Items {
   }
 
   def load(cfg: Configuration) {
-    mutagenBucket = regItem(new ItemMutagenBucket(cfg.getItem("MutagenBucket", Ids.itemIds.next()).getInt),"MutagenBucket")
+    mutagenBucket = regItem(new ItemMutagenBucket(cfg.getItem("MutagenBucket", Ids.itemIds.next()).getInt), "MutagenBucket")
     mutagenCan = regItem(new ItemMutagenCan(cfg.getItem("MutagenCan", Ids.itemIds.next()).getInt), "MutagenCan")
 
     FluidContainerRegistry.registerFluidContainer(Blocks.mutagenFluid, new ItemStack(mutagenBucket), new ItemStack(Item.bucketEmpty))
