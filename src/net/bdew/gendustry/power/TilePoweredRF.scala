@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeDirection
 import net.bdew.gendustry.config.Tuning
 
 trait TilePoweredRF extends TilePoweredBase with IEnergyHandler {
-  lazy val ratio = Tuning.getSection("Power").getFloat("RF/MJ Ratio")
+  lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
   def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) =
     (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt

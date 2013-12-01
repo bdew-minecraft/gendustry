@@ -21,13 +21,20 @@ trait TilePoweredMJ extends TilePoweredBase with IPowerReceptor {
   def getWorld = worldObj
 
   serverTick.listen(() => {
-    val transfer = power.inject(powerHandler.getEnergyStored, false)
-    powerHandler.useEnergy(transfer, transfer, true)
+    if (power.stored < power.capacity && powerHandler.getEnergyStored > 0) {
+      // this is needed because perdition is stupid and can get applied after getEnergyStored and ninja-reduce the value >.>
+      val canSend = powerHandler.useEnergy(0, power.capacity - power.stored, false)
+      val transferred = power.inject(canSend, false)
+      powerHandler.useEnergy(transferred, transferred, true)
+    }
   })
+
+  persistSave.listen(t => powerHandler.writeToNBT(t, "bcPower"))
+  persistLoad.listen(t => if (t.hasKey("bcPower")) powerHandler.readFromNBT(t, "bcPower"))
 
   override def configurePower(cfg: PoweredMachine) {
     super.configurePower(cfg)
-    powerHandler.configure(cfg.minReceivedEnergy, cfg.maxReceivedEnergy, cfg.activationEnergy, cfg.maxStoredEnergy)
+    powerHandler.configure(cfg.minReceivedEnergy, cfg.maxReceivedEnergy, cfg.activationEnergy, cfg.maxReceivedEnergy * 10)
     powerHandler.configurePowerPerdition(cfg.powerLoss, cfg.powerLossInterval)
   }
 }

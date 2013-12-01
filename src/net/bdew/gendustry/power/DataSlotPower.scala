@@ -20,9 +20,10 @@ case class DataSlotPower(name: String, parent: TileDataSlots, kind: PowerHandler
 
   var stored = 0F
   var capacity = 0F
+  var maxReceive = 0F
 
   def inject(v: Float, simulate: Boolean): Float = {
-    val canAdd = Misc.clamp(v, 0F, capacity - stored)
+    val canAdd = Misc.clamp(v, 0F, Misc.min(capacity - stored, maxReceive))
     if ((canAdd > 0) && !simulate) {
       stored += canAdd
       parent.dataSlotChanged(this)
@@ -41,6 +42,7 @@ case class DataSlotPower(name: String, parent: TileDataSlots, kind: PowerHandler
 
   def configure(cfg: PoweredMachine) {
     capacity = cfg.maxStoredEnergy
+    maxReceive = cfg.maxReceivedEnergy
   }
 
   def save(t: NBTTagCompound, kind: UpdateKind.Value) {
