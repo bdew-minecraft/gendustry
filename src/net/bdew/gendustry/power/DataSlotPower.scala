@@ -14,6 +14,7 @@ import buildcraft.api.power.PowerHandler
 import net.bdew.lib.data.base.{TileDataSlots, UpdateKind, DataSlot}
 import net.bdew.gendustry.machines.PoweredMachine
 import net.bdew.lib.Misc
+import net.bdew.gendustry.Gendustry
 
 case class DataSlotPower(name: String, parent: TileDataSlots, kind: PowerHandler.Type) extends DataSlot {
   updateKind = Set(UpdateKind.GUI, UpdateKind.SAVE)
@@ -56,7 +57,12 @@ case class DataSlotPower(name: String, parent: TileDataSlots, kind: PowerHandler
   def load(t: NBTTagCompound, kind: UpdateKind.Value) {
     if (t.hasKey(name)) {
       val tag = t.getCompoundTag(name)
-      stored = tag.getFloat("stored")
+      if (kind == UpdateKind.SAVE && tag.hasKey("storedEnergy")) {
+        stored = tag.getFloat("storedEnergy")
+        Gendustry.logInfo("Importing energy from old save: %f MJ", stored)
+      } else {
+        stored = tag.getFloat("stored")
+      }
       if (kind == UpdateKind.GUI)
         capacity = tag.getFloat("capacity")
     }
