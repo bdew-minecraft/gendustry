@@ -11,7 +11,6 @@ package net.bdew.gendustry.machines.apiary
 
 import net.bdew.lib.data._
 import net.bdew.lib.tile.inventory.{BreakableInventoryTile, SidedInventory, PersistentInventoryTile}
-import net.bdew.gendustry.data.ExposePower
 import forestry.api.apiculture._
 import net.minecraftforge.common.ForgeDirection
 import forestry.api.genetics.{AlleleManager, IIndividual}
@@ -31,14 +30,14 @@ import net.bdew.lib.data.DataSlotFloat
 import net.bdew.lib.data.DataSlotInt
 import net.bdew.lib.data.DataSlotString
 import net.bdew.lib.data.DataSlotBoolean
-import net.bdew.gendustry.data.DataSlotPower
+import net.bdew.gendustry.power.{TilePowered, DataSlotPower}
 
 class TileApiary extends TileExtended
 with TileDataSlots
 with PersistentInventoryTile
 with SidedInventory
 with BreakableInventoryTile
-with ExposePower
+with TilePowered
 with IBeeHousing {
   val slotsBees = 0 to 1
   val slotsUpgrades = 2 to 5
@@ -51,11 +50,13 @@ with IBeeHousing {
   val logic = beeRoot.createBeekeepingLogic(this)
   lazy val cfg = Machines.apiary
 
-  val power = DataSlotPower("power", this, Type.MACHINE).configure(cfg)
+  val power = DataSlotPower("power", this, Type.MACHINE)
   val errorState = DataSlotInt("error", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE, UpdateKind.WORLD)
   val owner = DataSlotString("owner", this, "").setUpdate(UpdateKind.SAVE)
   val guiProgress = DataSlotFloat("progress", this)
   val guiBreeding = DataSlotFloat("breeding", this)
+
+  configurePower(cfg)
 
   // for client rendering and fx
   val hasLight = DataSlotBoolean("haslight", this).setUpdate(UpdateKind.WORLD)
@@ -100,10 +101,10 @@ with IBeeHousing {
   serverTick.listen(() => {
     movePrincess = false
 
-    if (power.getEnergyStored >= cfg.baseMjPerTick * mods.energy) {
+    if (power.stored >= cfg.baseMjPerTick * mods.energy) {
       logic.update()
       if ((logic.getQueen != null || logic.getBreedingTime > 0) && (errorState :== 1))
-        power.useEnergy(cfg.baseMjPerTick, cfg.baseMjPerTick * mods.energy, true)
+        power.extract(cfg.baseMjPerTick * mods.energy, false)
     } else {
       setErrorState(-1)
     }

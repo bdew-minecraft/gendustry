@@ -12,7 +12,7 @@ package net.bdew.gendustry.gui
 import net.bdew.lib.gui.{Point, TextureLocation, Rect}
 import scala.collection.mutable
 import java.text.DecimalFormat
-import net.bdew.gendustry.data.DataSlotPower
+import net.bdew.gendustry.power.DataSlotPower
 import net.minecraft.client.Minecraft
 import net.bdew.lib.gui.widgets.Widget
 
@@ -21,9 +21,9 @@ class WidgetMJGauge(val rect: Rect, texture: TextureLocation, dslot: DataSlotPow
 
   override def draw() {
     Minecraft.getMinecraft.renderEngine.bindTexture(texture.resource)
-    val fill = (dslot.getEnergyStored / dslot.getMaxEnergyStored * rect.h).round
+    val fill = (dslot.stored / dslot.capacity * rect.h).round
     parent.drawTexturedModalRect(rect.x, rect.y + rect.h - fill, texture.x, texture.y + rect.h - fill, rect.w, fill)
   }
 
-  override def handleTooltip(p: Point, tip: mutable.MutableList[String]) = tip += formater.format(dslot.getEnergyStored) + "/" + formater.format(dslot.getMaxEnergyStored) + " MJ"
+  override def handleTooltip(p: Point, tip: mutable.MutableList[String]) = tip += formater.format(dslot.stored) + "/" + formater.format(dslot.capacity) + " MJ"
 }

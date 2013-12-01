@@ -9,15 +9,8 @@
 
 package net.bdew.gendustry.machines.sampler
 
-import buildcraft.api.power.PowerHandler.Type
-import net.bdew.gendustry.data.{DataSlotPower, ExposePower}
 import net.bdew.gendustry.config.{Items, Machines}
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.ForgeDirection
-import net.bdew.lib.data.{DataSlotItemStack, DataSlotFloat}
-import net.bdew.lib.tile.inventory.{BreakableInventoryTile, SidedInventory, PersistentInventoryTile}
-import net.bdew.lib.tile.TileExtended
-import net.bdew.lib.data.base.{UpdateKind, TileDataSlots}
 import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.machines.TileItemProcessor
 import scala.util.Random
@@ -34,13 +27,13 @@ class TileSampler extends TileItemProcessor {
     if (root == null) return new ItemStack(Items.waste)
     val member = root.getMember(stack)
     val genome = member.getGenome
-    val chromosomes = genome.getChromosomes.zipWithIndex.filter(_._1!=null)
+    val chromosomes = genome.getChromosomes.zipWithIndex.filter(_._1 != null)
     val alleles = chromosomes.map({
-      case (x,n)=>Seq(n -> x.getPrimaryAllele, n-> x.getSecondaryAllele)
+      case (x, n) => Seq(n -> x.getPrimaryAllele, n -> x.getSecondaryAllele)
     }).flatten
 
     val rand = new Random()
-    val (chr,allele) = alleles(rand.nextInt(alleles.length))
+    val (chr, allele) = alleles(rand.nextInt(alleles.length))
     return Items.geneSample.newStack(GeneSampleInfo(root, chr, allele))
   }
 
@@ -57,7 +50,6 @@ class TileSampler extends TileItemProcessor {
       return true
     } else return false
   }
-
 
   override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
     if (itemstack == null || itemstack.getItem == null) return false

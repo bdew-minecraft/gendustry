@@ -12,25 +12,24 @@ package net.bdew.gendustry.machines
 import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.data.base.{UpdateKind, TileDataSlots}
 import net.bdew.lib.tile.inventory.{BreakableInventoryTile, SidedInventory, PersistentInventoryTile}
-import net.bdew.gendustry.data.{DataSlotPower, ExposePower}
+import net.bdew.gendustry.power.{TilePowered, DataSlotPower}
 import buildcraft.api.power.PowerHandler.Type
 import net.bdew.lib.data.DataSlotFloat
-import net.minecraftforge.common.ForgeDirection
 
 abstract class TileBaseProcessor extends TileExtended
 with TileDataSlots
 with PersistentInventoryTile
 with BreakableInventoryTile
 with SidedInventory
-with ExposePower {
+with TilePowered {
   def cfg: ProcessorMachine
-  val power = DataSlotPower("power", this, Type.MACHINE).configure(cfg)
+  val power = DataSlotPower("power", this, Type.MACHINE)
   val progress = DataSlotFloat("progress", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
 
-  def getPowerDataslot(from: ForgeDirection): DataSlotPower = power
+  configurePower(cfg)
 
   override def tickServer() {
-    if (power.getEnergyStored > cfg.activationEnergy) {
+    if (power.stored > cfg.activationEnergy) {
 
       if (!isWorking)
         if (tryStart())
@@ -38,9 +37,9 @@ with ExposePower {
 
       if (isWorking) {
 
-        if ((progress < 1) && (power.getEnergyStored > cfg.activationEnergy)) {
-          val maxConsume = Math.min(Math.max(cfg.powerUseRate * power.getEnergyStored, cfg.activationEnergy), cfg.mjPerItem * (1 - progress))
-          val consumed = power.useEnergy(0, maxConsume, true)
+        if ((progress < 1) && (power.stored > cfg.activationEnergy)) {
+          val maxConsume = Math.min(Math.max(cfg.powerUseRate * power.stored, cfg.activationEnergy), cfg.mjPerItem * (1 - progress))
+          val consumed = power.extract(maxConsume, false)
           progress += consumed / cfg.mjPerItem
         }
 
