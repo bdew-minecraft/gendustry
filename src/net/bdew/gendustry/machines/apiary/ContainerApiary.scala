@@ -36,14 +36,14 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
 
   bindPlayerInventory(player.inventory, 8, 84, 142)
 
-
-
   override def transferStackInSlot(player: EntityPlayer, slot: Int): ItemStack = {
     val stack = getSlot(slot).getStack
     if (getSlot(slot).inventory == player.inventory && te.isUpgrade(stack)) {
       val canAdd = Misc.min(te.getMaxAdditionalUpgrades(stack), stack.stackSize)
       if (canAdd > 0) {
-        ItemUtils.addStackToSlots(stack.splitStack(canAdd), te, te.slotsUpgrades, true)
+        val remains = ItemUtils.addStackToSlots(stack.splitStack(canAdd), te, te.slotsUpgrades, true)
+        if (remains != null)
+          stack.stackSize += remains.stackSize
       }
       getSlot(slot).putStack(if (stack.stackSize > 0) stack else null)
       return null
