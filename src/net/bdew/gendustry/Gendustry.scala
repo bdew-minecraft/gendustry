@@ -23,7 +23,7 @@ import net.bdew.gendustry.gui.GuiHandler
 import java.io.File
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 
-@Mod(modid = Gendustry.modId, version = "@GendustryVer@", name = "Gendustry", dependencies = "required-after:Forestry;required-after:BuildCraft|Core;required-after:bdlib@[@BdLibVer@,)", modLanguage = "scala")
+@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry;required-after:BuildCraft|Core;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 object Gendustry {
   var log: Logger = null

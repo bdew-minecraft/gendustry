@@ -1,0 +1,101 @@
+task getDeps() {}
+
+project.ext.addGitDep = {String name, String repo, String version ->
+    def dest = "build/deps/"+name
+
+    def clone = task("clone"+name.capitalize(), type: Exec) {
+        doFirst {
+            new File(dest).deleteDir()
+        }
+        inputs.property "repo", repo
+        outputs.file dest+"/.git/config"
+        commandLine "git", "clone", repo, dest
+        doLast {println("")}
+    }
+
+    def fetch = task("fetch"+name.capitalize(), type: Exec) {
+        workingDir dest
+        inputs.property "repo", repo
+        inputs.property "version", version
+        outputs.files fileTree(dir: dest)
+        commandLine "git", "fetch"
+        dependsOn clone
+        doLast {println("")}
+    }
+
+    def checkOut = task("checkOut"+name.capitalize(), type: Exec) {
+        workingDir dest
+        inputs.property "repo", repo
+        inputs.property "version", version
+        outputs.files fileTree(dir: dest)
+        commandLine "git", "reset", "--hard", version
+        dependsOn fetch
+        doLast {println("")}
+    }
+
+    getDeps.dependsOn(checkOut)
+}
+
+project.ext.addHgDep = {String name, String repo, String version ->
+    def dest = "build/deps/"+name
+
+    def clone = task("clone"+name.capitalize(), type: Exec) {
+        doFirst {
+            new File(dest).deleteDir()
+        }
+        inputs.property "repo", repo
+        outputs.file dest+"/.hg/hgrc"
+        commandLine "hg", "clone", repo, dest
+        doLast {println("")}
+    }
+
+    def fetch = task("fetch"+name.capitalize(), type: Exec) {
+        workingDir dest
+        inputs.property "repo", repo
+        inputs.property "version", version
+        outputs.files fileTree(dir: dest)
+        commandLine "hg", "pull"
+        dependsOn clone
+        doLast {println("")}
+    }
+
+    def checkOut = task("checkOut"+name.capitalize(), type: Exec) {
+        workingDir dest
+        inputs.property "repo", repo
+        inputs.property "version", version
+        outputs.files fileTree(dir: dest)
+        commandLine "hg", "update", "-C", version
+        dependsOn fetch
+        doLast {println("")}
+    }
+
+    getDeps.dependsOn(checkOut)
+}
+
+project.ext.addZipDep = {String name, String url, String version ->
+    def dest = "build/deps/"+name
+    def zipname = "build/download/"+name+"-"+version+".zip"
+
+    def download = task("download"+name.capitalize()) {
+        inputs.property "url", url
+        inputs.property "version", version
+        outputs.file zipname
+        doFirst {
+            mkdir("build/download")
+        }
+        doLast {
+            ant.get(src: url, dest: zipname, verbose: "true")
+        }
+    }
+
+    def unzip = task("unzip"+name.capitalize()) {
+        inputs.file zipname
+        outputs.files fileTree(dir: dest)
+        dependsOn download
+        doLast {
+		    ant.unzip(src: zipname, dest: dest)
+        }
+    }
+
+    getDeps.dependsOn(unzip)
+}

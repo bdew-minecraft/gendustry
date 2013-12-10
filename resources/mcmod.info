@@ -3,7 +3,7 @@
   "modid": "gendustry",
   "name": "GenDustry",
   "description": "",
-  "version": "@GendustryVer@",
+  "version": "@GENDUSTRY_VER@",
   "url": "bdew.net/mods/",
   "updateUrl": "",
   "authorList": [

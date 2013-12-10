@@ -1,0 +1,114 @@
+buildscript {
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            name = "bdew"
+            url = "http://jenkins.bdew.net/maven"
+        }
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.bdew.minecraftforge.gradle:forgegradle:1.0.1'
+    }
+}
+
+apply plugin: 'forge'
+
+version = "1.1.0"
+
+if (project.hasProperty('buildnum')) {
+    project.version = project.version + '.' + project.buildnum
+} else {
+    project.version = project.version + '-dev'
+}
+
+group= "net.bdew.gendustry"
+archivesBaseName = "deps"
+
+minecraft {
+    version = "1.6.4-9.11.1.964"
+}
+
+apply from: 'downloader.gradle'
+
+addGitDep("cofh","https://github.com/KingLemming/CoFHLib.git","df46d2289b5de6c505445acee44e0609512c3613")
+addGitDep("bc","https://github.com/BuildCraft/BuildCraft.git","40e1ecc6715cc1f2a273bc36cde6d1a6e99fc0d6")
+addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059e2397977b227f438db9d21ef8de1a8e")
+addGitDep("ue","https://github.com/Universal-Electricity/Universal-Electricity","7f08e6544b869a7df4cd19782492b7d5e4b17647")
+addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
+addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
+addZipDep("forestry","http://bit.ly/1azY0BT","2.3.0.4")
+addZipDep("ic2","http://ic2api.player.to:8080/job/IC2_experimental/307/artifact/packages/industrialcraft-2-api_2.0.307-experimental.zip","307")
+
+task patchDeps(type: Sync) {
+    dependsOn getDeps
+    from "build/deps"
+    into "deps"
+    exclude "**/.git"
+    exclude "**/.hg"
+    exclude "ue/src/buildcraft"
+    exclude "ue/src/cofh"
+    exclude "ue/src/ic2"
+    doLast {
+        println("Applying patch...")
+        ant.fixcrlf(srcDir: "deps", includes: "**/*.java")
+        ant.patch(patchfile: "fixes.patch", strip: "1", dir: "deps", ignorewhitespace: "Yes", failonerror: "Yes")
+    }
+}
+
+deobfBinJar.dependsOn(patchDeps)
+
+afterEvaluate {
+    sourceMainJava.dependsOn(patchDeps)
+}
+
+deobfBinJar.addTransformer('deps/nei/nei_at.cfg')
+
+sourceSets {
+    main {
+        java {
+            srcDir 'deps/ccc'
+            srcDir 'deps/ccl'
+            srcDir 'deps/nei'
+            include 'codechicken/**'
+            include 'net/**'
+
+            srcDir 'deps/forestry'
+            include 'forestry/**'
+
+            srcDir 'deps/bc/common'
+            include 'buildcraft/api/**'
+
+            srcDir 'deps/ic2'
+            include 'ic2/**'
+
+            srcDir 'deps/ue/src'
+            include 'universalelectricity/**'
+
+            srcDir 'deps/cofh'
+            include 'cofh/api/**'
+        }
+    }
+}
+
+
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allSource
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+}
+
+configurations { deps }
+artifacts { 
+    deps deobfJar
+    deps sourceJar
+}
