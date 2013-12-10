@@ -101,10 +101,12 @@ sourceSets {
 task sourceJar(type: Jar) {
     classifier "sources"
     from sourceSets.main.allSource
+    rootProject.ext.depSourceJarPath = archivePath
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
+    rootProject.ext.depJarPath = archivePath
 }
 
 configurations { deps }
