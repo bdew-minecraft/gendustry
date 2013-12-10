@@ -5,22 +5,18 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "bdew"
-            url = "http://jenkins.bdew.net/maven"
-        }
-        maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
     }
     dependencies {
-        classpath 'net.bdew.minecraftforge.gradle:forgegradle:1.0.1'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
 
 apply plugin: 'forge'
 
-version = "1.1.0"
+version = "1.2.0"
 
 if (project.hasProperty('buildnum')) {
     project.version = project.version + '.' + project.buildnum
@@ -43,7 +39,7 @@ addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059
 addGitDep("ue","https://github.com/Universal-Electricity/Universal-Electricity","7f08e6544b869a7df4cd19782492b7d5e4b17647")
 addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
 addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
-addZipDep("forestry","http://bit.ly/1azY0BT","2.3.0.4")
+addZipDep("forestry","http://bit.ly/IYjfWc","2.3.1.0")
 addZipDep("ic2","http://ic2api.player.to:8080/job/IC2_experimental/307/artifact/packages/industrialcraft-2-api_2.0.307-experimental.zip","307")
 
 task patchDeps(type: Sync) {
