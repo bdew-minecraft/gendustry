@@ -12,10 +12,7 @@ package net.bdew.gendustry.machines
 import net.minecraftforge.common.Configuration
 
 abstract class PoweredMachine(cfg: Configuration, name: String) extends Machine(cfg, name) {
-  lazy val minReceivedEnergy = tuning.getFloat("MinReceivedEnergy")
   lazy val maxReceivedEnergy = tuning.getFloat("MaxReceivedEnergy")
   lazy val activationEnergy = tuning.getFloat("ActivationEnergy")
   lazy val maxStoredEnergy = tuning.getFloat("MaxStoredEnergy")
-  lazy val powerLoss = tuning.getInt("PowerLoss")
-  lazy val powerLossInterval = tuning.getInt("PowerLossInterval")
 }

@@ -22,8 +22,9 @@ import cpw.mods.fml.common.network.NetworkRegistry
 import net.bdew.gendustry.gui.GuiHandler
 import java.io.File
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
+import net.bdew.gendustry.compat.PowerProxy
 
-@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry;required-after:BuildCraft|Core;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
+@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.3.1.0,);after:BuildCraft|energy;after:IC2;after:CoFHCore;required-after:bdlib", modLanguage = "scala") //@[BDLIB_VER,)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 object Gendustry {
   var log: Logger = null
@@ -40,6 +41,7 @@ object Gendustry {
   @EventHandler
   def preInit(event: FMLPreInitializationEvent) {
     log = event.getModLog
+    PowerProxy.logModVersions()
     configDir = event.getModConfigurationDirectory
     TuningLoader.load("tuning")
     val config: Configuration = Config.load(event.getSuggestedConfigurationFile)

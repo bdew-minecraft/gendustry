@@ -25,7 +25,10 @@ import java.util
 import net.minecraft.creativetab.CreativeTabs
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.renderer.texture.IconRegister
+import cpw.mods.fml.common.Optional
+import net.bdew.gendustry.compat.PowerProxy
 
+@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyContainerItem")
 class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Array.empty[Block]) with IEnergyContainerItem with IToolGrafter {
   val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
   val rfPerCharge = cfg.getInt("RfPerCharge")

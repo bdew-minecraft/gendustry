@@ -12,12 +12,19 @@ package net.bdew.gendustry.power
 import cofh.api.energy.IEnergyHandler
 import net.minecraftforge.common.ForgeDirection
 import net.bdew.gendustry.config.Tuning
+import cpw.mods.fml.common.Optional
+import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.gendustry.Gendustry
 
+@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyHandler")
 trait TilePoweredRF extends TilePoweredBase with IEnergyHandler {
   lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
-  def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) =
-    (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt
+  def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = {
+    val res = (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt
+    Gendustry.logInfo("Recieved RF: %f", res)
+    res
+  }
 
   def extractEnergy(from: ForgeDirection, maxExtract: Int, simulate: Boolean) = 0
   def canInterface(from: ForgeDirection) = true
