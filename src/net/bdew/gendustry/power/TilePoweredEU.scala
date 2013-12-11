@@ -16,7 +16,6 @@ import ic2.api.energy.tile.IEnergySink
 import net.bdew.gendustry.config.Tuning
 import net.minecraft.tileentity.TileEntity
 import cpw.mods.fml.common.Optional
-import net.bdew.gendustry.Gendustry
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.IEnergySink")
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {
@@ -42,9 +41,6 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = true
   def getMaxSafeInput = maxSafe
   def demandedEnergyUnits() = (power.capacity - power.stored) * ratio
-  def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) = {
-    val res = power.inject((amount / ratio).toFloat, false) * ratio
-    Gendustry.logInfo("Recieved EU: %f", res)
-    res
-  }
+  def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) =
+    power.inject((amount / ratio).toFloat, false) * ratio
 }

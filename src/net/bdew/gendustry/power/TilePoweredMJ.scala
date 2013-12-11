@@ -14,7 +14,6 @@ import net.bdew.gendustry.machines.PoweredMachine
 import net.minecraftforge.common.ForgeDirection
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
-import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 
 @Optional.Interface(modid = PowerProxy.BC_MOD_ID, iface = "buildcraft.api.power.IPowerReceptor")
@@ -33,7 +32,6 @@ trait TilePoweredMJ extends TilePoweredBase with IPowerReceptor {
         // this is needed because perdition is stupid and can get applied after getEnergyStored and ninja-reduce the value >.>
         val canSend = powerHandler.useEnergy(0, power.capacity - power.stored, false)
         val transferred = power.inject(canSend, false)
-        Gendustry.logInfo("Recieved MJ: %f", transferred)
         powerHandler.useEnergy(transferred, transferred, true)
       }
     })
