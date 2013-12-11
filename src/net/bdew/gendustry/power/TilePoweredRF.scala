@@ -18,7 +18,7 @@ import net.bdew.gendustry.Gendustry
 
 @Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyHandler")
 trait TilePoweredRF extends TilePoweredBase with IEnergyHandler {
-  lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
+  private lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
   def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) = {
     val res = (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt

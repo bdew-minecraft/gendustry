@@ -10,7 +10,6 @@
 package net.bdew.gendustry.compat
 
 import cpw.mods.fml.common.{ModAPIManager, ModContainer, Loader}
-import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
 import java.util
 
@@ -19,7 +18,7 @@ object PowerProxy {
   final val BC_MOD_ID = "BuildCraftAPI|power"
   final val TE_MOD_ID = "CoFHCore"
 
-  lazy val lookup: collection.Map[String, ModContainer] =  {
+  lazy val lookup: collection.Map[String, ModContainer] = {
     val mods = new util.ArrayList[ModContainer]
     val nameLookup = new util.HashMap[String, ModContainer]
 
@@ -32,6 +31,7 @@ object PowerProxy {
 
   lazy val haveBC = haveModVersion(BC_MOD_ID)
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
+  lazy val haveTE = haveModVersion(TE_MOD_ID)
 
   def haveModVersion(modid: String) = lookup.contains(modid)
 
@@ -41,8 +41,15 @@ object PowerProxy {
   }
 
   def logModVersions() {
-    Gendustry.logInfo("BC Version: %s", getModVersion(BC_MOD_ID))
+    if (!haveBC && !haveIC2 && !haveTE) {
+      Gendustry.logWarn("No useable energy system detected")
+      Gendustry.logWarn("This mod requires at least one of the following mods to function properly:")
+      Gendustry.logWarn("* BuildCraft 4.2.0+ or any mod that properly bundles the BC API")
+      Gendustry.logWarn("* IC2 Experimental")
+      Gendustry.logWarn("* CoFHCore (Thermal Expansion)")
+    }
+    Gendustry.logInfo("BC API Version: %s", getModVersion(BC_MOD_ID))
     Gendustry.logInfo("IC2 Version: %s", getModVersion(IC2_MOD_ID))
-    Gendustry.logInfo("CoFHCore Version: %s", getModVersion(TE_MOD_ID))
+    Gendustry.logInfo("TE(CoFHCore) Version: %s", getModVersion(TE_MOD_ID))
   }
 }

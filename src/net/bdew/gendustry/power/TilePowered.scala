@@ -17,4 +17,4 @@ trait TilePoweredBase extends TileExtended {
   def configurePower(cfg: PoweredMachine) = power.configure(cfg)
 }
 
-trait TilePowered extends TilePoweredBase with TilePoweredMJ with TilePoweredRF
+trait TilePowered extends TilePoweredBase with TilePoweredMJ with TilePoweredRF with TilePoweredEU

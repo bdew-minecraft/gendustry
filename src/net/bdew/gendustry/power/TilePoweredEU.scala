@@ -21,13 +21,14 @@ import net.bdew.gendustry.Gendustry
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.IEnergySink")
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   var sentLoaded = false
-  lazy val ratio = Tuning.getSection("Power").getFloat("IC2_MJ_Ratio")
+  private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   lazy val maxSafe = Tuning.getSection("Power").getSection("IC2").getInt("MaxSafeInput")
 
   if (PowerProxy.haveIC2) {
     serverTick.listen(() => {
       if (!sentLoaded) {
         MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
+        sentLoaded = true
       }
     })
   }
@@ -42,7 +43,7 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   def getMaxSafeInput = maxSafe
   def demandedEnergyUnits() = (power.capacity - power.stored) * ratio
   def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) = {
-    val res =  power.inject((amount / ratio).toFloat, false) * ratio
+    val res = power.inject((amount / ratio).toFloat, false) * ratio
     Gendustry.logInfo("Recieved EU: %f", res)
     res
   }
