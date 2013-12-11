@@ -9,14 +9,12 @@
 
 package net.bdew.gendustry.items
 
-import cofh.api.energy.IEnergyContainerItem
 import net.minecraft.item.{ItemStack, EnumToolMaterial, ItemTool}
 import forestry.api.arboriculture.IToolGrafter
 import net.minecraft.world.World
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
-import net.minecraft.nbt.NBTTagCompound
 import net.bdew.lib.Misc
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -27,12 +25,13 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.renderer.texture.IconRegister
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.gendustry.power.ItemPowered
 
-@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyContainerItem")
-class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Array.empty[Block]) with IEnergyContainerItem with IToolGrafter {
-  val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
-  val rfPerCharge = cfg.getInt("RfPerCharge")
-  val maxCharge = cfg.getInt("Charges") * rfPerCharge
+@Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
+class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Array.empty[Block]) with ItemPowered with IToolGrafter {
+  lazy val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
+  lazy val mjPerCharge = cfg.getInt("MjPerCharge")
+  lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
   val aoe = cfg.getInt("AOE")
 
   setUnlocalizedName(Gendustry.modId + ".grafter")
@@ -41,36 +40,9 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
 
   efficiencyOnProperMaterial = 32
 
-  def getCharge(stack: ItemStack): Int = {
-    if (!stack.hasTagCompound) setCharge(stack, 0)
-    return Misc.clamp(stack.getTagCompound.getInteger("charge"), 0, maxCharge)
-  }
-
-  def useCharge(stack: ItemStack, uses: Int = 1) {
-    setCharge(stack, Misc.clamp(getCharge(stack) - uses * rfPerCharge, 0, maxCharge))
-  }
-
-  def setCharge(stack: ItemStack, charge: Int) {
-    if (!stack.hasTagCompound) stack.setTagCompound(new NBTTagCompound())
-    stack.getTagCompound.setInteger("charge", charge)
-    updateDamage(stack)
-  }
-
-  def updateDamage(stack: ItemStack) {
-    setDamage(stack, Misc.clamp((100 * (1 - getCharge(stack).toFloat / maxCharge)).round, 1, 100))
-  }
-
-  def stackWithCharge(charge: Int): ItemStack = {
-    val n = new ItemStack(this)
-    setCharge(n, charge)
-    return n
-  }
-
-  override def setDamage(stack: ItemStack, damage: Int) = super.setDamage(stack, Misc.clamp(damage, 1, 100))
-
   override def getStrVsBlock(stack: ItemStack, block: Block, meta: Int): Float = getStrVsBlock(stack, block)
   override def getStrVsBlock(stack: ItemStack, block: Block): Float = {
-    if (getCharge(stack) < rfPerCharge) return 0.1F
+    if (!hasCharges(stack)) return 0.1F
     if (block.blockMaterial == Material.leaves) return efficiencyOnProperMaterial
     return 0.1F
   }
@@ -83,13 +55,13 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
              dz <- -1 * aoe to aoe
              if dy + y > 0 && dy + y < world.getHeight) {
           val bl = Block.blocksList(world.getBlockId(x + dx, y + dy, z + dz))
-          if (bl != null && bl.blockMaterial == Material.leaves && getCharge(stack) > rfPerCharge) {
+          if (bl != null && bl.blockMaterial == Material.leaves && hasCharges(stack)) {
             bl.removeBlockByPlayer(world, player.asInstanceOf[EntityPlayer], x + dx, y + dy, z + dz)
-            useCharge(stack)
+            useCharge(stack, 1, player)
           }
         }
       }
-      useCharge(stack)
+      useCharge(stack, 1, player)
       return true
     }
     return false
@@ -101,7 +73,7 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
     import scala.collection.JavaConverters._
     val tip = l.asInstanceOf[util.List[String]].asScala
 
-    tip += Misc.toLocalF("gendustry.label.charges", getCharge(stack) / rfPerCharge)
+    tip += Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge)
   }
 
   override def getSubItems(par1: Int, tabs: CreativeTabs, l: util.List[_]) {
@@ -115,18 +87,7 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
   override def getIsRepairable(par1ItemStack: ItemStack, par2ItemStack: ItemStack): Boolean = false
   override def isBookEnchantable(itemstack1: ItemStack, itemstack2: ItemStack): Boolean = false
 
-  def receiveEnergy(container: ItemStack, maxReceive: Int, simulate: Boolean): Int = {
-    val charge = getCharge(container)
-    val canCharge = Misc.clamp(maxCharge - charge, 0, maxReceive)
-    if (!simulate) setCharge(container, charge + canCharge)
-    return canCharge
-  }
-
-  def extractEnergy(container: ItemStack, maxExtract: Int, simulate: Boolean): Int = 0
-  def getEnergyStored(container: ItemStack): Int = getCharge(container)
-  def getMaxEnergyStored(container: ItemStack): Int = maxCharge
-
-  def getSaplingModifier(stack: ItemStack, world: World, player: EntityPlayer, x: Int, y: Int, z: Int): Float = if (getCharge(stack) > rfPerCharge) 100 else 0
+  def getSaplingModifier(stack: ItemStack, world: World, player: EntityPlayer, x: Int, y: Int, z: Int): Float = if (hasCharges(stack)) 100 else 0
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IconRegister) {
