@@ -93,6 +93,9 @@ sourceSets {
     }
 }
 
+jar {
+    classifier "obf"
+}
 
 task sourceJar(type: Jar) {
     classifier "sources"

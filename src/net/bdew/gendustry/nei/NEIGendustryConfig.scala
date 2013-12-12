@@ -30,7 +30,13 @@ class NEIGendustryConfig extends IConfigureNEI {
     combos.foreach(x => API.addNBTItem(Items.geneSample.newStack(x)))
   }
 
-  def loadConfig() = {
+  def addRecipeHandler(h: BaseRecipeHandler) {
+    API.registerRecipeHandler(h)
+    API.registerUsageHandler(h)
+  }
+
+  def loadConfig() {
     if (Config.neiAddSamples) addSamples()
+    addRecipeHandler(new MutagenProducerHandler)
   }
 }
