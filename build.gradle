@@ -4,13 +4,18 @@ buildscript {
     }
     repositories {
         mavenCentral()
+	mavenLocal()
+        maven {
+            name = "bdew"
+            url = "http://jenkins.bdew.net/maven"
+        }
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+        classpath 'net.bdew.minecraftforge.gradle:forgegradle:1.0.4'
     }
 }
 
