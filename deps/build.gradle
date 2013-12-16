@@ -34,7 +34,7 @@ minecraft {
 apply from: 'downloader.gradle'
 
 addGitDep("cofh","https://github.com/KingLemming/CoFHLib.git","df46d2289b5de6c505445acee44e0609512c3613")
-addGitDep("bc","https://github.com/BuildCraft/BuildCraft.git","40e1ecc6715cc1f2a273bc36cde6d1a6e99fc0d6")
+addGitDep("bc","https://github.com/BuildCraft/BuildCraft.git","03acd96b2b5a9a3270985246cd835c0ca866def7")
 addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059e2397977b227f438db9d21ef8de1a8e")
 addGitDep("ue","https://github.com/Universal-Electricity/Universal-Electricity","7f08e6544b869a7df4cd19782492b7d5e4b17647")
 addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
