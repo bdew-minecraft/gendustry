@@ -13,12 +13,11 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.lib.gui.{Rect, Point}
 import net.bdew.gendustry.config.{Blocks, Machines}
 import net.minecraft.item.ItemStack
-import codechicken.nei.PositionedStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.mutagen.MutagenRegistry
 import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
 import java.awt.Rectangle
-import net.bdew.gendustry.nei.helpers.{PowerComponent, RecipeComponent, FluidComponent}
+import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 
 class MutagenProducerHandler extends BaseRecipeHandler {
   lazy val offset = new Point(5, 13)
@@ -29,8 +28,7 @@ class MutagenProducerHandler extends BaseRecipeHandler {
 
     import scala.collection.JavaConversions._
 
-    var components = List.empty[RecipeComponent]
-    val inPositioned = new PositionedStack(in, 44 - offset.x, 41 - offset.y)
+    val inPositioned = position(in, 44, 41)
     val getResult = null
 
     components :+= new FluidComponent(mutagenRect, new FluidStack(Blocks.mutagenFluid, out), Machines.mutagenProducer.tankSize)
@@ -56,11 +54,6 @@ class MutagenProducerHandler extends BaseRecipeHandler {
       case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
       case ("MutagenProducer", _) => addAllRecipes()
     }
-  }
-
-  override def loadCraftingRecipes(result: ItemStack) = {
-    if (result != null && result.itemID == Blocks.mutagen.blockID)
-      addAllRecipes()
   }
 
   override def loadUsageRecipes(stack: ItemStack) {

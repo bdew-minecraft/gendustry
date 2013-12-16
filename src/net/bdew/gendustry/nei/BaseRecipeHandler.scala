@@ -16,12 +16,15 @@ import org.lwjgl.opengl.GL11
 import codechicken.core.gui.GuiDraw._
 import net.bdew.gendustry.nei.helpers.RecipeComponent
 import java.util
+import net.minecraft.item.ItemStack
+import codechicken.nei.PositionedStack
 
 abstract class BaseRecipeHandler extends TemplateRecipeHandler {
   val offset: Point
 
   abstract class CachedRecipeWithComponents extends CachedRecipe {
-    def components: List[RecipeComponent]
+    var components = List.empty[RecipeComponent]
+    def position(s: ItemStack, x: Int, y: Int) = new PositionedStack(s, x - offset.x, y - offset.y)
   }
 
   override def drawExtras(recipe: Int) {
