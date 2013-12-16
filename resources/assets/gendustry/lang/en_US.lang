@@ -52,6 +52,10 @@ gendustry.label.flowering=Flowering Chance: %s
 gendustry.label.production=Production Modifier: %s
 gendustry.label.territory=Territory: %s
 
+gendustry.label.consume=Consume chance: %s%%
+gendustry.label.mutatron.death=Death chance (ignoble): %s%%
+gendustry.label.mutatron.degrade=Degrade chance (pristine): %s%%
+
 gendustry.label.mod.automated=* Automation
 gendustry.label.mod.hellish=* Hell Environment Simulation
 gendustry.label.mod.sealed=* Rain Protection
