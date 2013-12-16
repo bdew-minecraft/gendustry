@@ -18,6 +18,7 @@ import net.bdew.gendustry.nei.helpers.RecipeComponent
 import java.util
 import net.minecraft.item.ItemStack
 import codechicken.nei.PositionedStack
+import net.minecraft.client.gui.inventory.GuiContainer
 
 abstract class BaseRecipeHandler extends TemplateRecipeHandler {
   val offset: Point
@@ -33,8 +34,16 @@ abstract class BaseRecipeHandler extends TemplateRecipeHandler {
     super.drawExtras(recipe)
   }
 
+  val guiCls = classOf[GuiContainer]
+  val guiLeftField = guiCls.getField("guiLeft")
+  val guiTopField = guiCls.getField("guiTop")
+
+  def getGuiOffset(gui: GuiContainer): Point = {
+    return new Point(guiLeftField.get(gui).asInstanceOf[Int], guiTopField.get(gui).asInstanceOf[Int])
+  }
+  
   override def mouseClicked(gui: GuiRecipe, button: Int, recipe: Int): Boolean = {
-    val mrel = new Point(GuiDraw.getMousePosition) - gui.getRecipePosition(recipe) + offset - ((gui.guiLeft, gui.guiTop))
+    val mrel = new Point(GuiDraw.getMousePosition) - gui.getRecipePosition(recipe) + offset - getGuiOffset(gui)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
       if (component.rect.contains(mrel) && component.mouseClick(button)) return true
     super.mouseClicked(gui, button, recipe)
@@ -42,7 +51,7 @@ abstract class BaseRecipeHandler extends TemplateRecipeHandler {
 
   override def handleTooltip(gui: GuiRecipe, currenttip: util.List[String], recipe: Int) = {
     import scala.collection.JavaConversions._
-    val mrel = new Point(GuiDraw.getMousePosition) - gui.getRecipePosition(recipe) + offset - ((gui.guiLeft, gui.guiTop))
+    val mrel = new Point(GuiDraw.getMousePosition) - gui.getRecipePosition(recipe) + offset - getGuiOffset(gui)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
       if (component.rect.contains(mrel)) currenttip.addAll(component.getTooltip)
     super.handleTooltip(gui, currenttip, recipe)
