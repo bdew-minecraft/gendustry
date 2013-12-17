@@ -13,6 +13,7 @@ import codechicken.nei.api.{API, IConfigureNEI}
 import net.bdew.gendustry.config.{Config, Items}
 import cpw.mods.fml.common.event.FMLInterModComms
 import net.bdew.gendustry.Gendustry
+import codechicken.nei.forge.GuiContainerManager
 
 class NEIGendustryConfig extends IConfigureNEI {
   def getName: String = "Gendustry"
@@ -30,6 +31,9 @@ class NEIGendustryConfig extends IConfigureNEI {
     addRecipeHandler(new MutagenProducerHandler)
     addRecipeHandler(new MutatronHandler)
     addRecipeHandler(new SamplerHandler)
+
+    GuiContainerManager.addTooltipHandler(new SmeltingTooltipHandler)
+
     FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutagen Producer@MutagenProducer");
     FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutatron@Mutatron");
     FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Sampler@Sampler");
