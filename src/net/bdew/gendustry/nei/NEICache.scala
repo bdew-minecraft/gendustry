@@ -15,7 +15,8 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.forestry.GeneSampleInfo
 
 object NEICache {
-  implicit def mutationOrdering = new Ordering[IMutation] {
+
+  implicit object MutationOrdering extends Ordering[IMutation] {
     def compare(x: IMutation, y: IMutation): Int =
       if (x.getRoot != y.getRoot)
         x.getRoot.getUID.compareTo(y.getRoot.getUID)
@@ -27,7 +28,7 @@ object NEICache {
         x.getAllele1.getUID.compareTo(y.getAllele1.getUID)
   }
 
-  implicit def speciesOrdering = new Ordering[IAlleleSpecies] {
+  implicit object SpeciesOrdering extends Ordering[IAlleleSpecies] {
     def compare(x: IAlleleSpecies, y: IAlleleSpecies): Int =
       if (x.getRoot != y.getRoot)
         x.getRoot.getUID.compareTo(y.getRoot.getUID)
@@ -35,7 +36,7 @@ object NEICache {
         x.getUID.compareTo(y.getUID)
   }
 
-  implicit def sampleOrdering = new Ordering[GeneSampleInfo] {
+  implicit object SampleOrdering extends Ordering[GeneSampleInfo] {
     def compare(x: GeneSampleInfo, y: GeneSampleInfo): Int =
       if (x.root != y.root)
         x.root.getUID.compareTo(y.root.getUID)
@@ -45,9 +46,9 @@ object NEICache {
         x.allele.getUID.compareTo(y.allele.getUID)
   }
 
-  var speciesResultMutations = collection.mutable.Map.empty[IAlleleSpecies, collection.SortedSet[IMutation]].withDefault(x => collection.SortedSet.empty[IMutation])
-  var speciesUsedMutations = collection.mutable.Map.empty[IAlleleSpecies, collection.SortedSet[IMutation]].withDefault(x => collection.SortedSet.empty[IMutation])
-  var speciesChromosomes = collection.mutable.Map.empty[GeneSampleInfo, collection.SortedSet[IAlleleSpecies]].withDefault(x => collection.SortedSet.empty[IAlleleSpecies])
+  val speciesResultMutations = collection.mutable.Map.empty[IAlleleSpecies, collection.SortedSet[IMutation]].withDefault(x => collection.SortedSet.empty[IMutation])
+  val speciesUsedMutations = collection.mutable.Map.empty[IAlleleSpecies, collection.SortedSet[IMutation]].withDefault(x => collection.SortedSet.empty[IMutation])
+  val speciesChromosomes = collection.mutable.Map.empty[GeneSampleInfo, collection.SortedSet[IAlleleSpecies]].withDefault(x => collection.SortedSet.empty[IAlleleSpecies])
   var geneSamples = collection.SortedSet.empty[GeneSampleInfo]
 
   def load() {

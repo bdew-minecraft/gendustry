@@ -31,7 +31,7 @@ class SamplerHandler extends BaseRecipeHandler {
   val mjRect = new Rect(8, 19, 16, 58)
 
   import scala.collection.JavaConversions._
-  import NEICache.sampleOrdering
+  import NEICache.SampleOrdering
 
   class SamplerRecipe(sample: GeneSampleInfo, input: ItemStack) extends CachedRecipeWithComponents {
     val getResult = position(Items.geneSample.newStack(sample), 137, 49)
