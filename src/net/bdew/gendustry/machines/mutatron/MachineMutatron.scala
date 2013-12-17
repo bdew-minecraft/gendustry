@@ -27,6 +27,7 @@ class MachineMutatron(cfg: Configuration) extends ProcessorMachine(cfg, "Mutatro
   lazy val labwareConsumeChance = tuning.getFloat("LabwareConsumeChance")
   lazy val degradeChanceNatural = tuning.getFloat("DegradeChanceNatural")
   lazy val deathChanceArtificial = tuning.getFloat("DeathChanceArtificial")
+  lazy val secretChance = tuning.getFloat("SecretMutationChance")
 
   if (cfg.get("Machines Enabled", name, true).getBoolean(true)) {
     block = new BlockMutatron(getBlockId)

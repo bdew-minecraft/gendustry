@@ -79,7 +79,30 @@ object GeneticsHelper {
     val random = new Random
     if (valid.size == 0) return null
 
-    val selected = valid(random.nextInt(valid.size))
+    val selected = if (valid.size > 1) {
+      val secret = valid.filter(_.isSecret)
+      val normal = valid.filter(!_.isSecret)
+      if (secret.size > 0) {
+        if (normal.size > 0) {
+          // Have both, check chance
+          if (random.nextInt(100) < Machines.mutatron.secretChance) {
+            secret(random.nextInt(secret.size))
+          } else {
+            normal(random.nextInt(normal.size))
+          }
+        } else {
+          // Only secret mutations - choose 1 randomly
+          secret(random.nextInt(secret.size))
+        }
+      } else {
+        // All calid mutations aren't secret - choose 1 randomly
+        normal(random.nextInt(normal.size))
+      }
+    } else {
+      // only 1 valid mutation - use it
+      valid(0)
+    }
+
     val root = selected.getRoot
     val individual = root.templateAsIndividual(selected.getTemplate)
 
