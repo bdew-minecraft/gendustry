@@ -106,5 +106,5 @@ class SamplerHandler extends BaseRecipeHandler {
   }
 
   def getGuiTexture = Gendustry.modId + ":textures/gui/sampler.png"
-  def getRecipeName = "Sampler"
+  def getRecipeName = Misc.toLocal("tile.gendustry.sampler.name")
 }

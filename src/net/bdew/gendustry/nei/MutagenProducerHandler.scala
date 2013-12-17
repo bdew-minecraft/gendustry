@@ -18,6 +18,7 @@ import net.bdew.gendustry.mutagen.MutagenRegistry
 import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
 import java.awt.Rectangle
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
+import net.bdew.lib.Misc
 
 class MutagenProducerHandler extends BaseRecipeHandler {
   lazy val offset = new Point(5, 13)
@@ -64,5 +65,5 @@ class MutagenProducerHandler extends BaseRecipeHandler {
   }
 
   def getGuiTexture = Gendustry.modId + ":textures/gui/mutagenproducer.png"
-  def getRecipeName = "Mutagen Producer"
+  def getRecipeName = Misc.toLocal("tile.gendustry.mutagen.producer.name")
 }

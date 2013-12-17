@@ -65,7 +65,7 @@ class MutatronHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[MutatronRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(79 - offset.x, 41 - offset.y, 53, 15), "Mutatron"))
+    transferRects.add(new RecipeTransferRect(new Rectangle(89 - offset.x, 41 - offset.y, 40, 15), "Mutatron"))
   }
 
   def addAllRecipes() {
@@ -112,5 +112,5 @@ class MutatronHandler extends BaseRecipeHandler {
   }
 
   def getGuiTexture = Gendustry.modId + ":textures/gui/mutatron.png"
-  def getRecipeName = "Mutatron"
+  def getRecipeName = Misc.toLocal("tile.gendustry.mutatron.name")
 }
