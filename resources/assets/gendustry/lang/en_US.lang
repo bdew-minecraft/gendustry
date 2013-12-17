@@ -38,6 +38,8 @@ gendustry.upgrades.cooler.name=Cooler Upgrade
 
 fluid.gendustry.mutagen=Mutagen
 
+label.template.crafting=Genetic Samples can be added to a Template. Combine them in any crafting table. Multiple samples can be added at once.
+
 gendustry.label.charges=Charges: %s
 
 gendustry.label.empty=Empty

@@ -14,12 +14,13 @@ import net.bdew.gendustry.config.{Config, Items}
 import cpw.mods.fml.common.event.FMLInterModComms
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.forge.GuiContainerManager
+import codechicken.nei.recipe.{ICraftingHandler, IUsageHandler}
 
 class NEIGendustryConfig extends IConfigureNEI {
   def getName: String = "Gendustry"
   def getVersion: String = "GENDUSTRY_VER"
 
-  def addRecipeHandler(h: BaseRecipeHandler) {
+  def addRecipeHandler(h: IUsageHandler with ICraftingHandler) {
     API.registerRecipeHandler(h)
     API.registerUsageHandler(h)
   }
@@ -28,9 +29,11 @@ class NEIGendustryConfig extends IConfigureNEI {
     NEICache.load()
     if (Config.neiAddSamples)
       NEICache.geneSamples.foreach(x => API.addNBTItem(Items.geneSample.newStack(x)))
+
     addRecipeHandler(new MutagenProducerHandler)
     addRecipeHandler(new MutatronHandler)
     addRecipeHandler(new SamplerHandler)
+    addRecipeHandler(new TemplateCraftingHandler)
 
     GuiContainerManager.addTooltipHandler(new SmeltingTooltipHandler)
 
