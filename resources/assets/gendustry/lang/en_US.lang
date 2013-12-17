@@ -53,6 +53,7 @@ gendustry.label.production=Production Modifier: %s
 gendustry.label.territory=Territory: %s
 
 gendustry.label.erase=Place in furance to erase genetic content
+gendustry.label.recipes=Click to see recipes
 gendustry.label.consume=Consume chance: %s%%
 gendustry.label.mutatron.death=Death chance (ignoble): %s%%
 gendustry.label.mutatron.degrade=Degrade chance (pristine): %s%%
