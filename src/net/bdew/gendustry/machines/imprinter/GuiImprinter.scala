@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.imprinter
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{WidgetMJGauge, Textures}
+import net.bdew.gendustry.gui.{WidgetProgressBarNEI, WidgetMJGauge, Textures}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.bdew.lib.gui.{Rect, BaseScreen}
@@ -21,7 +21,7 @@ class GuiImprinter(val te: TileImprinter, player: EntityPlayer) extends BaseScre
   val texture: ResourceLocation = new ResourceLocation(Gendustry.modId + ":textures/gui/imprinter.png")
   override def initGui() {
     super.initGui()
-    addWidget(new WidgetProgressBar(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress))
+    addWidget(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Imprinter"))
     addWidget(new WidgetMJGauge(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     addWidget(new WidgetLabel(Misc.toLocal("tile.gendustry.imprinter.name"), 8, 6, 4210752))
   }

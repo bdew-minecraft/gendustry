@@ -33,12 +33,14 @@ class NEIGendustryConfig extends IConfigureNEI {
     addRecipeHandler(new MutagenProducerHandler)
     addRecipeHandler(new MutatronHandler)
     addRecipeHandler(new SamplerHandler)
+    addRecipeHandler(new ImprinterHandler)
     addRecipeHandler(new TemplateCraftingHandler)
 
     GuiContainerManager.addTooltipHandler(new SmeltingTooltipHandler)
 
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutagen Producer@MutagenProducer");
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutatron@Mutatron");
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Sampler@Sampler");
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutagen Producer@MutagenProducer")
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutatron@Mutatron")
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Sampler@Sampler")
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Imprinter@Imprinter")
   }
 }
