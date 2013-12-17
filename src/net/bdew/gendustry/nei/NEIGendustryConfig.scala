@@ -11,6 +11,8 @@ package net.bdew.gendustry.nei
 
 import codechicken.nei.api.{API, IConfigureNEI}
 import net.bdew.gendustry.config.{Config, Items}
+import cpw.mods.fml.common.event.FMLInterModComms
+import net.bdew.gendustry.Gendustry
 
 class NEIGendustryConfig extends IConfigureNEI {
   def getName: String = "Gendustry"
@@ -24,9 +26,12 @@ class NEIGendustryConfig extends IConfigureNEI {
   def loadConfig() {
     NEICache.load()
     if (Config.neiAddSamples)
-      NEICache.speciesChromosomes.keys.foreach(x => API.addNBTItem(Items.geneSample.newStack(x)))
+      NEICache.geneSamples.foreach(x => API.addNBTItem(Items.geneSample.newStack(x)))
     addRecipeHandler(new MutagenProducerHandler)
     addRecipeHandler(new MutatronHandler)
     addRecipeHandler(new SamplerHandler)
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutagen Producer@MutagenProducer");
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutatron@Mutatron");
+    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Sampler@Sampler");
   }
 }
