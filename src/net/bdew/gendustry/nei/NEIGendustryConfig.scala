@@ -27,5 +27,6 @@ class NEIGendustryConfig extends IConfigureNEI {
       NEICache.speciesChromosomes.keys.foreach(x => API.addNBTItem(Items.geneSample.newStack(x)))
     addRecipeHandler(new MutagenProducerHandler)
     addRecipeHandler(new MutatronHandler)
+    addRecipeHandler(new SamplerHandler)
   }
 }

@@ -50,6 +50,7 @@ class MutatronHandler extends BaseRecipeHandler {
       case 1 => root.templateAsIndividual(root.getTemplate(mutation.getAllele1.getUID))
       case 2 => root.templateAsIndividual(mutation.getTemplate)
     }
+    individual.analyze()
     return (root, slot) match {
       case (bees: IBeeRoot, 0) => bees.getMemberStack(individual, EnumBeeType.PRINCESS.ordinal())
       case (bees: IBeeRoot, 1) => bees.getMemberStack(individual, EnumBeeType.DRONE.ordinal())
@@ -88,16 +89,6 @@ class MutatronHandler extends BaseRecipeHandler {
     }
   }
 
-  override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
-    if (stack == getRecipe(recipe).labware.item)
-      currenttip += Misc.toLocalF("gendustry.label.consume", Machines.mutatron.labwareConsumeChance.toInt)
-    if (stack == getRecipe(recipe).getResult.item) {
-      currenttip += Misc.toLocalF("gendustry.label.mutatron.degrade", Machines.mutatron.degradeChanceNatural.toInt)
-      currenttip += Misc.toLocalF("gendustry.label.mutatron.death", Machines.mutatron.deathChanceArtificial.toInt)
-    }
-    super.handleItemTooltip(gui, stack, currenttip, recipe)
-  }
-
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("item", Seq(x: ItemStack)) =>
@@ -108,6 +99,16 @@ class MutatronHandler extends BaseRecipeHandler {
         }
       case ("Mutatron", _) => addAllRecipes()
     }
+  }
+
+  override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
+    if (stack == getRecipe(recipe).labware.item)
+      currenttip += Misc.toLocalF("gendustry.label.consume", Machines.mutatron.labwareConsumeChance.toInt)
+    if (stack == getRecipe(recipe).getResult.item) {
+      currenttip += Misc.toLocalF("gendustry.label.mutatron.degrade", Machines.mutatron.degradeChanceNatural.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.mutatron.death", Machines.mutatron.deathChanceArtificial.toInt)
+    }
+    super.handleItemTooltip(gui, stack, currenttip, recipe)
   }
 
   def getGuiTexture = Gendustry.modId + ":textures/gui/mutatron.png"
