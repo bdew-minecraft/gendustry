@@ -19,13 +19,13 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.compat.ExtraBeesProxy
 
 class TileSampler extends TileItemProcessor with TilePowered {
-  lazy val cfg = Machines.imprinter
+  lazy val cfg = Machines.sampler
   val outputSlots = Seq(3)
 
   def getSizeInventory = 4
 
   def selectRandomAllele(stack: ItemStack): ItemStack = {
-    if (ExtraBeesProxy.isSerum(stack)) {
+    if (cfg.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
       val sample = ExtraBeesProxy.getSerumSample(stack)
       if (sample != null) return Items.geneSample.newStack(sample)
     }
@@ -66,7 +66,7 @@ class TileSampler extends TileItemProcessor with TilePowered {
       case 1 =>
         return itemstack.getItem == Items.labware
       case 2 =>
-        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null || ExtraBeesProxy.isSerum(itemstack)
+        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null || (cfg.convertEBSerums && ExtraBeesProxy.isSerum(itemstack))
       case _ =>
         return false
     }

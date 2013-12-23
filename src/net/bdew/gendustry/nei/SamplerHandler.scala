@@ -24,6 +24,7 @@ import java.util
 import net.bdew.lib.Misc
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import scala.Some
+import net.bdew.gendustry.compat.ExtraBeesProxy
 
 class SamplerHandler extends BaseRecipeHandler {
   lazy val offset = new Point(5, 13)
@@ -65,6 +66,12 @@ class SamplerHandler extends BaseRecipeHandler {
     for (info <- NEICache.geneSamples; species <- NEICache.speciesChromosomes(info)) {
       arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
     }
+    if (Machines.sampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
+      for (sample <- NEICache.geneSamples if sample.root.isInstanceOf[IBeeRoot]) {
+        val serum = ExtraBeesProxy.makeSerumFromSample(sample)
+        if (serum != null) arecipes.add(new SamplerRecipe(sample, serum))
+      }
+    }
   }
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
@@ -83,6 +90,10 @@ class SamplerHandler extends BaseRecipeHandler {
               alleles += GeneSampleInfo(root, n, chromosome.getSecondaryAllele)
           }
           alleles.foreach(sample => arecipes.add(new SamplerRecipe(sample, stack)))
+        } else if (Machines.sampler.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
+          val sample = ExtraBeesProxy.getSerumSample(stack)
+          if (sample != null)
+            arecipes.add(new SamplerRecipe(sample, stack))
         }
       case ("Sampler", _) => addAllRecipes()
     }
@@ -94,6 +105,10 @@ class SamplerHandler extends BaseRecipeHandler {
         val info = Items.geneSample.getInfo(stack)
         for (species <- NEICache.speciesChromosomes(info)) {
           arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
+        }
+        if (Machines.sampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
+          val serum = ExtraBeesProxy.makeSerumFromSample(info)
+          if (serum != null) arecipes.add(new SamplerRecipe(info, serum))
         }
       case ("Sampler", _) => addAllRecipes()
     }

@@ -42,7 +42,7 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
       case p: IAllelePlantType => if (p.getPlantTypes.isEmpty) "-" else p.getPlantTypes.asScala.mkString(", ")
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
       case g: IAlleleGrowth => g.getProvider.getDescription
-      case x => x.getName
+      case x => StringUtil.localize(x.getName)
     }
     return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr)
   }

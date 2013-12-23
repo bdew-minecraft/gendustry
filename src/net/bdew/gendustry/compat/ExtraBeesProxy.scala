@@ -14,7 +14,7 @@ import net.minecraft.item.{ItemStack, Item}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.minecraft.nbt.NBTTagCompound
-import forestry.api.apiculture.EnumBeeChromosome
+import forestry.api.apiculture.{IBeeRoot, EnumBeeChromosome}
 import forestry.api.genetics.AlleleManager
 
 object ExtraBeesProxy {
@@ -32,7 +32,7 @@ object ExtraBeesProxy {
     else
       null
 
-  if (itemSerum != null) Gendustry.logInfo("ExtraBees serum item ID: ", itemSerum.itemID)
+  if (itemSerum != null) Gendustry.logInfo("ExtraBees serum item: %s", itemSerum)
 
   def isSerum(stack: ItemStack) = if (itemSerum != null) stack.itemID == itemSerum.itemID else false
 
@@ -48,5 +48,22 @@ object ExtraBeesProxy {
       return new GeneSampleInfo(AlleleManager.alleleRegistry.getSpeciesRoot("rootBees"), chromosome, alleleObj)
     }
     return null
+  }
+
+  def makeSerumFromSample(sample: GeneSampleInfo): ItemStack = {
+    if (itemSerum == null || !sample.root.isInstanceOf[IBeeRoot]) return null
+    val serum = new ItemStack(itemSerum)
+    val nbt = new NBTTagCompound
+    nbt.setString("uid", sample.allele.getUID)
+
+    if (sample.chromosome >= EnumBeeChromosome.HUMIDITY.ordinal)
+      nbt.setInteger("chromosome", sample.chromosome - 1)
+    else
+      nbt.setInteger("chromosome", sample.chromosome)
+
+    nbt.setInteger("quality", 10)
+
+    serum.setTagCompound(nbt)
+    return serum
   }
 }
