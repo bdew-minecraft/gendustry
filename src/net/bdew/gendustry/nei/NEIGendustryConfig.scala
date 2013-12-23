@@ -10,7 +10,7 @@
 package net.bdew.gendustry.nei
 
 import codechicken.nei.api.{API, IConfigureNEI}
-import net.bdew.gendustry.config.{Config, Items}
+import net.bdew.gendustry.config.{Machines, Config, Items}
 import cpw.mods.fml.common.event.FMLInterModComms
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.forge.GuiContainerManager
@@ -30,17 +30,28 @@ class NEIGendustryConfig extends IConfigureNEI {
     if (Config.neiAddSamples)
       NEICache.geneSamples.foreach(x => API.addNBTItem(Items.geneSample.newStack(x)))
 
-    addRecipeHandler(new MutagenProducerHandler)
-    addRecipeHandler(new MutatronHandler)
-    addRecipeHandler(new SamplerHandler)
-    addRecipeHandler(new ImprinterHandler)
     addRecipeHandler(new TemplateCraftingHandler)
 
-    GuiContainerManager.addTooltipHandler(new SmeltingTooltipHandler)
+    if (Machines.mutagenProducer.enabled) {
+      addRecipeHandler(new MutagenProducerHandler)
+      FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutagen Producer@MutagenProducer")
+    }
 
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutagen Producer@MutagenProducer")
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutatron@Mutatron")
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Sampler@Sampler")
-    FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Imprinter@Imprinter")
+    if (Machines.mutatron.enabled) {
+      addRecipeHandler(new MutatronHandler)
+      FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Mutatron@Mutatron")
+    }
+
+    if (Machines.sampler.enabled) {
+      addRecipeHandler(new SamplerHandler)
+      FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Sampler@Sampler")
+    }
+
+    if (Machines.imprinter.enabled) {
+      addRecipeHandler(new ImprinterHandler)
+      FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Imprinter@Imprinter")
+    }
+
+    GuiContainerManager.addTooltipHandler(new SmeltingTooltipHandler)
   }
 }
