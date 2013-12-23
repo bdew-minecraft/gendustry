@@ -42,6 +42,8 @@ object Gendustry {
     PowerProxy.logModVersions()
     configDir = event.getModConfigurationDirectory
     TuningLoader.load("tuning")
+    TuningLoader.load("recipes")
+    TuningLoader.load("override", false)
     Config.load(event.getSuggestedConfigurationFile)
   }
 
@@ -49,7 +51,7 @@ object Gendustry {
   def init(event: FMLInitializationEvent) {
     NetworkRegistry.instance.registerGuiHandler(this, Config.guiHandler)
     Upgrades.init()
-    TuningLoader.load("recipes")
+    TuningLoader.loadDealayed()
   }
 
   @EventHandler

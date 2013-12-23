@@ -19,7 +19,7 @@ apply plugin: 'forge'
 apply plugin: 'scala'
 
 version = "0.9.5"
-ext.bdlibver = "0.9.3.9"
+ext.bdlibver = "0.9.3.11"
 ext.versuffix = "mc164"
 
 if (project.hasProperty('buildnum')) {

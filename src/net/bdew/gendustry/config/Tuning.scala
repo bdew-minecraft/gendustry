@@ -10,12 +10,14 @@
 package net.bdew.gendustry.config
 
 import net.bdew.lib.recipes.gencfg._
-import net.bdew.lib.recipes.{RecipeLoader, RecipeParser, Statement, StackRef}
+import net.bdew.lib.recipes._
 import net.bdew.gendustry.mutagen.MutagenRegistry
 import net.minecraftforge.oredict.OreDictionary
 import buildcraft.api.recipes.AssemblyRecipe
 import java.io.{InputStreamReader, FileReader, File}
 import net.bdew.gendustry.Gendustry
+import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.lib.recipes.gencfg.CfgVal
 
 object Tuning extends ConfigSection
 
@@ -31,9 +33,9 @@ object TuningLoader {
 
   case class EntryModifierDiv(v: Float) extends EntryModifier
 
-  case class StMutagen(st: StackRef, mb: Int) extends Statement
+  case class StMutagen(st: StackRef, mb: Int) extends DelayedStatement
 
-  case class StAssembly(rec: List[(Char, Int)], power: Int, out: StackRef, cnt: Int) extends Statement
+  case class StAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
   class Parser extends RecipeParser with GenericConfigParser {
     override def statement = mutagen | assembly | super.statement
@@ -62,7 +64,7 @@ object TuningLoader {
 
     override def newParser(): RecipeParser = new Parser()
 
-    override def processStatement(s: Statement): Unit = s match {
+    override def processDelayedStatement(s: DelayedStatement): Unit = s match {
       case StMutagen(st, mb) =>
         val in = getConcreteStack(st)
         MutagenRegistry.register(in, mb)
@@ -84,19 +86,30 @@ object TuningLoader {
         log.info("Output: %s".format(outStack))
         AssemblyRecipe.assemblyRecipes.add(new AssemblyRecipe(stacks.toArray, power, outStack))
         log.info("Done")
-      case _ => super.processStatement(s)
+
+      case _ => super.processDelayedStatement(s)
     }
   }
 
-  def load(part: String) {
+  val loader = new Loader
+
+  def loadDealayed() = loader.processDelayedStatements()
+
+  def load(part: String, checkJar: Boolean = true) {
     val f = new File(Gendustry.configDir, "%s-%s.cfg".format(Gendustry.modId, part))
     val r = if (f.exists() && f.canRead) {
+      Gendustry.logInfo("Loading configuration from %s", f.toString)
       new FileReader(f)
-    } else {
+    } else if (checkJar) {
+      val res = "/assets/%s/%s-%s.cfg".format(Gendustry.modId, Gendustry.modId, part)
+      val stream = this.getClass.getResourceAsStream(res)
+      Gendustry.logInfo("Loading configuration from JAR - %s", this.getClass.getResource(res))
       new InputStreamReader(this.getClass.getResourceAsStream("/assets/%s/%s-%s.cfg".format(Gendustry.modId, Gendustry.modId, part)))
+    } else {
+      return
     }
     try {
-      new Loader().load(r)
+      loader.load(r)
     } finally {
       r.close()
     }
