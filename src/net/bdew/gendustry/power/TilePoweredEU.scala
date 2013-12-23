@@ -17,6 +17,7 @@ import net.bdew.gendustry.config.Tuning
 import net.minecraft.tileentity.TileEntity
 import cpw.mods.fml.common.Optional
 import net.bdew.lib.power.TilePoweredBase
+import net.bdew.lib.Misc
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.IEnergySink")
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {
@@ -41,7 +42,12 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
 
   def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = true
   def getMaxSafeInput = maxSafe
-  def demandedEnergyUnits() = (power.capacity - power.stored) * ratio
-  def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) =
-    power.inject((amount / ratio).toFloat, false) * ratio
+  def demandedEnergyUnits() = Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
+  def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) = {
+    // IC2 is borked and is ignoring the return value, we need to store everything otherwise energy will be wasted
+    // We go around power.inject so that all energy can be added
+    power.stored += (amount / ratio).toFloat
+    power.parent.dataSlotChanged(power)
+    0
+  }
 }
