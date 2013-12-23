@@ -19,7 +19,7 @@ import forestry.api.core.{EnumHumidity, EnumTemperature}
 import net.bdew.lib.Misc
 import forestry.api.arboriculture.EnumGermlingType
 import net.bdew.lib.tile.TileExtended
-import net.bdew.gendustry.config.Machines
+import net.bdew.gendustry.config.{Config, Machines}
 import net.bdew.lib.items.ItemUtils
 import net.bdew.gendustry.api.{ApiaryModifiers, IApiaryUpgrade}
 import scala.collection.mutable
@@ -147,7 +147,7 @@ with IBeeHousing {
   }
 
   def addStats(l: mutable.MutableList[String]) {
-    l += Misc.toLocalF("gendustry.label.energy", "%.1f".format(cfg.baseMjPerTick * mods.energy))
+    l += Misc.toLocalF("gendustry.label.energy", "%.1f".format(cfg.baseMjPerTick * mods.energy * Config.powerShowMultiplier), Config.powerShowUnits)
     l += Misc.toLocalF("gendustry.label.temperature", Misc.toLocal(getTemperature.getName))
     l += Misc.toLocalF("gendustry.label.humidity", Misc.toLocal(getHumidity.getName))
 

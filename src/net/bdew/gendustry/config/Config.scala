@@ -15,9 +15,12 @@ import net.bdew.lib.config.IdManager
 import net.bdew.lib.gui.GuiHandler
 
 object Config {
-  var neiAddSamples = false
   var IDs: IdManager = null
   val guiHandler = new GuiHandler
+
+  var neiAddSamples = false
+  var powerShowUnits = "MJ"
+  var powerShowMultiplier = 1F
 
   def load(cfg: File) {
     val c = new Configuration(cfg)
@@ -25,6 +28,8 @@ object Config {
 
     try {
       neiAddSamples = c.get("NEI", "Add samples", true).getBoolean(false)
+      powerShowUnits = c.get("Display", "PowerShowUnits", "MJ", "Units to use when displaying power. Valid values: MJ, EU, RF").getString
+      if (powerShowUnits != "MJ") powerShowMultiplier = Tuning.getSection("Power").getFloat(powerShowUnits + "_MJ_Ratio")
       IDs = new IdManager(c, 15000, 3500)
       Fluids.load()
       Blocks.load()

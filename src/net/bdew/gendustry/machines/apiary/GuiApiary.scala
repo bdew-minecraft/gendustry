@@ -14,16 +14,15 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.bdew.lib.gui.{Rect, BaseScreen}
 import net.bdew.lib.gui.widgets.WidgetLabel
-import net.bdew.gendustry.gui.Textures
+import net.bdew.gendustry.gui.{WidgetPowerCustom, Textures}
 import net.bdew.lib.Misc
-import net.bdew.lib.power.WidgetPowerGauge
 
 class GuiApiary(val te: TileApiary, player: EntityPlayer) extends BaseScreen(new ContainerApiary(te, player), 176, 166) {
   val texture = new ResourceLocation(Gendustry.modId + ":textures/gui/apiary.png")
   override def initGui() {
     super.initGui()
     addWidget(new WidgetError(155, 5, te))
-    addWidget(new WidgetPowerGauge(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
+    addWidget(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     addWidget(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiBreeding, te.guiProgress))
     addWidget(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, 4210752))
   }

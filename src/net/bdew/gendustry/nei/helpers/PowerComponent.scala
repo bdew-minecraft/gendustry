@@ -14,10 +14,11 @@ import java.text.DecimalFormat
 import net.minecraft.client.Minecraft
 import net.bdew.gendustry.gui.Textures
 import codechicken.core.gui.GuiDraw
+import net.bdew.gendustry.config.Config
 
 class PowerComponent(rect: Rect, power: Float, capacity: Float) extends RecipeComponent(rect) {
   val formater = new DecimalFormat("#,###")
-  def getTooltip = List("%s MJ".format(formater.format(power)))
+  def getTooltip = List("%s %s".format(formater.format(power * Config.powerShowMultiplier), Config.powerShowUnits))
   def mouseClick(button: Int) = false
   def render(offset: Point) {
     Minecraft.getMinecraft.renderEngine.bindTexture(Textures.powerFill.resource)
