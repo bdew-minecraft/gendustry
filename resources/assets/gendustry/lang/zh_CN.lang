@@ -1,0 +1,119 @@
+#zh_CN
+
+tile.gendustry.mutagen.name=诱变剂
+tile.gendustry.mutagen.producer.name=诱变剂制造机
+tile.gendustry.mutatron.name=突变子
+tile.gendustry.apiary.name=工业蜂箱
+tile.gendustry.imprinter.name=基因复制机
+tile.gendustry.sampler.name=基因拓模机
+
+item.gendustry.mutagen.bucket.name=诱变剂桶
+item.gendustry.mutagen.can.name=诱变剂罐
+
+item.gendustry.MutagenTank.name=诱变剂储罐
+item.gendustry.BeeReceptacle.name=蜜蜂插槽
+item.gendustry.PowerModule.name=能量模块
+item.gendustry.GeneticsProcessor.name=基因加工仪
+item.gendustry.UpgradeFrame.name=升级框架
+item.gendustry.ClimateModule.name=气候控制模块
+item.gendustry.Labware.name=基因药皿
+item.gendustry.GeneSample.name=基因样本
+item.gendustry.GeneTemplate.name=基因模板
+item.gendustry.GeneSampleBlank.name=空白基因模板
+item.gendustry.Waste.name=基因无表达片段
+item.gendustry.grafter.name=工业剪枝器
+
+gendustry.upgrades.prod.name=产量升级
+gendustry.upgrades.life.name=寿命升级
+gendustry.upgrades.flowering.name=授粉升级
+gendustry.upgrades.territory.name=范围升级
+gendustry.upgrades.sealing.name=气密性升级
+gendustry.upgrades.light.name=光照升级
+gendustry.upgrades.sky.name=露天升级
+gendustry.upgrades.hell.name=地狱升级
+gendustry.upgrades.auto.name=自动化升级
+gendustry.upgrades.humidifier.name=加湿器升级
+gendustry.upgrades.dryer.name=烘干器升级
+gendustry.upgrades.heater.name=加热器升级
+gendustry.upgrades.sieve.name=筛子升级
+gendustry.upgrades.cooler.name=冷却器升级
+
+fluid.gendustry.mutagen=诱变剂
+
+label.template.crafting=基因样本可以被添加到模板中.在工作台中就可以完成此操作.多个样本可以一次添加到同一模板中.
+
+gendustry.label.charges=充能: %s
+
+gendustry.label.empty=空
+gendustry.label.breeding=饲育中
+gendustry.label.working=生产中
+gendustry.label.maxinstall=最大安装量:
+gendustry.label.temperature=温度: %s
+gendustry.label.humidity=湿度: %s
+gendustry.label.energy=需求能量: %s MJ/t
+gendustry.label.lifespan=寿命调整: %s
+gendustry.label.flowering=授粉几率: %s
+gendustry.label.production=产量调整: %s
+gendustry.label.territory=活动范围: %s
+
+gendustry.label.erase=放入熔炉以清除基因内容
+gendustry.label.recipes=点击以查看合成表
+gendustry.label.consume=消耗几率:: %s%%
+gendustry.label.mutatron.death=死亡率(卑贱): %s%%
+gendustry.label.mutatron.degrade=衰退率 (原始): %s%%
+
+gendustry.label.mod.automated=* 自动化
+gendustry.label.mod.hellish=* 地狱环境模拟
+gendustry.label.mod.sealed=* 避雨
+gendustry.label.mod.selflighted=* 内部照明
+gendustry.label.mod.sky=* 露天模拟
+gendustry.label.mod.energy=* 能量消耗
+gendustry.label.mod.lifespan=* 寿命
+gendustry.label.mod.flowering=* 开花授粉
+gendustry.label.mod.geneticDecay=* 基因衰退
+gendustry.label.mod.mutation=* 突变率
+gendustry.label.mod.production=* 产量
+gendustry.label.mod.territory=* 活动范围
+gendustry.label.mod.sieve=* 授粉
+gendustry.label.mod.temperature=* 温度
+gendustry.label.mod.humidity=* 湿度
+
+gendustry.error.power=能量不足
+
+gendustry.label.sample.rootBees=采集自蜜蜂
+gendustry.label.sample.rootTrees=采集自树苗
+gendustry.label.sample.rootButterflies=采集自蝴蝶
+
+gendustry.label.template.rootBees=可以用于蜜蜂
+gendustry.label.template.rootTrees=可以用于树苗
+gendustry.label.template.rootButterflies=可以用于蝴蝶
+gendustry.label.template.blank=可以添加基因样本
+
+gendustry.chromosome.FLOWER_PROVIDER=授粉对象
+gendustry.chromosome.GIRTH=周长
+gendustry.chromosome.SPEED=速度
+gendustry.chromosome.YIELD=产量
+gendustry.chromosome.HEIGHT=高度
+gendustry.chromosome.GROWTH=成长
+gendustry.chromosome.FLOWERING=开花
+gendustry.chromosome.METABOLISM=代谢
+gendustry.chromosome.LIFESPAN=寿命
+gendustry.chromosome.TERRITORY=活动范围
+gendustry.chromosome.FERTILITY=生育能力
+gendustry.chromosome.SIZE=大小
+gendustry.chromosome.HUMIDITY=湿度
+gendustry.chromosome.SPECIES=品种
+gendustry.chromosome.FIRE_RESIST=耐火性
+gendustry.chromosome.TEMPERATURE_TOLERANCE=温度适应性
+gendustry.chromosome.HUMIDITY_TOLERANCE=湿度适应性
+gendustry.chromosome.PLANT=植物
+gendustry.chromosome.EFFECT=特殊效果
+gendustry.chromosome.CAVE_DWELLING=穴居性
+gendustry.chromosome.MATURATION=成熟
+gendustry.chromosome.NOCTURNAL=夜行性
+gendustry.chromosome.TOLERANT_FLYER=耐雨飞行性
+gendustry.chromosome.FRUITS=果实
+gendustry.chromosome.SAPPINESS=多汁
+
+gendustry.allele.false=假
+gendustry.allele.true=真
