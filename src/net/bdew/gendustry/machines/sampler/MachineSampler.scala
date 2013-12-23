@@ -9,20 +9,20 @@
 
 package net.bdew.gendustry.machines.sampler
 
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.client.gui.inventory.GuiContainer
-import net.bdew.gendustry.gui.GuiProvider
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.bdew.lib.gui.GuiProvider
 
 class MachineSampler extends Machine("Sampler", new BlockSampler(_)) with GuiProvider with ProcessorMachine {
   def guiId = 5
+  type TEClass = TileSampler
 
   lazy val labwareConsumeChance = tuning.getInt("LabwareConsumeChance")
 
   @SideOnly(Side.CLIENT)
-  def getGui(te: TileEntity, player: EntityPlayer): GuiContainer = new GuiSampler(te.asInstanceOf[TileSampler], player)
-  def getContainer(te: TileEntity, player: EntityPlayer): Container = new ContainerSampler(te.asInstanceOf[TileSampler], player)
+  def getGui(te: TileSampler, player: EntityPlayer): GuiContainer = new GuiSampler(te, player)
+  def getContainer(te: TileSampler, player: EntityPlayer): Container = new ContainerSampler(te, player)
 }

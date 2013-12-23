@@ -18,7 +18,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.common.network.NetworkRegistry
-import net.bdew.gendustry.gui.GuiHandler
 import java.io.File
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.compat.PowerProxy
@@ -48,7 +47,7 @@ object Gendustry {
 
   @EventHandler
   def init(event: FMLInitializationEvent) {
-    NetworkRegistry.instance.registerGuiHandler(this, GuiHandler)
+    NetworkRegistry.instance.registerGuiHandler(this, Config.guiHandler)
     Upgrades.init()
     TuningLoader.load("recipes")
   }

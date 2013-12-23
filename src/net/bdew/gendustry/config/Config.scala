@@ -12,13 +12,12 @@ package net.bdew.gendustry.config
 import net.minecraftforge.common.Configuration
 import java.io.File
 import net.bdew.lib.config.IdManager
-import net.bdew.gendustry.mutagen.FluidMutagen
+import net.bdew.lib.gui.GuiHandler
 
 object Config {
   var neiAddSamples = false
   var IDs: IdManager = null
-  var
-  mutagenFluid = new FluidMutagen
+  val guiHandler = new GuiHandler
 
   def load(cfg: File) {
     val c = new Configuration(cfg)

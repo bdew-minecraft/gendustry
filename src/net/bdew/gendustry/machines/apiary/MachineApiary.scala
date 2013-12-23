@@ -9,20 +9,18 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.Container
-import net.minecraft.client.gui.inventory.GuiContainer
-import net.bdew.gendustry.gui.GuiProvider
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, PoweredMachine}
+import net.bdew.lib.gui.GuiProvider
 
 class MachineApiary extends Machine("IndustrialApiary", new BlockApiary(_)) with GuiProvider with PoweredMachine {
   def guiId = 3
+  type TEClass = TileApiary
 
   lazy val baseMjPerTick = tuning.getInt("BaseMjPerTick")
 
   @SideOnly(Side.CLIENT)
-  def getGui(te: TileEntity, player: EntityPlayer): GuiContainer = new GuiApiary(te.asInstanceOf[TileApiary], player)
-  def getContainer(te: TileEntity, player: EntityPlayer): Container = new ContainerApiary(te.asInstanceOf[TileApiary], player)
+  def getGui(te: TileApiary, player: EntityPlayer) = new GuiApiary(te, player)
+  def getContainer(te: TileApiary, player: EntityPlayer) = new ContainerApiary(te, player)
 }

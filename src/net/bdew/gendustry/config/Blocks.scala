@@ -17,8 +17,8 @@ import net.bdew.lib.config.BlockManager
 import net.bdew.gendustry.Gendustry
 
 object Blocks extends BlockManager(Config.IDs) {
-  var mutagen = regBlockCls(classOf[BlockMutagen], "Mutagen")
-  var testPowerEmitter = new PowerEmitterBlock(ids.getBlockId("Test Power Emitter"))
+  val mutagen = regBlockCls(classOf[BlockMutagen], "Mutagen")
+  val testPowerEmitter = new PowerEmitterBlock(ids.getBlockId("Test Power Emitter"))
   GameRegistry.registerBlock(testPowerEmitter, "PowerEmitterBlock")
   GameRegistry.registerTileEntity(classOf[PowerEmitterTile], "PowerEmitterBlock")
   Gendustry.logInfo("Blocks loaded")

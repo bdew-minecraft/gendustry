@@ -17,7 +17,7 @@ import net.bdew.gendustry.machines.sampler.MachineSampler
 import net.bdew.lib.config.MachineManager
 import net.bdew.gendustry.Gendustry
 
-object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines")) {
+object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines"), Config.guiHandler) {
   val mutagenProducer = registerMachine(new MachineMutagenProducer)
   val mutatron = registerMachine(new MachineMutatron)
   val apiary = registerMachine(new MachineApiary)

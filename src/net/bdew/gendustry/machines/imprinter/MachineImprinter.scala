@@ -9,22 +9,20 @@
 
 package net.bdew.gendustry.machines.imprinter
 
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.Container
-import net.minecraft.client.gui.inventory.GuiContainer
-import net.bdew.gendustry.gui.GuiProvider
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.bdew.lib.gui.GuiProvider
 
 class MachineImprinter extends Machine("Imprinter", new BlockImprinter(_)) with GuiProvider with ProcessorMachine {
   def guiId = 4
+  type TEClass = TileImprinter
 
   lazy val labwareConsumeChance = tuning.getInt("LabwareConsumeChance")
   lazy val deathChanceNatural = tuning.getInt("DeathChanceNatural")
   lazy val deathChanceArtificial = tuning.getInt("DeathChanceArtificial")
 
   @SideOnly(Side.CLIENT)
-  def getGui(te: TileEntity, player: EntityPlayer): GuiContainer = new GuiImprinter(te.asInstanceOf[TileImprinter], player)
-  def getContainer(te: TileEntity, player: EntityPlayer): Container = new ContainerImprinter(te.asInstanceOf[TileImprinter], player)
+  def getGui(te: TileImprinter, player: EntityPlayer) = new GuiImprinter(te, player)
+  def getContainer(te: TileImprinter, player: EntityPlayer) = new ContainerImprinter(te, player)
 }
