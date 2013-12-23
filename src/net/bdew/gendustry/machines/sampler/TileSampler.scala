@@ -16,6 +16,7 @@ import scala.util.Random
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.gendustry.compat.ExtraBeesProxy
 
 class TileSampler extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.imprinter
@@ -24,6 +25,11 @@ class TileSampler extends TileItemProcessor with TilePowered {
   def getSizeInventory = 4
 
   def selectRandomAllele(stack: ItemStack): ItemStack = {
+    if (ExtraBeesProxy.isSerum(stack)) {
+      val sample = ExtraBeesProxy.getSerumSample(stack)
+      if (sample != null) return Items.geneSample.newStack(sample)
+    }
+
     val root = AlleleManager.alleleRegistry.getSpeciesRoot(stack)
     if (root == null) return new ItemStack(Items.waste)
     val member = root.getMember(stack)
@@ -60,7 +66,7 @@ class TileSampler extends TileItemProcessor with TilePowered {
       case 1 =>
         return itemstack.getItem == Items.labware
       case 2 =>
-        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null
+        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null || ExtraBeesProxy.isSerum(itemstack)
       case _ =>
         return false
     }
