@@ -9,19 +9,20 @@
 
 package net.bdew.gendustry.machines.mutatron
 
-import net.bdew.gendustry.config.{Items, Machines, Blocks}
+import net.bdew.gendustry.config.{Fluids, Items, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.ForgeDirection
 import net.minecraftforge.fluids._
 import net.bdew.lib.data.DataSlotTankRestricted
 import net.bdew.lib.tile.ExposeTank
-import net.bdew.gendustry.machines.TileItemProcessor
+import net.bdew.lib.power.TileItemProcessor
+import net.bdew.gendustry.power.TilePowered
 
-class TileMutatron extends TileItemProcessor with ExposeTank {
+class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutatron
   val outputSlots = Seq(2)
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Blocks.mutagenFluid.getID)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID)
 
   def getSizeInventory = 4
 

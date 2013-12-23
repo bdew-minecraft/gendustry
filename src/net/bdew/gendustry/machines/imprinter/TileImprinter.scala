@@ -12,12 +12,13 @@ package net.bdew.gendustry.machines.imprinter
 import net.bdew.gendustry.config.{Items, Machines}
 import net.minecraft.item.ItemStack
 import forestry.api.genetics.AlleleManager
-import net.bdew.gendustry.machines.TileItemProcessor
 import net.minecraft.nbt.NBTTagCompound
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot, IBee}
 import scala.util.Random
+import net.bdew.lib.power.TileItemProcessor
+import net.bdew.gendustry.power.TilePowered
 
-class TileImprinter extends TileItemProcessor {
+class TileImprinter extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.imprinter
   val outputSlots = Seq(3)
   def getSizeInventory = 4

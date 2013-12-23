@@ -15,59 +15,38 @@ import net.bdew.gendustry.mutagen.ItemMutagenBucket
 import net.bdew.gendustry.mutagen.ItemMutagenCan
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.Configuration
 import net.minecraftforge.fluids.FluidContainerRegistry
-import net.bdew.gendustry.items.{IndustrialGrafter, GeneTemplate, GeneSample, SimpleItem}
+import net.bdew.gendustry.items.{IndustrialGrafter, GeneTemplate, GeneSample}
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
+import net.bdew.lib.config.ItemManager
+import net.bdew.gendustry.Gendustry
 
-object Items {
-  var mutagenBucket: ItemMutagenBucket = null
-  var mutagenCan: ItemMutagenCan = null
-  var labware: SimpleItem = null
-  var waste: SimpleItem = null
-  var geneSample: GeneSample = null
-  var geneSampleBlank: SimpleItem = null
-  var geneTemplate: GeneTemplate = null
-  var upgradeItem: ItemApiaryUpgrade = null
-  var grafter: IndustrialGrafter = null
+object Items extends ItemManager(Config.IDs) {
 
-  def regSimpleItem(cfg: Configuration, name: String): SimpleItem =
-    regItem(new SimpleItem(cfg.getItem(name, Ids.itemIds.next()).getInt, name), name)
+  val mutagenBucket = regItemCls(classOf[ItemMutagenBucket], "MutagenBucket")
+  val mutagenCan = regItemCls(classOf[ItemMutagenCan], "MutagenCan")
 
-  def regItem[T <: SimpleItem](item: T): T = regItem(item, item.name)
+  FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenBucket), new ItemStack(Item.bucketEmpty))
+  FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenCan), ItemInterface.getItem("canEmpty"))
 
-  def regItem[T <: Item](item: T, name: String, addStack: Boolean = true): T = {
-    GameRegistry.registerItem(item, name)
-    if (addStack)
-      GameRegistry.registerCustomItemStack(name, new ItemStack(item))
-    return item
-  }
+  val geneSample = regItem(new GeneSample(ids.getItemId("GeneSample")))
+  val geneTemplate = regItem(new GeneTemplate(ids.getItemId("GeneTemplate")))
 
-  def load(cfg: Configuration) {
-    mutagenBucket = regItem(new ItemMutagenBucket(cfg.getItem("MutagenBucket", Ids.itemIds.next()).getInt), "MutagenBucket")
-    mutagenCan = regItem(new ItemMutagenCan(cfg.getItem("MutagenCan", Ids.itemIds.next()).getInt), "MutagenCan")
+  val upgradeItem = regItemCls(classOf[ItemApiaryUpgrade], "ApiaryUpgrade")
 
-    FluidContainerRegistry.registerFluidContainer(Blocks.mutagenFluid, new ItemStack(mutagenBucket), new ItemStack(Item.bucketEmpty))
-    FluidContainerRegistry.registerFluidContainer(Blocks.mutagenFluid, new ItemStack(mutagenCan), ItemInterface.getItem("canEmpty"))
+  val grafter = regItemCls(classOf[IndustrialGrafter], "IndustrialGrafter", false)
+  GameRegistry.registerCustomItemStack("IndustrialGrafter", grafter.stackWithCharge(0))
 
-    geneSample = regItem(new GeneSample(cfg.getItem("GeneSample", Ids.itemIds.next()).getInt))
-    geneTemplate = regItem(new GeneTemplate(cfg.getItem("GeneTemplate", Ids.itemIds.next()).getInt))
+  regSimpleItem("MutagenTank")
+  regSimpleItem("BeeReceptacle")
+  regSimpleItem("PowerModule")
+  regSimpleItem("GeneticsProcessor")
+  regSimpleItem("UpgradeFrame")
+  regSimpleItem("ClimateModule")
 
-    upgradeItem = regItem(new ItemApiaryUpgrade(cfg.getItem("ApiaryUpgrade", Ids.itemIds.next()).getInt), "ApiaryUpgrade")
+  val labware = regSimpleItem("Labware")
+  val waste = regSimpleItem("Waste")
+  val geneSampleBlank = regSimpleItem("GeneSampleBlank")
 
-    grafter = regItem(new IndustrialGrafter(cfg.getItem("IndustrialGrafter", Ids.itemIds.next()).getInt), "IndustrialGrafter", false)
-    GameRegistry.registerCustomItemStack("IndustrialGrafter", grafter.stackWithCharge(0))
-
-    regSimpleItem(cfg, "MutagenTank")
-    regSimpleItem(cfg, "BeeReceptacle")
-    regSimpleItem(cfg, "PowerModule")
-    regSimpleItem(cfg, "GeneticsProcessor")
-    regSimpleItem(cfg, "UpgradeFrame")
-    regSimpleItem(cfg, "ClimateModule")
-
-    labware = regSimpleItem(cfg, "Labware")
-    waste = regSimpleItem(cfg, "Waste")
-    geneSampleBlank = regSimpleItem(cfg, "GeneSampleBlank")
-
-  }
+  Gendustry.logInfo("Items loaded")
 }

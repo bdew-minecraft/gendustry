@@ -11,7 +11,7 @@ package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.gui.{Rect, Point}
-import net.bdew.gendustry.config.{Blocks, Machines}
+import net.bdew.gendustry.config.{Fluids, Blocks, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.mutagen.MutagenRegistry
@@ -32,7 +32,7 @@ class MutagenProducerHandler extends BaseRecipeHandler {
     val inPositioned = position(in, 44, 41)
     val getResult = null
 
-    components :+= new FluidComponent(mutagenRect, new FluidStack(Blocks.mutagenFluid, out), Machines.mutagenProducer.tankSize)
+    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, out), Machines.mutagenProducer.tankSize)
     components :+= new PowerComponent(mjRect, Machines.mutagenProducer.mjPerItem, Machines.mutagenProducer.maxStoredEnergy)
 
     override def getOtherStacks = List(inPositioned)
@@ -51,7 +51,7 @@ class MutagenProducerHandler extends BaseRecipeHandler {
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Blocks.mutagenFluid.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
       case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
       case ("MutagenProducer", _) => addAllRecipes()
     }

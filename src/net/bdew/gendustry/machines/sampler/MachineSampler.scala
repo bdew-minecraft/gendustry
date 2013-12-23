@@ -9,25 +9,18 @@
 
 package net.bdew.gendustry.machines.sampler
 
-import net.bdew.gendustry.machines.ProcessorMachine
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.client.gui.inventory.GuiContainer
-import net.minecraftforge.common.Configuration
 import net.bdew.gendustry.gui.GuiProvider
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
 
-class MachineSampler(cfg: Configuration) extends ProcessorMachine(cfg, "Sampler") with GuiProvider {
-  var block: BlockSampler = null
-  lazy val guiId = 5
+class MachineSampler extends Machine("Sampler", new BlockSampler(_)) with GuiProvider with ProcessorMachine {
+  def guiId = 5
 
   lazy val labwareConsumeChance = tuning.getInt("LabwareConsumeChance")
-
-  if (cfg.get("Machines Enabled", name, true).getBoolean(true)) {
-    block = new BlockSampler(getBlockId)
-    registerBlock(block)
-  }
 
   @SideOnly(Side.CLIENT)
   def getGui(te: TileEntity, player: EntityPlayer): GuiContainer = new GuiSampler(te.asInstanceOf[TileSampler], player)

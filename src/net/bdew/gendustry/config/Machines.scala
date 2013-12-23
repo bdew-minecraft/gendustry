@@ -9,25 +9,20 @@
 
 package net.bdew.gendustry.config
 
-import net.minecraftforge.common.Configuration
 import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.bdew.gendustry.machines.apiary.MachineApiary
 import net.bdew.gendustry.machines.imprinter.MachineImprinter
 import net.bdew.gendustry.machines.sampler.MachineSampler
+import net.bdew.lib.config.MachineManager
+import net.bdew.gendustry.Gendustry
 
-object Machines {
-  var mutagenProducer: MachineMutagenProducer = null
-  var mutatron: MachineMutatron = null
-  var apiary: MachineApiary = null
-  var imprinter: MachineImprinter = null
-  var sampler: MachineSampler = null
+object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines")) {
+  val mutagenProducer = registerMachine(new MachineMutagenProducer)
+  val mutatron = registerMachine(new MachineMutatron)
+  val apiary = registerMachine(new MachineApiary)
+  val imprinter = registerMachine(new MachineImprinter)
+  val sampler = registerMachine(new MachineSampler)
 
-  def load(cfg: Configuration) {
-    mutagenProducer = new MachineMutagenProducer(cfg)
-    mutatron = new MachineMutatron(cfg)
-    apiary = new MachineApiary(cfg)
-    imprinter = new MachineImprinter(cfg)
-    sampler = new MachineSampler(cfg)
-  }
+  Gendustry.logInfo("Machines loaded")
 }

@@ -16,6 +16,7 @@ import ic2.api.energy.tile.IEnergySink
 import net.bdew.gendustry.config.Tuning
 import net.minecraft.tileentity.TileEntity
 import cpw.mods.fml.common.Optional
+import net.bdew.lib.power.TilePoweredBase
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.IEnergySink")
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {

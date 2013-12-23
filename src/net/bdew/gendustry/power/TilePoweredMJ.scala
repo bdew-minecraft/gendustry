@@ -10,11 +10,12 @@
 package net.bdew.gendustry.power
 
 import buildcraft.api.power.{PowerHandler, IPowerReceptor}
-import net.bdew.gendustry.machines.PoweredMachine
 import net.minecraftforge.common.ForgeDirection
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.config.Tuning
+import net.bdew.lib.machine.PoweredMachine
+import net.bdew.lib.power.TilePoweredBase
 
 @Optional.Interface(modid = PowerProxy.BC_MOD_ID, iface = "buildcraft.api.power.IPowerReceptor")
 trait TilePoweredMJ extends TilePoweredBase with IPowerReceptor {

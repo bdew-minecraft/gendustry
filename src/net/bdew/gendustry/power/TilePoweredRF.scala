@@ -14,6 +14,7 @@ import net.minecraftforge.common.ForgeDirection
 import net.bdew.gendustry.config.Tuning
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.lib.power.TilePoweredBase
 
 @Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyHandler")
 trait TilePoweredRF extends TilePoweredBase with IEnergyHandler {

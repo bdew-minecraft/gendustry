@@ -9,18 +9,16 @@
 
 package net.bdew.gendustry.machines.mutatron
 
-import net.bdew.gendustry.machines.ProcessorMachine
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.client.gui.inventory.GuiContainer
-import net.minecraftforge.common.Configuration
 import net.bdew.gendustry.gui.GuiProvider
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
 
-class MachineMutatron(cfg: Configuration) extends ProcessorMachine(cfg, "Mutatron") with GuiProvider {
-  var block: BlockMutatron = null
-  lazy val guiId = 2
+class MachineMutatron extends Machine("Mutatron", new BlockMutatron(_)) with GuiProvider with ProcessorMachine {
+  def guiId = 2
 
   lazy val tankSize = tuning.getInt("TankSize")
   lazy val mutagenPerItem = tuning.getInt("MutagenPerItem")
@@ -28,11 +26,6 @@ class MachineMutatron(cfg: Configuration) extends ProcessorMachine(cfg, "Mutatro
   lazy val degradeChanceNatural = tuning.getFloat("DegradeChanceNatural")
   lazy val deathChanceArtificial = tuning.getFloat("DeathChanceArtificial")
   lazy val secretChance = tuning.getFloat("SecretMutationChance")
-
-  if (cfg.get("Machines Enabled", name, true).getBoolean(true)) {
-    block = new BlockMutatron(getBlockId)
-    registerBlock(block)
-  }
 
   @SideOnly(Side.CLIENT)
   def getGui(te: TileEntity, player: EntityPlayer): GuiContainer = new GuiMutatron(te.asInstanceOf[TileMutatron], player)

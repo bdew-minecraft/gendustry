@@ -10,11 +10,9 @@
 package net.bdew.gendustry.mutagen
 
 import net.minecraftforge.fluids.Fluid
-import net.minecraftforge.fluids.FluidRegistry
 
 class FluidMutagen extends Fluid("Mutagen") {
   setDensity(1000)
   setViscosity(1000)
   setUnlocalizedName("gendustry.mutagen")
-  FluidRegistry.registerFluid(this)
 }

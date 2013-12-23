@@ -17,14 +17,12 @@ import net.minecraft.entity.player.EntityPlayer
 import java.util
 import cpw.mods.fml.common.registry.GameRegistry
 import forestry.api.genetics.{ISpeciesRoot, AlleleManager}
+import net.bdew.lib.items.SimpleItem
 
 class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
   setMaxStackSize(1)
 
   GameRegistry.addRecipe(new GeneRecipe)
-
-  override def getUnlocalizedName: String = super.getUnlocalizedName
-  override def getUnlocalizedName(par1ItemStack: ItemStack): String = super.getUnlocalizedName
 
   def getSpecies(stack: ItemStack): ISpeciesRoot =
     if (stack.hasTagCompound) AlleleManager.alleleRegistry.getSpeciesRoot(stack.getTagCompound.getString("species")) else null

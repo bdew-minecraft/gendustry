@@ -19,7 +19,6 @@ import forestry.api.core.{EnumHumidity, EnumTemperature}
 import net.bdew.lib.Misc
 import forestry.api.arboriculture.EnumGermlingType
 import net.bdew.lib.tile.TileExtended
-import buildcraft.api.power.PowerHandler.Type
 import net.bdew.gendustry.config.Machines
 import net.bdew.lib.items.ItemUtils
 import net.bdew.gendustry.api.{ApiaryModifiers, IApiaryUpgrade}
@@ -30,7 +29,8 @@ import net.bdew.lib.data.DataSlotFloat
 import net.bdew.lib.data.DataSlotInt
 import net.bdew.lib.data.DataSlotString
 import net.bdew.lib.data.DataSlotBoolean
-import net.bdew.gendustry.power.{TilePowered, DataSlotPower}
+import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.power.DataSlotPower
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -50,7 +50,7 @@ with IBeeHousing {
   val logic = beeRoot.createBeekeepingLogic(this)
   lazy val cfg = Machines.apiary
 
-  val power = DataSlotPower("power", this, Type.MACHINE)
+  val power = DataSlotPower("power", this)
   val errorState = DataSlotInt("error", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE, UpdateKind.WORLD)
   val owner = DataSlotString("owner", this, "").setUpdate(UpdateKind.SAVE)
   val guiProgress = DataSlotFloat("progress", this)

@@ -12,8 +12,7 @@ package net.bdew.gendustry.mutagen
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.config.Blocks
-import net.bdew.gendustry.config.Items
+import net.bdew.gendustry.config.{Fluids, Items}
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IconRegister
 import net.minecraft.item.ItemStack
@@ -26,11 +25,11 @@ import net.minecraftforge.event.ForgeSubscribe
 import net.minecraftforge.event.entity.player.FillBucketEvent
 import net.minecraftforge.fluids.BlockFluidClassic
 
-class BlockMutagen(id: Int) extends BlockFluidClassic(id, Blocks.mutagenFluid, Material.water) {
+class BlockMutagen(id: Int) extends BlockFluidClassic(id, Fluids.mutagen, Material.water) {
   protected var stillIcon: Icon = null
   protected var flowingIcon: Icon = null
 
-  Blocks.mutagenFluid.setBlockID(id)
+  Fluids.mutagen.setBlockID(id)
   setUnlocalizedName(Gendustry.modId + ".mutagen")
   MinecraftForge.EVENT_BUS.register(this)
 
@@ -62,6 +61,6 @@ class BlockMutagen(id: Int) extends BlockFluidClassic(id, Blocks.mutagenFluid, M
   override def registerIcons(register: IconRegister) {
     stillIcon = register.registerIcon(Gendustry.modId + ":mutagen/still")
     flowingIcon = register.registerIcon(Gendustry.modId + ":mutagen/flowing")
-    Blocks.mutagenFluid.setIcons(stillIcon, flowingIcon)
+    Fluids.mutagen.setIcons(stillIcon, flowingIcon)
   }
 }

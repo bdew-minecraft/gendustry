@@ -10,29 +10,16 @@
 package net.bdew.gendustry.config
 
 import cpw.mods.fml.common.registry.GameRegistry
-import net.bdew.gendustry.machines.mproducer.BlockMutagenProducer
-import net.bdew.gendustry.machines.mutatron.BlockMutatron
 import net.bdew.gendustry.mutagen.BlockMutagen
-import net.bdew.gendustry.mutagen.FluidMutagen
 import net.bdew.gendustry.test.PowerEmitterBlock
 import net.bdew.gendustry.test.PowerEmitterTile
-import net.minecraftforge.common.Configuration
+import net.bdew.lib.config.BlockManager
+import net.bdew.gendustry.Gendustry
 
-object Blocks {
-  var mutagenFluid: FluidMutagen = null
-  var mutagen: BlockMutagen = null
-  var mutagenProducer: BlockMutagenProducer = null
-  var mutatron: BlockMutatron = null
-  var testPowerEmitter: PowerEmitterBlock = null
-
-  def load(cfg: Configuration) {
-    mutagenFluid = new FluidMutagen
-
-    mutagen = new BlockMutagen(cfg.getBlock("Mutagen", Ids.blockIds.next()).getInt)
-    GameRegistry.registerBlock(mutagen, "Mutagen")
-
-    testPowerEmitter = new PowerEmitterBlock(cfg.getBlock("Test Power Emitter", Ids.blockIds.next()).getInt)
-    GameRegistry.registerBlock(testPowerEmitter, "PowerEmitterBlock")
-    GameRegistry.registerTileEntity(classOf[PowerEmitterTile], "PowerEmitterBlock")
-  }
+object Blocks extends BlockManager(Config.IDs) {
+  var mutagen = regBlockCls(classOf[BlockMutagen], "Mutagen")
+  var testPowerEmitter = new PowerEmitterBlock(ids.getBlockId("Test Power Emitter"))
+  GameRegistry.registerBlock(testPowerEmitter, "PowerEmitterBlock")
+  GameRegistry.registerTileEntity(classOf[PowerEmitterTile], "PowerEmitterBlock")
+  Gendustry.logInfo("Blocks loaded")
 }

@@ -6,24 +6,20 @@ buildscript {
         mavenCentral()
 	mavenLocal()
         maven {
-            name = "bdew"
-            url = "http://jenkins.bdew.net/maven"
-        }
-        maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
     }
     dependencies {
-        classpath 'net.bdew.minecraftforge.gradle:forgegradle:1.0.4'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
 
 apply plugin: 'forge'
 apply plugin: 'scala'
 
-version = "0.9.4"
-ext.bdlibver = "0.9.2.6"
+version = "0.9.5"
+ext.bdlibver = "0.9.3.8"
 ext.versuffix = "mc164"
 
 if (project.hasProperty('buildnum')) {
@@ -42,7 +38,6 @@ minecraft {
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
 }
-
 
 repositories {
     mavenCentral()

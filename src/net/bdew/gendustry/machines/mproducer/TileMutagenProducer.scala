@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.mproducer
 
-import net.bdew.gendustry.config.{Blocks, Machines}
+import net.bdew.gendustry.config.{Fluids, Machines}
 import net.bdew.gendustry.mutagen.MutagenRegistry
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
@@ -18,12 +18,13 @@ import net.minecraftforge.fluids._
 import net.bdew.lib.data._
 import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.data.base.UpdateKind
-import net.bdew.gendustry.machines.TileBaseProcessor
+import net.bdew.lib.power.TileBaseProcessor
+import net.bdew.gendustry.power.TilePowered
 
-class TileMutagenProducer extends TileBaseProcessor with ExposeTank {
+class TileMutagenProducer extends TileBaseProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutagenProducer
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Blocks.mutagenFluid.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val output = DataSlotInt("output", this).setUpdate(UpdateKind.SAVE)
 
   def getSizeInventory = 1

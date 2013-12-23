@@ -10,7 +10,7 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.lib.gui.{Rect, Point}
-import net.bdew.gendustry.config.{Items, Blocks, Machines}
+import net.bdew.gendustry.config.{Fluids, Items, Blocks, Machines}
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import forestry.api.genetics.{AlleleManager, ISpeciesRoot, IMutation}
@@ -37,7 +37,7 @@ class MutatronHandler extends BaseRecipeHandler {
     val in2 = position(getRecipeStack(1, mutation), 60, 53)
     val labware = position(new ItemStack(Items.labware), 98, 17)
 
-    components :+= new FluidComponent(mutagenRect, new FluidStack(Blocks.mutagenFluid, Machines.mutatron.mutagenPerItem), Machines.mutatron.tankSize)
+    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, Machines.mutatron.mutagenPerItem), Machines.mutatron.tankSize)
     components :+= new PowerComponent(mjRect, Machines.mutatron.mjPerItem, Machines.mutatron.maxStoredEnergy)
 
     override def getOtherStacks = List(in1, in2, labware)
@@ -76,7 +76,7 @@ class MutatronHandler extends BaseRecipeHandler {
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Blocks.mutagenFluid.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
       case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
       case ("item", Seq(x: ItemStack)) if x.itemID == Items.labware.itemID => addAllRecipes()
       case ("item", Seq(x: ItemStack)) =>

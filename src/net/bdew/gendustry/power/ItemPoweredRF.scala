@@ -15,6 +15,7 @@ import cofh.api.energy.IEnergyContainerItem
 import net.minecraft.item.ItemStack
 import net.bdew.lib.Misc
 import net.bdew.gendustry.config.Tuning
+import net.bdew.lib.power.ItemPoweredBase
 
 @Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyContainerItem")
 trait ItemPoweredRF extends ItemPoweredBase with IEnergyContainerItem {

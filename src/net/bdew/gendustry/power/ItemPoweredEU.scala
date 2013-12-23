@@ -9,13 +9,13 @@
 
 package net.bdew.gendustry.power
 
-import ic2.api.item.{ElectricItem, IElectricItemManager, ISpecialElectricItem}
+import ic2.api.item.{ElectricItem, ISpecialElectricItem}
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.config.Tuning
 import net.minecraft.entity.EntityLivingBase
 import net.bdew.gendustry.compat.PowerProxy
-import net.bdew.lib.Misc
 import cpw.mods.fml.common.Optional
+import net.bdew.lib.power.ItemPoweredBase
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.ISpecialElectricItem")
 trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
@@ -37,26 +37,3 @@ trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
   def getManager(itemStack: ItemStack) = manager
 }
 
-class ItemPoweredEUManager(item: ItemPoweredEU) extends IElectricItemManager {
-  private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
-
-  def charge(itemStack: ItemStack, amount: Int, tier: Int, ignoreTransferLimit: Boolean, simulate: Boolean): Int = {
-    val charge = item.getCharge(itemStack)
-    val canCharge = Misc.clamp(item.maxCharge.toFloat - charge, 0F, amount / ratio).floor.toInt
-    if (!simulate) item.setCharge(itemStack, charge + canCharge)
-    return (canCharge * ratio).round
-  }
-
-  def discharge(itemStack: ItemStack, amount: Int, tier: Int, ignoreTransferLimit: Boolean, simulate: Boolean) = 0
-  def getCharge(itemStack: ItemStack) = (item.getCharge(itemStack) * ratio).round.toInt
-
-  def use(itemStack: ItemStack, amount: Int, entity: EntityLivingBase) =
-    ElectricItem.rawManager.use(itemStack, amount, entity)
-
-  def canUse(itemStack: ItemStack, amount: Int) =
-    ElectricItem.rawManager.canUse(itemStack, amount)
-  def chargeFromArmor(itemStack: ItemStack, entity: EntityLivingBase) =
-    ElectricItem.rawManager.chargeFromArmor(itemStack, entity)
-  def getToolTip(itemStack: ItemStack) =
-    ElectricItem.rawManager.getToolTip(itemStack)
-}

@@ -9,27 +9,18 @@
 
 package net.bdew.gendustry.machines.mproducer
 
-import net.bdew.gendustry.machines.ProcessorMachine
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.Container
-import net.minecraft.client.gui.inventory.GuiContainer
-import net.minecraftforge.common.Configuration
 import net.bdew.gendustry.gui.GuiProvider
 import cpw.mods.fml.relauncher.{SideOnly, Side}
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
 
-class MachineMutagenProducer(cfg: Configuration) extends ProcessorMachine(cfg, "MutagenProducer") with GuiProvider {
-  var block: BlockMutagenProducer = null
-  lazy val guiId = 1
+class MachineMutagenProducer extends Machine("MutagenProducer", new BlockMutagenProducer(_)) with GuiProvider with ProcessorMachine {
+  def guiId = 1
 
   lazy val tankSize = tuning.getInt("TankSize")
 
-  if (cfg.get("Machines Enabled", name, true).getBoolean(true)) {
-    block = new BlockMutagenProducer(getBlockId)
-    registerBlock(block)
-  }
-
   @SideOnly(Side.CLIENT)
-  def getGui(te: TileEntity, player: EntityPlayer): GuiContainer = new GuiMutagenProducer(te.asInstanceOf[TileMutagenProducer], player)
-  def getContainer(te: TileEntity, player: EntityPlayer): Container = new ContainerMutagenProducer(te.asInstanceOf[TileMutagenProducer], player)
+  def getGui(te: TileEntity, player: EntityPlayer) = new GuiMutagenProducer(te.asInstanceOf[TileMutagenProducer], player)
+  def getContainer(te: TileEntity, player: EntityPlayer) = new ContainerMutagenProducer(te.asInstanceOf[TileMutagenProducer], player)
 }

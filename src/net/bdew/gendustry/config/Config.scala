@@ -11,17 +11,29 @@ package net.bdew.gendustry.config
 
 import net.minecraftforge.common.Configuration
 import java.io.File
+import net.bdew.lib.config.IdManager
+import net.bdew.gendustry.mutagen.FluidMutagen
 
 object Config {
   var neiAddSamples = false
+  var IDs: IdManager = null
+  var
+  mutagenFluid = new FluidMutagen
 
-  def load(cfg: File): Configuration = {
+  def load(cfg: File) {
     val c = new Configuration(cfg)
     c.load()
-    c.addCustomCategoryComment("machines enabled", "Disabling a machine will remove it's block registration, loading any world will remove the blocks permanently")
 
-    neiAddSamples = c.get("NEI", "Add samples", true).getBoolean(false)
+    try {
+      neiAddSamples = c.get("NEI", "Add samples", true).getBoolean(false)
+      IDs = new IdManager(c, 15000, 3500)
+      Fluids.load()
+      Blocks.load()
+      Items.load()
+      Machines.load()
+    } finally {
+      c.save()
+    }
 
-    return c
   }
 }

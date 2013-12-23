@@ -9,12 +9,6 @@
 
 package net.bdew.gendustry.power
 
-import net.bdew.lib.tile.TileExtended
-import net.bdew.gendustry.machines.PoweredMachine
-
-trait TilePoweredBase extends TileExtended {
-  def power: DataSlotPower
-  def configurePower(cfg: PoweredMachine) = power.configure(cfg)
-}
+import net.bdew.lib.power.TilePoweredBase
 
 trait TilePowered extends TilePoweredBase with TilePoweredMJ with TilePoweredRF with TilePoweredEU

@@ -11,7 +11,6 @@ package net.bdew.gendustry
 
 import java.util.logging.Logger
 import net.bdew.gendustry.config._
-import net.minecraftforge.common.Configuration
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.FMLInitializationEvent
@@ -44,15 +43,7 @@ object Gendustry {
     PowerProxy.logModVersions()
     configDir = event.getModConfigurationDirectory
     TuningLoader.load("tuning")
-    val config: Configuration = Config.load(event.getSuggestedConfigurationFile)
-    try {
-      Ids.init(config)
-      Blocks.load(config)
-      Machines.load(config)
-      Items.load(config)
-    } finally {
-      config.save()
-    }
+    Config.load(event.getSuggestedConfigurationFile)
   }
 
   @EventHandler

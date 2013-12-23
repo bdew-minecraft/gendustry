@@ -12,11 +12,12 @@ package net.bdew.gendustry.machines.sampler
 import net.bdew.gendustry.config.{Items, Machines}
 import net.minecraft.item.ItemStack
 import forestry.api.genetics.AlleleManager
-import net.bdew.gendustry.machines.TileItemProcessor
 import scala.util.Random
 import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.lib.power.TileItemProcessor
+import net.bdew.gendustry.power.TilePowered
 
-class TileSampler extends TileItemProcessor {
+class TileSampler extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.imprinter
   val outputSlots = Seq(3)
 
