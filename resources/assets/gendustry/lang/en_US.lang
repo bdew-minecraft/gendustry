@@ -38,11 +38,10 @@ gendustry.upgrades.cooler.name=Cooler Upgrade
 
 fluid.gendustry.mutagen=Mutagen
 
-label.template.crafting=Genetic Samples can be added to a Template. Combine them in any crafting table. Multiple samples can be added at once.
+gendustry.label.template.crafting=Genetic Samples can be added to a Template. Combine them in any crafting table. Multiple samples can be added at once.
 
 gendustry.label.charges=Charges: %s
 
-gendustry.label.empty=Empty
 gendustry.label.breeding=Breeding
 gendustry.label.working=Working
 gendustry.label.maxinstall=Maximum Installed:
@@ -115,3 +114,6 @@ gendustry.chromosome.SAPPINESS=Sappiness
 
 gendustry.allele.false=False
 gendustry.allele.true=True
+
+#this will be moved to bdlib at some point
+bdlib.label.empty=Empty

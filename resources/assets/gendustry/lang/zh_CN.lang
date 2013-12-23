@@ -40,11 +40,10 @@ gendustry.upgrades.cooler.name=冷却器升级
 
 fluid.gendustry.mutagen=诱变剂
 
-label.template.crafting=基因样本可以被添加到模板中.在工作台中就可以完成此操作.多个样本可以一次添加到同一模板中.
+gendustry.label.template.crafting=基因样本可以被添加到模板中.在工作台中就可以完成此操作.多个样本可以一次添加到同一模板中.
 
 gendustry.label.charges=充能: %s
 
-gendustry.label.empty=空
 gendustry.label.breeding=饲育中
 gendustry.label.working=生产中
 gendustry.label.maxinstall=最大安装量:
@@ -117,3 +116,5 @@ gendustry.chromosome.SAPPINESS=多汁
 
 gendustry.allele.false=假
 gendustry.allele.true=真
+
+bdlib.label.empty=空

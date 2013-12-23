@@ -37,7 +37,7 @@ class TemplateCraftingHandler extends ShapelessRecipeHandler {
   }
 
   override def drawExtras(recipe: Int) = {
-    GuiDraw.fontRenderer.drawSplitString(Misc.toLocal("label.template.crafting"), 5, 65, 155, 0x404040)
+    GuiDraw.fontRenderer.drawSplitString(Misc.toLocal("gendustry.label.template.crafting"), 5, 65, 155, 0x404040)
   }
 
   override def recipiesPerPage() = 1
