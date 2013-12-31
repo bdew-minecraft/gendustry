@@ -1,6 +1,7 @@
 tile.gendustry.mutagen.name=Mutagen
 tile.gendustry.mutagen.producer.name=Mutagen-Erzeuger
 tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.mutatron.adv.name=Erweitertes Mutatron
 tile.gendustry.apiary.name=Industrieller Bienenstock
 tile.gendustry.imprinter.name=Gen-Drucker
 tile.gendustry.sampler.name=Gen-Abtaster
@@ -41,6 +42,7 @@ fluid.gendustry.mutagen=Mutagen
 gendustry.label.template.crafting=Genetische Proben können an jeder Werkbank zu einer Schablone hinzugefügt werden. Mehrere Proben können gleichzeitig hinzugefügt werden.
 
 gendustry.label.charges=Benutzungen: %s
+gendustry.label.select=Auswahl:
 
 gendustry.label.breeding=Züchten
 gendustry.label.working=Arbeiten
