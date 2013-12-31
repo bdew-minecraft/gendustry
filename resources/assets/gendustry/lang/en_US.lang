@@ -1,6 +1,7 @@
 tile.gendustry.mutagen.name=Mutagen
 tile.gendustry.mutagen.producer.name=Mutagen Producer
 tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.mutatron.adv.name=Advanced Mutatron
 tile.gendustry.apiary.name=Industrial Apiary
 tile.gendustry.imprinter.name=Genetic Imprinter
 tile.gendustry.sampler.name=Genetic Sampler
@@ -41,6 +42,7 @@ fluid.gendustry.mutagen=Mutagen
 gendustry.label.template.crafting=Genetic Samples can be added to a Template. Combine them in any crafting table. Multiple samples can be added at once.
 
 gendustry.label.charges=Charges: %s
+gendustry.label.select=Select:
 
 gendustry.label.breeding=Breeding
 gendustry.label.working=Working
