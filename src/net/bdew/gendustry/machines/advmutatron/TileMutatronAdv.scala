@@ -91,6 +91,13 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
   }
 
   allowSided = true
+
+  override def dropItems() {
+    for (slot <- selectorSlots)
+      inv(slot) = null
+    super.dropItems()
+  }
+
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == 2
 
   override def canDrain(from: ForgeDirection, fluid: Fluid): Boolean = false
