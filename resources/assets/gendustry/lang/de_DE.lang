@@ -1,0 +1,121 @@
+tile.gendustry.mutagen.name=Mutagen
+tile.gendustry.mutagen.producer.name=Mutagen-Erzeuger
+tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.mutatron.adv.name=Erweitertes Mutatron
+tile.gendustry.apiary.name=Industrieller Bienenstock
+tile.gendustry.imprinter.name=Gen-Drucker
+tile.gendustry.sampler.name=Gen-Abtaster
+
+item.gendustry.mutagen.bucket.name=Mutagen-Eimer
+item.gendustry.mutagen.can.name=Mutagen-Zelle
+
+item.gendustry.MutagenTank.name=Mutagen-Tank
+item.gendustry.BeeReceptacle.name=Bienenbehälter
+item.gendustry.PowerModule.name=Energiemodul
+item.gendustry.GeneticsProcessor.name=Genetik-Prozessor
+item.gendustry.UpgradeFrame.name=Upgrade-Rahmen
+item.gendustry.ClimateModule.name=Klimakontrollmodul
+item.gendustry.Labware.name=Genlabor-Utensilien
+item.gendustry.GeneSample.name=Genprobe
+item.gendustry.GeneTemplate.name=Genetische Schablone
+item.gendustry.GeneSampleBlank.name=Leere Genprobe
+item.gendustry.Waste.name=Genetischer Abfall
+item.gendustry.grafter.name=Industrielles Pfropfmesser
+
+gendustry.upgrades.prod.name=Produktions-Upgrade
+gendustry.upgrades.life.name=Lebensdauer-Upgrade
+gendustry.upgrades.flowering.name=Blüh-Upgrade
+gendustry.upgrades.territory.name=Territorien-Upgrade
+gendustry.upgrades.sealing.name=Abdichtungs-Upgrade
+gendustry.upgrades.light.name=Licht-Upgrade
+gendustry.upgrades.sky.name=Freier-Himmel-Upgrade
+gendustry.upgrades.hell.name=Höllen-Upgrade
+gendustry.upgrades.auto.name=Automatisierungs-Upgrade
+gendustry.upgrades.humidifier.name=Befeuchter-Upgrade
+gendustry.upgrades.dryer.name=Trockner-Upgrade
+gendustry.upgrades.heater.name=Heizungs-Upgrade
+gendustry.upgrades.sieve.name=Sieb-Upgrade
+gendustry.upgrades.cooler.name=Kühlungs-Upgrade
+
+fluid.gendustry.mutagen=Mutagen
+
+gendustry.label.template.crafting=Genetische Proben können an jeder Werkbank zu einer Schablone hinzugefügt werden. Mehrere Proben können gleichzeitig hinzugefügt werden.
+
+gendustry.label.charges=Benutzungen: %s
+gendustry.label.select=Auswahl:
+
+gendustry.label.breeding=Züchten
+gendustry.label.working=Arbeiten
+gendustry.label.maxinstall=Maximal installierbar:
+gendustry.label.temperature=Temperatur: %s
+gendustry.label.humidity=Feuchtigkeit: %s
+gendustry.label.energy=Benötigte Energie: %s %s/t
+gendustry.label.lifespan=Lebensdauer-Modifikator: %s
+gendustry.label.flowering=Blüh-Wahrscheinlichkeit: %s
+gendustry.label.production=Produktions-Modifikator: %s
+gendustry.label.territory=Territorium: %s
+
+gendustry.label.erase=Im Ofen kann das Genmaterial zerstört werden
+gendustry.label.recipes=Klicken um Rezepte zu sehen
+gendustry.label.consume=Verbrauchswahrscheinlichkeit: %s%%
+gendustry.label.mutatron.death=Todeswahrscheinlichkeit (gemein): %s%%
+gendustry.label.mutatron.degrade=Rückschrittwahrscheinlichkeit (unberührt): %s%%
+
+gendustry.label.mod.automated=* Automatisierung
+gendustry.label.mod.hellish=* Höllenumwelt-Simulation
+gendustry.label.mod.sealed=* Regenschutz
+gendustry.label.mod.selflighted=* Interne Beleuchtung
+gendustry.label.mod.sky=* Freier-Himmel-Simulation
+gendustry.label.mod.energy=* Energieverbrauch
+gendustry.label.mod.lifespan=* Lebensdauer
+gendustry.label.mod.flowering=* Blühen und Bestäuben
+gendustry.label.mod.geneticDecay=* Genetischer Verfall
+gendustry.label.mod.mutation=* Mutationswahrscheinlichkeit
+gendustry.label.mod.production=* Produktion
+gendustry.label.mod.territory=* Territorium
+gendustry.label.mod.sieve=* Pollensammlung
+gendustry.label.mod.temperature=* Temperatur
+gendustry.label.mod.humidity=* Feuchtigkeit
+
+gendustry.error.power=Nicht genug Energie
+
+gendustry.label.sample.rootBees=Von einer Biene
+gendustry.label.sample.rootTrees=Von einem Setzling
+gendustry.label.sample.rootButterflies=Von einem Schmetterling
+
+gendustry.label.template.rootBees=Kann mit einer Biene verwendet werden
+gendustry.label.template.rootTrees=Kann mit einem Setzling verwendet werden
+gendustry.label.template.rootButterflies=Kann mit einem Schmetterling verwendet werden
+gendustry.label.template.blank=Genprobe kann hinzugefügt werden
+
+gendustry.chromosome.FLOWER_PROVIDER=Blumen
+gendustry.chromosome.GIRTH=Umfang
+gendustry.chromosome.SPEED=Geschwindigkeit
+gendustry.chromosome.YIELD=Ertrag
+gendustry.chromosome.HEIGHT=Höhe
+gendustry.chromosome.GROWTH=Wachstum
+gendustry.chromosome.FLOWERING=Blühen
+gendustry.chromosome.METABOLISM=Metabolismus
+gendustry.chromosome.LIFESPAN=Lebensdauer
+gendustry.chromosome.TERRITORY=Territorium
+gendustry.chromosome.FERTILITY=Fruchtbarkeit
+gendustry.chromosome.SIZE=Größe
+gendustry.chromosome.HUMIDITY=Feuchtigkeit
+gendustry.chromosome.SPECIES=Spezie
+gendustry.chromosome.FIRE_RESIST=Feuerresistent
+gendustry.chromosome.TEMPERATURE_TOLERANCE=Temperaturtoleranz
+gendustry.chromosome.HUMIDITY_TOLERANCE=Feuchtigkeitstoleranz
+gendustry.chromosome.PLANT=Pflanze
+gendustry.chromosome.EFFECT=Effekt
+gendustry.chromosome.CAVE_DWELLING=Höhlenbewohner
+gendustry.chromosome.MATURATION=Reifung
+gendustry.chromosome.NOCTURNAL=Nachtaktiv
+gendustry.chromosome.TOLERANT_FLYER=Toleranter Flieger
+gendustry.chromosome.FRUITS=Früchte
+gendustry.chromosome.SAPPINESS=Saftigkeit
+
+gendustry.allele.false=Falsch
+gendustry.allele.true=Wahr
+
+#this will be moved to bdlib at some point
+bdlib.label.empty=Leer
