@@ -40,11 +40,11 @@ fluid.gendustry.mutagen=Mutagen
 
 gendustry.label.template.crafting=Genetische Proben können an jeder Werkbank zu einer Schablone hinzugefügt werden. Mehrere Proben können gleichzeitig hinzugefügt werden.
 
-gendustry.label.charges=Ladungen: %s
+gendustry.label.charges=Benutzungen: %s
 
 gendustry.label.breeding=Züchten
 gendustry.label.working=Arbeiten
-gendustry.label.maxinstall=Maximal Installiert:
+gendustry.label.maxinstall=Maximal installierbar:
 gendustry.label.temperature=Temperatur: %s
 gendustry.label.humidity=Feuchtigkeit: %s
 gendustry.label.energy=Benötigte Energie: %s %s/t
