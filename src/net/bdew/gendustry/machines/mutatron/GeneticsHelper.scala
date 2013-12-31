@@ -19,6 +19,8 @@ import java.util.Random
 import net.bdew.gendustry.config.{Items, Machines}
 
 object GeneticsHelper {
+  val random = new Random
+
   def checkIndividualType(root: ISpeciesRoot, stack: ItemStack, slot: Int): Boolean = {
     (root, slot) match {
       case (bees: IBeeRoot, 0) => bees.getType(stack) == EnumBeeType.PRINCESS
@@ -76,7 +78,6 @@ object GeneticsHelper {
 
   def getMutationResult(fromStack: ItemStack, toStack: ItemStack): ItemStack = {
     val valid = getValidMutations(fromStack, toStack)
-    val random = new Random
     if (valid.size == 0) return null
 
     val selected = if (valid.size > 1) {
@@ -102,26 +103,50 @@ object GeneticsHelper {
       // only 1 valid mutation - use it
       valid(0)
     }
+    return getFinalMutationResult(selected, fromStack, true)
+  }
 
+  def getFinalMutationResult(selected: IMutation, fromStack: ItemStack, applyDecay: Boolean): ItemStack = {
     val root = selected.getRoot
     val individual = root.templateAsIndividual(selected.getTemplate)
 
-    root match {
+    val res = root match {
       case bees: IBeeRoot =>
         individual.asInstanceOf[IBee].mate(individual)
-        val original = bees.getMember(fromStack)
-        if (original.isNatural) {
+        root.getMemberStack(individual, EnumBeeType.QUEEN.ordinal)
+      case _: ITreeRoot =>
+        root.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal)
+      case _ =>
+        root.getMemberStack(individual, 0)
+    }
+
+    if (applyDecay)
+      return applyMutationDecayChance(res, fromStack)
+    else
+      return res
+  }
+
+  def applyMutationDecayChance(result: ItemStack, original: ItemStack): ItemStack = {
+    val root = AlleleManager.alleleRegistry.getSpeciesRoot(result)
+    root match {
+      case bees: IBeeRoot =>
+        val beeResult = bees.getMember(result)
+        val beeOriginal = bees.getMember(original)
+
+        if (beeOriginal.isNatural) {
           if (random.nextInt(100) < Machines.mutatron.degradeChanceNatural)
-            individual.asInstanceOf[IBee].setIsNatural(false)
+            beeResult.setIsNatural(false)
         } else {
           if (random.nextInt(100) < Machines.mutatron.deathChanceArtificial)
             return new ItemStack(Items.waste)
         }
-        return root.getMemberStack(individual, EnumBeeType.QUEEN.ordinal)
-      case _: ITreeRoot =>
-        return root.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal)
+
+        beeResult.writeToNBT(result.getTagCompound)
+        return result
+
       case _ =>
-        return root.getMemberStack(individual, 0)
+        return result
     }
+
   }
 }
