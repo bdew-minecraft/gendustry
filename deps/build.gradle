@@ -33,10 +33,9 @@ minecraft {
 
 apply from: 'downloader.gradle'
 
-addGitDep("cofh","https://github.com/KingLemming/CoFHLib.git","df46d2289b5de6c505445acee44e0609512c3613")
+addGitDep("cofh","https://github.com/KingLemming/CoFHLib.git","24600c4cfda893a16316c0631972170413f3a1e3")
 addGitDep("bc","https://github.com/BuildCraft/BuildCraft.git","03acd96b2b5a9a3270985246cd835c0ca866def7")
 addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059e2397977b227f438db9d21ef8de1a8e")
-addGitDep("ue","https://github.com/Universal-Electricity/Universal-Electricity","7f08e6544b869a7df4cd19782492b7d5e4b17647")
 addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
 addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
 addZipDep("forestry","http://bit.ly/IYjfWc","2.3.1.0")
