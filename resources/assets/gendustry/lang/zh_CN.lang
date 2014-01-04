@@ -2,7 +2,8 @@
 
 tile.gendustry.mutagen.name=诱变剂
 tile.gendustry.mutagen.producer.name=诱变剂制造机
-tile.gendustry.mutatron.name=突变子
+tile.gendustry.mutatron.name=突变方块
+tile.gendustry.mutatron.adv.name=高级突变方块
 tile.gendustry.apiary.name=工业蜂箱
 tile.gendustry.imprinter.name=基因复制机
 tile.gendustry.sampler.name=基因拓模机
@@ -43,6 +44,7 @@ fluid.gendustry.mutagen=诱变剂
 gendustry.label.template.crafting=基因样本可以被添加到模板中.在工作台中就可以完成此操作.多个样本可以一次添加到同一模板中.
 
 gendustry.label.charges=充能: %s
+gendustry.label.select=选择:
 
 gendustry.label.breeding=饲育中
 gendustry.label.working=生产中
