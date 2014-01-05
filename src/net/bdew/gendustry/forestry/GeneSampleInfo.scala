@@ -50,6 +50,7 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
 
 object GeneSampleInfo {
   def fromNBT(t: NBTTagCompound): GeneSampleInfo = {
+    if (t == null) return null
     val species = AlleleManager.alleleRegistry.getSpeciesRoot(t.getString("species"))
     val allele = AlleleManager.alleleRegistry.getAllele(t.getString("allele"))
     return GeneSampleInfo(species, t.getInteger("chromosome"), allele)
