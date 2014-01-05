@@ -16,6 +16,7 @@ import net.bdew.gendustry.machines.imprinter.MachineImprinter
 import net.bdew.gendustry.machines.sampler.MachineSampler
 import net.bdew.lib.config.MachineManager
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.machines.advmutatron.MachineMutatronAdv
 
 object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines"), Config.guiHandler) {
   val mutagenProducer = registerMachine(new MachineMutagenProducer)
@@ -23,6 +24,7 @@ object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines")
   val apiary = registerMachine(new MachineApiary)
   val imprinter = registerMachine(new MachineImprinter)
   val sampler = registerMachine(new MachineSampler)
+  val mutatronAdv = registerMachine(new MachineMutatronAdv)
 
   Gendustry.logInfo("Machines loaded")
 }
