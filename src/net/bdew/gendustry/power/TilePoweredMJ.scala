@@ -23,7 +23,7 @@ trait TilePoweredMJ extends TilePoweredBase with IPowerReceptor {
 
   def doWork(workProvider: PowerHandler) {}
 
-  def getPowerReceiver(side: ForgeDirection) = powerHandler.getPowerReceiver
+  def getPowerReceiver(side: ForgeDirection) = if (PowerProxy.MJEnabled) powerHandler.getPowerReceiver else null
 
   def getWorld = worldObj
 

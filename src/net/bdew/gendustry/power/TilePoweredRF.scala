@@ -24,7 +24,7 @@ trait TilePoweredRF extends TilePoweredBase with IEnergyHandler {
     (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt
 
   def extractEnergy(from: ForgeDirection, maxExtract: Int, simulate: Boolean) = 0
-  def canInterface(from: ForgeDirection) = true
+  def canInterface(from: ForgeDirection) = PowerProxy.RFEnabled
   def getEnergyStored(from: ForgeDirection) = (power.stored * ratio).floor.toInt
   def getMaxEnergyStored(from: ForgeDirection) = (power.capacity * ratio).floor.toInt
 }

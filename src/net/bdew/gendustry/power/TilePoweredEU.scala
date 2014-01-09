@@ -25,7 +25,7 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   lazy val maxSafe = Tuning.getSection("Power").getSection("IC2").getInt("MaxSafeInput")
 
-  if (PowerProxy.haveIC2) {
+  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
     serverTick.listen(() => {
       if (!sentLoaded) {
         MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
@@ -51,7 +51,7 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
     }
   }
 
-  def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = true
+  def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = PowerProxy.EUEnabled
   def getMaxSafeInput = maxSafe
   def demandedEnergyUnits() = Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
   def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) = {
