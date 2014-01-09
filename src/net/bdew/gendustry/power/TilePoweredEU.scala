@@ -34,10 +34,21 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
     })
   }
 
+  override def invalidate() {
+    sendUnload()
+    super.invalidate()
+  }
+
   override def onChunkUnload() = {
-    if (PowerProxy.haveIC2)
-      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+    sendUnload()
     super.onChunkUnload()
+  }
+
+  def sendUnload() {
+    if (PowerProxy.haveIC2 && sentLoaded) {
+      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+      sentLoaded = false
+    }
   }
 
   def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = true
