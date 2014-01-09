@@ -23,7 +23,7 @@ class GeneRecipe extends IRecipe {
     var samples = Seq.empty[GeneSampleInfo]
     for (i <- 0 until 3; j <- 0 until 3) {
       val itm = inv.getStackInRowAndColumn(i, j)
-      if (itm != null && itm.getItem.isInstanceOf[GeneSample])
+      if (itm != null && itm.getItem.isInstanceOf[GeneSample] && itm.hasTagCompound)
         samples :+= Items.geneSample.getInfo(itm)
       else if (itm != null && itm.getItem.isInstanceOf[GeneTemplate] && template == null)
         template = itm

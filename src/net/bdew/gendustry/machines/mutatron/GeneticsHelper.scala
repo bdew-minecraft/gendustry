@@ -12,7 +12,7 @@ package net.bdew.gendustry.machines.mutatron
 import forestry.api.apiculture.EnumBeeType
 import forestry.api.apiculture.IBee
 import forestry.api.apiculture.IBeeRoot
-import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
+import forestry.api.arboriculture.{ITree, EnumGermlingType, ITreeRoot}
 import forestry.api.genetics._
 import net.minecraft.item.ItemStack
 import java.util.Random
@@ -110,12 +110,14 @@ object GeneticsHelper {
     val root = selected.getRoot
     val individual = root.templateAsIndividual(selected.getTemplate)
 
-    val res = root match {
-      case bees: IBeeRoot =>
-        individual.asInstanceOf[IBee].mate(individual)
-        root.getMemberStack(individual, EnumBeeType.QUEEN.ordinal)
-      case _: ITreeRoot =>
-        root.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal)
+    val res = individual match {
+      case newbee: IBee =>
+        val orig = root.getMember(fromStack).asInstanceOf[IBee]
+        newbee.mate(newbee)
+        newbee.setIsNatural(orig.isNatural)
+        root.getMemberStack(newbee, EnumBeeType.QUEEN.ordinal)
+      case newtree: ITree =>
+        root.getMemberStack(newtree, EnumGermlingType.SAPLING.ordinal)
       case _ =>
         root.getMemberStack(individual, 0)
     }

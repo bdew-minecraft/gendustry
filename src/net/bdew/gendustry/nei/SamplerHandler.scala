@@ -103,12 +103,16 @@ class SamplerHandler extends BaseRecipeHandler {
     Some(outputId, results) collect {
       case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneSample.itemID =>
         val info = Items.geneSample.getInfo(stack)
-        for (species <- NEICache.speciesChromosomes(info)) {
-          arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
-        }
-        if (Machines.sampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
-          val serum = ExtraBeesProxy.makeSerumFromSample(info)
-          if (serum != null) arecipes.add(new SamplerRecipe(info, serum))
+        if (info == null) {
+          addAllRecipes()
+        } else {
+          for (species <- NEICache.speciesChromosomes(info)) {
+            arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
+          }
+          if (Machines.sampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
+            val serum = ExtraBeesProxy.makeSerumFromSample(info)
+            if (serum != null) arecipes.add(new SamplerRecipe(info, serum))
+          }
         }
       case ("Sampler", _) => addAllRecipes()
     }
