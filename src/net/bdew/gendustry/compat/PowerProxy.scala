@@ -20,7 +20,7 @@ object PowerProxy {
   final val TE_MOD_ID = "CoFHCore"
 
   lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")
-  lazy val MJEnabled = Tuning.getSection("Power").getSection("MJ").getBoolean("Enabled")
+  lazy val MJEnabled = Tuning.getSection("Power").getSection("BC").getBoolean("Enabled")
   lazy val RFEnabled = Tuning.getSection("Power").getSection("RF").getBoolean("Enabled")
 
   lazy val lookup: collection.Map[String, ModContainer] = {
