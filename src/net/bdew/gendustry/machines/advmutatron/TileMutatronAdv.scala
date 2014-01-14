@@ -13,7 +13,7 @@ import net.bdew.gendustry.config.{Fluids, Items, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.ForgeDirection
 import net.minecraftforge.fluids._
-import net.bdew.lib.data.{DataSlotInt, DataSlotTankRestricted}
+import net.bdew.lib.data.{DataSlotString, DataSlotInt, DataSlotTankRestricted}
 import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
@@ -27,6 +27,7 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID)
   val selectedMutation = DataSlotInt("selected", this, -1).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
+  val lastPlayer = DataSlotString("player", this).setUpdate(UpdateKind.SAVE)
 
   def getSizeInventory = 10
 
@@ -63,6 +64,8 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
     if (canStart) {
       output := GeneticsHelper.applyMutationDecayChance(getStackInSlot(selectedMutation.cval), getStackInSlot(0))
       tank.drain(cfg.mutagenPerItem, true)
+      if (lastPlayer.cval != null && lastPlayer.cval > "")
+        GeneticsHelper.addMutationToTracker(inv(0), inv(1), output, lastPlayer, worldObj)
       decrStackSize(0, 1)
       decrStackSize(1, 1)
       if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
