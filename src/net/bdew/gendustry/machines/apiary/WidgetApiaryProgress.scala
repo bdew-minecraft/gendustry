@@ -29,12 +29,11 @@ class WidgetApiaryProgress(val rect: Rect, breeding: DataSlotFloat, progress: Da
     }
   }
 
-  override def draw() {
-    Minecraft.getMinecraft.renderEngine.bindTexture(texture.resource)
+  override def draw(mouse: Point) {
     if (breeding.cval > 0) {
-      parent.drawTexturedModalRect(rect.x, rect.y, texture.x, texture.y, (breeding.cval * rect.w).round, rect.h)
+      parent.drawTexture(Rect(rect.x, rect.y, (breeding.cval * rect.w).round, rect.h), texture)
     } else if (progress.cval > 0) {
-      parent.drawTexturedModalRect(rect.x, rect.y, texture.x, texture.y, (progress.cval * rect.w).round, rect.h)
+      parent.drawTexture(Rect(rect.x, rect.y, (progress.cval * rect.w).round, rect.h), texture)
     }
   }
 }

@@ -21,8 +21,8 @@ class GuiSampler(val te: TileSampler, player: EntityPlayer) extends BaseScreen(n
   val texture: ResourceLocation = new ResourceLocation(Gendustry.modId + ":textures/gui/sampler.png")
   override def initGui() {
     super.initGui()
-    addWidget(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Sampler"))
-    addWidget(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    addWidget(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, 4210752))
+    widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Sampler"))
+    widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, 4210752))
   }
 }

@@ -17,11 +17,9 @@ import net.bdew.gendustry.gui.Textures
 class WidgetSelector(origin: Point, dslot: DataSlotInt, slotOffset: Int) extends Widget {
   val rect = new Rect(origin, 0, 0)
   val texture = Textures.slotSelect
-  override def draw() = {
-    if (dslot > 0) {
-      bindTexture(texture.resource)
-      val pos = rect.origin +((dslot.cval + slotOffset) * 18, 0)
-      parent.drawTexturedModalRect(pos.x, pos.y, texture.x, texture.y, 18, 18)
-    }
+
+  override def draw(mouse: Point) = {
+    if (dslot > 0)
+      parent.drawTexture(Rect(rect.origin.x + (dslot.cval + slotOffset) * 18, rect.origin.y, 18, 18), texture)
   }
 }

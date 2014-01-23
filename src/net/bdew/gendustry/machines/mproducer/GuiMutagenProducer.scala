@@ -21,9 +21,9 @@ class GuiMutagenProducer(val te: TileMutagenProducer, player: EntityPlayer) exte
   val texture = new ResourceLocation(Gendustry.modId + ":textures/gui/mutagenproducer.png")
   override def initGui() {
     super.initGui()
-    addWidget(new WidgetProgressBarNEI(new Rect(79, 41, 53, 15), Textures.greenProgress(53), te.progress, "MutagenProducer"))
-    addWidget(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    addWidget(new WidgetFluidGauge(new Rect(152, 19, 16, 58), Textures.tankOverlay, te.tank))
-    addWidget(new WidgetLabel(Misc.toLocal("tile.gendustry.mutagen.producer.name"), 8, 6, 4210752))
+    widgets.add(new WidgetProgressBarNEI(new Rect(79, 41, 53, 15), Textures.greenProgress(53), te.progress, "MutagenProducer"))
+    widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
+    widgets.add(new WidgetFluidGauge(new Rect(152, 19, 16, 58), Textures.tankOverlay, te.tank))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutagen.producer.name"), 8, 6, 4210752))
   }
 }
