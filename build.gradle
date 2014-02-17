@@ -18,8 +18,8 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'scala'
 
-version = "1.0.3"
-ext.bdlibver = "1.1.0.21"
+version = "1.0.4"
+ext.bdlibver = "1.2.0.24"
 ext.versuffix = "mc164"
 
 if (project.hasProperty('buildnum')) {
