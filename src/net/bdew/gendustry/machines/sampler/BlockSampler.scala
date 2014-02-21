@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public

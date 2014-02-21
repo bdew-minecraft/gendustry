@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -21,9 +21,9 @@ class GuiApiary(val te: TileApiary, player: EntityPlayer) extends BaseScreen(new
   val texture = new ResourceLocation(Gendustry.modId + ":textures/gui/apiary.png")
   override def initGui() {
     super.initGui()
-    addWidget(new WidgetError(155, 5, te))
-    addWidget(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    addWidget(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiBreeding, te.guiProgress))
-    addWidget(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, 4210752))
+    widgets.add(new WidgetError(155, 5, te))
+    widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
+    widgets.add(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiBreeding, te.guiProgress))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, 4210752))
   }
 }

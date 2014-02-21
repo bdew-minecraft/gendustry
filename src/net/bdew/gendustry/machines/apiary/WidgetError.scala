@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -19,17 +19,16 @@ import net.bdew.gendustry.gui.Textures
 
 class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
   val rect: Rect = new Rect(x, y, 16, 16)
-  override def draw() {
+  override def draw(mouse: Point) {
     val err = apiary.errorState.cval
     if (err == -1) {
-      bindTexture(Textures.texture)
-      parent.drawTexturedModalRect(rect.x, rect.y, Textures.texturePowerError.x, Textures.texturePowerError.y, rect.w, rect.h)
+      parent.drawTexture(rect, Textures.texturePowerError)
     } else {
       bindTexture(TextureMap.locationItemsTexture)
       if (ErrorCodes.isValid(err)) {
-        parent.drawTexturedModelRectFromIcon(rect.x, rect.y, ErrorCodes.getIcon(err), 16, 16)
+        parent.drawIcon(rect, ErrorCodes.getIcon(err))
       } else {
-        parent.drawTexturedModelRectFromIcon(rect.x, rect.y, ErrorCodes.getIcon(0), 16, 16)
+        parent.drawIcon(rect, ErrorCodes.getIcon(0))
       }
     }
   }

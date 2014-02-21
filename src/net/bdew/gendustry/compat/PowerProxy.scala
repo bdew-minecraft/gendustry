@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -12,11 +12,16 @@ package net.bdew.gendustry.compat
 import cpw.mods.fml.common.{ModAPIManager, ModContainer, Loader}
 import net.bdew.gendustry.Gendustry
 import java.util
+import net.bdew.gendustry.config.Tuning
 
 object PowerProxy {
   final val IC2_MOD_ID = "IC2"
   final val BC_MOD_ID = "BuildCraftAPI|power"
   final val TE_MOD_ID = "CoFHCore"
+
+  lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")
+  lazy val MJEnabled = Tuning.getSection("Power").getSection("BC").getBoolean("Enabled")
+  lazy val RFEnabled = Tuning.getSection("Power").getSection("RF").getBoolean("Enabled")
 
   lazy val lookup: collection.Map[String, ModContainer] = {
     val mods = new util.ArrayList[ModContainer]

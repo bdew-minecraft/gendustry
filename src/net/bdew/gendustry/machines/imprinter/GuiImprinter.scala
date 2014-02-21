@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -21,8 +21,8 @@ class GuiImprinter(val te: TileImprinter, player: EntityPlayer) extends BaseScre
   val texture: ResourceLocation = new ResourceLocation(Gendustry.modId + ":textures/gui/imprinter.png")
   override def initGui() {
     super.initGui()
-    addWidget(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Imprinter"))
-    addWidget(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    addWidget(new WidgetLabel(Misc.toLocal("tile.gendustry.imprinter.name"), 8, 6, 4210752))
+    widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Imprinter"))
+    widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.imprinter.name"), 8, 6, 4210752))
   }
 }

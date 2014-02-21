@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -27,7 +27,10 @@ class ContainerMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extend
 
   bindPlayerInventory(player.inventory, 8, 106, 164)
 
+  te.lastPlayer := player.username
+
   override def slotClick(slotnum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
+    te.lastPlayer := player.username
     // This is a hacky workaround!
     // When a player changes the contents of a slot, playerInventoryBeingManipulated is set to true,
     // preventing updates to OTHER slots from being detected and sent back

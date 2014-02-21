@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -17,6 +17,7 @@ import forestry.api.genetics._
 import net.minecraft.item.ItemStack
 import java.util.Random
 import net.bdew.gendustry.config.{Items, Machines}
+import net.minecraft.world.World
 
 object GeneticsHelper {
   val random = new Random
@@ -149,6 +150,20 @@ object GeneticsHelper {
       case _ =>
         return result
     }
+  }
 
+  def addMutationToTracker(in1: ItemStack, in2: ItemStack, out: ItemStack, player: String, world: World) {
+    val root = AlleleManager.alleleRegistry.getSpeciesRoot(in1)
+    if (root == null || !root.isMember(in1) || !root.isMember(in2) || !root.isMember(out)) return
+    val sp1 = root.getMember(in1).getGenome.getPrimary
+    val sp2 = root.getMember(in2).getGenome.getPrimary
+    val spR = root.getMember(out).getGenome.getPrimary
+    val tracker = root.getBreedingTracker(world, player)
+
+    import scala.collection.JavaConverters._
+
+    root.getCombinations(sp1).asScala.filter(x => {
+      checkMutation(x, sp1, sp2) && x.getTemplate()(0) == spR
+    }).foreach(tracker.registerMutation)
   }
 }

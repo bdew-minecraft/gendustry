@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -25,7 +25,7 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   lazy val maxSafe = Tuning.getSection("Power").getSection("IC2").getInt("MaxSafeInput")
 
-  if (PowerProxy.haveIC2) {
+  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
     serverTick.listen(() => {
       if (!sentLoaded) {
         MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
@@ -34,13 +34,24 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
     })
   }
 
+  override def invalidate() {
+    sendUnload()
+    super.invalidate()
+  }
+
   override def onChunkUnload() = {
-    if (PowerProxy.haveIC2)
-      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+    sendUnload()
     super.onChunkUnload()
   }
 
-  def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = true
+  def sendUnload() {
+    if (PowerProxy.haveIC2 && sentLoaded) {
+      MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+      sentLoaded = false
+    }
+  }
+
+  def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = PowerProxy.EUEnabled
   def getMaxSafeInput = maxSafe
   def demandedEnergyUnits() = Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
   def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) = {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -38,13 +38,17 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
         case "METABOLISM" => i.getValue.toString
         case _ => i.getName
       }
+      case f: IAlleleFlowers => f.getProvider.getDescription
       case f: IAlleleFruit => StringUtil.localize(f.getProvider.getDescription)
       case p: IAllelePlantType => if (p.getPlantTypes.isEmpty) "-" else p.getPlantTypes.asScala.mkString(", ")
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
       case g: IAlleleGrowth => g.getProvider.getDescription
       case x => StringUtil.localize(x.getName)
     }
-    return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr)
+    if (alstr == "")
+      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), allele.getUID)
+    else
+      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr)
   }
 }
 
