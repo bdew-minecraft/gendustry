@@ -11,7 +11,6 @@ package net.bdew.gendustry.machines.apiary
 
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect}
-import net.minecraft.client.renderer.texture.TextureMap
 import scala.collection.mutable
 import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
@@ -24,11 +23,10 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
     if (err == -1) {
       parent.drawTexture(rect, Textures.texturePowerError)
     } else {
-      bindTexture(TextureMap.locationItemsTexture)
       if (ErrorCodes.isValid(err)) {
-        parent.drawIcon(rect, ErrorCodes.getIcon(err))
+        parent.drawTexture(rect, ErrorCodes.getIcon(err))
       } else {
-        parent.drawIcon(rect, ErrorCodes.getIcon(0))
+        parent.drawTexture(rect, ErrorCodes.getIcon(0))
       }
     }
   }

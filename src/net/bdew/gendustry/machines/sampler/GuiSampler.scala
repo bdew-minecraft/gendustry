@@ -12,17 +12,17 @@ package net.bdew.gendustry.machines.sampler
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.{WidgetPowerCustom, WidgetProgressBarNEI, Textures}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.ResourceLocation
-import net.bdew.lib.gui.{Rect, BaseScreen}
+import net.bdew.lib.gui.{Texture, Color, Rect, BaseScreen}
 import net.bdew.lib.gui.widgets.WidgetLabel
 import net.bdew.lib.Misc
 
 class GuiSampler(val te: TileSampler, player: EntityPlayer) extends BaseScreen(new ContainerSampler(te, player), 176, 166) {
-  val texture: ResourceLocation = new ResourceLocation(Gendustry.modId + ":textures/gui/sampler.png")
+  val background = Texture(Gendustry.modId, "textures/gui/sampler.png", rect)
+
   override def initGui() {
     super.initGui()
     widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Sampler"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, 4210752))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, Color.darkgray))
   }
 }

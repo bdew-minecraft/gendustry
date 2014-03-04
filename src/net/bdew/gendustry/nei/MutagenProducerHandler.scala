@@ -10,18 +10,15 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.gui.{Rect, Point}
+import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.{Fluids, Blocks, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.mutagen.MutagenRegistry
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import net.bdew.lib.Misc
 
-class MutagenProducerHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(152, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -41,7 +38,7 @@ class MutagenProducerHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[MutagenProducerRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(79 - offset.x, 41 - offset.y, 53, 15), "MutagenProducer"))
+    addTransferRect(Rect(79, 41, 53, 15), "MutagenProducer")
   }
 
   def addAllRecipes() {

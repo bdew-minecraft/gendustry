@@ -10,6 +10,7 @@
 package net.bdew.gendustry.machines.apiary
 
 import net.minecraft.util.Icon
+import net.bdew.lib.gui.Texture
 
 object ErrorCodes {
 
@@ -27,7 +28,7 @@ object ErrorCodes {
 
   def isValid(i: Int) = values.isDefinedAt(i)
 
-  def getIcon(i: Int) = mGetIcon.invoke(values(i)).asInstanceOf[Icon]
+  def getIcon(i: Int) = Texture(Texture.ITEMS, mGetIcon.invoke(values(i)).asInstanceOf[Icon])
   def getDescription(i: Int) = mGet.invoke(iLocalization, mGetDescription.invoke(values(i)).asInstanceOf[String]).asInstanceOf[String]
   def getHelp(i: Int) = mGet.invoke(iLocalization, mGetHelp.invoke(values(i)).asInstanceOf[String]).asInstanceOf[String]
 }

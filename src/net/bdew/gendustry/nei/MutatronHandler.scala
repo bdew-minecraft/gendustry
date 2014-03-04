@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.{Rect, Point}
+import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.{Fluids, Items, Blocks, Machines}
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
@@ -17,15 +17,12 @@ import forestry.api.genetics.{AlleleManager, ISpeciesRoot, IMutation}
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import net.minecraft.item.ItemStack
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.recipe.GuiRecipe
 import java.util
 import net.bdew.lib.Misc
 
-class MutatronHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class MutatronHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -65,7 +62,7 @@ class MutatronHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[MutatronRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(89 - offset.x, 41 - offset.y, 40, 15), "Mutatron"))
+    addTransferRect(Rect(89, 41, 40, 15), "Mutatron")
   }
 
   def addAllRecipes() {

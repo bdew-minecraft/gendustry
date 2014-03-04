@@ -16,7 +16,6 @@ import net.bdew.gendustry.gui.Textures
 import scala.collection.mutable
 import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
-import net.minecraft.client.Minecraft
 
 class WidgetApiaryProgress(val rect: Rect, breeding: DataSlotFloat, progress: DataSlotFloat) extends Widget {
   val texture = Textures.whiteProgress(rect.w)

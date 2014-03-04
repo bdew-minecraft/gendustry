@@ -9,15 +9,13 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.{Rect, Point}
+import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.{Items, Machines}
 import net.bdew.gendustry.nei.helpers.PowerComponent
 import forestry.api.genetics._
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import net.minecraft.item.ItemStack
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.recipe.GuiRecipe
 import java.util
@@ -26,8 +24,7 @@ import net.bdew.gendustry.forestry.GeneSampleInfo
 import scala.Some
 import forestry.api.lepidopterology.IButterflyRoot
 
-class ImprinterHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class ImprinterHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -71,7 +68,7 @@ class ImprinterHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[ImprinterRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(63 - offset.x, 49 - offset.y, 66, 15), "Imprinter"))
+    addTransferRect(Rect(63, 49, 66, 15), "Imprinter")
   }
 
   def addExample() {
