@@ -21,6 +21,8 @@ import cpw.mods.fml.common.network.NetworkRegistry
 import java.io.File
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.compat.PowerProxy
+import cpw.mods.fml.relauncher.Side
+import net.bdew.gendustry.gui.HintIcons
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.3.1.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -45,6 +47,9 @@ object Gendustry {
     TuningLoader.load("recipes")
     TuningLoader.load("override", false)
     Config.load(event.getSuggestedConfigurationFile)
+    if (event.getSide == Side.CLIENT) {
+      HintIcons.init()
+    }
   }
 
   @EventHandler
