@@ -30,9 +30,9 @@ class WidgetApiaryProgress(val rect: Rect, breeding: DataSlotFloat, progress: Da
 
   override def draw(mouse: Point) {
     if (breeding.cval > 0) {
-      parent.drawTexture(Rect(rect.x, rect.y, (breeding.cval * rect.w).round, rect.h), texture)
+      parent.drawTextureInterpolate(rect, texture, 0, 0, breeding.cval, 1)
     } else if (progress.cval > 0) {
-      parent.drawTexture(Rect(rect.x, rect.y, (progress.cval * rect.w).round, rect.h), texture)
+      parent.drawTextureInterpolate(rect, texture, 0, 0, progress.cval, 1)
     }
   }
 }
