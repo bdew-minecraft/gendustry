@@ -21,7 +21,14 @@ import net.bdew.lib.data.base.UpdateKind
 
 class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutatron
-  val outputSlots = Seq(2)
+  val outputSlots = Seq(slots.outIndividual)
+
+  object slots {
+    val inIndividual1 = 0
+    val inIndividual2 = 1
+    val inLabware = 3
+    val outIndividual = 2
+  }
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID)
   val lastPlayer = DataSlotString("player", this).setUpdate(UpdateKind.SAVE)
@@ -30,27 +37,33 @@ class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
 
   def getTankFromDirection(dir: ForgeDirection): IFluidTank = tank
 
+  def canStart =
+    getStackInSlot(slots.inIndividual1) != null &&
+      getStackInSlot(slots.inIndividual2) != null &&
+      getStackInSlot(slots.inLabware) != null &&
+      tank.getFluidAmount >= cfg.mutagenPerItem
+
   def tryStart(): Boolean = {
-    if (getStackInSlot(0) != null && getStackInSlot(1) != null && getStackInSlot(3) != null && tank.getFluidAmount >= cfg.mutagenPerItem) {
-      output := GeneticsHelper.getMutationResult(getStackInSlot(0), getStackInSlot(1))
+    if (canStart) {
+      output := GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2))
       tank.drain(cfg.mutagenPerItem, true)
       if (lastPlayer.cval != null && lastPlayer.cval > "")
-        GeneticsHelper.addMutationToTracker(inv(0), inv(1), output, lastPlayer, worldObj)
-      decrStackSize(0, 1)
-      decrStackSize(1, 1)
+        GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), output, lastPlayer, worldObj)
+      decrStackSize(slots.inIndividual1, 1)
+      decrStackSize(slots.inIndividual2, 1)
       if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
-        decrStackSize(3, 1)
+        decrStackSize(slots.inLabware, 1)
       return true
     } else return false
   }
 
   override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
     slot match {
-      case 0 =>
-        return GeneticsHelper.isPotentialMutationPair(itemstack, getStackInSlot(1))
-      case 1 =>
-        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(0), itemstack)
-      case 3 =>
+      case slots.inIndividual1 =>
+        return GeneticsHelper.isPotentialMutationPair(itemstack, getStackInSlot(slots.inIndividual2))
+      case slots.inIndividual2 =>
+        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(slots.inIndividual1), itemstack)
+      case slots.inLabware =>
         return itemstack.getItem == Items.labware
       case _ =>
         return false
@@ -58,7 +71,7 @@ class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
   }
 
   allowSided = true
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == 2
+  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outIndividual
 
   override def canDrain(from: ForgeDirection, fluid: Fluid): Boolean = false
   override def drain(from: ForgeDirection, resource: FluidStack, doDrain: Boolean): FluidStack = null

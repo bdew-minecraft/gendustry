@@ -24,6 +24,6 @@ object HintIcons extends IconPreloader(1) {
 
   val queen = TextureLoc("gendustry:hints/queen")
   val drone = TextureLoc("gendustry:hints/drone")
-  
-  val upgrade = TextureLoc("gendustry:hints/upgrade") 
+
+  val upgrade = TextureLoc("gendustry:hints/upgrade")
 }

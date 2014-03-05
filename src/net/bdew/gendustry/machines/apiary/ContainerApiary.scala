@@ -41,7 +41,7 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
     if (getSlot(slot).inventory == player.inventory && te.isUpgrade(stack)) {
       val canAdd = Misc.min(te.getMaxAdditionalUpgrades(stack), stack.stackSize)
       if (canAdd > 0) {
-        val remains = ItemUtils.addStackToSlots(stack.splitStack(canAdd), te, te.slotsUpgrades, true)
+        val remains = ItemUtils.addStackToSlots(stack.splitStack(canAdd), te, te.slots.upgrades, true)
         if (remains != null)
           stack.stackSize += remains.stackSize
       }
@@ -53,9 +53,9 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
 
   override def slotClick(slot: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
     var pstack = player.inventory.getItemStack
-    if (te.slotsUpgrades.contains(slot) && te.isUpgrade(pstack)) {
+    if (te.slots.upgrades.contains(slot) && te.isUpgrade(pstack)) {
       val idx = inventorySlots.get(slot).asInstanceOf[Slot].getSlotIndex
-      if (te.slotsUpgrades.contains(idx) && modifiers == 0 && button <= 1) {
+      if (te.slots.upgrades.contains(idx) && modifiers == 0 && button <= 1) {
         if (te.getStackInSlot(idx) == null || ItemUtils.isSameItem(pstack, te.getStackInSlot(idx))) {
           var canAdd = te.getMaxAdditionalUpgrades(pstack)
           if (canAdd > 0) {

@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.advmutatron
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{WidgetPowerCustom, WidgetProgressBarNEI, Textures}
+import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetLabel, WidgetFluidGauge}
@@ -27,5 +27,9 @@ class GuiMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extends Base
     widgets.add(new WidgetSelector(new Point(7, 84), te.selectedMutation, -1))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutatron.adv.name"), 8, 6, Color.darkgray))
     widgets.add(new WidgetLabel(Misc.toLocal("gendustry.label.select"), 8, 89, Color.darkgray))
+
+    inventorySlots.getSlot(te.slots.inIndividual1).setBackgroundIcon(HintIcons.queenOrSapling)
+    inventorySlots.getSlot(te.slots.inIndividual2).setBackgroundIcon(HintIcons.droneOrPollen)
+    inventorySlots.getSlot(te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
   }
 }

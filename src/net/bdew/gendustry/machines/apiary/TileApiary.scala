@@ -39,9 +39,14 @@ with SidedInventory
 with BreakableInventoryTile
 with TilePowered
 with IBeeHousing {
-  val slotsBees = 0 to 1
-  val slotsUpgrades = 2 to 5
-  val slotsOutput = 6 to 14
+
+  object slots {
+    val queen = 0
+    val drone = 1
+    val bees = 0 to 1
+    val upgrades = 2 to 5
+    val output = 6 to 14
+  }
 
   var mods = new ApiaryModifiers
   var movePrincess = false
@@ -64,18 +69,18 @@ with IBeeHousing {
 
   persistLoad.listen(x => {
     updateModifiers()
-    queen := getStackInSlot(0)
+    queen := getStackInSlot(slots.drone)
   })
 
   def updateModifiers() {
     mods = new ApiaryModifiers
-    for (upgrade <- Misc.iterSome(inv, slotsUpgrades).filter(isUpgrade))
+    for (upgrade <- Misc.iterSome(inv, slots.upgrades).filter(isUpgrade))
       getUpgrade(upgrade).applyModifiers(mods, upgrade)
     hasLight := mods.isSelfLighted
   }
 
   override def setInventorySlotContents(slot: Int, stack: ItemStack) = {
-    if (slot == 0) queen := stack
+    if (slot == slots.queen) queen := stack
     super.setInventorySlotContents(slot, stack)
   }
 
@@ -85,8 +90,8 @@ with IBeeHousing {
   }
 
   def doMovePrincess() {
-    for ((slot, stack) <- Misc.iterSomeEnum(inv, slotsOutput) if stack != null && beeRoot.isMember(stack, EnumBeeType.PRINCESS.ordinal())) {
-      setInventorySlotContents(0, stack)
+    for ((slot, stack) <- Misc.iterSomeEnum(inv, slots.output) if stack != null && beeRoot.isMember(stack, EnumBeeType.PRINCESS.ordinal())) {
+      setInventorySlotContents(slots.queen, stack)
       setInventorySlotContents(slot, null)
       return
     }
@@ -109,7 +114,7 @@ with IBeeHousing {
       setErrorState(-1)
     }
 
-    if (movePrincess && getStackInSlot(0) == null)
+    if (movePrincess && getStackInSlot(slots.queen) == null)
       doMovePrincess()
 
     if (logic.getQueen != null)
@@ -127,7 +132,7 @@ with IBeeHousing {
     if (!isUpgrade(stack)) return 0
     var existing = 0
     val thisId = getUpgrade(stack).getStackingId(stack)
-    for (upgrade <- Misc.iterSome(inv, slotsUpgrades).filter(isUpgrade)) {
+    for (upgrade <- Misc.iterSome(inv, slots.upgrades).filter(isUpgrade)) {
       if (getUpgrade(upgrade).getStackingId(upgrade) == thisId)
         existing += upgrade.stackSize
     }
@@ -136,11 +141,11 @@ with IBeeHousing {
 
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
     if (stack == null || stack.getItem == null) return false
-    if (slotsUpgrades.contains(slot)) {
+    if (slots.upgrades.contains(slot)) {
       return getMaxAdditionalUpgrades(stack) >= stack.stackSize
-    } else if (slot == 0) {
+    } else if (slot == slots.queen) {
       return beeRoot.isMember(stack, EnumBeeType.QUEEN.ordinal()) || beeRoot.isMember(stack, EnumBeeType.PRINCESS.ordinal())
-    } else if (slot == 1) {
+    } else if (slot == slots.drone) {
       return beeRoot.isMember(stack, EnumBeeType.DRONE.ordinal())
     } else
       return false
@@ -169,8 +174,8 @@ with IBeeHousing {
   def getPowerDataslot(from: ForgeDirection) = power
   def getSizeInventory = 15
 
-  override def canInsertItem(slot: Int, stack: ItemStack, side: Int) = slotsBees.contains(slot) && isItemValidForSlot(slot, stack)
-  override def canExtractItem(slot: Int, stack: ItemStack, side: Int) = slotsOutput.contains(slot)
+  override def canInsertItem(slot: Int, stack: ItemStack, side: Int) = slots.bees.contains(slot) && isItemValidForSlot(slot, stack)
+  override def canExtractItem(slot: Int, stack: ItemStack, side: Int) = slots.output.contains(slot)
 
   // IBeeListener
   def onPostQueenDeath(queen: IBee) {
@@ -205,8 +210,8 @@ with IBeeHousing {
   // IBeeHousing
   def setQueen(itemstack: ItemStack) = setInventorySlotContents(0, itemstack)
   def setDrone(itemstack: ItemStack) = setInventorySlotContents(1, itemstack)
-  def getQueen = getStackInSlot(0)
-  def getDrone = getStackInSlot(1)
+  def getQueen = getStackInSlot(slots.queen)
+  def getDrone = getStackInSlot(slots.drone)
   def canBreed = true
 
   // IHousing
@@ -226,8 +231,8 @@ with IBeeHousing {
   def addProduct(product: ItemStack, all: Boolean): Boolean = {
     var p = product
     if (mods.isAutomated && beeRoot.isMember(product))
-      p = ItemUtils.addStackToSlots(p, this, slotsBees, false)
-    p = ItemUtils.addStackToSlots(p, this, slotsOutput, false)
+      p = ItemUtils.addStackToSlots(p, this, slots.bees, false)
+    p = ItemUtils.addStackToSlots(p, this, slots.output, false)
     return p == null
   }
 }

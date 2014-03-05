@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.imprinter
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{WidgetPowerCustom, WidgetProgressBarNEI, Textures}
+import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.gui.{Color, Texture, Rect, BaseScreen}
 import net.bdew.lib.gui.widgets.WidgetLabel
@@ -24,5 +24,9 @@ class GuiImprinter(val te: TileImprinter, player: EntityPlayer) extends BaseScre
     widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Imprinter"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.imprinter.name"), 8, 6, Color.darkgray))
+
+    inventorySlots.getSlot(te.slots.inIndividual).setBackgroundIcon(HintIcons.queenOrSapling)
+    inventorySlots.getSlot(te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
+    inventorySlots.getSlot(te.slots.inTemplate).setBackgroundIcon(HintIcons.template)
   }
 }

@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.sampler
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{WidgetPowerCustom, WidgetProgressBarNEI, Textures}
+import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.gui.{Texture, Color, Rect, BaseScreen}
 import net.bdew.lib.gui.widgets.WidgetLabel
@@ -24,5 +24,10 @@ class GuiSampler(val te: TileSampler, player: EntityPlayer) extends BaseScreen(n
     widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Sampler"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, Color.darkgray))
+
+    inventorySlots.getSlot(te.slots.inSampleBlank).setBackgroundIcon(HintIcons.blankSample)
+    inventorySlots.getSlot(te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
+    inventorySlots.getSlot(te.slots.inIndividual).setBackgroundIcon(HintIcons.droneOrSapling)
+    inventorySlots.getSlot(te.slots.outSample).setBackgroundIcon(HintIcons.sample)
   }
 }

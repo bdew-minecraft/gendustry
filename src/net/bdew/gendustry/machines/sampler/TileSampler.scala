@@ -20,7 +20,14 @@ import net.bdew.gendustry.compat.ExtraBeesProxy
 
 class TileSampler extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.sampler
-  val outputSlots = Seq(3)
+  val outputSlots = Seq(slots.outSample)
+
+  object slots {
+    val inSampleBlank = 0
+    val inLabware = 1
+    val inIndividual = 2
+    val outSample = 3
+  }
 
   def getSizeInventory = 4
 
@@ -44,15 +51,18 @@ class TileSampler extends TileItemProcessor with TilePowered {
     return Items.geneSample.newStack(GeneSampleInfo(root, chr, allele))
   }
 
+  def canStart =
+    getStackInSlot(slots.inSampleBlank) != null &&
+      getStackInSlot(slots.inLabware) != null &&
+      getStackInSlot(slots.inIndividual) != null
+
   def tryStart(): Boolean = {
-    if (getStackInSlot(0) != null && getStackInSlot(1) != null && getStackInSlot(2) != null) {
-
-      output := selectRandomAllele(getStackInSlot(2))
-
-      decrStackSize(0, 1)
-      decrStackSize(2, 1)
+    if (canStart) {
+      output := selectRandomAllele(getStackInSlot(slots.inIndividual))
+      decrStackSize(slots.inSampleBlank, 1)
+      decrStackSize(slots.inIndividual, 1)
       if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
-        decrStackSize(1, 1)
+        decrStackSize(slots.inLabware, 1)
 
       return true
     } else return false
@@ -61,11 +71,11 @@ class TileSampler extends TileItemProcessor with TilePowered {
   override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
     if (itemstack == null || itemstack.getItem == null) return false
     slot match {
-      case 0 =>
+      case slots.inSampleBlank =>
         return itemstack.getItem == Items.geneSampleBlank
-      case 1 =>
+      case slots.inLabware =>
         return itemstack.getItem == Items.labware
-      case 2 =>
+      case slots.inIndividual =>
         return AlleleManager.alleleRegistry.getIndividual(itemstack) != null || (cfg.convertEBSerums && ExtraBeesProxy.isSerum(itemstack))
       case _ =>
         return false
@@ -73,5 +83,5 @@ class TileSampler extends TileItemProcessor with TilePowered {
   }
 
   allowSided = true
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == 3
+  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outSample
 }

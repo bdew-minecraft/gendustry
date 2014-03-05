@@ -13,7 +13,7 @@ import net.bdew.gendustry.Gendustry
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.gui.{Texture, Color, Rect, BaseScreen}
 import net.bdew.lib.gui.widgets.WidgetLabel
-import net.bdew.gendustry.gui.{WidgetPowerCustom, Textures}
+import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, Textures}
 import net.bdew.lib.Misc
 
 class GuiApiary(val te: TileApiary, player: EntityPlayer) extends BaseScreen(new ContainerApiary(te, player), 176, 166) {
@@ -24,5 +24,9 @@ class GuiApiary(val te: TileApiary, player: EntityPlayer) extends BaseScreen(new
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiBreeding, te.guiProgress))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, Color.darkgray))
+
+    te.slots.upgrades.foreach(inventorySlots.getSlot(_).setBackgroundIcon(HintIcons.upgrade))
+    inventorySlots.getSlot(te.slots.drone).setBackgroundIcon(HintIcons.drone)
+    inventorySlots.getSlot(te.slots.queen).setBackgroundIcon(HintIcons.queen)
   }
 }
