@@ -31,6 +31,7 @@ import net.bdew.lib.data.DataSlotString
 import net.bdew.lib.data.DataSlotBoolean
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.DataSlotPower
+import net.bdew.gendustry.compat.triggers.ForestryErrorSource
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -38,6 +39,7 @@ with PersistentInventoryTile
 with SidedInventory
 with BreakableInventoryTile
 with TilePowered
+with ForestryErrorSource
 with IBeeHousing {
 
   object slots {

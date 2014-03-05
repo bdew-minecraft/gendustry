@@ -117,5 +117,12 @@ gendustry.chromosome.SAPPINESS=Sappiness
 gendustry.allele.false=False
 gendustry.allele.true=True
 
+gendustry.trigger.power0=Power Empty
+gendustry.trigger.power25=Power >= 25%
+gendustry.trigger.power50=Power >= 50%
+gendustry.trigger.power75=Power >= 75%
+gendustry.trigger.power100=Power Full
+gendustry.trigger.working=Machine Working
+
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty
