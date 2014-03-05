@@ -29,6 +29,10 @@ object Items extends ItemManager(Config.IDs) {
   FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenBucket), new ItemStack(Item.bucketEmpty))
   FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenCan), ItemInterface.getItem("canEmpty"))
 
+  val labware = regSimpleItem("Labware")
+  val waste = regSimpleItem("Waste")
+  val geneSampleBlank = regSimpleItem("GeneSampleBlank")
+
   val geneSample = regItem(new GeneSample(ids.getItemId("GeneSample")))
   val geneTemplate = regItem(new GeneTemplate(ids.getItemId("GeneTemplate")))
 
@@ -43,10 +47,6 @@ object Items extends ItemManager(Config.IDs) {
   regSimpleItem("GeneticsProcessor")
   regSimpleItem("UpgradeFrame")
   regSimpleItem("ClimateModule")
-
-  val labware = regSimpleItem("Labware")
-  val waste = regSimpleItem("Waste")
-  val geneSampleBlank = regSimpleItem("GeneSampleBlank")
 
   Gendustry.logInfo("Items loaded")
 }
