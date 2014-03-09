@@ -117,5 +117,12 @@ gendustry.chromosome.SAPPINESS=Saftigkeit
 gendustry.allele.false=Falsch
 gendustry.allele.true=Wahr
 
+gendustry.trigger.power0=Keine Energie
+gendustry.trigger.power25=Energie >= 25%
+gendustry.trigger.power50=Energie >= 50%
+gendustry.trigger.power75=Energie >= 75%
+gendustry.trigger.power100=Energie voll
+gendustry.trigger.working=Maschine arbeitet
+
 #this will be moved to bdlib at some point
 bdlib.label.empty=Leer
