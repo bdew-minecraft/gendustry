@@ -1,4 +1,5 @@
-tile.gendustry.mutagen.name=Mutagen
+# ==== BLOCKS ====
+
 tile.gendustry.mutagen.producer.name=Mutagen Producer
 tile.gendustry.mutatron.name=Mutatron
 tile.gendustry.mutatron.adv.name=Advanced Mutatron
@@ -6,8 +7,7 @@ tile.gendustry.apiary.name=Industrial Apiary
 tile.gendustry.imprinter.name=Genetic Imprinter
 tile.gendustry.sampler.name=Genetic Sampler
 
-item.gendustry.mutagen.bucket.name=Mutagen Bucket
-item.gendustry.mutagen.can.name=Mutagen Can
+# ==== GENERAL ITEMS ====
 
 item.gendustry.MutagenTank.name=Mutagen Tank
 item.gendustry.BeeReceptacle.name=Bee Receptacle
@@ -21,6 +21,28 @@ item.gendustry.GeneTemplate.name=Genetic Template
 item.gendustry.GeneSampleBlank.name=Blank Gene Sample
 item.gendustry.Waste.name=Genetic Waste
 item.gendustry.grafter.name=Industrial Grafter
+
+# ==== FLUIDS ====
+
+fluid.gendustry.mutagen=Mutagen
+fluid.gendustry.liquiddna=Liquid DNA
+fluid.gendustry.protein=Protein
+
+tile.gendustry.mutagen.name=Mutagen
+tile.gendustry.liquiddna.name=Liquid DNA
+tile.gendustry.protein.name=Protein
+
+# ==== FLUID CONTAINERS ====
+
+item.gendustry.mutagen.bucket.name=Mutagen Bucket
+item.gendustry.mutagen.can.name=Mutagen Can
+item.gendustry.liquiddna.bucket.name=Liquid DNA Bucket
+item.gendustry.liquiddna.can.name=Liquid DNA Can
+item.gendustry.protein.bucket.name=Protein Bucket
+item.gendustry.protein.can.name=Protein Can
+
+
+# ==== UPGRADES ====
 
 gendustry.upgrades.prod.name=Production Upgrade
 gendustry.upgrades.life.name=Lifespan Upgrade
@@ -37,7 +59,7 @@ gendustry.upgrades.heater.name=Heater Upgrade
 gendustry.upgrades.sieve.name=Sieve Upgrade
 gendustry.upgrades.cooler.name=Cooler Upgrade
 
-fluid.gendustry.mutagen=Mutagen
+# ==== GUI AND TOOLTIPS ====
 
 gendustry.label.template.crafting=Genetic Samples can be added to a Template. Combine them in any crafting table. Multiple samples can be added at once.
 
@@ -88,6 +110,8 @@ gendustry.label.template.rootTrees=Can be applied to a Sapling
 gendustry.label.template.rootButterflies=Can be applied to a Butterfly
 gendustry.label.template.blank=Gene Samples can be added
 
+# ==== CHROMOSOMES (should match forestry) ====
+
 gendustry.chromosome.FLOWER_PROVIDER=Flowers
 gendustry.chromosome.GIRTH=Girth
 gendustry.chromosome.SPEED=Speed
@@ -116,6 +140,8 @@ gendustry.chromosome.SAPPINESS=Sappiness
 
 gendustry.allele.false=False
 gendustry.allele.true=True
+
+# ==== BC TRIGGERS ====
 
 gendustry.trigger.power0=Power Empty
 gendustry.trigger.power25=Power >= 25%

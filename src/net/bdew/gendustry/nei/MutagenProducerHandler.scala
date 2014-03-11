@@ -11,7 +11,7 @@ package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Fluids, Blocks, Machines}
+import net.bdew.gendustry.config.{Fluids, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.mutagen.MutagenRegistry
@@ -49,7 +49,7 @@ class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
+      case ("item", Seq(x: ItemStack)) if x.itemID == Fluids.mutagen.getBlockID => addAllRecipes()
       case ("MutagenProducer", _) => addAllRecipes()
     }
   }

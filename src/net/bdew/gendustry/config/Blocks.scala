@@ -9,12 +9,9 @@
 
 package net.bdew.gendustry.config
 
-import net.bdew.gendustry.mutagen.BlockMutagen
 import net.bdew.lib.config.BlockManager
 import net.bdew.gendustry.Gendustry
 
 object Blocks extends BlockManager(Config.IDs) {
-  val mutagen = regBlockCls(classOf[BlockMutagen], "Mutagen")
-
   Gendustry.logInfo("Blocks loaded")
 }

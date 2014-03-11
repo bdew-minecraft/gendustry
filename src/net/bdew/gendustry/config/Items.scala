@@ -10,25 +10,12 @@
 package net.bdew.gendustry.config
 
 import cpw.mods.fml.common.registry.GameRegistry
-import forestry.api.core.ItemInterface
-import net.bdew.gendustry.mutagen.ItemMutagenBucket
-import net.bdew.gendustry.mutagen.ItemMutagenCan
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraftforge.fluids.FluidContainerRegistry
 import net.bdew.gendustry.items.{IndustrialGrafter, GeneTemplate, GeneSample}
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
 
 object Items extends ItemManager(Config.IDs) {
-
-  val mutagenBucket = regItemCls(classOf[ItemMutagenBucket], "MutagenBucket")
-  val mutagenCan = regItemCls(classOf[ItemMutagenCan], "MutagenCan")
-
-  FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenBucket), new ItemStack(Item.bucketEmpty))
-  FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenCan), ItemInterface.getItem("canEmpty"))
-
   val labware = regSimpleItem("Labware")
   val waste = regSimpleItem("Waste")
   val geneSampleBlank = regSimpleItem("GeneSampleBlank")

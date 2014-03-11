@@ -12,15 +12,15 @@ package net.bdew.gendustry.mutagen
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.config.Blocks
 import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.item.ItemBucket
+import net.minecraft.item.Item
+import net.minecraftforge.fluids.Fluid
 
-class ItemMutagenBucket(id: Int) extends ItemBucket(id, Blocks.mutagen.blockID) {
-  setUnlocalizedName(Gendustry.modId + ".mutagen.bucket")
+class ItemFluidCan(id: Int, fluid: Fluid) extends Item(id) {
+  setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase + ".can")
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IconRegister) {
-    itemIcon = reg.registerIcon(Gendustry.modId + ":mutagen/bucket")
+    itemIcon = reg.registerIcon(Gendustry.modId + ":can/" + fluid.getName.toLowerCase)
   }
 }

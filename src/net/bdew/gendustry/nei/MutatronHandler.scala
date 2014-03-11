@@ -10,7 +10,7 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Fluids, Items, Blocks, Machines}
+import net.bdew.gendustry.config.{Fluids, Items, Machines}
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import forestry.api.genetics.{AlleleManager, ISpeciesRoot, IMutation}
@@ -74,7 +74,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
+      case ("item", Seq(x: ItemStack)) if x.itemID == Fluids.mutagen.getBlockID => addAllRecipes()
       case ("item", Seq(x: ItemStack)) if x.itemID == Items.labware.itemID => addAllRecipes()
       case ("item", Seq(x: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(x)
