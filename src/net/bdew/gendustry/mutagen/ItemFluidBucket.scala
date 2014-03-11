@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
 import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.item.{ItemStack, ItemBucket}
+import net.minecraft.item.{Item, ItemStack, ItemBucket}
 import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.event.ForgeSubscribe
 import net.minecraftforge.event.entity.player.FillBucketEvent
@@ -22,6 +22,8 @@ import net.minecraftforge.common.MinecraftForge
 
 class ItemFluidBucket(id: Int, fluid: Fluid) extends ItemBucket(id, fluid.getBlockID) {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase + ".bucket")
+
+  setContainerItem(Item.bucketEmpty)
 
   MinecraftForge.EVENT_BUS.register(this)
 
