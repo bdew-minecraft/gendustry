@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.mproducer
 
 import net.bdew.gendustry.config.{Fluids, Machines}
-import net.bdew.gendustry.mutagen.MutagenRegistry
+import net.bdew.gendustry.fluids.MutagenSources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.ForgeDirection
@@ -34,7 +34,7 @@ class TileMutagenProducer extends TileBaseProcessor with TilePowered with Expose
   def isWorking = output > 0
   def tryStart(): Boolean = {
     if (getStackInSlot(0) != null) {
-      output := MutagenRegistry.getValue(getStackInSlot(0))
+      output := MutagenSources.getValue(getStackInSlot(0))
       decrStackSize(0, 1)
       return true
     } else return false
@@ -67,7 +67,7 @@ class TileMutagenProducer extends TileBaseProcessor with TilePowered with Expose
   }
 
   allowSided = true
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = MutagenRegistry.getValue(itemstack) > 0
+  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = MutagenSources.getValue(itemstack) > 0
   override def canExtractItem(slot: Int, item: ItemStack, side: Int): Boolean = false
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0

@@ -10,7 +10,7 @@
 package net.bdew.gendustry.config
 
 import net.bdew.lib.config.FluidManager
-import net.bdew.gendustry.mutagen.{ItemFluidCan, ItemFluidBucket, BlockFluid}
+import net.bdew.gendustry.fluids.{ItemFluidCan, ItemFluidBucket, BlockFluid}
 import net.bdew.gendustry.Gendustry
 import net.minecraftforge.fluids.{FluidStack, FluidContainerRegistry, FluidRegistry, Fluid}
 import net.bdew.lib.Misc

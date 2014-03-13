@@ -7,7 +7,7 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry.mutagen
+package net.bdew.gendustry.fluids
 
 import net.minecraft.block.Block
 import net.minecraft.item.Item
@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack
 import scala.collection.mutable
 import net.minecraftforge.oredict.OreDictionary
 
-object MutagenRegistry {
+class FluidRegistry {
   val values = mutable.Map.empty[Int, mutable.Map[Int, Int]]
 
   def register(block: Block, value: Integer): Unit = register(block.blockID, OreDictionary.WILDCARD_VALUE, value)
@@ -44,3 +44,10 @@ object MutagenRegistry {
     }
   }
 }
+
+object MutagenSources extends FluidRegistry
+
+object LiquidDNASources extends FluidRegistry
+
+object ProteinSources extends FluidRegistry
+

@@ -11,7 +11,7 @@ package net.bdew.gendustry.config
 
 import net.bdew.lib.recipes.gencfg._
 import net.bdew.lib.recipes._
-import net.bdew.gendustry.mutagen.MutagenRegistry
+import net.bdew.gendustry.fluids.{LiquidDNASources, ProteinSources, MutagenSources}
 import net.minecraftforge.oredict.OreDictionary
 import buildcraft.api.recipes.AssemblyRecipe
 import java.io.{InputStreamReader, FileReader, File}
@@ -35,12 +35,25 @@ object TuningLoader {
 
   case class StMutagen(st: StackRef, mb: Int) extends DelayedStatement
 
+  case class StLiquidDNA(st: StackRef, mb: Int) extends DelayedStatement
+
+  case class StProtein(st: StackRef, mb: Int) extends DelayedStatement
+
   case class StAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
   class Parser extends RecipeParser with GenericConfigParser {
-    override def statement = mutagen | assembly | super.statement
+    override def delayedStatement = mutagen | dna | protein | assembly | super.delayedStatement
+
     def mutagen = "mutagen" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
       case sp ~ n => StMutagen(sp, n)
+    }
+
+    def dna = "dna" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
+      case sp ~ n => StLiquidDNA(sp, n)
+    }
+
+    def protein = "protein" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
+      case sp ~ n => StProtein(sp, n)
     }
 
     def charWithCount = recipeChar ~ ("*" ~> int).? ^^ {
@@ -66,9 +79,22 @@ object TuningLoader {
 
     override def processDelayedStatement(s: DelayedStatement): Unit = s match {
       case StMutagen(st, mb) =>
-        val in = getConcreteStack(st)
-        MutagenRegistry.register(in, mb)
-        log.info("Added mutagen source %s -> %d mb".format(in, mb))
+        for (x <- getAllConcreteStacks(st)) {
+          MutagenSources.register(x, mb)
+          log.info("Added Mutagen source %s -> %d mb".format(x, mb))
+        }
+
+      case StLiquidDNA(st, mb) =>
+        for (x <- getAllConcreteStacks(st)) {
+          LiquidDNASources.register(x, mb)
+          log.info("Added Liquid DNA source %s -> %d mb".format(x, mb))
+        }
+
+      case StProtein(st, mb) =>
+        for (x <- getAllConcreteStacks(st)) {
+          ProteinSources.register(x, mb)
+          log.info("Added Protein source %s -> %d mb".format(x, mb))
+        }
 
       case StAssembly(rec, power, out, cnt) =>
         log.info("Adding assembly recipe: %s + %d mj => %s * %d".format(rec, power, out, cnt))

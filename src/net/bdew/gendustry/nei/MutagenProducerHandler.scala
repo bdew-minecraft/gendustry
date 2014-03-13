@@ -14,7 +14,7 @@ import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.{Fluids, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
-import net.bdew.gendustry.mutagen.MutagenRegistry
+import net.bdew.gendustry.fluids.MutagenSources
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import net.bdew.lib.Misc
 
@@ -42,7 +42,7 @@ class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   }
 
   def addAllRecipes() {
-    for ((id, vals) <- MutagenRegistry.values; (meta, out) <- vals)
+    for ((id, vals) <- MutagenSources.values; (meta, out) <- vals)
       arecipes.add(new MutagenProducerRecipe(new ItemStack(id, 1, meta), out))
   }
 
@@ -55,7 +55,7 @@ class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   }
 
   override def loadUsageRecipes(stack: ItemStack) {
-    val res = MutagenRegistry.getValue(stack)
+    val res = MutagenSources.getValue(stack)
     if (res > 0) {
       arecipes.add(new MutagenProducerRecipe(stack, res))
     }

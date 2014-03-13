@@ -7,7 +7,7 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry.mutagen
+package net.bdew.gendustry.fluids
 
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
