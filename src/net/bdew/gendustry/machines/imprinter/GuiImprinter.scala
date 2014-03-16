@@ -25,8 +25,8 @@ class GuiImprinter(val te: TileImprinter, player: EntityPlayer) extends BaseScre
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.imprinter.name"), 8, 6, Color.darkgray))
 
-    inventorySlots.getSlot(te.slots.inIndividual).setBackgroundIcon(HintIcons.queenOrSapling)
-    inventorySlots.getSlot(te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
-    inventorySlots.getSlot(te.slots.inTemplate).setBackgroundIcon(HintIcons.template)
+    inventorySlots.getSlotFromInventory(te, te.slots.inIndividual).setBackgroundIcon(HintIcons.queenOrSapling)
+    inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
+    inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundIcon(HintIcons.template)
   }
 }

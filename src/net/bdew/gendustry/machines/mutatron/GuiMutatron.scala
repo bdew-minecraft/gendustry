@@ -26,8 +26,8 @@ class GuiMutatron(val te: TileMutatron, player: EntityPlayer) extends BaseScreen
     widgets.add(new WidgetFluidGauge(new Rect(32, 19, 16, 58), Textures.tankOverlay, te.tank))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutatron.name"), 8, 6, Color.darkgray))
 
-    inventorySlots.getSlot(te.slots.inIndividual1).setBackgroundIcon(HintIcons.queenOrSapling)
-    inventorySlots.getSlot(te.slots.inIndividual2).setBackgroundIcon(HintIcons.droneOrPollen)
-    inventorySlots.getSlot(te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
+    inventorySlots.getSlotFromInventory(te, te.slots.inIndividual1).setBackgroundIcon(HintIcons.queenOrSapling)
+    inventorySlots.getSlotFromInventory(te, te.slots.inIndividual2).setBackgroundIcon(HintIcons.droneOrPollen)
+    inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
   }
 }

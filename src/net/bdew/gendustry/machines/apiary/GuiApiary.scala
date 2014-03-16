@@ -26,7 +26,7 @@ class GuiApiary(val te: TileApiary, player: EntityPlayer) extends BaseScreen(new
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, Color.darkgray))
 
     te.slots.upgrades.foreach(inventorySlots.getSlot(_).setBackgroundIcon(HintIcons.upgrade))
-    inventorySlots.getSlot(te.slots.drone).setBackgroundIcon(HintIcons.drone)
-    inventorySlots.getSlot(te.slots.queen).setBackgroundIcon(HintIcons.queen)
+    inventorySlots.getSlotFromInventory(te, te.slots.drone).setBackgroundIcon(HintIcons.drone)
+    inventorySlots.getSlotFromInventory(te, te.slots.queen).setBackgroundIcon(HintIcons.queen)
   }
 }
