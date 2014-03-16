@@ -6,6 +6,8 @@ tile.gendustry.mutatron.adv.name=Advanced Mutatron
 tile.gendustry.apiary.name=Industrial Apiary
 tile.gendustry.imprinter.name=Genetic Imprinter
 tile.gendustry.sampler.name=Genetic Sampler
+tile.gendustry.extractor.name=DNA Extractor
+tile.gendustry.liquifier.name=Protein Liquifier
 
 # ==== GENERAL ITEMS ====
 
