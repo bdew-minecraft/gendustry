@@ -15,6 +15,7 @@ item.gendustry.MutagenTank.name=Mutagen Tank
 item.gendustry.BeeReceptacle.name=Bee Receptacle
 item.gendustry.PowerModule.name=Power Module
 item.gendustry.GeneticsProcessor.name=Genetics Processor
+item.gendustry.EnvProcessor.name=Enviromental Processor
 item.gendustry.UpgradeFrame.name=Upgrade Frame
 item.gendustry.ClimateModule.name=Climate Control Module
 item.gendustry.Labware.name=Genetics Labware
@@ -53,13 +54,17 @@ gendustry.upgrades.territory.name=Territory Upgrade
 gendustry.upgrades.sealing.name=Seal Upgrade
 gendustry.upgrades.light.name=Light Upgrade
 gendustry.upgrades.sky.name=Open Sky Upgrade
-gendustry.upgrades.hell.name=Hell Upgrade
+gendustry.upgrades.hell.name=Hell Emulation Upgrade
 gendustry.upgrades.auto.name=Automation Upgrade
 gendustry.upgrades.humidifier.name=Humidifier Upgrade
 gendustry.upgrades.dryer.name=Dryer Upgrade
 gendustry.upgrades.heater.name=Heater Upgrade
 gendustry.upgrades.sieve.name=Sieve Upgrade
 gendustry.upgrades.cooler.name=Cooler Upgrade
+gendustry.upgrades.desert.name=Desert Emulation Upgrade
+gendustry.upgrades.plains.name=Plains Emulation Upgrade
+gendustry.upgrades.jungle.name=Jungle Emulation Upgrade
+gendustry.upgrades.stabilizer.name=Genetic Stabilizer Upgrade
 
 # ==== GUI AND TOOLTIPS ====
 
@@ -86,7 +91,7 @@ gendustry.label.mutatron.death=Death chance (ignoble): %s%%
 gendustry.label.mutatron.degrade=Degrade chance (pristine): %s%%
 
 gendustry.label.mod.automated=* Automation
-gendustry.label.mod.hellish=* Hell Environment Simulation
+gendustry.label.mod.biome=* Biome Override: %s
 gendustry.label.mod.sealed=* Rain Protection
 gendustry.label.mod.selflighted=* Internal Lighting
 gendustry.label.mod.sky=* Open Sky Simulation

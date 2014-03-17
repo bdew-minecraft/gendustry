@@ -207,7 +207,7 @@ with IBeeHousing {
   def isSealed = mods.isSealed
   def isSelfLighted = mods.isSelfLighted
   def isSunlightSimulated = mods.isSunlightSimulated
-  def isHellish = mods.isHellish
+  def isHellish = mods.biomeOverride == BiomeGenBase.hell
 
   // IBeeHousing
   def setQueen(itemstack: ItemStack) = setInventorySlotContents(0, itemstack)
@@ -216,19 +216,21 @@ with IBeeHousing {
   def getDrone = getStackInSlot(slots.drone)
   def canBreed = true
 
+  def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
+
   // IHousing
   def setErrorState(state: Int) = errorState := state
   def getOwnerName = owner
   def getXCoord = xCoord
   def getYCoord = yCoord
   def getZCoord = zCoord
-  def getBiomeId = if (mods.isHellish) BiomeGenBase.hell.biomeID else getBiome.biomeID
-  def getTemperature: EnumTemperature = {
-    if (mods.isHellish || EnumTemperature.isBiomeHellish(getBiome.biomeID))
-      return EnumTemperature.HELLISH
-    return EnumTemperature.getFromValue(getBiome.temperature + mods.temperature)
-  }
-  def getHumidity = EnumHumidity.getFromValue(getBiome.rainfall + mods.humidity)
+  def getBiomeId = getModifiedBiome.biomeID
+  def getTemperature =
+    if (EnumTemperature.isBiomeHellish(getModifiedBiome))
+      EnumTemperature.HELLISH
+    else
+      EnumTemperature.getFromValue(getModifiedBiome.temperature + mods.temperature)
+  def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.rainfall + mods.humidity)
   def getErrorOrdinal = errorState
   def addProduct(product: ItemStack, all: Boolean): Boolean = {
     var p = product

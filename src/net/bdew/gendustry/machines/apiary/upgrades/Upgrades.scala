@@ -15,6 +15,7 @@ import net.bdew.gendustry.config.{Items, Tuning}
 import net.bdew.lib.recipes.gencfg.{EntryStr, ConfigSection}
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
+import net.bdew.lib.Misc
 
 object Upgrades {
   val map = collection.mutable.Map.empty[Int, Upgrade]
@@ -27,7 +28,7 @@ object Upgrades {
     }
   }
 
-  def makeMod(upg: String, n: String, e: EntryModifier): ModFunc = {
+  def makeNumMod(upg: String, n: String, e: EntryModifier): ModFunc = {
     val calc: (Float, Int) => Float = e match {
       case EntryModifierAdd(v) => (x, n) => x + v * n
       case EntryModifierSub(v) => (x, n) => x - v * n
@@ -48,14 +49,16 @@ object Upgrades {
     }
   }
 
-  def makeBoolMod(upg: String, n: String, b: Boolean): ModFunc = n match {
-    case "sealed" => (a, n) => a.isSealed = b
-    case "selfLighted" => (a, n) => a.isSelfLighted = b
-    case "sunlightSimulated" => (a, n) => a.isSunlightSimulated = b
-    case "hellish" => (a, n) => a.isHellish = b
-    case "automated" => (a, n) => a.isAutomated = b
-    case "collectingPollen" => (a, n) => a.isCollectingPollen = b
-    case x => sys.error("Unknown boolean upgrade modifier '%s' in upgrade '%s'".format(x, upg))
+  def str2bool(s: String) = Tuning.trueVals.contains(s.toLowerCase)
+
+  def makeStrMod(upg: String, n: String, v: String): ModFunc = n match {
+    case "sealed" => (a, n) => a.isSealed = str2bool(v)
+    case "selfLighted" => (a, n) => a.isSelfLighted = str2bool(v)
+    case "sunlightSimulated" => (a, n) => a.isSunlightSimulated = str2bool(v)
+    case "automated" => (a, n) => a.isAutomated = str2bool(v)
+    case "collectingPollen" => (a, n) => a.isCollectingPollen = str2bool(v)
+    case "biomeOverride" => (a, n) => a.biomeOverride = Misc.getBiomeByName(v)
+    case x => sys.error("Unknown string upgrade modifier '%s' in upgrade '%s'".format(x, upg))
   }
 
   def init() {
@@ -63,8 +66,8 @@ object Upgrades {
       val id = sect.getInt("id")
       val max = sect.getInt("max")
       val mods = sect.flatMap({
-        case (pname, EntryStr(_)) => Some(makeBoolMod(name, pname, sect.getBoolean(pname)))
-        case (pname, x: EntryModifier) => Some(makeMod(name, pname, x))
+        case (pname, EntryStr(v)) => Some(makeStrMod(name, pname, v))
+        case (pname, x: EntryModifier) => Some(makeNumMod(name, pname, x))
         case ("id", _) | ("max", _) => None
         case (pname, v) => sys.error("Unknown upgrade modifier '%s' - %s in upgrade '%s'".format(pname, v, name))
       })

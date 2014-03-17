@@ -32,6 +32,7 @@ object Items extends ItemManager(Config.IDs) {
   regSimpleItem("BeeReceptacle")
   regSimpleItem("PowerModule")
   regSimpleItem("GeneticsProcessor")
+  regSimpleItem("EnvProcessor")
   regSimpleItem("UpgradeFrame")
   regSimpleItem("ClimateModule")
 

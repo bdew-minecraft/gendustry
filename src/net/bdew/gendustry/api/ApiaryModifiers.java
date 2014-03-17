@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.api;
 
+import net.minecraft.world.biome.BiomeGenBase;
+
 public class ApiaryModifiers {
     public float territory = 1;
 
@@ -29,9 +31,10 @@ public class ApiaryModifiers {
     public boolean isSealed = false;
     public boolean isSelfLighted = false;
     public boolean isSunlightSimulated = false;
-    public boolean isHellish = false;
     public boolean isAutomated = false;
     public boolean isCollectingPollen = false;
+
+    public BiomeGenBase biomeOverride = null;
 
     public float energy = 1;
 

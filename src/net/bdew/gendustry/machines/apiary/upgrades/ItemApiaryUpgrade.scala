@@ -45,8 +45,8 @@ class ItemApiaryUpgrade(id: Int) extends Item(id) with IApiaryUpgrade {
 
     if (mods.isAutomated)
       l.add(Misc.toLocal(Gendustry.modId + ".label.mod.automated"))
-    if (mods.isHellish)
-      l.add(Misc.toLocal(Gendustry.modId + ".label.mod.hellish"))
+    if (mods.biomeOverride != null)
+      l.add(Misc.toLocalF(Gendustry.modId + ".label.mod.biome", mods.biomeOverride.biomeName))
     if (mods.isSealed)
       l.add(Misc.toLocal(Gendustry.modId + ".label.mod.sealed"))
     if (mods.isSelfLighted)
