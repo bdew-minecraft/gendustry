@@ -11,18 +11,41 @@ package net.bdew.gendustry.items
 
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo}
-import net.bdew.lib.Misc
+import net.bdew.lib.{Client, Misc}
 import net.minecraft.nbt.{NBTTagList, NBTTagCompound}
 import net.minecraft.entity.player.EntityPlayer
 import java.util
 import cpw.mods.fml.common.registry.GameRegistry
 import forestry.api.genetics.{ISpeciesRoot, AlleleManager}
 import net.bdew.lib.items.SimpleItem
+import forestry.api.apiculture.{IBeeRoot, EnumBeeChromosome}
+import forestry.api.arboriculture.{ITreeRoot, EnumTreeChromosome}
+import forestry.api.lepidopterology.{IButterflyRoot, EnumButterflyChromosome}
+import net.minecraft.util.EnumChatFormatting
 
 class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
   setMaxStackSize(1)
 
+  val deprecatedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
+
   GameRegistry.addRecipe(new GeneRecipe)
+
+  def getRequiredChromosomes(sp: ISpeciesRoot) = sp match {
+    case x: IBeeRoot =>
+      EnumBeeChromosome.values().filterNot(deprecatedBeeChromosomes.contains).map(_.ordinal())
+    case x: ITreeRoot =>
+      EnumTreeChromosome.values().map(_.ordinal())
+    case x: IButterflyRoot =>
+      EnumButterflyChromosome.values().map(_.ordinal())
+  }
+
+  def isComplete(stack: ItemStack) = {
+    val sp = getSpecies(stack)
+    if (sp == null)
+      false
+    else
+      (getRequiredChromosomes(sp).toSet -- getSamples(stack).map(_.chromosome).toSet).isEmpty
+  }
 
   def getSpecies(stack: ItemStack): ISpeciesRoot =
     if (stack.hasTagCompound) AlleleManager.alleleRegistry.getSpeciesRoot(stack.getTagCompound.getString("species")) else null
@@ -66,7 +89,26 @@ class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
     if (tag != null && tag.hasKey("species")) {
       try {
         tip += Misc.toLocal("gendustry.label.template." + tag.getString("species"))
-        tip ++= getSamples(stack).map(_.getText)
+        val root = getSpecies(stack)
+        val samples = getSamples(stack).map(x => x.chromosome -> x.getText).toMap
+        val required = getRequiredChromosomes(root)
+
+        tip +=
+          (if (isComplete(stack)) EnumChatFormatting.GREEN else EnumChatFormatting.RED) +
+            Misc.toLocalF("gendustry.label.template.chromosomes", samples.size, required.size) +
+            EnumChatFormatting.RESET
+
+        for (chr <- required)
+          if (samples.contains(chr))
+            tip += samples(chr)
+          else if (Client.shiftDown)
+            tip += "%s%s: %s%s".format(
+              EnumChatFormatting.RED,
+              Misc.toLocal("gendustry.chromosome." + GeneSampleInfo.getChromosomeName(root, chr)),
+              Misc.toLocal("gendustry.label.template.missing"),
+              EnumChatFormatting.RESET
+            )
+
       } catch {
         case e: Throwable =>
           e.printStackTrace()

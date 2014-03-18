@@ -25,12 +25,7 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
 
   def getText: String = {
     import scala.collection.JavaConverters._
-    val chr = root match {
-      case x: IBeeRoot => EnumBeeChromosome.values()(chromosome).toString
-      case x: ITreeRoot => EnumTreeChromosome.values()(chromosome).toString
-      case x: IButterflyRoot => EnumButterflyChromosome.values()(chromosome).toString
-      case _ => "Invalid"
-    }
+    val chr = GeneSampleInfo.getChromosomeName(root, chromosome)
     val alstr = allele match {
       case i: IAlleleInteger => chr match {
         case "GIRTH" => "%d x %d".format(i.getValue, i.getValue)
@@ -58,5 +53,11 @@ object GeneSampleInfo {
     val species = AlleleManager.alleleRegistry.getSpeciesRoot(t.getString("species"))
     val allele = AlleleManager.alleleRegistry.getAllele(t.getString("allele"))
     return GeneSampleInfo(species, t.getInteger("chromosome"), allele)
+  }
+  def getChromosomeName(root: ISpeciesRoot, chromosome: Int) = root match {
+    case x: IBeeRoot => EnumBeeChromosome.values()(chromosome).toString
+    case x: ITreeRoot => EnumTreeChromosome.values()(chromosome).toString
+    case x: IButterflyRoot => EnumButterflyChromosome.values()(chromosome).toString
+    case _ => "Invalid"
   }
 }

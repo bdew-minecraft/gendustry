@@ -116,6 +116,8 @@ gendustry.label.template.rootBees=Can be applied to a Bee
 gendustry.label.template.rootTrees=Can be applied to a Sapling
 gendustry.label.template.rootButterflies=Can be applied to a Butterfly
 gendustry.label.template.blank=Gene Samples can be added
+gendustry.label.template.missing=Missing
+gendustry.label.template.chromosomes=%s/%s Chromosomes
 
 # ==== CHROMOSOMES (should match forestry) ====
 
