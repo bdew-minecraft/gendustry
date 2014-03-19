@@ -32,7 +32,8 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
-  val aoe = cfg.getInt("AOE")
+  lazy val aoe = cfg.getInt("AOE")
+  lazy val saplingModifier = cfg.getFloat("SaplingModifier")
 
   setUnlocalizedName(Gendustry.modId + ".grafter")
   setMaxStackSize(1)
@@ -87,7 +88,7 @@ class IndustrialGrafter(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, 
   override def getIsRepairable(par1ItemStack: ItemStack, par2ItemStack: ItemStack): Boolean = false
   override def isBookEnchantable(itemstack1: ItemStack, itemstack2: ItemStack): Boolean = false
 
-  def getSaplingModifier(stack: ItemStack, world: World, player: EntityPlayer, x: Int, y: Int, z: Int): Float = if (hasCharges(stack)) 100 else 0
+  def getSaplingModifier(stack: ItemStack, world: World, player: EntityPlayer, x: Int, y: Int, z: Int): Float = if (hasCharges(stack)) saplingModifier else 0
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IconRegister) {
