@@ -122,6 +122,11 @@ gendustry.label.template.blank=Gene Samples can be added
 gendustry.label.template.missing=Missing
 gendustry.label.template.chromosomes=%s/%s Chromosomes
 
+gendustry.rsmode.always=Always ON
+gendustry.rsmode.never=Disabled
+gendustry.rsmode.rs_on=Enable on redstone
+gendustry.rsmode.rs_off=Disable on redstone
+
 # ==== CHROMOSOMES (should match forestry) ====
 
 gendustry.chromosome.FLOWER_PROVIDER=Flowers
