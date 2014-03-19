@@ -18,6 +18,7 @@ object HintIcons extends IconPreloader(1) {
   val template = TextureLoc("gendustry:hints/template")
 
   val sampleOrTemplate = TextureLoc("gendustry:hints/sample_template")
+  val sampleOrTemplateBlank = TextureLoc("gendustry:hints/sample_template_blank")
   val queenOrSapling = TextureLoc("gendustry:hints/queen_sapling")
   val droneOrPollen = TextureLoc("gendustry:hints/drone_pollen")
   val droneOrSapling = TextureLoc("gendustry:hints/drone_sapling")
