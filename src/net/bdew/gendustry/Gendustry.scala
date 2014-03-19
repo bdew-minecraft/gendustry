@@ -13,9 +13,7 @@ import java.util.logging.Logger
 import net.bdew.gendustry.config._
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event.FMLInitializationEvent
-import cpw.mods.fml.common.event.FMLPostInitializationEvent
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.common.network.NetworkRegistry
 import java.io.File
@@ -24,6 +22,7 @@ import net.bdew.gendustry.compat.PowerProxy
 import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.compat.triggers.TriggerProvider
+import net.minecraft.command.CommandHandler
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.3.1.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -65,5 +64,10 @@ object Gendustry {
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
+  }
+
+  @EventHandler
+  def serverStarting(event: FMLServerStartingEvent) {
+    event.getServer.getCommandManager.asInstanceOf[CommandHandler].registerCommand(new CommandGiveTemplate)
   }
 }
