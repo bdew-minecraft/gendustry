@@ -19,7 +19,7 @@ import net.bdew.gendustry.power.TilePowered
 import forestry.api.genetics.IAllele
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
-import forestry.api.lepidopterology.EnumFlutterType
+import forestry.api.lepidopterology.{IButterflyRoot, EnumFlutterType}
 
 class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandler {
   lazy val cfg = Machines.replicator
@@ -55,7 +55,7 @@ class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandl
           bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal())
         case trees: ITreeRoot =>
           trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
-        case butterflies: ITreeRoot =>
+        case butterflies: IButterflyRoot =>
           butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal())
       })
       return true
