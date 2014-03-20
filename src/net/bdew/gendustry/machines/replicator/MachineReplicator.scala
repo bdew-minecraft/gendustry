@@ -23,6 +23,8 @@ class MachineReplicator extends Machine("Replicator", new BlockReplicator(_)) wi
   lazy val dnaPerItem = tuning.getInt("DNAPerItem")
   lazy val proteinPerItem = tuning.getInt("ProteinPerItem")
 
+  lazy val makePristineBees = tuning.getBoolean("MakePristineBees")
+
   @SideOnly(Side.CLIENT)
   def getGui(te: TileReplicator, player: EntityPlayer) = new GuiReplicator(te, player)
   def getContainer(te: TileReplicator, player: EntityPlayer) = new ContainerReplicator(te, player)

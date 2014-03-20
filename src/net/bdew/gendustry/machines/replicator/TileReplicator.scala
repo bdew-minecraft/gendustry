@@ -17,7 +17,7 @@ import net.bdew.lib.data.DataSlotTankRestricted
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import forestry.api.genetics.IAllele
-import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
+import forestry.api.apiculture.{IBee, EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.lepidopterology.{IButterflyRoot, EnumFlutterType}
 
@@ -52,6 +52,7 @@ class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandl
       individual.analyze()
       output := (root match {
         case bees: IBeeRoot =>
+          individual.asInstanceOf[IBee].setIsNatural(cfg.makePristineBees)
           bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal())
         case trees: ITreeRoot =>
           trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
