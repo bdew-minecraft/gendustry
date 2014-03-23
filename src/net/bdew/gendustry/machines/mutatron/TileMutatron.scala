@@ -18,6 +18,7 @@ import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.data.base.UpdateKind
+import net.bdew.gendustry.forestry.GeneticsHelper
 
 class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutatron

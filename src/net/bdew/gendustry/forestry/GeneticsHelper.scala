@@ -7,7 +7,7 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry.machines.mutatron
+package net.bdew.gendustry.forestry
 
 import forestry.api.apiculture.EnumBeeType
 import forestry.api.apiculture.IBee
@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack
 import java.util.Random
 import net.bdew.gendustry.config.{Items, Machines}
 import net.minecraft.world.World
+import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
 
 object GeneticsHelper {
   val random = new Random
@@ -166,4 +167,34 @@ object GeneticsHelper {
       checkMutation(x, sp1, sp2) && x.getTemplate()(0) == spR
     }).foreach(tracker.registerMutation)
   }
+
+  def individualFromTemplate(tpl: ItemStack, pristine: Boolean = false) = {
+    val root = Items.geneTemplate.getSpecies(tpl)
+    val samples = Items.geneTemplate.getSamples(tpl)
+    val template = root.getDefaultTemplate
+    samples.foreach(x => template(x.chromosome) = x.allele)
+    val individual = root.templateAsIndividual(template)
+    individual.analyze()
+    root match {
+      case bees: IBeeRoot =>
+        individual.asInstanceOf[IBee].setIsNatural(pristine)
+        bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal())
+      case trees: ITreeRoot =>
+        trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
+      case butterflies: IButterflyRoot =>
+        butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal())
+    }
+  }
+
+  def templateFromSpeciesUID(uid: String) = {
+    val root = AlleleManager.alleleRegistry.getAllele(uid).asInstanceOf[IAlleleSpecies].getRoot
+    val template = root.getTemplate(uid)
+    val item = new ItemStack(Items.geneTemplate)
+
+    for ((allele, chromosome) <- template.zipWithIndex if allele != null)
+      Items.geneTemplate.addSample(item, GeneSampleInfo(root, chromosome, allele))
+
+    item
+  }
+
 }

@@ -17,8 +17,8 @@ import net.bdew.lib.data.{DataSlotString, DataSlotInt, DataSlotTankRestricted}
 import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
-import net.bdew.gendustry.machines.mutatron.GeneticsHelper
 import net.bdew.lib.data.base.UpdateKind
+import net.bdew.gendustry.forestry.GeneticsHelper
 
 class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutatronAdv

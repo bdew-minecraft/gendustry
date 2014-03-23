@@ -16,10 +16,7 @@ import net.minecraftforge.fluids._
 import net.bdew.lib.data.DataSlotTankRestricted
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
-import forestry.api.genetics.IAllele
-import forestry.api.apiculture.{IBee, EnumBeeType, IBeeRoot}
-import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
-import forestry.api.lepidopterology.{IButterflyRoot, EnumFlutterType}
+import net.bdew.gendustry.forestry.GeneticsHelper
 
 class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandler {
   lazy val cfg = Machines.replicator
@@ -43,22 +40,9 @@ class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandl
 
   def tryStart(): Boolean = {
     if (canStart) {
-      val tpl = getStackInSlot(slots.inTemplate)
-      val root = Items.geneTemplate.getSpecies(tpl)
-      val samples = Items.geneTemplate.getSamples(tpl)
-      val template = new Array[IAllele](samples.map(_.chromosome).max + 1)
-      samples.foreach(x => template(x.chromosome) = x.allele)
-      val individual = root.templateAsIndividual(template)
-      individual.analyze()
-      output := (root match {
-        case bees: IBeeRoot =>
-          individual.asInstanceOf[IBee].setIsNatural(cfg.makePristineBees)
-          bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal())
-        case trees: ITreeRoot =>
-          trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
-        case butterflies: IButterflyRoot =>
-          butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal())
-      })
+      output := GeneticsHelper.individualFromTemplate(getStackInSlot(slots.inTemplate), cfg.makePristineBees)
+      dnaTank.drain(cfg.dnaPerItem, true)
+      proteinTank.drain(cfg.proteinPerItem, true)
       return true
     } else return false
   }

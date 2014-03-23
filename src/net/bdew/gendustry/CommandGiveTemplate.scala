@@ -13,10 +13,8 @@ import _root_.forestry.api.genetics.{IAlleleSpecies, AlleleManager}
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
 import net.minecraft.command.WrongUsageException
-import net.minecraft.item.ItemStack
 import java.util.List
-import net.bdew.gendustry.config.Items
-import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.gendustry.forestry.GeneticsHelper
 
 class CommandGiveTemplate extends CommandBase {
   def getCommandName = "givetemplate"
@@ -41,14 +39,7 @@ class CommandGiveTemplate extends CommandBase {
     if (!validSpecies.contains(uid))
       throw new WrongUsageException("gendustry.givetemplate.usage")
 
-    val root = AlleleManager.alleleRegistry.getAllele(uid).asInstanceOf[IAlleleSpecies].getRoot
-    val template = root.getTemplate(uid)
-    val item = new ItemStack(Items.geneTemplate)
-
-    for ((allele, chromosome) <- template.zipWithIndex if allele != null)
-      Items.geneTemplate.addSample(item, GeneSampleInfo(root, chromosome, allele))
-
-    val entityitem = player.dropPlayerItem(item)
+    val entityitem = player.dropPlayerItem(GeneticsHelper.templateFromSpeciesUID(uid))
     entityitem.delayBeforeCanPickup = 0
 
     CommandBase.notifyAdmins(sender, "gendustry.givetemplate.success", uid, player.username)
