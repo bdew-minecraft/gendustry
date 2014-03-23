@@ -67,6 +67,11 @@ class NEIGendustryConfig extends IConfigureNEI {
       FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Replicator@Replicator")
     }
 
+    if (Machines.transposer.enabled) {
+      addRecipeHandler(new TransposerHandler)
+      FMLInterModComms.sendRuntimeMessage(Gendustry, "NEIPlugins", "register-crafting-handler", "Gendustry@Transposer@Transposer")
+    }
+
     GuiContainerManager.addTooltipHandler(new SmeltingTooltipHandler)
   }
 }
