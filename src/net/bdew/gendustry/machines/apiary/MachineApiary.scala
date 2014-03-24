@@ -21,6 +21,6 @@ class MachineApiary extends Machine("IndustrialApiary", new BlockApiary(_)) with
   lazy val baseMjPerTick = tuning.getInt("BaseMjPerTick")
 
   @SideOnly(Side.CLIENT)
-  def getGui(te: TileApiary, player: EntityPlayer) = new GuiApiary(te, player)
+  def getGui(te: TileApiary, player: EntityPlayer) = new GuiApiary(te, player, new ContainerApiary(te, player))
   def getContainer(te: TileApiary, player: EntityPlayer) = new ContainerApiary(te, player)
 }

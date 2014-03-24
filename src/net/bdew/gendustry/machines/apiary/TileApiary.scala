@@ -32,6 +32,7 @@ import net.bdew.lib.data.DataSlotBoolean
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.gendustry.compat.triggers.ForestryErrorSource
+import net.bdew.gendustry.gui.rscontrol.TileRSContollable
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -40,6 +41,7 @@ with SidedInventory
 with BreakableInventoryTile
 with TilePowered
 with ForestryErrorSource
+with TileRSContollable
 with IBeeHousing {
 
   object slots {
@@ -71,7 +73,7 @@ with IBeeHousing {
 
   persistLoad.listen(x => {
     updateModifiers()
-    queen := getStackInSlot(slots.drone)
+    queen := getStackInSlot(slots.queen)
   })
 
   def updateModifiers() {
@@ -108,7 +110,9 @@ with IBeeHousing {
   serverTick.listen(() => {
     movePrincess = false
 
-    if (power.stored >= cfg.baseMjPerTick * mods.energy) {
+    if (!canWork) {
+      setErrorState(-2)
+    } else if (power.stored >= cfg.baseMjPerTick * mods.energy) {
       logic.update()
       if ((logic.getQueen != null || logic.getBreedingTime > 0) && (errorState :== 1))
         power.extract(cfg.baseMjPerTick * mods.energy, false)

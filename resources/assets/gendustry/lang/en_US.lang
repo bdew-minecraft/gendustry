@@ -110,6 +110,7 @@ gendustry.label.mod.temperature=* Temperature
 gendustry.label.mod.humidity=* Humidity
 
 gendustry.error.power=Not enough power
+gendustry.error.disabled=Disabled by settings
 
 gendustry.label.sample.rootBees=Taken from a Bee
 gendustry.label.sample.rootTrees=Taken from a Sapling

@@ -16,8 +16,9 @@ import net.minecraft.inventory.{IInventory, Slot}
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.Misc
+import net.bdew.gendustry.gui.rscontrol.ContainerRSControllable
 
-class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots {
+class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots with ContainerRSControllable {
   lazy val dataSource = te
 
   addSlotToContainer(new SlotValidating(te, 0, 39, 29))
