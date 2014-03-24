@@ -17,7 +17,7 @@ import net.bdew.lib.gui.widgets.WidgetLabel
 import net.bdew.lib.Misc
 
 class GuiTransposer(val te: TileTransposer, player: EntityPlayer) extends BaseScreen(new ContainerTransposer(te, player), 176, 166) {
-  val background = Texture(Gendustry.modId, "textures/gui/Transposer.png", rect)
+  val background = Texture(Gendustry.modId, "textures/gui/transposer.png", rect)
 
   override def initGui() {
     super.initGui()
