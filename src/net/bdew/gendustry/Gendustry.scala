@@ -68,6 +68,8 @@ object Gendustry {
 
   @EventHandler
   def serverStarting(event: FMLServerStartingEvent) {
-    event.getServer.getCommandManager.asInstanceOf[CommandHandler].registerCommand(new CommandGiveTemplate)
+    val commandHandler = event.getServer.getCommandManager.asInstanceOf[CommandHandler]
+    commandHandler.registerCommand(new CommandGiveTemplate)
+    commandHandler.registerCommand(new CommandGiveSample)
   }
 }
