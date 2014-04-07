@@ -26,17 +26,18 @@ import net.minecraft.util.EnumChatFormatting
 class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
   setMaxStackSize(1)
 
-  val deprecatedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
+  val unusedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
+  val unusedButterflyChromosomes = Set(EnumButterflyChromosome.TERRITORY)
 
   GameRegistry.addRecipe(new GeneRecipe)
 
   def getRequiredChromosomes(sp: ISpeciesRoot) = sp match {
     case x: IBeeRoot =>
-      EnumBeeChromosome.values().filterNot(deprecatedBeeChromosomes.contains).map(_.ordinal())
+      EnumBeeChromosome.values().filterNot(unusedBeeChromosomes.contains).map(_.ordinal())
     case x: ITreeRoot =>
       EnumTreeChromosome.values().map(_.ordinal())
     case x: IButterflyRoot =>
-      EnumButterflyChromosome.values().map(_.ordinal())
+      EnumButterflyChromosome.values().filterNot(unusedButterflyChromosomes.contains).map(_.ordinal())
   }
 
   def isComplete(stack: ItemStack) = {
