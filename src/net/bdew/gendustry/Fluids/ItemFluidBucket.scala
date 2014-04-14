@@ -12,32 +12,33 @@ package net.bdew.gendustry.fluids
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
-import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.item.{Item, ItemStack, ItemBucket}
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.item.{ItemStack, ItemBucket}
 import net.minecraftforge.fluids.Fluid
-import net.minecraftforge.event.ForgeSubscribe
 import net.minecraftforge.event.entity.player.FillBucketEvent
-import net.minecraftforge.event.Event.Result
 import net.minecraftforge.common.MinecraftForge
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.Event.Result
+import cpw.mods.fml.common.registry.GameRegistry
 
-class ItemFluidBucket(id: Int, fluid: Fluid) extends ItemBucket(id, fluid.getBlockID) {
+class ItemFluidBucket(fluid: Fluid) extends ItemBucket(fluid.getBlock) {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase + ".bucket")
 
-  setContainerItem(Item.bucketEmpty)
+  setContainerItem(GameRegistry.findItem("minecraft", "bucket"))
 
   MinecraftForge.EVENT_BUS.register(this)
 
-  @ForgeSubscribe
+  @SubscribeEvent
   def onBucketFill(event: FillBucketEvent) {
     if (event.world.getBlockMetadata(event.target.blockX, event.target.blockY, event.target.blockZ) != 0) return
-    if (event.world.getBlockId(event.target.blockX, event.target.blockY, event.target.blockZ) != fluid.getBlockID) return
+    if (event.world.getBlock(event.target.blockX, event.target.blockY, event.target.blockZ) != fluid.getBlock) return
     event.world.setBlockToAir(event.target.blockX, event.target.blockY, event.target.blockZ)
     event.result = new ItemStack(this)
     event.setResult(Result.ALLOW)
   }
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
+  override def registerIcons(reg: IIconRegister) {
     itemIcon = reg.registerIcon(Gendustry.modId + ":bucket/" + fluid.getName.toLowerCase)
   }
 }

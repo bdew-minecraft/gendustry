@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{SideOnly, Side}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineExtractor extends Machine("Extractor", new BlockExtractor(_)) with GuiProvider with ProcessorMachine {
+class MachineExtractor extends Machine("Extractor", new BlockExtractor) with GuiProvider with ProcessorMachine {
   def guiId = 8
   type TEClass = TileExtractor
 

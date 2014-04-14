@@ -10,7 +10,7 @@
 package net.bdew.gendustry.compat.triggers
 
 import net.bdew.lib.power.TileBaseProcessor
-import net.minecraftforge.common.ForgeDirection
+import net.minecraftforge.common.util.ForgeDirection
 
 object TriggerWorking extends BaseTrigger("working", "x", classOf[TileBaseProcessor]) {
   def getState(side: ForgeDirection, tile: TileBaseProcessor) = tile.isWorking

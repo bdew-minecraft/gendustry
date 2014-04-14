@@ -15,11 +15,11 @@ import net.bdew.gendustry.Gendustry
 import net.minecraftforge.fluids.{FluidStack, FluidContainerRegistry, FluidRegistry, Fluid}
 import net.bdew.lib.Misc
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import forestry.api.core.ItemInterface
 
-object Fluids extends FluidManager(Config.IDs) {
-  val emptyBucket = new ItemStack(Item.bucketEmpty)
+object Fluids extends FluidManager() {
+  val emptyBucket = new ItemStack(GameRegistry.findItem("minecraft", "bucket"))
   val emptyCan = ItemInterface.getItem("canEmpty")
 
   def registerFluid(id: String,
@@ -45,17 +45,17 @@ object Fluids extends FluidManager(Config.IDs) {
       true
     }
     val fluid = FluidRegistry.getFluid(id.toLowerCase)
-    if (fluid.getBlockID == -1) {
-      val block = new BlockFluid(ids.getBlockId(id), fluid, ownFluid)
+    if (fluid.getBlock == null) {
+      val block = new BlockFluid(fluid, ownFluid)
       GameRegistry.registerBlock(block, "fluid." + id)
-      fluid.setBlockID(block)
+      fluid.setBlock(block)
     }
     if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyBucket) == null) {
-      val bucket = Items.regItem(new ItemFluidBucket(ids.getItemId(id + "Bucket"), fluid), id + "Bucket")
+      val bucket = Items.regItem(new ItemFluidBucket(fluid), id + "Bucket")
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
     }
     if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyCan) == null) {
-      val can = Items.regItem(new ItemFluidCan(ids.getItemId(id + "Can"), fluid), id + "Can")
+      val can = Items.regItem(new ItemFluidCan(fluid), id + "Can")
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), emptyCan)
     }
     return fluid

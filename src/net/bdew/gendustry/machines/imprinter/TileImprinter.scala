@@ -75,7 +75,7 @@ class TileImprinter extends TileItemProcessor with TilePowered {
 
       val newTag = new NBTTagCompound()
       root.templateAsGenome(primary, secondary).writeToNBT(newTag)
-      newStack.getTagCompound.setCompoundTag("Genome", newTag)
+      newStack.getTagCompound.setTag("Genome", newTag)
 
       doStart(newStack)
 

@@ -11,7 +11,7 @@ package net.bdew.gendustry.machines.mutatron
 
 import net.bdew.gendustry.config.{Fluids, Items, Machines}
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.ForgeDirection
+import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
 import net.bdew.lib.data.{DataSlotString, DataSlotTankRestricted}
 import net.bdew.lib.tile.ExposeTank

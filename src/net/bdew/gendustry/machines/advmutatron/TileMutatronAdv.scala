@@ -11,7 +11,6 @@ package net.bdew.gendustry.machines.advmutatron
 
 import net.bdew.gendustry.config.{Fluids, Items, Machines}
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.ForgeDirection
 import net.minecraftforge.fluids._
 import net.bdew.lib.data.{DataSlotString, DataSlotInt, DataSlotTankRestricted}
 import net.bdew.lib.tile.ExposeTank
@@ -19,6 +18,7 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutatronAdv
@@ -40,9 +40,9 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
 
   def getTankFromDirection(dir: ForgeDirection): IFluidTank = tank
 
-  override def onInventoryChanged() {
+  override def markDirty() {
     updateSelectors()
-    super.onInventoryChanged()
+    super.markDirty()
   }
 
   def updateSelectors() {

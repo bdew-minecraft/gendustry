@@ -13,13 +13,13 @@ import net.bdew.gendustry.config.{Items, Fluids, Machines}
 import net.bdew.gendustry.fluids.LiquidDNASources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
 import net.minecraftforge.fluids._
 import net.bdew.lib.data._
 import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileExtractor extends TileBaseProcessor with TilePowered with ExposeTank {
   lazy val cfg = Machines.extractor
@@ -58,7 +58,7 @@ class TileExtractor extends TileBaseProcessor with TilePowered with ExposeTank {
 
   def sendFluid() {
     for (dir <- ForgeDirection.VALID_DIRECTIONS) {
-      val te: TileEntity = worldObj.getBlockTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)
+      val te: TileEntity = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)
       if (te != null && te.isInstanceOf[IFluidHandler]) {
         val pumped = te.asInstanceOf[IFluidHandler].fill(dir.getOpposite, tank.getFluid, true)
         if (pumped > 0) {

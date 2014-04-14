@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.items
 
-import net.minecraft.item.{ItemStack, EnumToolMaterial, ItemTool}
+import net.minecraft.item.{Item, ItemStack, ItemTool}
 import net.minecraft.world.World
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.gendustry.Gendustry
@@ -20,15 +20,16 @@ import net.minecraft.entity.EntityLivingBase
 import java.util
 import net.minecraft.creativetab.CreativeTabs
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.power.ItemPowered
 import forestry.api.core.IToolScoop
-import net.minecraftforge.common.{ForgeHooks, MinecraftForge}
+import net.minecraftforge.common.ForgeHooks
+import net.minecraft.block.material.Material
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
-class IndustrialScoop(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Array.empty[Block]) with ItemPowered with IToolScoop {
+class IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with ItemPowered with IToolScoop {
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialScoop")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
@@ -37,21 +38,21 @@ class IndustrialScoop(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Ar
   setMaxStackSize(1)
   setMaxDamage(101)
 
-  MinecraftForge.setToolClass(this, "scoop", 3)
-
   efficiencyOnProperMaterial = 32
 
-  override def getStrVsBlock(stack: ItemStack, block: Block) = getStrVsBlock(stack, block, 1)
-  override def getStrVsBlock(stack: ItemStack, block: Block, meta: Int) =
+  override def getHarvestLevel(stack: ItemStack, toolClass: String) =
+    if (toolClass == "scoop") 3 else -1
+
+  override def getDigSpeed(stack: ItemStack, block: Block, meta: Int) =
     if (!hasCharges(stack))
       0.1F
-    else if (ForgeHooks.isToolEffective(stack, block, meta))
+    else if (block.getMaterial == Material.leaves)
       efficiencyOnProperMaterial
     else
       0.1F
 
-  override def onBlockDestroyed(stack: ItemStack, world: World, blockId: Int, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
-    if (ForgeHooks.isToolEffective(stack, Block.blocksList(world.getBlockId(x, y, z)), world.getBlockMetadata(x, y, z))) {
+  override def onBlockDestroyed(stack: ItemStack, world: World, block: Block, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
+    if (ForgeHooks.isToolEffective(stack, block, world.getBlockMetadata(x, y, z))) {
       useCharge(stack, 1, player)
       return true
     }
@@ -67,7 +68,7 @@ class IndustrialScoop(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Ar
     tip += Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge)
   }
 
-  override def getSubItems(par1: Int, tabs: CreativeTabs, l: util.List[_]) {
+  override def getSubItems(item: Item, tabs: CreativeTabs, l: util.List[_]) {
     import scala.collection.JavaConverters._
     val items = l.asInstanceOf[util.List[ItemStack]].asScala
     items += new ItemStack(this)
@@ -79,7 +80,7 @@ class IndustrialScoop(id: Int) extends ItemTool(id, 0, EnumToolMaterial.IRON, Ar
   override def isBookEnchantable(itemstack1: ItemStack, itemstack2: ItemStack): Boolean = false
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
+  override def registerIcons(reg: IIconRegister) {
     itemIcon = reg.registerIcon(Gendustry.modId + ":scoop")
   }
 }

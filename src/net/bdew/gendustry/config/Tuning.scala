@@ -13,11 +13,12 @@ import net.bdew.lib.recipes.gencfg._
 import net.bdew.lib.recipes._
 import net.bdew.gendustry.fluids.{LiquidDNASources, ProteinSources, MutagenSources}
 import net.minecraftforge.oredict.OreDictionary
-import buildcraft.api.recipes.AssemblyRecipe
 import java.io.{InputStreamReader, FileReader, File}
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.bdew.lib.recipes.gencfg.CfgVal
+import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
+import buildcraft.core.recipes.AssemblyRecipeManager
 
 object Tuning extends ConfigSection
 
@@ -81,37 +82,37 @@ object TuningLoader {
       case StMutagen(st, mb) =>
         for (x <- getAllConcreteStacks(st)) {
           MutagenSources.register(x, mb)
-          log.info("Added Mutagen source %s -> %d mb".format(x, mb))
+          Gendustry.logInfo("Added Mutagen source %s -> %d mb".format(x, mb))
         }
 
       case StLiquidDNA(st, mb) =>
         for (x <- getAllConcreteStacks(st)) {
           LiquidDNASources.register(x, mb)
-          log.info("Added Liquid DNA source %s -> %d mb".format(x, mb))
+          Gendustry.logInfo("Added Liquid DNA source %s -> %d mb".format(x, mb))
         }
 
       case StProtein(st, mb) =>
         for (x <- getAllConcreteStacks(st)) {
           ProteinSources.register(x, mb)
-          log.info("Added Protein source %s -> %d mb".format(x, mb))
+          Gendustry.logInfo("Added Protein source %s -> %d mb".format(x, mb))
         }
 
       case StAssembly(rec, power, out, cnt) =>
-        log.info("Adding assembly recipe: %s + %d mj => %s * %d".format(rec, power, out, cnt))
+        Gendustry.logInfo("Adding assembly recipe: %s + %d mj => %s * %d".format(rec, power, out, cnt))
         val outStack = getConcreteStack(out, cnt)
         val stacks = rec.map {
           case (c, n) =>
             val s = getConcreteStack(currCharMap(c), n)
             if (s.getItemDamage == OreDictionary.WILDCARD_VALUE) {
               s.setItemDamage(0)
-              log.warning("%s added with wildcard metadata which is unsupported, assuming 0".format(s))
+              Gendustry.logWarn("%s added with wildcard metadata which is unsupported, assuming 0".format(s))
             }
-            log.info("%s -> %s".format(c, s))
+            Gendustry.logInfo("%s -> %s".format(c, s))
             s
         }
-        log.info("Output: %s".format(outStack))
-        AssemblyRecipe.assemblyRecipes.add(new AssemblyRecipe(stacks.toArray, power, outStack))
-        log.info("Done")
+        Gendustry.logInfo("Output: %s".format(outStack))
+        AssemblyRecipeManager.INSTANCE.getRecipes.add(new AssemblyRecipe(outStack, power, stacks: _*))
+        Gendustry.logInfo("Done")
 
       case _ => super.processDelayedStatement(s)
     }

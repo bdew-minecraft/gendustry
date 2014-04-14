@@ -10,8 +10,8 @@
 package net.bdew.gendustry.compat.triggers
 
 import net.bdew.gendustry.power.TilePowered
-import net.minecraftforge.common.ForgeDirection
 import buildcraft.api.gates.ActionManager
+import net.minecraftforge.common.util.ForgeDirection
 
 object TriggerPower0 extends BaseTrigger("power0", "z1", classOf[TilePowered]) {
   def getState(side: ForgeDirection, tile: TilePowered) = tile.power.stored == 0

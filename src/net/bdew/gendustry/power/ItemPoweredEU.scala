@@ -29,8 +29,8 @@ trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
   }
 
   def canProvideEnergy(itemStack: ItemStack) = false
-  def getChargedItemId(itemStack: ItemStack) = itemID
-  def getEmptyItemId(itemStack: ItemStack) = itemID
+  override def getEmptyItem(itemStack: ItemStack) = this
+  override def getChargedItem(itemStack: ItemStack) = this
   def getMaxCharge(itemStack: ItemStack) = (maxCharge * ratio).round
   def getTier(itemStack: ItemStack) = 2
   def getTransferLimit(itemStack: ItemStack) = 2048

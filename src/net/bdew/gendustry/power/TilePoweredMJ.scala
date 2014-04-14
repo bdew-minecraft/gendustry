@@ -10,12 +10,12 @@
 package net.bdew.gendustry.power
 
 import buildcraft.api.power.{PowerHandler, IPowerReceptor}
-import net.minecraftforge.common.ForgeDirection
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.machine.PoweredMachine
 import net.bdew.lib.power.TilePoweredBase
+import net.minecraftforge.common.util.ForgeDirection
 
 @Optional.Interface(modid = PowerProxy.BC_MOD_ID, iface = "buildcraft.api.power.IPowerReceptor")
 trait TilePoweredMJ extends TilePoweredBase with IPowerReceptor {
@@ -25,14 +25,14 @@ trait TilePoweredMJ extends TilePoweredBase with IPowerReceptor {
 
   def getPowerReceiver(side: ForgeDirection) = if (PowerProxy.MJEnabled) powerHandler.getPowerReceiver else null
 
-  def getWorld = worldObj
+  def getWorld = getWorldObj
 
   if (PowerProxy.haveBC) {
     serverTick.listen(() => {
       if (power.stored < power.capacity && powerHandler.getEnergyStored > 0) {
         // this is needed because perdition is stupid and can get applied after getEnergyStored and ninja-reduce the value >.>
         val canSend = powerHandler.useEnergy(0, power.capacity - power.stored, false)
-        val transferred = power.inject(canSend, false)
+        val transferred = power.inject(canSend.toFloat, false)
         powerHandler.useEnergy(transferred, transferred, true)
       }
     })

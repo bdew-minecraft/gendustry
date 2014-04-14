@@ -59,10 +59,10 @@ class CommandGiveSample extends CommandBase {
     if (!isValidAllele(root, chromosome, allele)) throw new CommandException("gendustry.givesample.error.invalid")
 
     val sample = Items.geneSample.newStack(GeneSampleInfo(root, chromosome, allele))
-    val entityitem = player.dropPlayerItem(sample)
+    val entityitem = player.entityDropItem(sample, 0)
     entityitem.delayBeforeCanPickup = 0
 
-    CommandBase.notifyAdmins(sender, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.username)
+    CommandBase.notifyAdmins(sender, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
   }
 
   override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): List[_] = {

@@ -18,7 +18,7 @@ import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.config.Items
 import net.bdew.lib.items.SimpleItem
 
-class GeneSample(id: Int) extends SimpleItem(id, "GeneSample") {
+class GeneSample extends SimpleItem("GeneSample") {
 
   setMaxStackSize(1)
   setContainerItem(Items.geneSampleBlank)

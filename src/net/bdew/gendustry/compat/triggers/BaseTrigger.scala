@@ -10,24 +10,24 @@
 package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.gates.{ITriggerParameter, ITrigger}
-import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.util.Icon
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.util.IIcon
 import net.bdew.lib.Misc
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
+import net.minecraftforge.common.util.ForgeDirection
 
 abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, tileClass: Class[T]) extends ITrigger {
-  var icon: Icon = null
+  var icon: IIcon = null
   def getLegacyId = -1
   def getUniqueTag = "gendustry." + ordering + "." + id
   def getIcon = icon
-  def registerIcons(ir: IconRegister) =
+  def registerIcons(ir: IIconRegister) =
     icon = ir.registerIcon("gendustry:trigger/" + id)
   def hasParameter = false
   def requiresParameter = false
   def getDescription = Misc.toLocal("gendustry.trigger." + id)
   def createParameter() = null
-
+  def rotateLeft() = this
   def isTriggerActive(side: ForgeDirection, tile: TileEntity, parameter: ITriggerParameter) =
     if (tileClass.isInstance(tile))
       getState(side, tile.asInstanceOf[T])

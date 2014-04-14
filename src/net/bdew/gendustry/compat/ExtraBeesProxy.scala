@@ -34,7 +34,7 @@ object ExtraBeesProxy {
 
   if (itemSerum != null) Gendustry.logInfo("ExtraBees serum item: %s", itemSerum)
 
-  def isSerum(stack: ItemStack) = if (itemSerum != null) stack.itemID == itemSerum.itemID else false
+  def isSerum(stack: ItemStack) = if (itemSerum != null) stack.getItem == itemSerum else false
 
   def getSerumSample(stack: ItemStack): GeneSampleInfo = {
     if (!isSerum(stack)) return null

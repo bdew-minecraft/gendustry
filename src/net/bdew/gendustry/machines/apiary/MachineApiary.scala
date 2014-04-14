@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, PoweredMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineApiary extends Machine("IndustrialApiary", new BlockApiary(_)) with GuiProvider with PoweredMachine {
+class MachineApiary extends Machine("IndustrialApiary", new BlockApiary) with GuiProvider with PoweredMachine {
   def guiId = 3
   type TEClass = TileApiary
 

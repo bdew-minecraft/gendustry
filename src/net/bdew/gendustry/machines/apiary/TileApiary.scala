@@ -12,7 +12,6 @@ package net.bdew.gendustry.machines.apiary
 import net.bdew.lib.data._
 import net.bdew.lib.tile.inventory.{BreakableInventoryTile, SidedInventory, PersistentInventoryTile}
 import forestry.api.apiculture._
-import net.minecraftforge.common.ForgeDirection
 import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.minecraft.item.ItemStack
 import forestry.api.core.{EnumHumidity, EnumTemperature}
@@ -33,6 +32,7 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.gendustry.compat.triggers.ForestryErrorSource
 import net.bdew.gendustry.gui.rscontrol.TileRSContollable
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -88,9 +88,9 @@ with IBeeHousing {
     super.setInventorySlotContents(slot, stack)
   }
 
-  override def onInventoryChanged() {
+  override def markDirty() {
     updateModifiers()
-    super.onInventoryChanged()
+    super.markDirty()
   }
 
   def doMovePrincess() {

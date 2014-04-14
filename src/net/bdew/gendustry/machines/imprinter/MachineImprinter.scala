@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineImprinter extends Machine("Imprinter", new BlockImprinter(_)) with GuiProvider with ProcessorMachine {
+class MachineImprinter extends Machine("Imprinter", new BlockImprinter) with GuiProvider with ProcessorMachine {
   def guiId = 4
   type TEClass = TileImprinter
 

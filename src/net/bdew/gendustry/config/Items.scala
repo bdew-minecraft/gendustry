@@ -15,13 +15,13 @@ import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
 
-object Items extends ItemManager(Config.IDs) {
+object Items extends ItemManager() {
   val labware = regSimpleItem("Labware")
   val waste = regSimpleItem("Waste")
   val geneSampleBlank = regSimpleItem("GeneSampleBlank")
 
-  val geneSample = regItem(new GeneSample(ids.getItemId("GeneSample")))
-  val geneTemplate = regItem(new GeneTemplate(ids.getItemId("GeneTemplate")))
+  val geneSample = regItem(new GeneSample())
+  val geneTemplate = regItem(new GeneTemplate())
 
   val upgradeItem = regItemCls(classOf[ItemApiaryUpgrade], "ApiaryUpgrade")
 

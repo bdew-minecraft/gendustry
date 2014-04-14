@@ -22,7 +22,7 @@ import net.bdew.gendustry.machines.extractor.MachineExtractor
 import net.bdew.gendustry.machines.transposer.MachineTransposer
 import net.bdew.gendustry.machines.replicator.MachineReplicator
 
-object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines"), Config.guiHandler) {
+object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler) {
   val mutagenProducer = registerMachine(new MachineMutagenProducer)
   val mutatron = registerMachine(new MachineMutatron)
   val apiary = registerMachine(new MachineApiary)

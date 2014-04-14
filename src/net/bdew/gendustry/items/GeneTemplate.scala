@@ -23,7 +23,7 @@ import forestry.api.arboriculture.{ITreeRoot, EnumTreeChromosome}
 import forestry.api.lepidopterology.{IButterflyRoot, EnumButterflyChromosome}
 import net.minecraft.util.EnumChatFormatting
 
-class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
+class GeneTemplate extends SimpleItem("GeneTemplate") {
   setMaxStackSize(1)
 
   val unusedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
@@ -54,7 +54,7 @@ class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
   def getSamples(stack: ItemStack): Iterable[GeneSampleInfo] = {
     val tag = stack.getTagCompound
     if (tag != null)
-      return Misc.iterNbtList[NBTTagCompound](tag.getTagList("samples")).map(x => GeneSampleInfo.fromNBT(x))
+      return Misc.iterNbtCompoundList(tag, "samples").map(x => GeneSampleInfo.fromNBT(x))
     else
       return Seq.empty[GeneSampleInfo]
   }

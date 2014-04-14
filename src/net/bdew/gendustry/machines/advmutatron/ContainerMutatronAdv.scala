@@ -27,10 +27,10 @@ class ContainerMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extend
 
   bindPlayerInventory(player.inventory, 8, 106, 164)
 
-  te.lastPlayer := player.username
+  te.lastPlayer := player.getDisplayName
 
   override def slotClick(slotnum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
-    te.lastPlayer := player.username
+    te.lastPlayer := player.getDisplayName
     // This is a hacky workaround!
     // When a player changes the contents of a slot, playerInventoryBeingManipulated is set to true,
     // preventing updates to OTHER slots from being detected and sent back

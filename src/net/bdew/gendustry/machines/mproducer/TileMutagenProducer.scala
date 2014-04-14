@@ -13,7 +13,7 @@ import net.bdew.gendustry.config.{Fluids, Machines}
 import net.bdew.gendustry.fluids.MutagenSources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
+import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
 import net.bdew.lib.data._
 import net.bdew.lib.tile.ExposeTank
@@ -50,7 +50,7 @@ class TileMutagenProducer extends TileBaseProcessor with TilePowered with Expose
 
   def sendFluid() {
     for (dir <- ForgeDirection.VALID_DIRECTIONS) {
-      val te: TileEntity = worldObj.getBlockTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)
+      val te: TileEntity = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)
       if (te != null && te.isInstanceOf[IFluidHandler]) {
         val pumped = te.asInstanceOf[IFluidHandler].fill(dir.getOpposite, tank.getFluid, true)
         if (pumped > 0) {

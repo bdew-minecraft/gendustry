@@ -28,18 +28,18 @@ group= "net.bdew.gendustry"
 archivesBaseName = "deps"
 
 minecraft {
-    version = "1.6.4-9.11.1.964"
+    version = "1.7.2-10.12.0.1057"
 }
 
 apply from: 'downloader.gradle'
 
-addGitDep("cofh","https://github.com/KingLemming/CoFHLib.git","24600c4cfda893a16316c0631972170413f3a1e3")
-addGitDep("bc","https://github.com/BuildCraft/BuildCraft.git","03acd96b2b5a9a3270985246cd835c0ca866def7")
-addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059e2397977b227f438db9d21ef8de1a8e")
-addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
-addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
-addZipDep("forestry","http://bit.ly/IYjfWc","2.3.1.0")
-addZipDep("ic2","http://ic2api.player.to:8080/job/IC2_experimental/307/artifact/packages/industrialcraft-2-api_2.0.307-experimental.zip","307")
+//addGitDep("cofh","https://github.com/KingLemming/CoFHLib.git","24600c4cfda893a16316c0631972170413f3a1e3")
+addGitDep("bc","https://github.com/BuildCraft/BuildCraft.git","30882a155b4d364c400ac02753455ba80dd833f8")
+//addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059e2397977b227f438db9d21ef8de1a8e")
+//addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
+//addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
+addZipDep("forestry","http://player.to/forestry/forestry-2.4.0.0-711-api.zip","2.4.0.0-711")
+addZipDep("ic2","http://ic2api.player.to:8080/job/IC2_experimental/459/artifact/build/libs/industrialcraft-2-2.1.459-experimental-api.jar","459")
 
 task patchDeps(type: Sync) {
     dependsOn getDeps
@@ -51,9 +51,9 @@ task patchDeps(type: Sync) {
     exclude "ue/src/cofh"
     exclude "ue/src/ic2"
     doLast {
-        println("Applying patch...")
-        ant.fixcrlf(srcDir: "deps", includes: "**/*.java")
-        ant.patch(patchfile: "fixes.patch", strip: "1", dir: "deps", ignorewhitespace: "Yes", failonerror: "Yes")
+//        println("Applying patch...")
+//        ant.fixcrlf(srcDir: "deps", includes: "**/*.java")
+//        ant.patch(patchfile: "fixes.patch", strip: "1", dir: "deps", ignorewhitespace: "Yes", failonerror: "Yes")
     }
 }
 
@@ -63,7 +63,7 @@ afterEvaluate {
     sourceMainJava.dependsOn(patchDeps)
 }
 
-deobfBinJar.addTransformer('deps/nei/nei_at.cfg')
+//deobfBinJar.addTransformer('deps/nei/nei_at.cfg')
 
 sourceSets {
     main {
@@ -78,7 +78,7 @@ sourceSets {
             include 'forestry/**'
 
             srcDir 'deps/bc/common'
-            include 'buildcraft/api/**'
+            include 'buildcraft/**'
 
             srcDir 'deps/ic2'
             include 'ic2/**'

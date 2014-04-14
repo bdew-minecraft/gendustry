@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineSampler extends Machine("Sampler", new BlockSampler(_)) with GuiProvider with ProcessorMachine {
+class MachineSampler extends Machine("Sampler", new BlockSampler) with GuiProvider with ProcessorMachine {
   def guiId = 5
   type TEClass = TileSampler
 

@@ -9,13 +9,11 @@
 
 package net.bdew.gendustry.config
 
-import net.minecraftforge.common.Configuration
 import java.io.File
-import net.bdew.lib.config.IdManager
 import net.bdew.lib.gui.GuiHandler
+import net.minecraftforge.common.config.Configuration
 
 object Config {
-  var IDs: IdManager = null
   val guiHandler = new GuiHandler
 
   var neiAddSamples = false
@@ -30,7 +28,6 @@ object Config {
       neiAddSamples = c.get("NEI", "Add samples", true).getBoolean(false)
       powerShowUnits = c.get("Display", "PowerShowUnits", "MJ", "Units to use when displaying power. Valid values: MJ, EU, RF").getString
       if (powerShowUnits != "MJ") powerShowMultiplier = Tuning.getSection("Power").getFloat(powerShowUnits + "_MJ_Ratio")
-      IDs = new IdManager(c, 15000, 3500)
       Fluids.load()
       Blocks.load()
       Items.load()

@@ -2,6 +2,7 @@
 /out
 /build
 /run
+/deps/run
 /.idea/workspace.xml
 /.idea/dictionaries
 /eclipse

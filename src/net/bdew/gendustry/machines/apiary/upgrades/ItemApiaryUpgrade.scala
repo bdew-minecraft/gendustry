@@ -11,9 +11,9 @@ package net.bdew.gendustry.machines.apiary.upgrades
 
 import net.minecraft.item.{ItemStack, Item}
 import net.bdew.gendustry.api.{ApiaryModifiers, IApiaryUpgrade}
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.bdew.gendustry.Gendustry
-import net.minecraft.util.Icon
+import net.minecraft.util.IIcon
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.creativetab.CreativeTabs
 import java.util
@@ -21,8 +21,8 @@ import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.Misc
 import cpw.mods.fml.common.registry.GameRegistry
 
-class ItemApiaryUpgrade(id: Int) extends Item(id) with IApiaryUpgrade {
-  val icons = collection.mutable.Map.empty[Int, Icon]
+class ItemApiaryUpgrade extends Item with IApiaryUpgrade {
+  val icons = collection.mutable.Map.empty[Int, IIcon]
 
   setHasSubtypes(true)
   setMaxDamage(-1)
@@ -79,7 +79,7 @@ class ItemApiaryUpgrade(id: Int) extends Item(id) with IApiaryUpgrade {
 
   }
 
-  def getStackingId(stack: ItemStack) = itemID * Int.MaxValue + stack.getItemDamage
+  def getStackingId(stack: ItemStack) = Item.getIdFromItem(this) * Int.MaxValue + stack.getItemDamage
   def getMaxNumber(stack: ItemStack): Int = {
     if (Upgrades.map.contains(stack.getItemDamage))
       return Upgrades.map(stack.getItemDamage).maxNum
@@ -93,7 +93,7 @@ class ItemApiaryUpgrade(id: Int) extends Item(id) with IApiaryUpgrade {
     }
   }
 
-  override def getIconFromDamage(meta: Int): Icon = {
+  override def getIconFromDamage(meta: Int): IIcon = {
     if (icons.contains(meta))
       return icons(meta)
     return null
@@ -105,14 +105,14 @@ class ItemApiaryUpgrade(id: Int) extends Item(id) with IApiaryUpgrade {
     return "invalid"
   }
 
-  override def getSubItems(par1: Int, par2CreativeTabs: CreativeTabs, list: util.List[_]) {
+  override def getSubItems(par1: Item, par2CreativeTabs: CreativeTabs, list: util.List[_]) {
     val l = list.asInstanceOf[util.List[ItemStack]]
     for ((id, name) <- Upgrades.map)
       l.add(new ItemStack(this, 1, id))
   }
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
+  override def registerIcons(reg: IIconRegister) {
     for ((id, upgrade) <- Upgrades.map) {
       icons += id -> reg.registerIcon("%s:upgrades/%s".format(Gendustry.modId, upgrade.name))
     }

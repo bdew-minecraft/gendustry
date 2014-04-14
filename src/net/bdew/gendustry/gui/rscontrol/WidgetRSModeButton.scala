@@ -14,6 +14,8 @@ import net.bdew.lib.gui.widgets.Widget
 import net.bdew.gendustry.gui.Textures
 import scala.collection.mutable
 import net.bdew.lib.{Misc, Client}
+import net.minecraft.client.audio.PositionedSoundRecord
+import net.minecraft.util.ResourceLocation
 
 class WidgetRSModeButton(p: Point, te: TileRSContollable, container: ContainerRSControllable) extends Widget {
   val rect = new Rect(p, 16, 16)
@@ -36,7 +38,7 @@ class WidgetRSModeButton(p: Point, te: TileRSContollable, container: ContainerRS
   }
 
   override def mouseClicked(p: Point, button: Int) {
-    Client.minecraft.sndManager.playSoundFX("random.click", 1.0F, 1.0F)
+    Client.minecraft.getSoundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F))
     Client.minecraft.playerController.windowClick(container.windowId, container.RSMODE_SLOT_NUM, RSMode.next(te.rsmode).id, 0, Client.player)
   }
 }

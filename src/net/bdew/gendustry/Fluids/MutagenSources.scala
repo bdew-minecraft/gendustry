@@ -9,32 +9,28 @@
 
 package net.bdew.gendustry.fluids
 
-import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import scala.collection.mutable
 import net.minecraftforge.oredict.OreDictionary
 
 class FluidRegistry {
-  val values = mutable.Map.empty[Int, mutable.Map[Int, Int]]
+  val values = mutable.Map.empty[Item, mutable.Map[Int, Int]]
 
-  def register(block: Block, value: Integer): Unit = register(block.blockID, OreDictionary.WILDCARD_VALUE, value)
-  def register(item: Item, value: Integer): Unit = register(item.itemID, OreDictionary.WILDCARD_VALUE, value)
-  def register(item: ItemStack, value: Integer): Unit = register(item.itemID, item.getItemDamage, value)
+  def register(stack: ItemStack, value: Int): Unit = register(stack.getItem, stack.getItemDamage, value)
 
-  def register(id: Int, damage: Int, value: Int) {
-    if (values.contains(id)) {
-      values(id) += (damage -> value)
+  def register(item: Item, damage: Int, value: Int) {
+    if (values.contains(item)) {
+      values(item) += (damage -> value)
     } else {
       val sub = mutable.Map.empty[Int, Int]
       sub += (damage -> value)
-      values.put(id, sub)
+      values.put(item, sub)
     }
   }
 
   def getValue(item: ItemStack): Int = {
-    if (!values.contains(item.itemID)) return 0
-    val sub = values(item.itemID)
+    val sub = values.getOrElse(item.getItem, return 0)
     if (sub.contains(item.getItemDamage)) {
       return sub(item.getItemDamage)
     } else if (sub.contains(OreDictionary.WILDCARD_VALUE)) {

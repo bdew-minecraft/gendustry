@@ -14,22 +14,22 @@ import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.util.Icon
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.util.IIcon
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockReplicator(id: Int) extends Block(id, Material.rock) with HasTE[TileReplicator] with BreakableInventoryBlock with BlockGuiWrenchable {
+class BlockReplicator extends Block(Material.rock) with HasTE[TileReplicator] with BreakableInventoryBlock with BlockGuiWrenchable {
   val TEClass = classOf[TileReplicator]
-  private var icons: Array[Icon] = null
+  private var icons: Array[IIcon] = null
   lazy val guiId: Int = Machines.replicator.guiId
 
-  setUnlocalizedName(Gendustry.modId + ".replicator")
+  setBlockName(Gendustry.modId + ".replicator")
   setHardness(5)
 
-  override def getIcon(side: Int, meta: Int): Icon = {
+  override def getIcon(side: Int, meta: Int): IIcon = {
     side match {
       case 0 =>
         return icons(0)
@@ -41,8 +41,8 @@ class BlockReplicator(id: Int) extends Block(id, Material.rock) with HasTE[TileR
   }
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
-    icons = new Array[Icon](3)
+  override def registerBlockIcons(reg: IIconRegister) {
+    icons = new Array[IIcon](3)
     icons(0) = reg.registerIcon(Gendustry.modId + ":replicator/bottom")
     icons(1) = reg.registerIcon(Gendustry.modId + ":replicator/top")
     icons(2) = reg.registerIcon(Gendustry.modId + ":replicator/side")

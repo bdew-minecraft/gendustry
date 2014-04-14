@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineReplicator extends Machine("Replicator", new BlockReplicator(_)) with GuiProvider with ProcessorMachine {
+class MachineReplicator extends Machine("Replicator", new BlockReplicator) with GuiProvider with ProcessorMachine {
   def guiId = 10
   type TEClass = TileReplicator
 

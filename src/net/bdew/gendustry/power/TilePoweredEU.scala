@@ -10,7 +10,7 @@
 package net.bdew.gendustry.power
 
 import net.bdew.gendustry.compat.PowerProxy
-import net.minecraftforge.common.{ForgeDirection, MinecraftForge}
+import net.minecraftforge.common.MinecraftForge
 import ic2.api.energy.event.{EnergyTileUnloadEvent, EnergyTileLoadEvent}
 import ic2.api.energy.tile.IEnergySink
 import net.bdew.gendustry.config.Tuning
@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity
 import cpw.mods.fml.common.Optional
 import net.bdew.lib.power.TilePoweredBase
 import net.bdew.lib.Misc
+import net.minecraftforge.common.util.ForgeDirection
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.IEnergySink")
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {

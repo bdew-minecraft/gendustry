@@ -9,12 +9,12 @@
 
 package net.bdew.gendustry.compat.triggers
 
-import net.minecraftforge.common.ForgeDirection
 import net.bdew.gendustry.machines.apiary.{ErrorCodes, TileApiary}
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
 import net.bdew.gendustry.Gendustry
 import buildcraft.api.gates.ActionManager
+import net.minecraftforge.common.util.ForgeDirection
 
 trait ForestryErrorSource extends TileEntity {
   def getErrorOrdinal: Int
@@ -23,7 +23,7 @@ trait ForestryErrorSource extends TileEntity {
 case class ForestryErrorTrigger(code: Int) extends BaseTrigger("forestry.error." + code, "y%03d".format(code), classOf[ForestryErrorSource]) {
   override def getIcon = ErrorCodes.getIcon(code).icon
   override def getDescription = ErrorCodes.getDescription(code)
-  override def registerIcons(ir: IconRegister) {}
+  override def registerIcons(ir: IIconRegister) {}
   def getState(side: ForgeDirection, tile: ForestryErrorSource) =
     tile.asInstanceOf[TileApiary].getErrorOrdinal == code
 }

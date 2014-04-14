@@ -12,9 +12,9 @@ package net.bdew.gendustry.machines.apiary
 import net.bdew.gendustry.Gendustry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.util.Icon
+import net.minecraft.util.IIcon
 import net.minecraft.world.{IBlockAccess, World}
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
@@ -25,28 +25,28 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockApiary(id: Int) extends Block(id, Material.rock) with HasTE[TileApiary] with BlockGuiWrenchable with BreakableInventoryBlock {
-  private var icons: Array[Icon] = null
+class BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with BlockGuiWrenchable with BreakableInventoryBlock {
+  private var icons: Array[IIcon] = null
   val TEClass = classOf[TileApiary]
   lazy val guiId: Int = Machines.apiary.guiId
 
-  setUnlocalizedName(Gendustry.modId + ".apiary")
+  setBlockName(Gendustry.modId + ".apiary")
   setHardness(5)
 
-  override def getIcon(side: Int, meta: Int): Icon = if (side < 2) icons(0) else icons(1)
+  override def getIcon(side: Int, meta: Int): IIcon = if (side < 2) icons(0) else icons(1)
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
-    icons = new Array[Icon](2)
+  override def registerBlockIcons(reg: IIconRegister) {
+    icons = new Array[IIcon](2)
     icons(0) = reg.registerIcon(Gendustry.modId + ":apiary/top")
     icons(1) = reg.registerIcon(Gendustry.modId + ":apiary/side")
   }
 
   override def getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int): Int = {
-    val block: Block = Block.blocksList(world.getBlockId(x, y, z))
+    val block = world.getBlock(x, y, z)
     if (block != null && block != this)
       return block.getLightValue(world, x, y, z)
-    else if (world.getBlockTileEntity(x, y, z) != null && getTE(world, x, y, z).hasLight)
+    else if (world.getTileEntity(x, y, z) != null && getTE(world, x, y, z).hasLight)
       return 15
     else
       return 0
@@ -54,6 +54,6 @@ class BlockApiary(id: Int) extends Block(id, Material.rock) with HasTE[TileApiar
 
   override def onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, player: EntityLivingBase, stack: ItemStack) {
     if (player.isInstanceOf[EntityPlayerMP])
-      getTE(world, x, y, z).owner := player.asInstanceOf[EntityPlayerMP].username
+      getTE(world, x, y, z).owner := player.asInstanceOf[EntityPlayerMP].getCommandSenderName
   }
 }

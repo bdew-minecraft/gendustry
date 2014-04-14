@@ -12,15 +12,15 @@ package net.bdew.gendustry.fluids
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.item.Item
 import net.minecraftforge.fluids.Fluid
 
-class ItemFluidCan(id: Int, fluid: Fluid) extends Item(id) {
+class ItemFluidCan(fluid: Fluid) extends Item() {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase + ".can")
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
+  override def registerIcons(reg: IIconRegister) {
     itemIcon = reg.registerIcon(Gendustry.modId + ":can/" + fluid.getName.toLowerCase)
   }
 }
