@@ -38,7 +38,7 @@ group = "net.bdew"
 archivesBaseName = "gendustry"
 
 minecraft {
-    version = "1.7.2-10.12.0.1057"
+    version = "1.7.2-10.12.0.1056"
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
 }
@@ -53,8 +53,9 @@ repositories {
 
 dependencies {
     compile "net.bdew:bdlib:" + bdlibver
-//    compile "com.mod-buildcraft:buildcraft:5.0.0.+:dev"
-    compile project(path: ':deps', configuration: 'deps')
+    compile "com.mod-buildcraft:buildcraft:6.0.6.8"
+    compile "net.bdew.thirdparty:ic2api:2.1.464.1"
+    compile "net.bdew.thirdparty:forestryapi:2.4.0.0.711.1"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -102,41 +103,6 @@ artifacts {
 }
 
 apply plugin: 'maven-publish'
-
-
-ideaModule {
-    dependsOn task(":deps:sourceJar")
-    dependsOn task(":deps:deobfJar")
-}
-
-idea {
-    module {
-        iml {
-            withXml { xmlProvider ->
-                // Fix the IDEA module XML to use the jars produced by deps, because using them directly doesn't work properly
-                // This is somwhat hackish, but i couldn't find a better way...
-
-                // Find the right node
-                def module = xmlProvider.asNode()
-                def moduleDeps = module.component.find {it.@name == "NewModuleRootManager"}
-
-                // Nuke the module dependency
-                moduleDeps.remove(moduleDeps.find {it['@module-name'] == 'deps'})
-
-                // Setup the entry structure
-                def myNode = new Node(null, 'orderEntry', [type:'module-library', exported:''])
-                moduleDeps.children().add(0, myNode)
-                def libNode = myNode.appendNode 'library'
-                def classesNode = libNode.appendNode 'CLASSES'
-                def sourceNode = libNode.appendNode 'SOURCES'
-
-                // Add the jars, project.depJarPath and project.depSourceJarPath are set in the subproject  
-                classesNode.appendNode 'root', [url: 'jar://' + project.depJarPath.getAbsolutePath().replace('\\','/')+'!/']
-                sourceNode.appendNode 'root', [url: 'jar://' + project.depSourceJarPath.getAbsolutePath().replace('\\','/')+'!/']
-            }
-        }
-    }
-}
 
 publishing {
     publications {

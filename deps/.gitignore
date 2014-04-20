@@ -1,9 +1,0 @@
-/.gradle
-/build
-/deps
-/eclipse
-/out
-
-*.ipr
-*.iml
-*.iws
