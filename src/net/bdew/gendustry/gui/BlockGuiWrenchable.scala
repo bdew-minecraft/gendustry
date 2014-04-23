@@ -14,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayer
 import buildcraft.api.tools.IToolWrench
 import net.bdew.gendustry.Gendustry
 import net.minecraft.block.Block
+import net.minecraftforge.fluids.{IFluidHandler, FluidContainerRegistry}
+import net.minecraftforge.common.util.ForgeDirection
 
 //import cofh.api.block.IDismantleable
 
@@ -43,7 +45,37 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
 
   def canDismantle(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean = true
 
-  override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, meta: Int, xoffs: Float, yoffs: Float, zoffs: Float): Boolean = {
+  def tryFluidInteract(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: ForgeDirection): Boolean = {
+    val tileEntity = world.getTileEntity(x, y, z)
+    val activeItem = player.getCurrentEquippedItem
+    if (activeItem != null && tileEntity != null && tileEntity.isInstanceOf[IFluidHandler]) {
+      val fluidHandler = tileEntity.asInstanceOf[IFluidHandler]
+      if (FluidContainerRegistry.isEmptyContainer(activeItem)) {
+        val fstack = fluidHandler.drain(side, Int.MaxValue, false)
+        if (fstack != null) {
+          val filled = FluidContainerRegistry.fillFluidContainer(fstack, activeItem)
+          if (filled != null) {
+            fluidHandler.drain(side, FluidContainerRegistry.getFluidForFilledItem(filled), true)
+            player.inventory.decrStackSize(player.inventory.currentItem, 1)
+            ItemUtils.dropItemToPlayer(world, player, filled)
+            return true
+          }
+        }
+      } else if (FluidContainerRegistry.isFilledContainer(activeItem)) {
+        val fstack = FluidContainerRegistry.getFluidForFilledItem(activeItem)
+        if (fstack!=null && (fluidHandler.fill(side, fstack, false) == fstack.amount)) {
+          fluidHandler.fill(side, fstack, true)
+          val cont = activeItem.getItem.getContainerItem(activeItem)
+          player.inventory.decrStackSize(player.inventory.currentItem, 1)
+          if (cont != null) ItemUtils.dropItemToPlayer(world, player, cont)
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, xoffs: Float, yoffs: Float, zoffs: Float): Boolean = {
     if (player.isSneaking) {
       val equipped = if (player.getCurrentEquippedItem != null) player.getCurrentEquippedItem.getItem else null
       if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, x, y, z)) {
@@ -51,6 +83,8 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
         return true
       }
       return false
+    } else if (tryFluidInteract(world, x, y, z, player, ForgeDirection.values()(side))) {
+      return true
     } else {
       if (!world.isRemote) player.openGui(Gendustry.instance, guiId, world, x, y, z)
       return true
