@@ -9,27 +9,23 @@
 
 package net.bdew.gendustry.config
 
-import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.gendustry.items.{IndustrialScoop, IndustrialGrafter, GeneTemplate, GeneSample}
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
 
-object Items extends ItemManager() {
+object Items extends ItemManager {
   val labware = regSimpleItem("Labware")
   val waste = regSimpleItem("Waste")
   val geneSampleBlank = regSimpleItem("GeneSampleBlank")
 
-  val geneSample = regItem(new GeneSample())
-  val geneTemplate = regItem(new GeneTemplate())
+  regItem(GeneSample)
+  regItem(GeneTemplate)
 
-  val upgradeItem = regItemCls(classOf[ItemApiaryUpgrade], "ApiaryUpgrade")
+  regItem(ItemApiaryUpgrade)
 
-  val grafter = regItemCls(classOf[IndustrialGrafter], "IndustrialGrafter", false)
-  GameRegistry.registerCustomItemStack("IndustrialGrafter", grafter.stackWithCharge(0))
-
-  val scoop = regItemCls(classOf[IndustrialScoop], "IndustrialScoop", false)
-  GameRegistry.registerCustomItemStack("IndustrialScoop", scoop.stackWithCharge(0))
+  regItem(IndustrialGrafter)
+  regItem(IndustrialScoop)
 
   regSimpleItem("MutagenTank")
   regSimpleItem("BeeReceptacle")

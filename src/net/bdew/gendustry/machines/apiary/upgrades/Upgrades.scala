@@ -11,7 +11,7 @@ package net.bdew.gendustry.machines.apiary.upgrades
 
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.config.TuningLoader._
-import net.bdew.gendustry.config.{Items, Tuning}
+import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.recipes.gencfg.{EntryStr, ConfigSection}
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
@@ -72,7 +72,7 @@ object Upgrades {
         case (pname, v) => sys.error("Unknown upgrade modifier '%s' - %s in upgrade '%s'".format(pname, v, name))
       })
       map += id -> Upgrade(id, name, max, mods.toSeq)
-      GameRegistry.registerCustomItemStack("upgrade." + name, new ItemStack(Items.upgradeItem, 1, id))
+      GameRegistry.registerCustomItemStack("upgrade." + name, new ItemStack(ItemApiaryUpgrade, 1, id))
     }
   }
 }

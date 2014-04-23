@@ -17,6 +17,7 @@ import forestry.api.apiculture.{EnumBeeType, IBeeRoot, IBee}
 import scala.util.Random
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.gendustry.items.GeneTemplate
 
 class TileImprinter extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.imprinter
@@ -41,7 +42,7 @@ class TileImprinter extends TileItemProcessor with TilePowered {
 
       val individual = AlleleManager.alleleRegistry.getIndividual(getStackInSlot(slots.inIndividual))
       val genome = individual.getGenome.getChromosomes
-      val root = Items.geneTemplate.getSpecies(getStackInSlot(slots.inTemplate))
+      val root = GeneTemplate.getSpecies(getStackInSlot(slots.inTemplate))
 
       if (root != individual.getGenome.getSpeciesRoot) return false
 
@@ -65,7 +66,7 @@ class TileImprinter extends TileItemProcessor with TilePowered {
       val primary = genome.map(x => if (x == null) null else x.getPrimaryAllele)
       val secondary = genome.map(x => if (x == null) null else x.getSecondaryAllele)
 
-      for (x <- Items.geneTemplate.getSamples(getStackInSlot(slots.inTemplate))) {
+      for (x <- GeneTemplate.getSamples(getStackInSlot(slots.inTemplate))) {
         primary(x.chromosome) = x.allele
         secondary(x.chromosome) = x.allele
       }
@@ -95,13 +96,13 @@ class TileImprinter extends TileItemProcessor with TilePowered {
     if (stack == null || stack.getItem == null) return false
     slot match {
       case slots.inTemplate =>
-        return (stack.getItem == Items.geneTemplate) &&
-          (inv(slots.inIndividual) == null || Items.geneTemplate.getSpecies(stack) == AlleleManager.alleleRegistry.getSpeciesRoot(inv(slots.inIndividual)))
+        return (stack.getItem == GeneTemplate) &&
+          (inv(slots.inIndividual) == null || GeneTemplate.getSpecies(stack) == AlleleManager.alleleRegistry.getSpeciesRoot(inv(slots.inIndividual)))
       case slots.inLabware =>
         return stack.getItem == Items.labware
       case slots.inIndividual =>
         return (AlleleManager.alleleRegistry.getIndividual(stack) != null) &&
-          (inv(slots.inTemplate) == null || Items.geneTemplate.getSpecies(inv(slots.inTemplate)) == AlleleManager.alleleRegistry.getSpeciesRoot(stack))
+          (inv(slots.inTemplate) == null || GeneTemplate.getSpecies(inv(slots.inTemplate)) == AlleleManager.alleleRegistry.getSpeciesRoot(stack))
       case _ =>
         return false
     }

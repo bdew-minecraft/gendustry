@@ -22,8 +22,9 @@ import forestry.api.apiculture.{IBeeRoot, EnumBeeChromosome}
 import forestry.api.arboriculture.{ITreeRoot, EnumTreeChromosome}
 import forestry.api.lepidopterology.{IButterflyRoot, EnumButterflyChromosome}
 import net.minecraft.util.EnumChatFormatting
+import net.bdew.gendustry.Gendustry
 
-class GeneTemplate extends SimpleItem("GeneTemplate") {
+object GeneTemplate extends SimpleItem("GeneTemplate") {
   setMaxStackSize(1)
 
   val unusedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
@@ -112,7 +113,7 @@ class GeneTemplate extends SimpleItem("GeneTemplate") {
 
       } catch {
         case e: Throwable =>
-          e.printStackTrace()
+          Gendustry.logWarnException("Exception while generating template tooltip", e)
           tip += "Error"
       }
     } else {

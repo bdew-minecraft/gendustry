@@ -17,6 +17,7 @@ import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.compat.ExtraBeesProxy
+import net.bdew.gendustry.items.GeneSample
 
 class TileSampler extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.sampler
@@ -34,7 +35,7 @@ class TileSampler extends TileItemProcessor with TilePowered {
   def selectRandomAllele(stack: ItemStack): ItemStack = {
     if (cfg.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
       val sample = ExtraBeesProxy.getSerumSample(stack)
-      if (sample != null) return Items.geneSample.newStack(sample)
+      if (sample != null) return GeneSample.newStack(sample)
     }
 
     val root = AlleleManager.alleleRegistry.getSpeciesRoot(stack)
@@ -48,7 +49,7 @@ class TileSampler extends TileItemProcessor with TilePowered {
 
     val rand = new Random()
     val (chr, allele) = alleles(rand.nextInt(alleles.length))
-    return Items.geneSample.newStack(GeneSampleInfo(root, chr, allele))
+    return GeneSample.newStack(GeneSampleInfo(root, chr, allele))
   }
 
   def canStart =

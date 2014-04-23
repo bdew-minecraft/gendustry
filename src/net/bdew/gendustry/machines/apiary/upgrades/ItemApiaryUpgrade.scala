@@ -19,17 +19,15 @@ import net.minecraft.creativetab.CreativeTabs
 import java.util
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.Misc
-import cpw.mods.fml.common.registry.GameRegistry
+import net.bdew.lib.items.NamedItem
 
-class ItemApiaryUpgrade extends Item with IApiaryUpgrade {
-  val icons = collection.mutable.Map.empty[Int, IIcon]
+object ItemApiaryUpgrade extends Item with IApiaryUpgrade with NamedItem {
+  var icons = Map.empty[Int, IIcon]
+  def name = "ApiaryUpgrade"
 
   setHasSubtypes(true)
   setMaxDamage(-1)
   setUnlocalizedName(Gendustry.modId + ".apiary.upgrade")
-
-  for ((id, upgrade) <- Upgrades.map)
-    GameRegistry.registerCustomItemStack("upgrade." + upgrade.name, new ItemStack(this, 1, id))
 
   def formatModifier(f: Float, base: Float) = (if (f > base) "+" else "") + "%.0f".format((f - base) * 100) + "%"
 
@@ -113,8 +111,8 @@ class ItemApiaryUpgrade extends Item with IApiaryUpgrade {
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {
-    for ((id, upgrade) <- Upgrades.map) {
-      icons += id -> reg.registerIcon("%s:upgrades/%s".format(Gendustry.modId, upgrade.name))
-    }
+    icons = Upgrades.map.map({
+      case (id, upgrade) => id -> reg.registerIcon("%s:upgrades/%s".format(Gendustry.modId, upgrade.name))
+    }).toMap
   }
 }

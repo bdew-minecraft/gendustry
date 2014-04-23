@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.replicator
 
-import net.bdew.gendustry.config.{Fluids, Items, Machines}
+import net.bdew.gendustry.config.{Fluids, Machines}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
@@ -17,6 +17,7 @@ import net.bdew.lib.data.DataSlotTankRestricted
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.items.GeneTemplate
 
 class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandler {
   lazy val cfg = Machines.replicator
@@ -48,7 +49,7 @@ class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandl
   }
 
   override def isItemValidForSlot(slot: Int, itemstack: ItemStack) =
-    slot == slots.inTemplate && itemstack.getItem == Items.geneTemplate && Items.geneTemplate.isComplete(itemstack)
+    slot == slots.inTemplate && itemstack.getItem == GeneTemplate && GeneTemplate.isComplete(itemstack)
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outIndividual

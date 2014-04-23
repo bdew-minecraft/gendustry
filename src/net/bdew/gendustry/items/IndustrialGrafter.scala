@@ -26,9 +26,11 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.power.ItemPowered
+import net.bdew.lib.items.NamedItem
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
-class IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with ItemPowered with IToolGrafter {
+object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolGrafter {
+  def name = "IndustrialGrafter"
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge

@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.world.World
 import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
-import net.bdew.gendustry.config.Items
 
 class GeneRecipe extends IRecipe {
   def matches(inv: InventoryCrafting, world: World): Boolean = getCraftingResult(inv) != null
@@ -23,9 +22,9 @@ class GeneRecipe extends IRecipe {
     var samples = Seq.empty[GeneSampleInfo]
     for (i <- 0 until 3; j <- 0 until 3) {
       val itm = inv.getStackInRowAndColumn(i, j)
-      if (itm != null && itm.getItem.isInstanceOf[GeneSample] && itm.hasTagCompound)
-        samples :+= Items.geneSample.getInfo(itm)
-      else if (itm != null && itm.getItem.isInstanceOf[GeneTemplate] && template == null)
+      if (itm != null && itm.getItem == GeneSample && itm.hasTagCompound)
+        samples :+= GeneSample.getInfo(itm)
+      else if (itm != null && itm.getItem == GeneTemplate && template == null)
         template = itm
       else if (itm != null)
         return null
@@ -33,7 +32,7 @@ class GeneRecipe extends IRecipe {
     if (samples.isEmpty || template == null) return null
     val out = template.copy()
     for (s <- samples) {
-      if (!Items.geneTemplate.addSample(out, s)) return null
+      if (!GeneTemplate.addSample(out, s)) return null
     }
     return out
   }

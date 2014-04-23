@@ -17,7 +17,7 @@ import net.bdew.lib.Misc
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
 
-object Fluids extends FluidManager() {
+object Fluids extends FluidManager {
   val emptyBucket = new ItemStack(GameRegistry.findItem("minecraft", "bucket"))
   val emptyCan = new ItemStack(GameRegistry.findItem("Forestry", "canEmpty"))
 

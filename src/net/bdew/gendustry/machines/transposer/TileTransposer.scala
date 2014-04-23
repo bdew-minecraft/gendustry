@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.items.IStack
+import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
 
 class TileTransposer extends TileItemProcessor with TilePowered {
   lazy val cfg = Machines.transposer
@@ -37,11 +38,11 @@ class TileTransposer extends TileItemProcessor with TilePowered {
   def tryStart(): Boolean = {
     if (canStart) {
       val tpl = getStackInSlot(slots.inTemplate)
-      if (tpl.getItem == Items.geneSample) {
+      if (tpl.getItem == GeneSample) {
         output := tpl.copy()
-      } else if (tpl.getItem == Items.geneTemplate && Items.geneTemplate.getSamples(tpl) != null) {
+      } else if (tpl.getItem == GeneTemplate && GeneTemplate.getSamples(tpl) != null) {
         output := getStackInSlot(slots.inBlank).copy()
-        Items.geneTemplate.getSamples(tpl).foreach(Items.geneTemplate.addSample(output, _))
+        GeneTemplate.getSamples(tpl).foreach(GeneTemplate.addSample(output, _))
       } else return false
 
       decrStackSize(slots.inBlank, 1)
@@ -54,13 +55,13 @@ class TileTransposer extends TileItemProcessor with TilePowered {
 
   def isValidInputs(blank: ItemStack, template: ItemStack) = (blank, template) match {
     case (IStack(Items.geneSampleBlank), null) => true
-    case (IStack(Items.geneSampleBlank), IStack(Items.geneSample)) => true
-    case (null, IStack(Items.geneSample)) => true
-    case (IStack(Items.geneTemplate), null) => true
-    case (null, IStack(Items.geneTemplate)) => Items.geneTemplate.getSpecies(template) != null
-    case (IStack(Items.geneTemplate), IStack(Items.geneTemplate)) =>
-      val bsp = Items.geneTemplate.getSpecies(blank)
-      val tsp = Items.geneTemplate.getSpecies(template)
+    case (IStack(Items.geneSampleBlank), IStack(GeneSample)) => true
+    case (null, IStack(GeneSample)) => true
+    case (IStack(GeneTemplate), null) => true
+    case (null, IStack(GeneTemplate)) => GeneTemplate.getSpecies(template) != null
+    case (IStack(GeneTemplate), IStack(GeneTemplate)) =>
+      val bsp = GeneTemplate.getSpecies(blank)
+      val tsp = GeneTemplate.getSpecies(template)
       tsp != null && (bsp == null || bsp == tsp)
     case _ => false
   }

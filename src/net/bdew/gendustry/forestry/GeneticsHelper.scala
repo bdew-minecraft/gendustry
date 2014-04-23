@@ -19,6 +19,7 @@ import java.util.Random
 import net.bdew.gendustry.config.{Items, Machines}
 import net.minecraft.world.World
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
+import net.bdew.gendustry.items.GeneTemplate
 
 object GeneticsHelper {
   val random = new Random
@@ -169,8 +170,8 @@ object GeneticsHelper {
   }
 
   def individualFromTemplate(tpl: ItemStack, pristine: Boolean = false) = {
-    val root = Items.geneTemplate.getSpecies(tpl)
-    val samples = Items.geneTemplate.getSamples(tpl)
+    val root = GeneTemplate.getSpecies(tpl)
+    val samples = GeneTemplate.getSamples(tpl)
     val template = root.getDefaultTemplate
     samples.foreach(x => template(x.chromosome) = x.allele)
     val individual = root.templateAsIndividual(template)
@@ -189,10 +190,10 @@ object GeneticsHelper {
   def templateFromSpeciesUID(uid: String) = {
     val root = AlleleManager.alleleRegistry.getAllele(uid).asInstanceOf[IAlleleSpecies].getRoot
     val template = root.getTemplate(uid)
-    val item = new ItemStack(Items.geneTemplate)
+    val item = new ItemStack(GeneTemplate)
 
     for ((allele, chromosome) <- template.zipWithIndex if allele != null)
-      Items.geneTemplate.addSample(item, GeneSampleInfo(root, chromosome, allele))
+      GeneTemplate.addSample(item, GeneSampleInfo(root, chromosome, allele))
 
     item
   }

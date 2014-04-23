@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.item.Item
 import net.minecraftforge.fluids.Fluid
 
-class ItemFluidCan(fluid: Fluid) extends Item() {
+class ItemFluidCan(fluid: Fluid) extends Item {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase + ".can")
 
   @SideOnly(Side.CLIENT)

@@ -16,7 +16,7 @@ import _root_.forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyR
 import net.minecraft.command.{CommandException, CommandBase, ICommandSender, WrongUsageException}
 import java.util.List
 import net.bdew.gendustry.forestry.GeneSampleInfo
-import net.bdew.gendustry.config.Items
+import net.bdew.gendustry.items.GeneSample
 
 class CommandGiveSample extends CommandBase {
   def getCommandName = "givesample"
@@ -58,7 +58,7 @@ class CommandGiveSample extends CommandBase {
 
     if (!isValidAllele(root, chromosome, allele)) throw new CommandException("gendustry.givesample.error.invalid")
 
-    val sample = Items.geneSample.newStack(GeneSampleInfo(root, chromosome, allele))
+    val sample = GeneSample.newStack(GeneSampleInfo(root, chromosome, allele))
     val entityitem = player.entityDropItem(sample, 0)
     entityitem.delayBeforeCanPickup = 0
 

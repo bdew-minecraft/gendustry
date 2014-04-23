@@ -27,9 +27,11 @@ import net.bdew.gendustry.power.ItemPowered
 import forestry.api.core.IToolScoop
 import net.minecraftforge.common.ForgeHooks
 import net.minecraft.block.material.Material
+import net.bdew.lib.items.NamedItem
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
-class IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with ItemPowered with IToolScoop {
+object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolScoop {
+  def name = "IndustrialScoop"
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialScoop")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
