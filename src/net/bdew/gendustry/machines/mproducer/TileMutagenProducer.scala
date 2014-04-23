@@ -52,7 +52,7 @@ class TileMutagenProducer extends TileBaseProcessor with TilePowered with Expose
     for (dir <- ForgeDirection.VALID_DIRECTIONS) {
       val te: TileEntity = worldObj.getBlockTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)
       if (te != null && te.isInstanceOf[IFluidHandler]) {
-        val pumped = te.asInstanceOf[IFluidHandler].fill(dir.getOpposite, tank.getFluid, true)
+        val pumped = te.asInstanceOf[IFluidHandler].fill(dir.getOpposite, tank.getFluid.copy(), true)
         if (pumped > 0) {
           tank.drain(pumped, true)
           if (tank.getFluidAmount <= 0) return
