@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack
 import net.bdew.lib.tile.inventory.BreakableInventoryTile
 import net.bdew.lib.items.ItemUtils
 
+//FIXME Reenable when TE support is readded
 //@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.block.IDismantleable")
 trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
   val guiId: Int
@@ -46,7 +47,7 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     if (player.isSneaking) {
       val equipped = if (player.getCurrentEquippedItem != null) player.getCurrentEquippedItem.getItem else null
       if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, x, y, z)) {
-        if (!world.isRemote) world.getBlock(x, y, z).harvestBlock(world, player, x, y, z, world.getBlockMetadata(x, y, z))
+        if (!world.isRemote) world.func_147480_a(x, y, z, true) //destroyBlock
         return true
       }
       return false
