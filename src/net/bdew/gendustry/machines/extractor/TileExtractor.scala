@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.extractor
 
-import net.bdew.gendustry.config.{Items, Fluids, Machines}
+import net.bdew.gendustry.config.{Items, Fluids}
 import net.bdew.gendustry.fluids.LiquidDNASources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
@@ -22,7 +22,7 @@ import net.bdew.gendustry.power.TilePowered
 import net.minecraftforge.common.util.ForgeDirection
 
 class TileExtractor extends TileBaseProcessor with TilePowered with ExposeTank {
-  lazy val cfg = Machines.extractor
+  lazy val cfg = MachineExtractor
 
   object slots {
     val inIndividual = 0

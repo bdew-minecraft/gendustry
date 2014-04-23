@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.transposer
 
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.gendustry.config.Items
 import net.minecraft.item.ItemStack
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
@@ -17,7 +17,7 @@ import net.bdew.lib.items.IStack
 import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
 
 class TileTransposer extends TileItemProcessor with TilePowered {
-  lazy val cfg = Machines.transposer
+  lazy val cfg = MachineTransposer
 
   val outputSlots = Seq(slots.outCopy)
 

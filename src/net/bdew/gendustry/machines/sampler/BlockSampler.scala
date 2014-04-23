@@ -18,13 +18,12 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockSampler extends Block(Material.rock) with HasTE[TileSampler] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockSampler extends Block(Material.rock) with HasTE[TileSampler] with BreakableInventoryBlock with BlockGuiWrenchable {
   val TEClass = classOf[TileSampler]
   private var icons: Array[IIcon] = null
-  lazy val guiId: Int = Machines.sampler.guiId
+  lazy val guiId: Int = MachineSampler.guiId
 
   setBlockName(Gendustry.modId + ".sampler")
   setHardness(5)

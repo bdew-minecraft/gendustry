@@ -18,7 +18,7 @@ import forestry.api.core.{EnumHumidity, EnumTemperature}
 import net.bdew.lib.Misc
 import forestry.api.arboriculture.EnumGermlingType
 import net.bdew.lib.tile.TileExtended
-import net.bdew.gendustry.config.{Config, Machines}
+import net.bdew.gendustry.config.Config
 import net.bdew.lib.items.ItemUtils
 import net.bdew.gendustry.api.{ApiaryModifiers, IApiaryUpgrade}
 import scala.collection.mutable
@@ -57,7 +57,7 @@ with IBeeHousing {
 
   val beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
   val logic = beeRoot.createBeekeepingLogic(this)
-  lazy val cfg = Machines.apiary
+  lazy val cfg = MachineApiary
 
   val power = DataSlotPower("power", this)
   val errorState = DataSlotInt("error", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE, UpdateKind.WORLD)

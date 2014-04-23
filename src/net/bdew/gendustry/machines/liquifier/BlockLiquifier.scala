@@ -18,13 +18,12 @@ import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockLiquifier extends Block(Material.rock) with HasTE[TileLiquifier] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockLiquifier extends Block(Material.rock) with HasTE[TileLiquifier] with BreakableInventoryBlock with BlockGuiWrenchable {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileLiquifier]
-  lazy val guiId = Machines.liquifier.guiId
+  lazy val guiId = MachineLiquifier.guiId
 
   setBlockName(Gendustry.modId + ".liquifier")
   setHardness(5)

@@ -18,13 +18,12 @@ import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockMutagenProducer extends Block(Material.rock) with HasTE[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockMutagenProducer extends Block(Material.rock) with HasTE[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileMutagenProducer]
-  lazy val guiId = Machines.mutagenProducer.guiId
+  lazy val guiId = MachineMutagenProducer.guiId
 
   setBlockName(Gendustry.modId + ".mutagen.producer")
   setHardness(5)

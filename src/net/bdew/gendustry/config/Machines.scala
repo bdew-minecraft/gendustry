@@ -23,16 +23,16 @@ import net.bdew.gendustry.machines.transposer.MachineTransposer
 import net.bdew.gendustry.machines.replicator.MachineReplicator
 
 object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler) {
-  val mutagenProducer = registerMachine(new MachineMutagenProducer)
-  val mutatron = registerMachine(new MachineMutatron)
-  val apiary = registerMachine(new MachineApiary)
-  val imprinter = registerMachine(new MachineImprinter)
-  val sampler = registerMachine(new MachineSampler)
-  val mutatronAdv = registerMachine(new MachineMutatronAdv)
-  val liquifier = registerMachine(new MachineLiquifier)
-  val extractor = registerMachine(new MachineExtractor)
-  val transposer = registerMachine(new MachineTransposer)
-  val replicator = registerMachine(new MachineReplicator)
+  registerMachine(MachineMutagenProducer)
+  registerMachine(MachineMutatron)
+  registerMachine(MachineApiary)
+  registerMachine(MachineImprinter)
+  registerMachine(MachineSampler)
+  registerMachine(MachineMutatronAdv)
+  registerMachine(MachineLiquifier)
+  registerMachine(MachineExtractor)
+  registerMachine(MachineTransposer)
+  registerMachine(MachineReplicator)
 
   Gendustry.logInfo("Machines loaded")
 }

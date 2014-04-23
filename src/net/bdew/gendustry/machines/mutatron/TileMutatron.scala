@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.mutatron
 
-import net.bdew.gendustry.config.{Fluids, Items, Machines}
+import net.bdew.gendustry.config.{Fluids, Items}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
@@ -21,7 +21,7 @@ import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
 
 class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
-  lazy val cfg = Machines.mutatron
+  lazy val cfg = MachineMutatron
   val outputSlots = Seq(slots.outIndividual)
 
   object slots {

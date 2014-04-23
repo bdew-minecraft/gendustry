@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.liquifier
 
-import net.bdew.gendustry.config.{Fluids, Machines}
+import net.bdew.gendustry.config.Fluids
 import net.bdew.gendustry.fluids.ProteinSources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
@@ -22,7 +22,7 @@ import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.gendustry.power.TilePowered
 
 class TileLiquifier extends TileBaseProcessor with TilePowered with ExposeTank {
-  lazy val cfg = Machines.liquifier
+  lazy val cfg = MachineLiquifier
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.protein.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val output = DataSlotInt("output", this).setUpdate(UpdateKind.SAVE)

@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineTransposer extends Machine("Transposer", new BlockTransposer) with GuiProvider with ProcessorMachine {
+object MachineTransposer extends Machine("Transposer", BlockTransposer) with GuiProvider with ProcessorMachine {
   def guiId = 9
   type TEClass = TileTransposer
 

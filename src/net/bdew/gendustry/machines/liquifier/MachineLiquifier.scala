@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{SideOnly, Side}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineLiquifier extends Machine("Liquifier", new BlockLiquifier) with GuiProvider with ProcessorMachine {
+object MachineLiquifier extends Machine("Liquifier", BlockLiquifier) with GuiProvider with ProcessorMachine {
   def guiId = 7
   type TEClass = TileLiquifier
 

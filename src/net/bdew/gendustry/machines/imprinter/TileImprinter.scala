@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.imprinter
 
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.gendustry.config.Items
 import net.minecraft.item.ItemStack
 import forestry.api.genetics.AlleleManager
 import net.minecraft.nbt.NBTTagCompound
@@ -20,7 +20,7 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.items.GeneTemplate
 
 class TileImprinter extends TileItemProcessor with TilePowered {
-  lazy val cfg = Machines.imprinter
+  lazy val cfg = MachineImprinter
   val outputSlots = Seq(slots.outIndividual)
 
   object slots {
@@ -50,12 +50,12 @@ class TileImprinter extends TileItemProcessor with TilePowered {
         if (root.asInstanceOf[IBeeRoot].getType(getStackInSlot(slots.inIndividual)) != EnumBeeType.DRONE) {
           val random = new Random()
           if (individual.asInstanceOf[IBee].isNatural) {
-            if (random.nextInt(100) < Machines.imprinter.deathChanceNatural) {
+            if (random.nextInt(100) < cfg.deathChanceNatural) {
               doStart(new ItemStack(Items.waste))
               return true
             }
           } else {
-            if (random.nextInt(100) < Machines.imprinter.deathChanceArtificial) {
+            if (random.nextInt(100) < cfg.deathChanceArtificial) {
               doStart(new ItemStack(Items.waste))
               return true
             }

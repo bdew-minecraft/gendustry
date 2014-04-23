@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.replicator
 
-import net.bdew.gendustry.config.{Fluids, Machines}
+import net.bdew.gendustry.config.Fluids
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
@@ -20,7 +20,7 @@ import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.items.GeneTemplate
 
 class TileReplicator extends TileItemProcessor with TilePowered with IFluidHandler {
-  lazy val cfg = Machines.replicator
+  lazy val cfg = MachineReplicator
   val outputSlots = Seq(slots.outIndividual)
 
   object slots {

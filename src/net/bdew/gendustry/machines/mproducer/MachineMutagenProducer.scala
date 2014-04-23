@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{SideOnly, Side}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineMutagenProducer extends Machine("MutagenProducer", new BlockMutagenProducer) with GuiProvider with ProcessorMachine {
+object MachineMutagenProducer extends Machine("MutagenProducer", BlockMutagenProducer) with GuiProvider with ProcessorMachine {
   def guiId = 1
   type TEClass = TileMutagenProducer
 

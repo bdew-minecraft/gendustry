@@ -20,15 +20,14 @@ import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with BlockGuiWrenchable with BreakableInventoryBlock {
+object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with BlockGuiWrenchable with BreakableInventoryBlock {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileApiary]
-  lazy val guiId: Int = Machines.apiary.guiId
+  lazy val guiId: Int = MachineApiary.guiId
 
   setBlockName(Gendustry.modId + ".apiary")
   setHardness(5)

@@ -18,13 +18,12 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 
-class BlockMutatronAdv extends Block(Material.rock) with HasTE[TileMutatronAdv] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockMutatronAdv extends Block(Material.rock) with HasTE[TileMutatronAdv] with BreakableInventoryBlock with BlockGuiWrenchable {
   val TEClass = classOf[TileMutatronAdv]
   private var icons: Array[IIcon] = null
-  lazy val guiId: Int = Machines.mutatronAdv.guiId
+  lazy val guiId = MachineMutatronAdv.guiId
 
   setBlockName(Gendustry.modId + ".mutatron.adv")
   setHardness(5)

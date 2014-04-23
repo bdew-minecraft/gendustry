@@ -16,10 +16,11 @@ import forestry.api.arboriculture.{ITree, EnumGermlingType, ITreeRoot}
 import forestry.api.genetics._
 import net.minecraft.item.ItemStack
 import java.util.Random
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.gendustry.config.Items
 import net.minecraft.world.World
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
 import net.bdew.gendustry.items.GeneTemplate
+import net.bdew.gendustry.machines.mutatron.MachineMutatron
 
 object GeneticsHelper {
   val random = new Random
@@ -89,7 +90,7 @@ object GeneticsHelper {
       if (secret.size > 0) {
         if (normal.size > 0) {
           // Have both, check chance
-          if (random.nextInt(100) < Machines.mutatron.secretChance) {
+          if (random.nextInt(100) < MachineMutatron.secretChance) {
             secret(random.nextInt(secret.size))
           } else {
             normal(random.nextInt(normal.size))
@@ -139,10 +140,10 @@ object GeneticsHelper {
         val beeOriginal = bees.getMember(original)
 
         if (beeOriginal.isNatural) {
-          if (random.nextInt(100) < Machines.mutatron.degradeChanceNatural)
+          if (random.nextInt(100) < MachineMutatron.degradeChanceNatural)
             beeResult.setIsNatural(false)
         } else {
-          if (random.nextInt(100) < Machines.mutatron.deathChanceArtificial)
+          if (random.nextInt(100) < MachineMutatron.deathChanceArtificial)
             return new ItemStack(Items.waste)
         }
 

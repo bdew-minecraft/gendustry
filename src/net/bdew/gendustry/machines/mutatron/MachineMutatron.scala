@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
 
-class MachineMutatron extends Machine("Mutatron", new BlockMutatron) with GuiProvider with ProcessorMachine {
+object MachineMutatron extends Machine("Mutatron", BlockMutatron) with GuiProvider with ProcessorMachine {
   def guiId = 2
   type TEClass = TileMutatron
 

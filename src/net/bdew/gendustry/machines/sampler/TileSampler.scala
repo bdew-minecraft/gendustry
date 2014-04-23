@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.sampler
 
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.gendustry.config.Items
 import net.minecraft.item.ItemStack
 import forestry.api.genetics.AlleleManager
 import scala.util.Random
@@ -20,7 +20,7 @@ import net.bdew.gendustry.compat.ExtraBeesProxy
 import net.bdew.gendustry.items.GeneSample
 
 class TileSampler extends TileItemProcessor with TilePowered {
-  lazy val cfg = Machines.sampler
+  lazy val cfg = MachineSampler
   val outputSlots = Seq(slots.outSample)
 
   object slots {
