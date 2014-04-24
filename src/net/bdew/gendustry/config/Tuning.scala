@@ -18,6 +18,7 @@ import java.io.{InputStreamReader, FileReader, File}
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.bdew.lib.recipes.gencfg.CfgVal
+import cpw.mods.fml.common.FMLCommonHandler
 
 object Tuning extends ConfigSection
 
@@ -123,21 +124,23 @@ object TuningLoader {
 
   def load(part: String, checkJar: Boolean = true) {
     val f = new File(Gendustry.configDir, "%s-%s.cfg".format(Gendustry.modId, part))
-    val r = if (f.exists() && f.canRead) {
+    val (path,reader) = if (f.exists() && f.canRead) {
       Gendustry.logInfo("Loading configuration from %s", f.toString)
-      new FileReader(f)
+      (f.getCanonicalPath, new FileReader(f))
     } else if (checkJar) {
       val res = "/assets/%s/%s-%s.cfg".format(Gendustry.modId, Gendustry.modId, part)
-      val stream = this.getClass.getResourceAsStream(res)
-      Gendustry.logInfo("Loading configuration from JAR - %s", this.getClass.getResource(res))
-      new InputStreamReader(this.getClass.getResourceAsStream("/assets/%s/%s-%s.cfg".format(Gendustry.modId, Gendustry.modId, part)))
+      (this.getClass.getResource(res).toString, new InputStreamReader(this.getClass.getResourceAsStream(res)))
     } else {
       return
     }
+    Gendustry.logInfo("Loading configuration file: %s", path)
     try {
-      loader.load(r)
+      loader.load(reader)
+    } catch {
+      case e: Throwable =>
+        FMLCommonHandler.instance().raiseException(e,"Gendustry config loading failed in file %s: %s".format(path, e.getMessage), true)
     } finally {
-      r.close()
+      reader.close()
     }
   }
 }
