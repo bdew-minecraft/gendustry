@@ -23,6 +23,7 @@ import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.minecraft.command.CommandHandler
+import net.bdew.gendustry.custom.CustomContent
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.3.1.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -47,6 +48,7 @@ object Gendustry {
     configFile = event.getSuggestedConfigurationFile
     TuningLoader.load("tuning")
     TuningLoader.load("recipes")
+    TuningLoader.load("bees")
     TuningLoader.load("override", false)
     TriggerProvider.registerTriggers()
     if (event.getSide == Side.CLIENT) {
@@ -60,10 +62,13 @@ object Gendustry {
     NetworkRegistry.instance.registerGuiHandler(this, Config.guiHandler)
     Upgrades.init()
     TuningLoader.loadDealayed()
+    CustomContent.registerBranches()
+    CustomContent.registerSpecies()
   }
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
+    CustomContent.registerTemplates()
   }
 
   @EventHandler

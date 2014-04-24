@@ -179,5 +179,9 @@ gendustry.givesample.error.chromosome=Chromosome not found: %s
 gendustry.givesample.error.invalid=Invalid allele for requested chromosome
 gendustry.givesample.success=Given sample (Species=%s, Chromosome=%s, Allele=%s) to %s
 
+# ==== BEES ====
+gendustry.bee.species.Iron=Iron
+gendustry.bee.species.Iron.description=Theese strudy bees can collect small chunks of iron from the environment
+
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty

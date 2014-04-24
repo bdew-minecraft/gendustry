@@ -19,6 +19,7 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.bdew.lib.recipes.gencfg.CfgVal
 import cpw.mods.fml.common.FMLCommonHandler
+import net.bdew.lib.recipes.lootlist.{LootListParser, LootListLoader}
 
 object Tuning extends ConfigSection
 
@@ -42,7 +43,7 @@ object TuningLoader {
 
   case class StAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
-  class Parser extends RecipeParser with GenericConfigParser {
+  class Parser extends RecipeParser with GenericConfigParser with LootListParser {
     override def delayedStatement = mutagen | dna | protein | assembly | super.delayedStatement
 
     def mutagen = "mutagen" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
@@ -73,7 +74,7 @@ object TuningLoader {
     def cfgDiv = ident ~ ("/" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierDiv(n.toFloat)) }
   }
 
-  class Loader extends RecipeLoader with GenericConfigLoader {
+  class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
     val cfgStore = Tuning
 
     override def newParser(): RecipeParser = new Parser()
@@ -124,7 +125,7 @@ object TuningLoader {
 
   def load(part: String, checkJar: Boolean = true) {
     val f = new File(Gendustry.configDir, "%s-%s.cfg".format(Gendustry.modId, part))
-    val (path,reader) = if (f.exists() && f.canRead) {
+    val (path, reader) = if (f.exists() && f.canRead) {
       Gendustry.logInfo("Loading configuration from %s", f.toString)
       (f.getCanonicalPath, new FileReader(f))
     } else if (checkJar) {
@@ -138,7 +139,7 @@ object TuningLoader {
       loader.load(reader)
     } catch {
       case e: Throwable =>
-        FMLCommonHandler.instance().raiseException(e,"Gendustry config loading failed in file %s: %s".format(path, e.getMessage), true)
+        FMLCommonHandler.instance().raiseException(e, "Gendustry config loading failed in file %s: %s".format(path, e.getMessage), true)
     } finally {
       reader.close()
     }
