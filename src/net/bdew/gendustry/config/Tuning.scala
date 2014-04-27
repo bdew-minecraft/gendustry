@@ -25,6 +25,8 @@ object Tuning extends ConfigSection
 
 object TuningLoader {
 
+  // Modifiers for apiary upgrades
+
   abstract class EntryModifier extends CfgEntry
 
   case class EntryModifierAdd(v: Float) extends EntryModifier
@@ -35,6 +37,8 @@ object TuningLoader {
 
   case class EntryModifierDiv(v: Float) extends EntryModifier
 
+  // Statements
+
   case class StMutagen(st: StackRef, mb: Int) extends DelayedStatement
 
   case class StLiquidDNA(st: StackRef, mb: Int) extends DelayedStatement
@@ -43,8 +47,18 @@ object TuningLoader {
 
   case class StAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
+  // Mutations
+
+  abstract class MutationRequirement
+
+  case class StMutation(parent1: String, parent2: String, result: String, chance: Float, secret: Boolean, requirements: List[MutationRequirement]) extends DelayedStatement
+
+  case class MReqTemperature(temperature: String) extends MutationRequirement
+
+  case class MReqHumidity(humidity: String) extends MutationRequirement
+
   class Parser extends RecipeParser with GenericConfigParser with LootListParser {
-    override def delayedStatement = mutagen | dna | protein | assembly | super.delayedStatement
+    override def delayedStatement = mutagen | dna | protein | assembly | stMutation | super.delayedStatement
 
     def mutagen = "mutagen" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
       case sp ~ n => StMutagen(sp, n)
@@ -62,6 +76,17 @@ object TuningLoader {
       case ch ~ cnt => (ch, cnt.getOrElse(1))
     }
 
+    def mrTemperature = "Req" ~> "Temperature" ~> ident ^^ MReqTemperature
+    def mrHumidity = "Req" ~> "Humidity" ~> ident ^^ MReqHumidity
+
+    def mutationReq = mrTemperature | mrHumidity
+
+    def stMutation = "secret".? ~ ("mutation" ~> ":") ~ (decimalNumber <~ "%") ~ str ~ "+" ~ str ~ "=" ~ str ~ mutationReq.* ^^ {
+      case secret ~ mutation ~ chance ~ p1 ~ plus ~ p2 ~ eq ~ res ~ req =>
+        StMutation(parent1 = p1, parent2 = p2, result = res,
+          chance = chance.toFloat, secret = secret.isDefined, requirements = req)
+    }
+
     def assembly = "assembly" ~> ":" ~> (charWithCount <~ ",").+ ~ (int <~ "mj") ~ ("=>" ~> specWithCount) ^^ {
       case r ~ p ~ (s ~ n) => StAssembly(r, p, s, n.getOrElse(1))
     }
@@ -73,6 +98,9 @@ object TuningLoader {
     def cfgSub = ident ~ ("-" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierSub(n.toFloat)) }
     def cfgDiv = ident ~ ("/" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierDiv(n.toFloat)) }
   }
+
+  // Mutations are collected here for later processing
+  var mutations = List.empty[StMutation]
 
   class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
     val cfgStore = Tuning
@@ -114,6 +142,8 @@ object TuningLoader {
         log.info("Output: %s".format(outStack))
         AssemblyRecipe.assemblyRecipes.add(new AssemblyRecipe(stacks.toArray, power, outStack))
         log.info("Done")
+
+      case x: StMutation => mutations +:= x
 
       case _ => super.processDelayedStatement(s)
     }

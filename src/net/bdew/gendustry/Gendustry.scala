@@ -69,6 +69,7 @@ object Gendustry {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     CustomContent.registerTemplates()
+    CustomContent.registerMuations()
   }
 
   @EventHandler

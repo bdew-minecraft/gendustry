@@ -9,30 +9,79 @@
 
 package net.bdew.gendustry.custom
 
-import net.bdew.gendustry.config.Tuning
+import net.bdew.gendustry.config.{TuningLoader, Tuning}
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import forestry.api.genetics.AlleleManager
 import forestry.api.genetics.IClassification.EnumClassLevel
+import net.bdew.gendustry.Gendustry
+import forestry.api.apiculture.IAlleleBeeSpecies
+import forestry.api.core.{EnumTemperature, EnumHumidity}
 
 object CustomContent {
   val reg = AlleleManager.alleleRegistry
   var mySpecies = List.empty[BeeSpecies]
 
   def registerBranches() {
-    Tuning.getSection("Branches").filterType(classOf[ConfigSection]).foreach({
+    Gendustry.logInfo("Registering branches")
+    val added = (Tuning.getSection("Branches").filterType(classOf[ConfigSection]) collect {
       case (_, cfg) =>
+        Gendustry.logInfo("%s -> %s (%s)", cfg.getString("Parent"), cfg.getString("UID"), cfg.getString("Scientific"))
         val cls = reg.createAndRegisterClassification(EnumClassLevel.GENUS, cfg.getString("UID"), cfg.getString("Scientific"))
         reg.getClassification("family." + cfg.getString("Parent")).addMemberGroup(cls)
-    })
+    }).size
+    Gendustry.logInfo("Registered %d branches", added)
   }
 
   def registerSpecies() {
-    Tuning.getSection("Bees").filterType(classOf[ConfigSection]).foreach({
+    Gendustry.logInfo("Registering bees")
+    val added = (Tuning.getSection("Bees").filterType(classOf[ConfigSection]) collect {
       case (uid, cfg) =>
         val species = new BeeSpecies(cfg, uid)
+        Gendustry.logInfo("Registering %s", species.getUID)
         mySpecies +:= species
         reg.registerAllele(species)
-    })
+    }).size
+    Gendustry.logInfo("Registered %d bees", added)
+  }
+
+  def lookupBeeSpecies(uid: String) =
+    Option(AlleleManager.alleleRegistry.getAllele(uid))
+      .getOrElse(sys.error("Species '%s' not found".format(uid)))
+      .asInstanceOf[IAlleleBeeSpecies]
+
+  def registerMuations() {
+    Gendustry.logInfo("Registering mutations")
+
+    val added = TuningLoader.mutations count { st =>
+      try {
+
+        Gendustry.logInfo("Registering mutation %s + %s = %s", st.parent1, st.parent2, st.result)
+
+        val mutation = new BeeMutation(
+          lookupBeeSpecies(st.parent1),
+          lookupBeeSpecies(st.parent2),
+          lookupBeeSpecies(st.result),
+          st.chance)
+
+        if (st.secret) mutation.isSecret = true
+
+        st.requirements foreach {
+          case TuningLoader.MReqHumidity(hum: String) =>
+            mutation.reqHumidity = Some(EnumHumidity.valueOf(hum.toUpperCase))
+          case TuningLoader.MReqTemperature(temp: String) =>
+            mutation.reqTemperature = Some(EnumTemperature.valueOf(temp.toUpperCase))
+        }
+
+        mutation.getRoot.registerMutation(mutation)
+
+        true
+      } catch {
+        case e: Throwable =>
+          Gendustry.logWarn("Adding mutation failed: %s (%s)", e.getMessage, st)
+          false
+      }
+    }
+    Gendustry.logInfo("Registered %d mutations", added)
   }
 
   def registerTemplates() {

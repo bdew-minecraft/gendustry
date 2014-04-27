@@ -183,5 +183,8 @@ gendustry.givesample.success=Given sample (Species=%s, Chromosome=%s, Allele=%s)
 gendustry.bee.species.Iron=Iron
 gendustry.bee.species.Iron.description=Theese strudy bees can collect small chunks of iron from the environment
 
+gendustry.req.temperature=Requires temperature: %s
+gendustry.req.humidity=Requires humidity: %s
+
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty
