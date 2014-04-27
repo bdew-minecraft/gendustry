@@ -46,10 +46,7 @@ object Gendustry {
     PowerProxy.logModVersions()
     configDir = event.getModConfigurationDirectory
     configFile = event.getSuggestedConfigurationFile
-    TuningLoader.load("tuning")
-    TuningLoader.load("recipes")
-    TuningLoader.load("bees")
-    TuningLoader.load("override", false)
+    TuningLoader.loadConfigFiles()
     TriggerProvider.registerTriggers()
     if (event.getSide == Side.CLIENT) {
       HintIcons.init()

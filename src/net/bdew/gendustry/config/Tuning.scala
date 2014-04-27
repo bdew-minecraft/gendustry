@@ -14,12 +14,12 @@ import net.bdew.lib.recipes._
 import net.bdew.gendustry.fluids.{LiquidDNASources, ProteinSources, MutagenSources}
 import net.minecraftforge.oredict.OreDictionary
 import buildcraft.api.recipes.AssemblyRecipe
-import java.io.{InputStreamReader, FileReader, File}
+import java.io._
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.recipes.gencfg.ConfigSection
-import net.bdew.lib.recipes.gencfg.CfgVal
 import cpw.mods.fml.common.FMLCommonHandler
 import net.bdew.lib.recipes.lootlist.{LootListParser, LootListLoader}
+import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.lib.recipes.gencfg.CfgVal
 
 object Tuning extends ConfigSection
 
@@ -153,18 +153,51 @@ object TuningLoader {
 
   def loadDealayed() = loader.processDelayedStatements()
 
-  def load(part: String, checkJar: Boolean = true) {
-    val f = new File(Gendustry.configDir, "%s-%s.cfg".format(Gendustry.modId, part))
-    val (path, reader) = if (f.exists() && f.canRead) {
-      Gendustry.logInfo("Loading configuration from %s", f.toString)
-      (f.getCanonicalPath, new FileReader(f))
-    } else if (checkJar) {
-      val res = "/assets/%s/%s-%s.cfg".format(Gendustry.modId, Gendustry.modId, part)
-      (this.getClass.getResource(res).toString, new InputStreamReader(this.getClass.getResourceAsStream(res)))
-    } else {
-      return
+  def loadConfigFiles() {
+    val listReader = new BufferedReader(new InputStreamReader(
+      getClass.getResourceAsStream("/assets/gendustry/config/files.lst")))
+    val list = Iterator.continually(listReader.readLine)
+      .takeWhile(_ != null)
+      .map(_.trim)
+      .filterNot(_.startsWith("#"))
+      .filterNot(_.isEmpty)
+      .toList
+    listReader.close()
+
+    val configDir = new File(Gendustry.configDir, "gendustry")
+    if (!configDir.exists()) {
+      configDir.mkdir()
+      val f = new FileWriter(new File(configDir, "readme.txt"))
+      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order\n")
+      f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration\n")
+      f.close()
     }
-    Gendustry.logInfo("Loading configuration file: %s", path)
+
+    val overrideDir = new File(configDir, "overrides")
+    if (!overrideDir.exists()) overrideDir.mkdir()
+
+    Gendustry.logInfo("Loading internal config files")
+
+    for (fileName <- list) {
+      val overrideFile = new File(overrideDir, fileName)
+      if (overrideFile.exists()) {
+        tryLoadConfig(new FileReader(overrideFile), overrideFile.getCanonicalPath)
+      } else {
+        val resname = "/assets/gendustry/config/" + fileName
+        tryLoadConfig(new InputStreamReader(getClass.getResourceAsStream(resname)), getClass.getResource(resname).toString)
+      }
+    }
+
+    Gendustry.logInfo("Loading user config files")
+
+    for (fileName <- configDir.list().sorted if fileName.endsWith(".cfg")) {
+      val file = new File(configDir, fileName)
+      if (file.canRead) tryLoadConfig(new FileReader(file), file.getCanonicalPath)
+    }
+  }
+
+  def tryLoadConfig(reader: Reader, path: String) {
+    Gendustry.logInfo("Loading config: %s", path)
     try {
       loader.load(reader)
     } catch {
