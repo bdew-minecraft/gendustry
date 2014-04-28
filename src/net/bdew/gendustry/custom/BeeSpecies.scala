@@ -48,13 +48,13 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override def getResearchBounty(world: World, researcher: String, individual: IIndividual, bountyLevel: Int) = ???
   override def getResearchSuitability(itemstack: ItemStack) = ???
   override def getComplexity = ???
-  override def getBranch = AlleleManager.alleleRegistry.getClassification("genus." + cfg.getString("Branch"))
-  override def getAuthority = cfg.getString("Authority")
-  override def getBinomial = cfg.getString("Binominal")
-  override def getDescription = Misc.toLocal("gendustry.bee.species." + ident + ".description")
+  override val getBranch = AlleleManager.alleleRegistry.getClassification("genus." + cfg.getString("Branch"))
+  override val getAuthority = cfg.getString("Authority")
+  override val getBinomial = cfg.getString("Binominal")
+  override val getDescription = Misc.toLocal("gendustry.bee.species." + ident + ".description")
 
   // IAlleleBeeSpecies
-  override def getEntityTexture = "textures/entity/bees/honeyBee.png"
+  override val getEntityTexture = "textures/entity/bees/honeyBee.png"
   @SideOnly(Side.CLIENT)
   override def getIcon(kind: EnumBeeType, renderPass: Int) =
     BeeIconProvider.icons(kind.ordinal())(renderPass)
@@ -74,9 +74,9 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
   Gendustry.logInfo("Resolving specialty list for bee '%s'...", ident)
   override val getSpecialty = prepareLootList("Specialty")
-  getProducts.asScala.foreach(x => Gendustry.logInfo("  [%d%%] %s", x._2, x._1))
+  getSpecialty.asScala.foreach(x => Gendustry.logInfo("  [%d%%] %s", x._2, x._1))
 
-  override def isNocturnal = cfg.getBoolean("Nocturnal")
+  override val isNocturnal = cfg.getBoolean("Nocturnal")
   override val getRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
 
   // Internal stuff
