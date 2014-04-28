@@ -14,7 +14,7 @@ import net.bdew.lib.recipes.gencfg.{CfgVal, GenericConfigParser}
 import net.bdew.lib.recipes.lootlist.LootListParser
 
 class Parser extends RecipeParser with GenericConfigParser with LootListParser {
-  override def delayedStatement = mutagen | dna | protein | assembly | stMutation | super.delayedStatement
+  override def delayedStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | super.delayedStatement
 
   // === Machine Recipes ===
 
@@ -36,6 +36,23 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
 
   def assembly = "assembly" ~> ":" ~> (charWithCount <~ ",").+ ~ (int <~ "mj") ~ ("=>" ~> specWithCount) ^^ {
     case r ~ p ~ (s ~ n) => StAssembly(r, p, s, n.getOrElse(1))
+  }
+
+  def oneOrManyDrops = (
+    dropsEntry ^^ { case d => List(d) }
+      | spec ^^ { case st => List((100, st)) }
+      | ("{" ~> dropsEntry.+ <~ "}")
+    )
+
+  def fluidSpec = str ~ (wholeNumber <~ "mb") ^^ { case id ~ amount => FluidSpec(id, amount.toInt) }
+
+  def squeezer = "squeezer" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> fluidSpec) ~ ("+" ~> dropsEntry).? ^^ {
+    case stack ~ ticks ~ fluid ~ Some((chance, res)) => StSqueezer(stack, fluid, ticks.toInt, res, chance)
+    case stack ~ ticks ~ fluid ~ None => StSqueezer(stack, fluid, ticks.toInt, null, 0)
+  }
+
+  def centrifuge = "centrifuge" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> oneOrManyDrops) ^^ {
+    case stack ~ ticks ~ drops => StCentrifuge(stack, drops, ticks.toInt)
   }
 
   // === Mutations ===
