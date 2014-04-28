@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.custom
 
-import net.bdew.gendustry.config.{TuningLoader, Tuning}
+import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import forestry.api.genetics.AlleleManager
 import forestry.api.genetics.IClassification.EnumClassLevel
 import net.bdew.gendustry.Gendustry
 import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.core.{EnumTemperature, EnumHumidity}
+import net.bdew.gendustry.config.loader.{TuningLoader, MReqHumidity, MReqTemperature}
 
 object CustomContent {
   val reg = AlleleManager.alleleRegistry
@@ -52,7 +53,7 @@ object CustomContent {
   def registerMuations() {
     Gendustry.logInfo("Registering mutations")
 
-    val added = TuningLoader.mutations count { st =>
+    val added = TuningLoader.loader.mutations count { st =>
       try {
 
         Gendustry.logInfo("Registering mutation %s + %s = %s", st.parent1, st.parent2, st.result)
@@ -66,9 +67,9 @@ object CustomContent {
         if (st.secret) mutation.isSecret = true
 
         st.requirements foreach {
-          case TuningLoader.MReqHumidity(hum: String) =>
+          case MReqHumidity(hum: String) =>
             mutation.reqHumidity = Some(EnumHumidity.valueOf(hum.toUpperCase))
-          case TuningLoader.MReqTemperature(temp: String) =>
+          case MReqTemperature(temp: String) =>
             mutation.reqTemperature = Some(EnumTemperature.valueOf(temp.toUpperCase))
         }
 

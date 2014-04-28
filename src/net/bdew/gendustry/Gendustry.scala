@@ -24,6 +24,7 @@ import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.minecraft.command.CommandHandler
 import net.bdew.gendustry.custom.CustomContent
+import net.bdew.gendustry.config.loader.TuningLoader
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.3.1.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)

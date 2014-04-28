@@ -19,7 +19,7 @@ import net.bdew.lib.recipes.gencfg.{EntryStr, ConfigSection}
 import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.recipes.lootlist.EntryLootList
-import net.bdew.gendustry.config.TuningLoader
+import net.bdew.gendustry.config.loader.TuningLoader
 
 class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   // IAllele
