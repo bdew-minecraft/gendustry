@@ -97,6 +97,16 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
     case x: StMutation => mutations +:= x
 
+    case StRegOredict(id, spec, wildcard) =>
+      log.info("Registering ore dictionary entry: %s -> %s".format(spec, id))
+      val stack = getConcreteStack(spec)
+      if (wildcard) {
+        log.info("Forcing wildcard damage (was %d)".format(stack.getItemDamage))
+        stack.setItemDamage(OreDictionary.WILDCARD_VALUE)
+      }
+      log.info("Actual stack: %s".format(stack))
+      OreDictionary.registerOre(id, stack)
+
     case _ => super.processDelayedStatement(s)
   }
 }

@@ -14,7 +14,11 @@ import net.bdew.lib.recipes.gencfg.{CfgVal, GenericConfigParser}
 import net.bdew.lib.recipes.lootlist.LootListParser
 
 class Parser extends RecipeParser with GenericConfigParser with LootListParser {
-  override def delayedStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | super.delayedStatement
+  override def delayedStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | regOreDict | super.delayedStatement
+
+  def regOreDict = "regOreDict" ~> ":" ~> spec ~ "@WILDCARD".? ~ ("->" ~> str) ^^ {
+    case spec ~ wildcard ~ id => StRegOredict(id, spec, wildcard.isDefined)
+  }
 
   // === Machine Recipes ===
 

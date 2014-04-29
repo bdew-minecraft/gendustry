@@ -14,6 +14,9 @@ import net.bdew.lib.recipes.{CraftingStatement, DelayedStatement, StackRef}
 
 case class FluidSpec(id: String, amount: Int)
 
+// Register OreDict statement
+case class StRegOredict(id: String, spec: StackRef, wildcard: Boolean) extends DelayedStatement
+
 // === Modifiers for apiary upgrades ===
 
 abstract class EntryModifier extends CfgEntry
