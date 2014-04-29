@@ -49,10 +49,15 @@ repositories {
         name = "bdew"
         url = "http://jenkins.bdew.net/maven"
     }
+    maven {
+        name = "chickenbones"
+        url = "http://chickenbones.net/maven"
+    }
 }
 
 dependencies {
     compile "net.bdew:bdlib:" + bdlibver
+    compile "codechicken:NotEnoughItems:1.7.2-1.0.0:dev"
     compile "com.mod-buildcraft:buildcraft:6.0.6.8"
     compile "net.bdew.thirdparty:ic2api:2.1.464.1"
     compile "net.bdew.thirdparty:forestryapi:2.4.0.0.711.1"
