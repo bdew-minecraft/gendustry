@@ -14,7 +14,7 @@ import net.bdew.gendustry.items.{IndustrialScoop, IndustrialGrafter, GeneTemplat
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.custom.CustomHoneyComb
+import net.bdew.gendustry.custom.{CustomHoneyDrop, CustomHoneyComb}
 
 object Items extends ItemManager(Config.IDs) {
   val labware = regSimpleItem("Labware")
@@ -32,7 +32,8 @@ object Items extends ItemManager(Config.IDs) {
   val scoop = regItemCls(classOf[IndustrialScoop], "IndustrialScoop", false)
   GameRegistry.registerCustomItemStack("IndustrialScoop", scoop.stackWithCharge(0))
 
-  regItem(new CustomHoneyComb(ids.getItemId("BeeComb")))
+  regItem(new CustomHoneyComb(ids.getItemId("HoneyComb")))
+  regItem(new CustomHoneyDrop(ids.getItemId("HoneyDrop")))
 
   regSimpleItem("MutagenTank")
   regSimpleItem("BeeReceptacle")

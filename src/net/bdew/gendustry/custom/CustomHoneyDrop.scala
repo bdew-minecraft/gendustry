@@ -11,19 +11,19 @@ package net.bdew.gendustry.custom
 
 import net.bdew.lib.items.SimpleItem
 import net.minecraft.client.renderer.texture.IconRegister
-import cpw.mods.fml.relauncher.{Side, SideOnly}
+import cpw.mods.fml.relauncher.{SideOnly, Side}
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.Gendustry
 import net.minecraft.util.Icon
-import net.bdew.gendustry.config.Tuning
-import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.minecraft.creativetab.CreativeTabs
 import java.util
+import net.bdew.gendustry.config.Tuning
+import net.bdew.lib.recipes.gencfg.ConfigSection
 import cpw.mods.fml.common.registry.GameRegistry
 
-class CustomHoneyComb(id: Int) extends SimpleItem(id, "HoneyComb") {
+class CustomHoneyDrop(id: Int) extends SimpleItem(id, "HoneyDrop") {
 
-  case class CombInfo(name: String, color1: Int, color2: Int)
+  case class HoneyDropInfo(name: String, color1: Int, color2: Int)
 
   var icons: Array[Icon] = null
 
@@ -32,8 +32,8 @@ class CustomHoneyComb(id: Int) extends SimpleItem(id, "HoneyComb") {
 
   override def requiresMultipleRenderPasses() = true
 
-  val data = (Tuning.getOrAddSection("HoneyCombs").filterType(classOf[ConfigSection]) map {
-    case (ident, cfg) => cfg.getInt("ID") -> CombInfo(
+  val data = (Tuning.getOrAddSection("HoneyDrops").filterType(classOf[ConfigSection]) map {
+    case (ident, cfg) => cfg.getInt("ID") -> HoneyDropInfo(
       ident,
       cfg.getColor("PrimaryColor").asRGB,
       cfg.getColor("SecondaryColor").asRGB
@@ -41,7 +41,7 @@ class CustomHoneyComb(id: Int) extends SimpleItem(id, "HoneyComb") {
   }).toMap
 
   for ((id, comb) <- data)
-    GameRegistry.registerCustomItemStack("HoneyComb." + comb.name, new ItemStack(this, 1, id))
+    GameRegistry.registerCustomItemStack("HoneyDrop." + comb.name, new ItemStack(this, 1, id))
 
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
@@ -65,13 +65,14 @@ class CustomHoneyComb(id: Int) extends SimpleItem(id, "HoneyComb") {
   }
 
   override def getUnlocalizedName(stack: ItemStack) =
-    getData(stack).map(x => "%s.honeycomb.%s".format(Gendustry.modId, x.name)).getOrElse("invalid")
+    getData(stack).map(x => "%s.honeydrop.%s".format(Gendustry.modId, x.name)).getOrElse("invalid")
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IconRegister) {
     icons = Array(
-      reg.registerIcon("forestry:beeCombs.0"),
-      reg.registerIcon("forestry:beeCombs.1")
+      reg.registerIcon("forestry:honeyDrop.0"),
+      reg.registerIcon("forestry:honeyDrop.1")
     )
   }
 }
+
