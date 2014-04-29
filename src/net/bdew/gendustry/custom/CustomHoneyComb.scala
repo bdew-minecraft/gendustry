@@ -21,7 +21,7 @@ import net.minecraft.creativetab.CreativeTabs
 import java.util
 import cpw.mods.fml.common.registry.GameRegistry
 
-class CustomBeeComb(id: Int) extends SimpleItem(id, "BeeComb") {
+class CustomHoneyComb(id: Int) extends SimpleItem(id, "HoneyComb") {
   var icons: Array[Icon] = null
 
   setHasSubtypes(true)
@@ -29,7 +29,7 @@ class CustomBeeComb(id: Int) extends SimpleItem(id, "BeeComb") {
 
   override def requiresMultipleRenderPasses() = true
 
-  val data = (Tuning.getOrAddSection("Combs").filterType(classOf[ConfigSection]) map {
+  val data = (Tuning.getOrAddSection("HoneyCombs").filterType(classOf[ConfigSection]) map {
     case (ident, cfg) => cfg.getInt("ID") -> CombInfo(
       ident,
       cfg.getColor("PrimaryColor").asRGB,
@@ -38,7 +38,7 @@ class CustomBeeComb(id: Int) extends SimpleItem(id, "BeeComb") {
   }).toMap
 
   for ((id, comb) <- data)
-    GameRegistry.registerCustomItemStack("BeeComb." + comb.name, new ItemStack(this, 1, id))
+    GameRegistry.registerCustomItemStack("HoneyComb." + comb.name, new ItemStack(this, 1, id))
 
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
