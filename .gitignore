@@ -9,3 +9,4 @@
 /.gradle
 /*.iml
 /*.ipr
+/.idea/libraries/Gradle__*
