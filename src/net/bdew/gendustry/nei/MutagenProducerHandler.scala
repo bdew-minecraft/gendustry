@@ -11,12 +11,14 @@ package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Fluids, Machines}
+import net.bdew.gendustry.config.Fluids
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.fluids.MutagenSources
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import net.bdew.lib.Misc
+import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
+import net.bdew.lib.items.IStackBlock
 
 class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(152, 19, 16, 58)
@@ -29,8 +31,8 @@ class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
     val inPositioned = position(in, 44, 41)
     val getResult = null
 
-    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, out), Machines.mutagenProducer.tankSize)
-    components :+= new PowerComponent(mjRect, Machines.mutagenProducer.mjPerItem, Machines.mutagenProducer.maxStoredEnergy)
+    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, out), MachineMutagenProducer.tankSize)
+    components :+= new PowerComponent(mjRect, MachineMutagenProducer.mjPerItem, MachineMutagenProducer.maxStoredEnergy)
 
     override def getOtherStacks = List(inPositioned)
   }
@@ -49,7 +51,7 @@ class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Fluids.mutagen.getBlockID => addAllRecipes()
+      case ("item", Seq(IStackBlock(x))) if x == Fluids.mutagen.getBlock => addAllRecipes()
       case ("MutagenProducer", _) => addAllRecipes()
     }
   }

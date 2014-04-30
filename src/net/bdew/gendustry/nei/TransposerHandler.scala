@@ -10,7 +10,7 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.nei.helpers.PowerComponent
 import forestry.api.genetics._
 import net.minecraft.item.ItemStack
@@ -21,6 +21,8 @@ import net.bdew.lib.Misc
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import scala.Some
 import net.bdew.lib.items.IStack
+import net.bdew.gendustry.machines.transposer.MachineTransposer
+import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 
 class TransposerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)
@@ -34,16 +36,16 @@ class TransposerHandler extends BaseRecipeHandler(5, 13) {
     val template = position(templateStack, 74, 28)
     val labware = position(new ItemStack(Items.labware), 98, 28)
 
-    components :+= new PowerComponent(mjRect, Machines.transposer.mjPerItem, Machines.transposer.maxStoredEnergy)
+    components :+= new PowerComponent(mjRect, MachineTransposer.mjPerItem, MachineTransposer.maxStoredEnergy)
 
     override def getOtherStacks = List(template, blank, labware)
   }
 
   def addRecipe(template: ItemStack) = template match {
-    case IStack(Items.geneSample) =>
+    case IStack(GeneSample) =>
       arecipes.add(new TransposerRecipe(new ItemStack(Items.geneSampleBlank), template, template))
-    case IStack(Items.geneTemplate) =>
-      arecipes.add(new TransposerRecipe(new ItemStack(Items.geneTemplate), template, template))
+    case IStack(GeneTemplate) =>
+      arecipes.add(new TransposerRecipe(new ItemStack(GeneTemplate), template, template))
   }
 
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[TransposerRecipe]
@@ -55,11 +57,11 @@ class TransposerHandler extends BaseRecipeHandler(5, 13) {
   lazy val forestSampleInfo = GeneSampleInfo(AlleleManager.alleleRegistry.getSpeciesRoot("rootBees"), 0,
     AlleleManager.alleleRegistry.getAllele("forestry.speciesForest"))
 
-  def addSampleRecipe() = addRecipe(Items.geneSample.newStack(forestSampleInfo))
+  def addSampleRecipe() = addRecipe(GeneSample.newStack(forestSampleInfo))
 
   def addTemplateRecipe() {
-    val tpl = new ItemStack(Items.geneTemplate)
-    Items.geneTemplate.addSample(tpl, forestSampleInfo)
+    val tpl = new ItemStack(GeneTemplate)
+    GeneTemplate.addSample(tpl, forestSampleInfo)
     addRecipe(tpl)
   }
 
@@ -72,10 +74,10 @@ class TransposerHandler extends BaseRecipeHandler(5, 13) {
     Some(outputId, results) collect {
       case ("item", Seq(IStack(Items.labware))) => addAllRecipes()
       case ("item", Seq(IStack(Items.geneSampleBlank))) => addSampleRecipe()
-      case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneSample.itemID =>
+      case ("item", Seq(stack: ItemStack)) if stack.getItem == GeneSample =>
         addRecipe(stack)
-      case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneTemplate.itemID =>
-        if (Items.geneTemplate.getSpecies(stack) == null)
+      case ("item", Seq(stack: ItemStack)) if stack.getItem == GeneTemplate =>
+        if (GeneTemplate.getSpecies(stack) == null)
           addTemplateRecipe()
         else
           addRecipe(stack)
@@ -86,10 +88,10 @@ class TransposerHandler extends BaseRecipeHandler(5, 13) {
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneSample.itemID =>
+      case ("item", Seq(stack: ItemStack)) if stack.getItem == GeneSample =>
         addRecipe(stack)
-      case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneTemplate.itemID =>
-        if (Items.geneTemplate.getSpecies(stack) == null)
+      case ("item", Seq(stack: ItemStack)) if stack.getItem == GeneTemplate =>
+        if (GeneTemplate.getSpecies(stack) == null)
           addTemplateRecipe()
         else
           addRecipe(stack)
@@ -99,7 +101,7 @@ class TransposerHandler extends BaseRecipeHandler(5, 13) {
 
   override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip += Misc.toLocalF("gendustry.label.consume", Machines.mutatron.labwareConsumeChance.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.consume", MachineTransposer.labwareConsumeChance.toInt)
     super.handleItemTooltip(gui, stack, currenttip, recipe)
   }
 

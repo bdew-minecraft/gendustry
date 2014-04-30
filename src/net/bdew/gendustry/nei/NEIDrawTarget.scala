@@ -10,8 +10,8 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.lib.gui.SimpleDrawTarget
-import codechicken.core.gui.GuiDraw
 import net.minecraft.client.Minecraft
+import codechicken.lib.gui.GuiDraw
 
 object NEIDrawTarget extends SimpleDrawTarget {
   def getZLevel = GuiDraw.gui.getZLevel

@@ -10,13 +10,15 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Fluids, Items, Machines}
+import net.bdew.gendustry.config.Fluids
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.Misc
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.machines.replicator.MachineReplicator
+import net.bdew.gendustry.items.GeneTemplate
 
 class ReplicatorHandler extends BaseRecipeHandler(5, 13) {
   val dnaRect = Rect(32, 19, 16, 58)
@@ -29,15 +31,15 @@ class ReplicatorHandler extends BaseRecipeHandler(5, 13) {
     val getResult = position(out, 142, 41)
     val templateStack = position(template, 98, 17)
 
-    components :+= new FluidComponent(dnaRect, new FluidStack(Fluids.dna, Machines.replicator.dnaPerItem), Machines.replicator.dnaTankSize)
-    components :+= new FluidComponent(proteinRect, new FluidStack(Fluids.protein, Machines.replicator.proteinPerItem), Machines.replicator.proteinTankSize)
-    components :+= new PowerComponent(mjRect, Machines.replicator.mjPerItem, Machines.replicator.maxStoredEnergy)
+    components :+= new FluidComponent(dnaRect, new FluidStack(Fluids.dna, MachineReplicator.dnaPerItem), MachineReplicator.dnaTankSize)
+    components :+= new FluidComponent(proteinRect, new FluidStack(Fluids.protein, MachineReplicator.proteinPerItem), MachineReplicator.proteinTankSize)
+    components :+= new PowerComponent(mjRect, MachineReplicator.mjPerItem, MachineReplicator.maxStoredEnergy)
 
     override def getOtherStacks = List(templateStack)
   }
 
   def addRecipe(tpl: ItemStack) {
-    arecipes.add(new ReplicatorRecipe(tpl, GeneticsHelper.individualFromTemplate(tpl, Machines.replicator.makePristineBees)))
+    arecipes.add(new ReplicatorRecipe(tpl, GeneticsHelper.individualFromTemplate(tpl, MachineReplicator.makePristineBees)))
   }
 
   def addRecipe(uid: String) {
@@ -60,7 +62,7 @@ class ReplicatorHandler extends BaseRecipeHandler(5, 13) {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.dna.getID => addAllRecipes()
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.protein.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Items.geneTemplate.itemID && Items.geneTemplate.isComplete(x) => addRecipe(x)
+      case ("item", Seq(x: ItemStack)) if x.getItem == GeneTemplate && GeneTemplate.isComplete(x) => addRecipe(x)
       case ("Replicator", _) => addAllRecipes()
     }
   }

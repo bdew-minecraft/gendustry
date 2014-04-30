@@ -11,9 +11,7 @@ package net.bdew.gendustry.nei
 
 import codechicken.nei.recipe.{GuiRecipe, TemplateRecipeHandler}
 import net.bdew.lib.gui._
-import codechicken.core.gui.GuiDraw
 import org.lwjgl.opengl.GL11
-import codechicken.core.gui.GuiDraw._
 import net.bdew.gendustry.nei.helpers.RecipeComponent
 import java.util
 import net.minecraft.item.ItemStack
@@ -22,6 +20,8 @@ import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
 import java.awt.Rectangle
 
 abstract class BaseRecipeHandler(val offX: Int, val offY: Int) extends TemplateRecipeHandler {
+
+  import codechicken.lib.gui.GuiDraw._
 
   abstract class CachedRecipeWithComponents extends CachedRecipe {
     var components = List.empty[RecipeComponent]
@@ -39,7 +39,7 @@ abstract class BaseRecipeHandler(val offX: Int, val offY: Int) extends TemplateR
   }
 
   override def mouseClicked(gui: GuiRecipe, button: Int, recipe: Int): Boolean = {
-    val mrel = GuiDraw.getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
+    val mrel = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
       if (component.rect.contains(mrel) && component.mouseClick(button)) return true
     super.mouseClicked(gui, button, recipe)
@@ -47,7 +47,7 @@ abstract class BaseRecipeHandler(val offX: Int, val offY: Int) extends TemplateR
 
   override def handleTooltip(gui: GuiRecipe, currenttip: util.List[String], recipe: Int) = {
     import scala.collection.JavaConversions._
-    val mrel = GuiDraw.getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
+    val mrel = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
       if (component.rect.contains(mrel)) currenttip.addAll(component.getTooltip)
     super.handleTooltip(gui, currenttip, recipe)

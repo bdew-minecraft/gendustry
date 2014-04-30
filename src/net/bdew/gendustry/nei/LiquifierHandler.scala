@@ -11,12 +11,14 @@ package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Fluids, Machines}
+import net.bdew.gendustry.config.Fluids
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.fluids.ProteinSources
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import net.bdew.lib.Misc
+import net.bdew.gendustry.machines.liquifier.MachineLiquifier
+import net.bdew.lib.items.IStackBlock
 
 class LiquifierHandler extends BaseRecipeHandler(5, 13) {
   val proteinRect = new Rect(152, 19, 16, 58)
@@ -29,8 +31,8 @@ class LiquifierHandler extends BaseRecipeHandler(5, 13) {
     val inPositioned = position(in, 44, 41)
     val getResult = null
 
-    components :+= new FluidComponent(proteinRect, new FluidStack(Fluids.protein, out), Machines.liquifier.tankSize)
-    components :+= new PowerComponent(mjRect, Machines.liquifier.mjPerItem, Machines.liquifier.maxStoredEnergy)
+    components :+= new FluidComponent(proteinRect, new FluidStack(Fluids.protein, out), MachineLiquifier.tankSize)
+    components :+= new PowerComponent(mjRect, MachineLiquifier.mjPerItem, MachineLiquifier.maxStoredEnergy)
 
     override def getOtherStacks = List(inPositioned)
   }
@@ -49,7 +51,7 @@ class LiquifierHandler extends BaseRecipeHandler(5, 13) {
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.protein.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Fluids.protein.getBlockID => addAllRecipes()
+      case ("item", Seq(IStackBlock(x))) if x == Fluids.protein.getBlock => addAllRecipes()
       case ("Liquifier", _) => addAllRecipes()
     }
   }

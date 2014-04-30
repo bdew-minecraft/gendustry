@@ -63,7 +63,7 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
         }
       } else if (FluidContainerRegistry.isFilledContainer(activeItem)) {
         val fstack = FluidContainerRegistry.getFluidForFilledItem(activeItem)
-        if (fstack!=null && (fluidHandler.fill(side, fstack, false) == fstack.amount)) {
+        if (fstack != null && (fluidHandler.fill(side, fstack, false) == fstack.amount)) {
           fluidHandler.fill(side, fstack, true)
           val cont = activeItem.getItem.getContainerItem(activeItem)
           player.inventory.decrStackSize(player.inventory.currentItem, 1)

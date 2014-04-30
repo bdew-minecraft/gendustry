@@ -11,7 +11,7 @@ package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Items, Fluids, Machines}
+import net.bdew.gendustry.config.{Items, Fluids}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.fluids.LiquidDNASources
@@ -23,6 +23,8 @@ import forestry.api.genetics.{IAlleleSpecies, AlleleManager}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
+import net.bdew.gendustry.machines.extractor.MachineExtractor
+import net.bdew.lib.items.IStackBlock
 
 class ExtractorHandler extends BaseRecipeHandler(5, 13) {
   val dnaRect = new Rect(152, 19, 16, 58)
@@ -36,8 +38,8 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
     val labware = position(new ItemStack(Items.labware), 94, 19)
     val getResult = null
 
-    components :+= new FluidComponent(dnaRect, new FluidStack(Fluids.dna, out), Machines.extractor.tankSize)
-    components :+= new PowerComponent(mjRect, Machines.extractor.mjPerItem, Machines.extractor.maxStoredEnergy)
+    components :+= new FluidComponent(dnaRect, new FluidStack(Fluids.dna, out), MachineExtractor.tankSize)
+    components :+= new PowerComponent(mjRect, MachineExtractor.mjPerItem, MachineExtractor.maxStoredEnergy)
 
     override def getOtherStacks = List(inPositioned, labware)
   }
@@ -82,7 +84,7 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.dna.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Fluids.dna.getBlockID => addAllRecipes()
+      case ("item", Seq(IStackBlock(x))) if x == Fluids.dna.getBlock => addAllRecipes()
       case ("Extractor", _) => addAllRecipes()
     }
   }
@@ -96,7 +98,7 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
 
   override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip.add(Misc.toLocalF("gendustry.label.consume", Machines.extractor.labwareConsumeChance.toInt))
+      currenttip.add(Misc.toLocalF("gendustry.label.consume", MachineExtractor.labwareConsumeChance.toInt))
     super.handleItemTooltip(gui, stack, currenttip, recipe)
   }
 
