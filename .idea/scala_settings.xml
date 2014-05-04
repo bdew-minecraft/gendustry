@@ -53,6 +53,7 @@
         <entry key="xml" value="XML" />
       </map>
     </option>
+    <option name="outputLimit" value="500" />
   </component>
 </project>
 

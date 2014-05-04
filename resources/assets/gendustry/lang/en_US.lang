@@ -179,5 +179,63 @@ gendustry.givesample.error.chromosome=Chromosome not found: %s
 gendustry.givesample.error.invalid=Invalid allele for requested chromosome
 gendustry.givesample.success=Given sample (Species=%s, Chromosome=%s, Allele=%s) to %s
 
+# ==== MUTATION REQUIREMENTS ====
+gendustry.req.temperature=Requires temperature: %s
+gendustry.req.humidity=Requires humidity: %s
+
+# ==== BEE SPECIES ====
+gendustry.bee.species.black=Black
+gendustry.bee.species.red=Red
+gendustry.bee.species.green=Green
+gendustry.bee.species.brown=Brown
+gendustry.bee.species.blue=Blue
+gendustry.bee.species.purple=Purple
+gendustry.bee.species.cyan=Cyan
+gendustry.bee.species.silver=Light Gray
+gendustry.bee.species.gray=Gray
+gendustry.bee.species.pink=Pink
+gendustry.bee.species.lime=Lime
+gendustry.bee.species.yellow=Yellow
+gendustry.bee.species.lightblue=Light Blue
+gendustry.bee.species.magenta=Magenta
+gendustry.bee.species.orange=Orange
+gendustry.bee.species.white=White
+
+# ==== COMBS ====
+
+gendustry.honeycomb.black.name=Black Colored Comb
+gendustry.honeycomb.red.name=Red Colored Comb
+gendustry.honeycomb.green.name=Green Colored Comb
+gendustry.honeycomb.brown.name=Brown Colored Comb
+gendustry.honeycomb.blue.name=Blue Colored Comb
+gendustry.honeycomb.purple.name=Purple Colored Comb
+gendustry.honeycomb.cyan.name=Cyan Colored Comb
+gendustry.honeycomb.silver.name=Light Gray Colored Comb
+gendustry.honeycomb.gray.name=Gray Colored Comb
+gendustry.honeycomb.pink.name=Pink Colored Comb
+gendustry.honeycomb.lime.name=Lime Colored Comb
+gendustry.honeycomb.yellow.name=Yellow Colored Comb
+gendustry.honeycomb.lightblue.name=Light Blue Colored Comb
+gendustry.honeycomb.magenta.name=Magenta Colored Comb
+gendustry.honeycomb.orange.name=Orange Colored Comb
+gendustry.honeycomb.white.name=White Colored Comb
+
+gendustry.honeydrop.black.name=Black Colored Honey Drop
+gendustry.honeydrop.red.name=Red Colored Honey Drop
+gendustry.honeydrop.green.name=Green Colored Honey Drop
+gendustry.honeydrop.brown.name=Brown Colored Honey Drop
+gendustry.honeydrop.blue.name=Blue Colored Honey Drop
+gendustry.honeydrop.purple.name=Purple Colored Honey Drop
+gendustry.honeydrop.cyan.name=Cyan Colored Honey Drop
+gendustry.honeydrop.silver.name=Light Gray Colored Honey Drop
+gendustry.honeydrop.gray.name=Gray Colored Honey Drop
+gendustry.honeydrop.pink.name=Pink Colored Honey Drop
+gendustry.honeydrop.lime.name=Lime Colored Honey Drop
+gendustry.honeydrop.yellow.name=Yellow Colored Honey Drop
+gendustry.honeydrop.lightblue.name=Light Blue Colored Honey Drop
+gendustry.honeydrop.magenta.name=Magenta Colored Honey Drop
+gendustry.honeydrop.orange.name=Orange Colored Honey Drop
+gendustry.honeydrop.white.name=White Colored Honey Drop
+
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty

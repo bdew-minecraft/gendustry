@@ -62,6 +62,31 @@ object NEICache {
       speciesUsedMutations(mutation.getAllele1.asInstanceOf[IAlleleSpecies]) += mutation
     }
 
+    Gendustry.logInfo("Mutations with multiple results from a single combination:")
+    Gendustry.logInfo("(This is not an error, no need to report it to anybody)")
+
+    speciesUsedMutations foreach { case (sp1, mutations) =>
+      // First make a list of partner -> result
+      val pairs = mutations.toList.map(mutation => mutation.getPartner(sp1) -> mutation)
+      // Select distinct partners
+      pairs.map(_._1).distinct map { dsp =>
+      // Find all results
+        dsp -> pairs.filter(_._1 == dsp).map(_._2)
+      } filter { case (partner, results) =>
+        // Filter for >1 results
+        results.size > 1
+      } foreach { case (partner, results) =>
+        // Combine result names
+        val names = results map { mutation =>
+          mutation.getTemplate()(0).getName +
+            // Add * if there are special requirements
+            (if (Option(mutation.getSpecialConditions).map(_.size).getOrElse(0) > 0) "*" else "")
+        } mkString ", "
+        // And print it out
+        Gendustry.logInfo("%s + %s => [%s]", sp1.getName, partner.getName, names)
+      }
+    }
+
     Gendustry.logInfo("%d mutation outputs", speciesResultMutations.size)
     Gendustry.logInfo("%d mutation inputs", speciesUsedMutations.size)
 
