@@ -45,11 +45,12 @@ object Gendustry {
   def preInit(event: FMLPreInitializationEvent) {
     log = event.getModLog
     PowerProxy.logModVersions()
-    configDir = event.getModConfigurationDirectory
+    configDir = new File(event.getModConfigurationDirectory, "gendustry")
     configFile = event.getSuggestedConfigurationFile
     TuningLoader.loadConfigFiles()
     TriggerProvider.registerTriggers()
     if (event.getSide == Side.CLIENT) {
+      ResourceListener.init()
       HintIcons.init()
     }
   }

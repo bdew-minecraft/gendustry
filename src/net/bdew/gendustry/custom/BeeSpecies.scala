@@ -51,7 +51,10 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override val getBranch = AlleleManager.alleleRegistry.getClassification("genus." + cfg.getString("Branch"))
   override val getAuthority = cfg.getString("Authority")
   override val getBinomial = cfg.getString("Binominal")
-  override val getDescription = Misc.toLocal("gendustry.bee.species." + ident + ".description")
+  override val getDescription =
+    if (Misc.hasLocal("gendustry.bee.species." + ident + ".description"))
+      Misc.toLocal("gendustry.bee.species." + ident + ".description")
+    else ""
 
   // IAlleleBeeSpecies
   override val getEntityTexture = "textures/entity/bees/honeyBee.png"

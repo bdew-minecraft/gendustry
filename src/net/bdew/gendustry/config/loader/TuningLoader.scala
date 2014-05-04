@@ -32,16 +32,15 @@ object TuningLoader {
       .toList
     listReader.close()
 
-    val configDir = new File(Gendustry.configDir, "gendustry")
-    if (!configDir.exists()) {
-      configDir.mkdir()
-      val f = new FileWriter(new File(configDir, "readme.txt"))
+    if (!Gendustry.configDir.exists()) {
+      Gendustry.configDir.mkdir()
+      val f = new FileWriter(new File(Gendustry.configDir, "readme.txt"))
       f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order\n")
       f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration\n")
       f.close()
     }
 
-    val overrideDir = new File(configDir, "overrides")
+    val overrideDir = new File(Gendustry.configDir, "overrides")
     if (!overrideDir.exists()) overrideDir.mkdir()
 
     Gendustry.logInfo("Loading internal config files")
@@ -58,8 +57,8 @@ object TuningLoader {
 
     Gendustry.logInfo("Loading user config files")
 
-    for (fileName <- configDir.list().sorted if fileName.endsWith(".cfg")) {
-      val file = new File(configDir, fileName)
+    for (fileName <- Gendustry.configDir.list().sorted if fileName.endsWith(".cfg")) {
+      val file = new File(Gendustry.configDir, fileName)
       if (file.canRead) tryLoadConfig(new FileReader(file), file.getCanonicalPath)
     }
   }
