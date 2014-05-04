@@ -16,11 +16,10 @@ import net.minecraftforge.fluids.{FluidStack, FluidContainerRegistry, FluidRegis
 import net.bdew.lib.Misc
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.{Item, ItemStack}
-import forestry.api.core.ItemInterface
+import net.bdew.gendustry.forestry.ForestryItems
 
 object Fluids extends FluidManager(Config.IDs) {
   val emptyBucket = new ItemStack(Item.bucketEmpty)
-  val emptyCan = ItemInterface.getItem("canEmpty")
 
   def registerFluid(id: String,
                     luminosity: Int = 0,
@@ -54,9 +53,9 @@ object Fluids extends FluidManager(Config.IDs) {
       val bucket = Items.regItem(new ItemFluidBucket(ids.getItemId(id + "Bucket"), fluid), id + "Bucket")
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
     }
-    if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyCan) == null) {
+    if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), ForestryItems.canEmpty) == null) {
       val can = Items.regItem(new ItemFluidCan(ids.getItemId(id + "Can"), fluid), id + "Can")
-      FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), emptyCan)
+      FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), ForestryItems.canEmpty)
     }
     return fluid
   }
