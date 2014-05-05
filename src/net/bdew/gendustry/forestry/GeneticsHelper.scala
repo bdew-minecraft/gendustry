@@ -179,8 +179,10 @@ object GeneticsHelper {
     individual.analyze()
     root match {
       case bees: IBeeRoot =>
-        individual.asInstanceOf[IBee].setIsNatural(pristine)
-        bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal())
+        val bee = individual.asInstanceOf[IBee]
+        bee.setIsNatural(pristine)
+        bee.mate(bee)
+        bees.getMemberStack(bee, EnumBeeType.QUEEN.ordinal())
       case trees: ITreeRoot =>
         trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
       case butterflies: IButterflyRoot =>
