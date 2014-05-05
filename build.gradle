@@ -53,14 +53,19 @@ repositories {
         name = "chickenbones"
         url = "http://chickenbones.net/maven"
     }
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
 }
 
 dependencies {
     compile "net.bdew:bdlib:" + bdlibver
     compile "codechicken:NotEnoughItems:1.7.2-1.0.1:dev"
     compile "codechicken:CodeChickenLib:1.7.2-1.1.0.76:dev"
-    compile "com.mod-buildcraft:buildcraft:6.0.6.8"
+    compile "com.mod-buildcraft:buildcraft:6.0.8:dev"
     compile "net.bdew.thirdparty:ic2api:2.1.464.1"
+    compile "net.industrial-craft:industrialcraft-2:2.1.470-experimental:api"
     compile "net.bdew.thirdparty:forestryapi:2.4.0.0.711.1"
 }
 
