@@ -23,12 +23,9 @@ import java.util
 import net.minecraft.creativetab.CreativeTabs
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.renderer.texture.IIconRegister
-import cpw.mods.fml.common.Optional
-import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.power.ItemPowered
 import net.bdew.lib.items.NamedItem
 
-@Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
 object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolGrafter {
   def name = "IndustrialGrafter"
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")

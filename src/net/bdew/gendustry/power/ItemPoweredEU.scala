@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.power
 
-import ic2.api.item.{ElectricItem, ISpecialElectricItem}
+import ic2.api.item.{IElectricItemManager, ElectricItem, ISpecialElectricItem}
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.config.Tuning
 import net.minecraft.entity.EntityLivingBase
@@ -31,9 +31,11 @@ trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
   def canProvideEnergy(itemStack: ItemStack) = false
   override def getEmptyItem(itemStack: ItemStack) = this
   override def getChargedItem(itemStack: ItemStack) = this
-  def getMaxCharge(itemStack: ItemStack) = (maxCharge * ratio).round
-  def getTier(itemStack: ItemStack) = 2
-  def getTransferLimit(itemStack: ItemStack) = 2048
-  def getManager(itemStack: ItemStack) = manager
+  override def getMaxCharge(itemStack: ItemStack) = (maxCharge * ratio).round
+  override def getTier(itemStack: ItemStack) = 2
+  override def getTransferLimit(itemStack: ItemStack) = 2048
+
+  @Optional.Method(modid = PowerProxy.IC2_MOD_ID)
+  override def getManager(itemStack: ItemStack): IElectricItemManager = manager
 }
 
