@@ -17,7 +17,7 @@ import net.bdew.gendustry.compat.PowerProxy
 import cpw.mods.fml.common.Optional
 import net.bdew.lib.power.ItemPoweredBase
 
-@Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.ISpecialElectricItem")
+@Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
 trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   private lazy val manager = new ItemPoweredEUManager(this)
