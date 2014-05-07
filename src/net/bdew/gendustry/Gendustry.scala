@@ -24,6 +24,8 @@ import net.minecraft.command.CommandHandler
 import net.bdew.gendustry.custom.CustomContent
 import net.bdew.gendustry.config.loader.TuningLoader
 import org.apache.logging.log4j.Logger
+import net.minecraftforge.oredict.RecipeSorter
+import net.bdew.gendustry.forestry.GeneRecipe
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.4.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 object Gendustry {
@@ -60,6 +62,7 @@ object Gendustry {
   def init(event: FMLInitializationEvent) {
     Config.load(configFile)
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
+    RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
     Upgrades.init()
     TuningLoader.loadDealayed()
     CustomContent.registerBranches()
