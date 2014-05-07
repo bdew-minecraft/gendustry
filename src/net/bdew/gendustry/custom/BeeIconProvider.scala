@@ -15,11 +15,11 @@ import net.minecraft.util.Icon
 import net.minecraft.client.renderer.texture.IconRegister
 import forestry.api.apiculture.EnumBeeType
 
-@SideOnly(Side.CLIENT)
 object BeeIconProvider extends IIconProvider {
   var icons: Array[Array[Icon]] = null
   val iconType = "default"
 
+  @SideOnly(Side.CLIENT)
   override def registerIcons(register: IconRegister) {
     if (icons != null)
       return
