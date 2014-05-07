@@ -22,7 +22,8 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
   // === IBeeMutation ===
 
   override def getChance(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome) =
-    if (reqTemperature.isDefined && reqTemperature.get != housing.getTemperature) 0
+    if (!((allele0 == parent1 && allele1 == parent2) || (allele0 == parent2 && allele1 == parent1))) 0
+    else if (reqTemperature.isDefined && reqTemperature.get != housing.getTemperature) 0
     else if (reqHumidity.isDefined && reqHumidity.get != housing.getHumidity) 0
     else chance
 
