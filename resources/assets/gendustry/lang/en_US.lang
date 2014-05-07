@@ -75,6 +75,8 @@ gendustry.label.template.crafting=Genetic Samples can be added to a Template. Co
 
 gendustry.label.charges=Charges: %s
 gendustry.label.select=Select:
+gendustry.label.status=Status: %s
+gendustry.label.control=Control: %s
 
 gendustry.label.breeding=Breeding
 gendustry.label.working=Working

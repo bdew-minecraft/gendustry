@@ -13,7 +13,7 @@ import java.util.logging.Logger
 import net.bdew.gendustry.config._
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.event._
 import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.common.network.NetworkRegistry
 import java.io.File
@@ -63,6 +63,7 @@ object Gendustry {
     TuningLoader.loadDealayed()
     CustomContent.registerBranches()
     CustomContent.registerSpecies()
+    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallabck")
   }
 
   @EventHandler

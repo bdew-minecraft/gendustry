@@ -40,6 +40,7 @@ addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db
 addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
 addZipDep("forestry","http://bit.ly/IYjfWc","2.3.1.0")
 addZipDep("ic2","http://ic2api.player.to:8080/job/IC2_experimental/307/artifact/packages/industrialcraft-2-api_2.0.307-experimental.zip","307")
+addHgDep("waila","https://bitbucket.org/ProfMobius/waila","db53ba213fdbb5ed87ab8db70c9bfdaa2f569f33")
 
 task patchDeps(type: Sync) {
     dependsOn getDeps
@@ -47,9 +48,6 @@ task patchDeps(type: Sync) {
     into "deps"
     exclude "**/.git"
     exclude "**/.hg"
-    exclude "ue/src/buildcraft"
-    exclude "ue/src/cofh"
-    exclude "ue/src/ic2"
     doLast {
         println("Applying patch...")
         ant.fixcrlf(srcDir: "deps", includes: "**/*.java")
@@ -83,11 +81,14 @@ sourceSets {
             srcDir 'deps/ic2'
             include 'ic2/**'
 
-            srcDir 'deps/ue/src'
-            include 'universalelectricity/**'
+            srcDir 'deps/nei'
+            include 'codechicken/**'
 
             srcDir 'deps/cofh'
             include 'cofh/api/**'
+
+            srcDir 'deps/waila'
+            include 'mcp/mobius/waila/api/*.java'
         }
     }
 }

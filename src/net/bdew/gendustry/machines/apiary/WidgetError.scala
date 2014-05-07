@@ -42,6 +42,6 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
     } else {
       tip += ErrorCodes.getDescription(0)
     }
-    apiary.addStats(tip)
+    tip ++= apiary.getStats
   }
 }
