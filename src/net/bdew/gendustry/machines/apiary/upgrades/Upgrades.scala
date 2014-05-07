@@ -10,12 +10,13 @@
 package net.bdew.gendustry.machines.apiary.upgrades
 
 import net.bdew.gendustry.api.ApiaryModifiers
-import net.bdew.gendustry.config.TuningLoader._
 import net.bdew.gendustry.config.Tuning
-import net.bdew.lib.recipes.gencfg.{EntryStr, ConfigSection}
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
 import net.bdew.lib.Misc
+import net.bdew.gendustry.config.loader._
+import net.bdew.lib.recipes.gencfg.EntryStr
+import net.bdew.lib.recipes.gencfg.ConfigSection
 
 object Upgrades {
   val map = collection.mutable.Map.empty[Int, Upgrade]

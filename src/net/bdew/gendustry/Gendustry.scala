@@ -12,7 +12,7 @@ package net.bdew.gendustry
 import net.bdew.gendustry.config._
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.event._
 import cpw.mods.fml.common.network.NetworkRegistry
 import java.io.File
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
@@ -21,6 +21,8 @@ import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.minecraft.command.CommandHandler
+import net.bdew.gendustry.custom.CustomContent
+import net.bdew.gendustry.config.loader.TuningLoader
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.4.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
@@ -44,13 +46,12 @@ object Gendustry {
   def preInit(event: FMLPreInitializationEvent) {
     log = event.getModLog
     PowerProxy.logModVersions()
-    configDir = event.getModConfigurationDirectory
+    configDir = new File(event.getModConfigurationDirectory, "gendustry")
     configFile = event.getSuggestedConfigurationFile
-    TuningLoader.load("tuning")
-    TuningLoader.load("recipes")
-    TuningLoader.load("override", false)
+    TuningLoader.loadConfigFiles()
     TriggerProvider.registerTriggers()
     if (event.getSide == Side.CLIENT) {
+      ResourceListener.init()
       HintIcons.init()
     }
   }
@@ -61,10 +62,15 @@ object Gendustry {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     Upgrades.init()
     TuningLoader.loadDealayed()
+    CustomContent.registerBranches()
+    CustomContent.registerSpecies()
+    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallabck")
   }
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
+    CustomContent.registerTemplates()
+    CustomContent.registerMuations()
   }
 
   @EventHandler

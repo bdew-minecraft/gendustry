@@ -21,7 +21,6 @@ import net.bdew.lib.tile.TileExtended
 import net.bdew.gendustry.config.Config
 import net.bdew.lib.items.ItemUtils
 import net.bdew.gendustry.api.{ApiaryModifiers, IApiaryUpgrade}
-import scala.collection.mutable
 import net.minecraft.world.biome.BiomeGenBase
 import net.bdew.lib.data.base.{UpdateKind, TileDataSlots}
 import net.bdew.lib.data.DataSlotFloat
@@ -157,22 +156,26 @@ with IBeeHousing {
       return false
   }
 
-  def addStats(l: mutable.MutableList[String]) {
-    l += Misc.toLocalF("gendustry.label.energy", "%.1f".format(cfg.baseMjPerTick * mods.energy * Config.powerShowMultiplier), Config.powerShowUnits)
-    l += Misc.toLocalF("gendustry.label.temperature", Misc.toLocal(getTemperature.getName))
-    l += Misc.toLocalF("gendustry.label.humidity", Misc.toLocal(getHumidity.getName))
+  def getStats = {
+    var strings = List.empty[String]
 
-    if (getQueen != null) {
-      val bee = beeRoot.getMember(getQueen)
+    strings :+= Misc.toLocalF("gendustry.label.energy", "%.1f".format(cfg.baseMjPerTick * mods.energy * Config.powerShowMultiplier), Config.powerShowUnits)
+    strings :+= Misc.toLocalF("gendustry.label.temperature", Misc.toLocal(getTemperature.getName))
+    strings :+= Misc.toLocalF("gendustry.label.humidity", Misc.toLocal(getHumidity.getName))
+
+    if (queen.cval != null) {
+      val bee = beeRoot.getMember(queen)
       if (bee != null && bee.isAnalyzed) {
         val genome = bee.getGenome
-        l += Misc.toLocalF("gendustry.label.production", "%.0f%%".format(100F * mods.production * genome.getSpeed))
-        l += Misc.toLocalF("gendustry.label.flowering", "%.0f%%".format(mods.flowering * genome.getFlowering))
-        l += Misc.toLocalF("gendustry.label.lifespan", "%.0f%%".format(mods.lifespan * genome.getLifespan))
+        strings :+= Misc.toLocalF("gendustry.label.production", "%.0f%%".format(100F * mods.production * genome.getSpeed))
+        strings :+= Misc.toLocalF("gendustry.label.flowering", "%.0f%%".format(mods.flowering * genome.getFlowering))
+        strings :+= Misc.toLocalF("gendustry.label.lifespan", "%.0f%%".format(mods.lifespan * genome.getLifespan))
         val t = genome.getTerritory.toSeq.map(mods.territory * _)
-        l += Misc.toLocalF("gendustry.label.territory", "%.0f x %.0f x %.0f".format(t: _*))
+        strings :+= Misc.toLocalF("gendustry.label.territory", "%.0f x %.0f x %.0f".format(t: _*))
       }
     }
+
+    strings
   }
 
   // Misc

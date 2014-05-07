@@ -4,7 +4,7 @@ buildscript {
     }
     repositories {
         mavenCentral()
-	mavenLocal()
+        mavenLocal()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -57,6 +57,10 @@ repositories {
         name = "ic2"
         url = "http://maven.ic2.player.to/"
     }
+    maven {
+        name "waila"
+        url "http://mobiusstrip.eu/maven"
+    }
 }
 
 dependencies {
@@ -67,6 +71,7 @@ dependencies {
     compile "net.bdew.thirdparty:ic2api:2.1.464.1"
     compile "net.industrial-craft:industrialcraft-2:2.1.470-experimental:api"
     compile "net.bdew.thirdparty:forestryapi:2.4.0.0.711.1"
+    compile "mcp.mobius.waila:Waila:1.5.2a"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens

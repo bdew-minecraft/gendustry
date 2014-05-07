@@ -13,6 +13,7 @@ import net.bdew.gendustry.items.{IndustrialScoop, IndustrialGrafter, GeneTemplat
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.custom.{CustomHoneyDrop, CustomHoneyComb}
 
 object Items extends ItemManager {
   val labware = regSimpleItem("Labware")
@@ -26,6 +27,9 @@ object Items extends ItemManager {
 
   regItem(IndustrialGrafter)
   regItem(IndustrialScoop)
+
+  regItem(CustomHoneyComb)
+  regItem(CustomHoneyDrop)
 
   regSimpleItem("MutagenTank")
   regSimpleItem("BeeReceptacle")

@@ -7,13 +7,13 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry.config
+package net.bdew.gendustry.forestry
 
-import net.bdew.lib.recipes.gencfg.ConfigSection
-import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
-import buildcraft.core.recipes.AssemblyRecipeManager
+import forestry.api.core.ItemInterface
 
-object Tuning extends ConfigSection
-
-
+@SuppressWarnings(Array("deprecation"))
+object ForestryItems {
+  lazy val honeydew = ItemInterface.getItem("honeydew")
+  lazy val canEmpty = ItemInterface.getItem("canEmpty")
+}
 

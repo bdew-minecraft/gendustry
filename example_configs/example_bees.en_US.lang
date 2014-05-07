@@ -1,0 +1,4 @@
+gendustry.bee.species.Test=Test
+gendustry.bee.species.Test.description=A curious species of bees, used to demonstrate the config system
+gendustry.honeycomb.test.name=Test Comb
+gendustry.honeydrop.test.name=Test Honey Drop
