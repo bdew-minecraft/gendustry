@@ -15,15 +15,17 @@ import forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
 import forestry.api.arboriculture.{IAlleleGrowth, IAlleleFruit, EnumTreeChromosome, ITreeRoot}
 import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
 import net.bdew.lib.Misc
+import net.bdew.gendustry.api.items.IGeneSample
 
-case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) {
+case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) extends IGeneSample {
   def writeToNBT(t: NBTTagCompound) {
     t.setString("species", root.getUID)
     t.setInteger("chromosome", chromosome)
     t.setString("allele", allele.getUID)
   }
 
-  def getText: String = {
+  @Override
+  def getLocalizedName: String = {
     import scala.collection.JavaConverters._
     val chr = GeneSampleInfo.getChromosomeName(root, chromosome)
     val alstr = allele match {

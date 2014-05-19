@@ -19,8 +19,10 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.api.blocks.IAdvancedMutatron
+import net.bdew.gendustry.apiimpl.TileWorker
 
-class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank {
+class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron {
   lazy val cfg = Machines.mutatronAdv
   val outputSlots = Seq(slots.outIndividual)
 
@@ -57,6 +59,16 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
         }
       }
     }
+  }
+
+  override def setMutation(mutation: Int) {
+    if (!isWorking && slots.selectors.contains(mutation) && inv(mutation) != null)
+      selectedMutation := mutation
+  }
+
+  override def getPossibleMutations = {
+    import scala.collection.JavaConverters._
+    (slots.selectors map (x => Integer.valueOf(x) -> inv(x)) filterNot (_._2 != null)).toMap.asJava
   }
 
   def canStart =

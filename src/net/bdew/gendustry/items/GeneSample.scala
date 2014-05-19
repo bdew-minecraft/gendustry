@@ -39,7 +39,7 @@ class GeneSample(id: Int) extends SimpleItem(id, "GeneSample") {
       val tip = l.asInstanceOf[util.List[String]].asScala
       val info = getInfo(stack)
       tip += Misc.toLocal("gendustry.label.sample." + info.root.getUID)
-      tip += info.getText
+      tip += info.getLocalizedName
     }
   }
 }

@@ -14,8 +14,9 @@ import net.minecraft.item.ItemStack
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.items.IStack
+import net.bdew.gendustry.apiimpl.TileWorker
 
-class TileTransposer extends TileItemProcessor with TilePowered {
+class TileTransposer extends TileItemProcessor with TileWorker with TilePowered {
   lazy val cfg = Machines.transposer
 
   val outputSlots = Seq(slots.outCopy)

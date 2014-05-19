@@ -17,8 +17,9 @@ import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.compat.ExtraBeesProxy
+import net.bdew.gendustry.apiimpl.TileWorker
 
-class TileSampler extends TileItemProcessor with TilePowered {
+class TileSampler extends TileItemProcessor with TileWorker with TilePowered {
   lazy val cfg = Machines.sampler
   val outputSlots = Seq(slots.outSample)
 

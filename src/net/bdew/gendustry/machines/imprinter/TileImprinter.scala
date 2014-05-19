@@ -17,8 +17,9 @@ import forestry.api.apiculture.{EnumBeeType, IBeeRoot, IBee}
 import scala.util.Random
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.gendustry.apiimpl.TileWorker
 
-class TileImprinter extends TileItemProcessor with TilePowered {
+class TileImprinter extends TileItemProcessor with TileWorker with TilePowered {
   lazy val cfg = Machines.imprinter
   val outputSlots = Seq(slots.outIndividual)
 

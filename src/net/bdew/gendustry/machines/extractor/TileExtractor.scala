@@ -20,8 +20,9 @@ import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.gendustry.apiimpl.TileWorker
 
-class TileExtractor extends TileBaseProcessor with TilePowered with ExposeTank {
+class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank {
   lazy val cfg = Machines.extractor
 
   object slots {

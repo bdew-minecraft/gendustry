@@ -21,7 +21,7 @@ import forestry.api.arboriculture.EnumGermlingType
 import net.bdew.lib.tile.TileExtended
 import net.bdew.gendustry.config.{Config, Machines}
 import net.bdew.lib.items.ItemUtils
-import net.bdew.gendustry.api.{ApiaryModifiers, IApiaryUpgrade}
+import net.bdew.gendustry.api.ApiaryModifiers
 import net.minecraft.world.biome.BiomeGenBase
 import net.bdew.lib.data.base.{UpdateKind, TileDataSlots}
 import net.bdew.lib.data.DataSlotFloat
@@ -32,6 +32,8 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.gendustry.compat.triggers.ForestryErrorSource
 import net.bdew.gendustry.gui.rscontrol.TileRSContollable
+import net.bdew.gendustry.api.items.IApiaryUpgrade
+import net.bdew.gendustry.api.blocks.IIndustrialApiary
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -41,7 +43,7 @@ with BreakableInventoryTile
 with TilePowered
 with ForestryErrorSource
 with TileRSContollable
-with IBeeHousing {
+with IIndustrialApiary {
 
   object slots {
     val queen = 0
@@ -186,6 +188,14 @@ with IBeeHousing {
   override def canInsertItem(slot: Int, stack: ItemStack, side: Int) = slots.bees.contains(slot) && isItemValidForSlot(slot, stack)
   override def canExtractItem(slot: Int, stack: ItemStack, side: Int) = slots.output.contains(slot)
 
+  //IIndustrialApiary
+  override def getUpgrades = {
+    import scala.collection.JavaConversions._
+    slots.upgrades map inv filterNot (_ == null)
+  }
+
+  override def getModifiers = mods
+
   // IBeeListener
   def onPostQueenDeath(queen: IBee) {
     if (mods.isAutomated) movePrincess = true
@@ -246,4 +256,5 @@ with IBeeHousing {
     p = ItemUtils.addStackToSlots(p, this, slots.output, false)
     return p == null
   }
+
 }

@@ -19,8 +19,9 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.apiimpl.TileWorker
 
-class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
+class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with ExposeTank {
   lazy val cfg = Machines.mutatron
   val outputSlots = Seq(slots.outIndividual)
 
