@@ -257,4 +257,9 @@ with IIndustrialApiary {
     return p == null
   }
 
+  override def validate() {
+    super.validate()
+    if (worldObj!=null && !worldObj.isRemote)
+      Sanity.check(this)
+  }
 }
