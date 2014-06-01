@@ -9,14 +9,14 @@
 
 package net.bdew.gendustry.items
 
-import net.bdew.lib.items.{ItemUtils, SimpleItem}
+import net.bdew.lib.items.SimpleItem
 import net.bdew.lib.covers.{TileCoverable, ItemCover}
 import net.minecraftforge.common.ForgeDirection
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.client.renderer.texture.IconRegister
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.Misc
+import net.bdew.gendustry.compat.itempush.ItemPush
 
 class EjectCover(id: Int) extends SimpleItem(id, "EjectCover") with ItemCover {
   override def getCoverIcon = itemIcon
@@ -27,15 +27,17 @@ class EjectCover(id: Int) extends SimpleItem(id, "EjectCover") with ItemCover {
   override def tickCover(te: TileCoverable, side: ForgeDirection): Unit = {
     if (te.worldObj.getTotalWorldTime % 20 != 0) return
     val inv = te.asInstanceOf[ISidedInventory with IInventory]
+
     for {
-      target <- Misc.getNeighbourTile(te, side, classOf[IInventory])
       slot <- inv.getAccessibleSlotsFromSide(side.ordinal())
       stack <- Option(inv.getStackInSlot(slot))
       if inv.canExtractItem(slot, stack, side.ordinal())
     } {
-      val slots = ItemUtils.getAccessibleSlotsFromSide(target, side.getOpposite)
-      inv.setInventorySlotContents(slot, ItemUtils.addStackToSlots(stack, target, slots, true))
-      inv.onInventoryChanged()
+      val stackLeft = ItemPush.pushStack(te, side, stack.copy())
+      if (stackLeft == null || stackLeft.stackSize < stack.stackSize) {
+        inv.setInventorySlotContents(slot, stackLeft)
+        inv.onInventoryChanged()
+      }
     }
   }
 

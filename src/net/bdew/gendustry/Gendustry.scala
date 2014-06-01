@@ -27,6 +27,7 @@ import net.bdew.gendustry.custom.CustomContent
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl}
+import net.bdew.gendustry.compat.itempush.ItemPush
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.3.1.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -51,6 +52,8 @@ object Gendustry {
     GendustryAPI.Blocks = BlockApiImpl
 
     PowerProxy.logModVersions()
+    ItemPush.init()
+
     configDir = new File(event.getModConfigurationDirectory, "gendustry")
     configFile = event.getSuggestedConfigurationFile
     TuningLoader.loadConfigFiles()
