@@ -17,14 +17,15 @@ import net.minecraft.client.renderer.texture.IconRegister
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.Misc
+import net.minecraft.item.ItemStack
 
 class ImportCover(id: Int) extends SimpleItem(id, "ImportCover") with ItemCover {
-  override def getCoverIcon = itemIcon
+  override def getCoverIcon(stack: ItemStack) = itemIcon
   override def getSpriteNumber = 0
 
-  override def isValidTile(te: TileCoverable) = te.isInstanceOf[ISidedInventory]
+  override def isValidTile(te: TileCoverable, stack: ItemStack) = te.isInstanceOf[ISidedInventory with IInventory]
 
-  override def tickCover(te: TileCoverable, side: ForgeDirection): Unit = {
+  override def tickCover(te: TileCoverable, side: ForgeDirection, coverStack: ItemStack): Unit = {
     if (te.worldObj.getTotalWorldTime % 20 != 0) return
     val inv = te.asInstanceOf[ISidedInventory with IInventory]
     val insertSlots = inv.getAccessibleSlotsFromSide(side.ordinal())

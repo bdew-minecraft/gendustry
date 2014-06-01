@@ -34,7 +34,7 @@ import net.bdew.gendustry.compat.triggers.ForestryErrorSource
 import net.bdew.gendustry.gui.rscontrol.TileRSContollable
 import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.gendustry.api.blocks.IIndustrialApiary
-import net.bdew.lib.covers.{ItemCover, TileCoverable}
+import net.bdew.lib.covers.TileCoverable
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -265,5 +265,5 @@ with IIndustrialApiary {
       Sanity.check(this)
   }
 
-  override def isValidCover(side: ForgeDirection, cover: ItemCover) = true
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }
