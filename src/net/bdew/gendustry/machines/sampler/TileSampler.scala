@@ -18,8 +18,10 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.compat.ExtraBeesProxy
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
+import net.minecraftforge.common.ForgeDirection
 
-class TileSampler extends TileItemProcessor with TileWorker with TilePowered {
+class TileSampler extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = Machines.sampler
   val outputSlots = Seq(slots.outSample)
 
@@ -85,4 +87,6 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered {
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outSample
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

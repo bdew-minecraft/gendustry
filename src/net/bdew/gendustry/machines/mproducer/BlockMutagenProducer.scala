@@ -20,8 +20,9 @@ import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-class BlockMutagenProducer(id: Int) extends Block(id, Material.rock) with HasTE[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
+class BlockMutagenProducer(id: Int) extends Block(id, Material.rock) with HasTE[TileMutagenProducer] with BlockCoverable[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
   private var icons: Array[Icon] = null
   val TEClass = classOf[TileMutagenProducer]
   lazy val guiId = Machines.mutagenProducer.guiId

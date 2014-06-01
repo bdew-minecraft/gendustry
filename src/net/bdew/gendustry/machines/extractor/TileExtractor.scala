@@ -21,8 +21,9 @@ import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
 
-class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank {
+class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = Machines.extractor
 
   object slots {
@@ -85,4 +86,6 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
   override def canFill(from: ForgeDirection, fluid: Fluid) = false
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

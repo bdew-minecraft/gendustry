@@ -21,8 +21,9 @@ import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.api.blocks.IAdvancedMutatron
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
 
-class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron {
+class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron with TileCoverable {
   lazy val cfg = Machines.mutatronAdv
   val outputSlots = Seq(slots.outIndividual)
 
@@ -125,4 +126,6 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
   override def canDrain(from: ForgeDirection, fluid: Fluid): Boolean = false
   override def drain(from: ForgeDirection, resource: FluidStack, doDrain: Boolean): FluidStack = null
   override def drain(from: ForgeDirection, maxDrain: Int, doDrain: Boolean): FluidStack = null
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

@@ -20,8 +20,9 @@ import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-class BlockMutatron(id: Int) extends Block(id, Material.rock) with HasTE[TileMutatron] with BreakableInventoryBlock with BlockGuiWrenchable {
+class BlockMutatron(id: Int) extends Block(id, Material.rock) with HasTE[TileMutatron] with BlockCoverable[TileMutatron] with BreakableInventoryBlock with BlockGuiWrenchable {
   val TEClass = classOf[TileMutatron]
   private var icons: Array[Icon] = null
   lazy val guiId: Int = Machines.mutatron.guiId

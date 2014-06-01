@@ -18,8 +18,10 @@ import scala.util.Random
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
+import net.minecraftforge.common.ForgeDirection
 
-class TileImprinter extends TileItemProcessor with TileWorker with TilePowered {
+class TileImprinter extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = Machines.imprinter
   val outputSlots = Seq(slots.outIndividual)
 
@@ -114,4 +116,6 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered {
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) =
     slot == slots.outIndividual ||
       (slot == slots.inTemplate && inv(slots.inIndividual) == null && (output :== null))
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }
