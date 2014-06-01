@@ -20,8 +20,6 @@ class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
   def getHeadStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = None
   def getBodyStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = None
 
-  println("BDP: %s < %s".format(this, cls))
-
   import scala.collection.JavaConversions._
 
   final override def getWailaTail(itemStack: ItemStack, currenttip: util.List[String], accessor: IWailaDataAccessor, config: IWailaConfigHandler) = {

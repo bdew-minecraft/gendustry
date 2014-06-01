@@ -10,7 +10,7 @@
 package net.bdew.gendustry.config
 
 import cpw.mods.fml.common.registry.GameRegistry
-import net.bdew.gendustry.items.{IndustrialScoop, IndustrialGrafter, GeneTemplate, GeneSample}
+import net.bdew.gendustry.items._
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
@@ -42,6 +42,9 @@ object Items extends ItemManager(Config.IDs) {
   regSimpleItem("EnvProcessor")
   regSimpleItem("UpgradeFrame")
   regSimpleItem("ClimateModule")
+
+  val coverEject = regItem(new EjectCover(ids.getItemId("EjectCover")))
+  val coverImport = regItem(new ImportCover(ids.getItemId("ImportCover")))
 
   Gendustry.logInfo("Items loaded")
 }

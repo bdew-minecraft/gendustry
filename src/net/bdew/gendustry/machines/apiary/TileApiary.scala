@@ -34,6 +34,7 @@ import net.bdew.gendustry.compat.triggers.ForestryErrorSource
 import net.bdew.gendustry.gui.rscontrol.TileRSContollable
 import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.gendustry.api.blocks.IIndustrialApiary
+import net.bdew.lib.covers.{ItemCover, TileCoverable}
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -43,6 +44,7 @@ with BreakableInventoryTile
 with TilePowered
 with ForestryErrorSource
 with TileRSContollable
+with TileCoverable
 with IIndustrialApiary {
 
   object slots {
@@ -259,7 +261,9 @@ with IIndustrialApiary {
 
   override def validate() {
     super.validate()
-    if (worldObj!=null && !worldObj.isRemote)
+    if (worldObj != null && !worldObj.isRemote)
       Sanity.check(this)
   }
+
+  override def isValidCover(side: ForgeDirection, cover: ItemCover) = true
 }

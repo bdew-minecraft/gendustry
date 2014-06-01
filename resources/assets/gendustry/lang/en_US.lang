@@ -27,6 +27,8 @@ item.gendustry.GeneSampleBlank.name=Blank Gene Sample
 item.gendustry.Waste.name=Genetic Waste
 item.gendustry.grafter.name=Industrial Grafter
 item.gendustry.scoop.name=Scooporator MX200 Turbo
+item.gendustry.ImportCover.name=Item Import Cover
+item.gendustry.EjectCover.name=Item Eject Cover
 
 # ==== FLUIDS ====
 

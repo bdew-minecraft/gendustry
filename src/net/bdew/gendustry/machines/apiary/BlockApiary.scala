@@ -24,8 +24,13 @@ import net.bdew.gendustry.config.Machines
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-class BlockApiary(id: Int) extends Block(id, Material.rock) with HasTE[TileApiary] with BlockGuiWrenchable with BreakableInventoryBlock {
+class BlockApiary(id: Int) extends Block(id, Material.rock)
+with HasTE[TileApiary]
+with BlockGuiWrenchable
+with BlockCoverable[TileApiary]
+with BreakableInventoryBlock {
   private var icons: Array[Icon] = null
   val TEClass = classOf[TileApiary]
   lazy val guiId: Int = Machines.apiary.guiId
