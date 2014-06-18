@@ -23,7 +23,7 @@ apply plugin: 'scala'
 apply plugin: 'forge'
 
 version = "1.2.0"
-ext.bdlibver = "1.3.0.9"
+ext.bdlibver = "1.3.0.10"
 ext.versuffix = "mc172"
 
 if (project.hasProperty('buildnum')) {
@@ -38,7 +38,7 @@ group = "net.bdew"
 archivesBaseName = "gendustry"
 
 minecraft {
-    version = "1.7.2-10.12.1.1060"
+    version = "1.7.2-10.12.2.1126"
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
 }
@@ -71,6 +71,7 @@ dependencies {
     compile "net.industrial-craft:industrialcraft-2:2.1.470-experimental:api"
     compile "net.sengir.forestry:forestry_1.7.2:2.4.1.22:api"
     compile "mcp.mobius.waila:Waila:1.5.2a"
+    compile "net.bdew.thirdparty:CoFHLib:R1.0:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
