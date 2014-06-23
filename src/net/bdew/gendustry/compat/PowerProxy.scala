@@ -17,7 +17,7 @@ import net.bdew.gendustry.config.Tuning
 object PowerProxy {
   final val IC2_MOD_ID = "IC2"
   final val BC_MOD_ID = "BuildCraftAPI|power"
-  final val TE_MOD_ID = "CoFHCore"
+  final val TE_MOD_ID = "CoFHAPI"
 
   lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")
   lazy val MJEnabled = Tuning.getSection("Power").getSection("BC").getBoolean("Enabled")
@@ -55,6 +55,6 @@ object PowerProxy {
     }
     Gendustry.logInfo("BC API Version: %s", getModVersion(BC_MOD_ID))
     Gendustry.logInfo("IC2 Version: %s", getModVersion(IC2_MOD_ID))
-    Gendustry.logInfo("TE(CoFHCore) Version: %s", getModVersion(TE_MOD_ID))
+    Gendustry.logInfo("RF API Version: %s", getModVersion(TE_MOD_ID))
   }
 }
