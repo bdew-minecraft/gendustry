@@ -24,8 +24,8 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.bdew.gendustry.power.ItemPowered
 import forestry.api.core.IToolScoop
 import net.minecraftforge.common.ForgeHooks
-import net.minecraft.block.material.Material
 import net.bdew.lib.items.NamedItem
+import com.google.common.collect.ImmutableSet
 
 object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolScoop {
   def name = "IndustrialScoop"
@@ -42,13 +42,12 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
   override def getHarvestLevel(stack: ItemStack, toolClass: String) =
     if (toolClass == "scoop") 3 else -1
 
+  override def getToolClasses(stack: ItemStack) = ImmutableSet.of("scoop")
+
   override def getDigSpeed(stack: ItemStack, block: Block, meta: Int) =
     if (!hasCharges(stack))
       0.1F
-    else if (block.getMaterial == Material.leaves)
-      efficiencyOnProperMaterial
-    else
-      0.1F
+    else super.getDigSpeed(stack, block, meta)
 
   override def onBlockDestroyed(stack: ItemStack, world: World, block: Block, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
     if (ForgeHooks.isToolEffective(stack, block, world.getBlockMetadata(x, y, z))) {
