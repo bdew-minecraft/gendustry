@@ -21,7 +21,7 @@ import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.bdew.gendustry.gui.BlockGuiWrenchable
 import net.bdew.lib.covers.BlockCoverable
 
-object BlockLiquifier extends Block(Material.rock) with HasTE[TileLiquifier] BlockCoverable[TileLiquifier] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockLiquifier extends Block(Material.rock) with HasTE[TileLiquifier] with BlockCoverable[TileLiquifier] with BreakableInventoryBlock with BlockGuiWrenchable {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileLiquifier]
   lazy val guiId = MachineLiquifier.guiId

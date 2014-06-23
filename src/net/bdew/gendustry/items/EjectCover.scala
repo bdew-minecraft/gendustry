@@ -11,22 +11,22 @@ package net.bdew.gendustry.items
 
 import net.bdew.lib.items.SimpleItem
 import net.bdew.lib.covers.{TileCoverable, ItemCover}
-import net.minecraftforge.common.ForgeDirection
 import net.minecraft.inventory.{IInventory, ISidedInventory}
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.itempush.ItemPush
 import net.minecraft.item.ItemStack
+import net.minecraftforge.common.util.ForgeDirection
 
-class EjectCover(id: Int) extends SimpleItem(id, "EjectCover") with ItemCover {
+object EjectCover extends SimpleItem("EjectCover") with ItemCover {
   override def getCoverIcon(stack: ItemStack) = itemIcon
   override def getSpriteNumber = 0
 
   override def isValidTile(te: TileCoverable, stack: ItemStack) = te.isInstanceOf[ISidedInventory with IInventory]
 
   override def tickCover(te: TileCoverable, side: ForgeDirection, coverStack: ItemStack): Unit = {
-    if (te.worldObj.getTotalWorldTime % 20 != 0) return
+    if (te.getWorldObj.getTotalWorldTime % 20 != 0) return
     val inv = te.asInstanceOf[ISidedInventory with IInventory]
 
     for {
@@ -37,13 +37,13 @@ class EjectCover(id: Int) extends SimpleItem(id, "EjectCover") with ItemCover {
       val stackLeft = ItemPush.pushStack(te, side, stack.copy())
       if (stackLeft == null || stackLeft.stackSize < stack.stackSize) {
         inv.setInventorySlotContents(slot, stackLeft)
-        inv.onInventoryChanged()
+        inv.markDirty()
       }
     }
   }
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
+  override def registerIcons(reg: IIconRegister) {
     itemIcon = reg.registerIcon(Gendustry.modId + ":covers/eject")
   }
 }

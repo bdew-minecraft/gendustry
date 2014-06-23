@@ -10,9 +10,9 @@
 package net.bdew.gendustry.compat.itempush
 
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.compat.PowerProxy
+import net.minecraftforge.common.util.ForgeDirection
 
 object ItemPush {
   var proxies = List.empty[ItemPushProxy]

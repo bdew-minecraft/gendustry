@@ -18,6 +18,9 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.compat.ExtraBeesProxy
 import net.bdew.gendustry.items.GeneSample
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileSampler extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = MachineSampler

@@ -70,7 +70,7 @@ object NEICache {
       val pairs = mutations.toList.map(mutation => mutation.getPartner(sp1) -> mutation)
       // Select distinct partners
       pairs.map(_._1).distinct map { dsp =>
-      // Find all results
+        // Find all results
         dsp -> pairs.filter(_._1 == dsp).map(_._2)
       } filter { case (partner, results) =>
         // Filter for >1 results

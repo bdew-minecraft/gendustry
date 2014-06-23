@@ -10,14 +10,14 @@
 package net.bdew.gendustry.compat.itempush
 
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
 import net.minecraft.item.ItemStack
 import net.bdew.lib.Misc
-import cofh.api.transport.IItemConduit
+import cofh.api.transport.IItemDuct
+import net.minecraftforge.common.util.ForgeDirection
 
 object CofhConduitPushProxy extends ItemPushProxy {
   override def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack) =
-    (for (conduit <- Misc.getNeighbourTile(from, dir, classOf[IItemConduit])) yield
+    (for (conduit <- Misc.getNeighbourTile(from, dir, classOf[IItemDuct])) yield
       conduit.insertItem(dir.getOpposite, stack)
       ).getOrElse(stack)
 }

@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.mproducer
 
-import net.bdew.gendustry.config.{Items, Fluids, Machines}
+import net.bdew.gendustry.config.{Items, Fluids}
 import net.bdew.gendustry.fluids.MutagenSources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity

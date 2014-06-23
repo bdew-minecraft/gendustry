@@ -10,8 +10,8 @@
 package net.bdew.gendustry.compat.itempush
 
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
 import net.minecraft.item.ItemStack
+import net.minecraftforge.common.util.ForgeDirection
 
 trait ItemPushProxy {
   def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack): ItemStack

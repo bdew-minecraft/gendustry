@@ -13,8 +13,8 @@ import net.bdew.lib.items.ItemUtils
 import net.minecraft.inventory.IInventory
 import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.ForgeDirection
 import net.minecraft.tileentity.TileEntity
+import net.minecraftforge.common.util.ForgeDirection
 
 object VanillaPush extends ItemPushProxy {
   override def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack) =

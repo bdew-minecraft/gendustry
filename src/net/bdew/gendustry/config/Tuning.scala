@@ -10,8 +10,6 @@
 package net.bdew.gendustry.config
 
 import net.bdew.lib.recipes.gencfg.ConfigSection
-import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
-import buildcraft.core.recipes.AssemblyRecipeManager
 
 object Tuning extends ConfigSection
 

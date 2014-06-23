@@ -73,7 +73,7 @@ dependencies {
     compile "net.industrial-craft:industrialcraft-2:2.1.470-experimental:api"
     compile "net.sengir.forestry:forestry_1.7.2:2.4.1.22:api"
     compile "mcp.mobius.waila:Waila:1.5.2a"
-    compile "net.bdew.thirdparty:CoFHLib:R1.0:api"
+    compile "net.bdew.thirdparty:CoFHLib:R1.0.1:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -102,7 +102,7 @@ processResources {
 }
 
 task apiJar(type: Jar, dependsOn: 'classes') {
-    from (sourceSets.main.output) {
+    from(sourceSets.main.output) {
         include 'net/bdew/gendustry/api/**'
     }
 

@@ -15,23 +15,26 @@ import net.bdew.gendustry.machines.advmutatron.TileMutatronAdv
 import net.bdew.gendustry.machines.apiary.TileApiary
 
 object BlockApiImpl extends IBlockAPI {
+  private def getTypedTileEntity[T](w: World, x: Int, y: Int, z: Int, cls: Class[T]) =
+    Option(w.getTileEntity(x, y, z)) filter cls.isInstance map (_.asInstanceOf[T])
+
   override def isWorkerMachine(w: World, x: Int, y: Int, z: Int) =
-    w.blockHasTileEntity(x, y, z) && w.getBlockTileEntity(x, y, z).isInstanceOf[TileWorker]
+    getTypedTileEntity(w, x, y, z, classOf[TileWorker]).isDefined
 
   override def getWorkerMachine(w: World, x: Int, y: Int, z: Int) =
-    if (isWorkerMachine(w, x, y, z)) w.getBlockTileEntity(x, y, z).asInstanceOf[TileWorker] else null
+    getTypedTileEntity(w, x, y, z, classOf[TileWorker]) getOrElse null
 
   override def isAdvancedMutatron(w: World, x: Int, y: Int, z: Int) =
-    w.blockHasTileEntity(x, y, z) && w.getBlockTileEntity(x, y, z).isInstanceOf[TileMutatronAdv]
+    getTypedTileEntity(w, x, y, z, classOf[TileMutatronAdv]).isDefined
 
   override def getAdvancedMutatron(w: World, x: Int, y: Int, z: Int) =
-    if (isWorkerMachine(w, x, y, z)) w.getBlockTileEntity(x, y, z).asInstanceOf[TileMutatronAdv] else null
+    getTypedTileEntity(w, x, y, z, classOf[TileMutatronAdv]) getOrElse null
 
   override def isIndustrialApiary(w: World, x: Int, y: Int, z: Int) =
-    w.blockHasTileEntity(x, y, z) && w.getBlockTileEntity(x, y, z).isInstanceOf[TileApiary]
+    getTypedTileEntity(w, x, y, z, classOf[TileApiary]).isDefined
 
   override def getIndustrialApiary(w: World, x: Int, y: Int, z: Int) =
-    if (isWorkerMachine(w, x, y, z)) w.getBlockTileEntity(x, y, z).asInstanceOf[TileApiary] else null
+    getTypedTileEntity(w, x, y, z, classOf[TileApiary]) getOrElse null
 }
 
 

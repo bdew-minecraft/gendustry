@@ -20,7 +20,7 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.apiimpl.TileWorker
 import net.bdew.lib.covers.TileCoverable
-import net.minecraftforge.common.ForgeDirection
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileImprinter extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = MachineImprinter

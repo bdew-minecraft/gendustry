@@ -15,6 +15,9 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.items.IStack
 import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileTransposer extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = MachineTransposer

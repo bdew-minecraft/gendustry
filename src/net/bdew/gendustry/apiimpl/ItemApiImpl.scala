@@ -12,6 +12,7 @@ package net.bdew.gendustry.apiimpl
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.api.items.IItemAPI
+import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
 
 object ItemApiImpl extends IItemAPI {
 
@@ -21,29 +22,29 @@ object ItemApiImpl extends IItemAPI {
     stack.getItem == Items.geneSampleBlank
 
   override def isFullSample(stack: ItemStack) =
-    stack.getItem == Items.geneSample
+    stack.getItem == GeneSample
 
   override def isEmptyTemplate(stack: ItemStack) =
-    stack.getItem == Items.geneTemplate && Items.geneTemplate.getSamples(stack).isEmpty
+    stack.getItem == GeneTemplate && GeneTemplate.getSamples(stack).isEmpty
 
   override def isFullTemplate(stack: ItemStack) =
-    stack.getItem == Items.geneTemplate && !Items.geneTemplate.getSamples(stack).isEmpty
+    stack.getItem == GeneTemplate && !GeneTemplate.getSamples(stack).isEmpty
 
   override def isCompleteTemplate(stack: ItemStack) =
-    stack.getItem == Items.geneTemplate && Items.geneTemplate.isComplete(stack)
+    stack.getItem == GeneTemplate && GeneTemplate.isComplete(stack)
 
   override def getTemplateGenome(stack: ItemStack) = {
-    val root = Items.geneTemplate.getSpecies(stack)
-    val samples = Items.geneTemplate.getSamples(stack)
+    val root = GeneTemplate.getSpecies(stack)
+    val samples = GeneTemplate.getSamples(stack)
     val template = root.getDefaultTemplate
     samples.foreach(x => template(x.chromosome) = x.allele)
     root.templateAsGenome(template)
   }
 
   override def getTemplateSamples(stack: ItemStack) =
-    Items.geneTemplate.getSamples(stack).toList
+    GeneTemplate.getSamples(stack).toList
 
   override def getSampleInfo(stack: ItemStack) =
-    Items.geneSample.getInfo(stack)
+    GeneSample.getInfo(stack)
 
 }

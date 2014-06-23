@@ -39,8 +39,8 @@ object Items extends ItemManager {
   regSimpleItem("UpgradeFrame")
   regSimpleItem("ClimateModule")
 
-  val coverEject = regItem(new EjectCover(ids.getItemId("EjectCover")))
-  val coverImport = regItem(new ImportCover(ids.getItemId("ImportCover")))
+  val coverEject = regItem(EjectCover)
+  val coverImport = regItem(ImportCover)
 
   Gendustry.logInfo("Items loaded")
 }

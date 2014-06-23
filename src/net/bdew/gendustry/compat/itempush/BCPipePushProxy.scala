@@ -10,10 +10,10 @@
 package net.bdew.gendustry.compat.itempush
 
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.ForgeDirection
 import net.minecraft.item.ItemStack
 import buildcraft.api.transport.IPipeTile
 import net.bdew.lib.Misc
+import net.minecraftforge.common.util.ForgeDirection
 
 object BCPipePushProxy extends ItemPushProxy {
   override def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack) =

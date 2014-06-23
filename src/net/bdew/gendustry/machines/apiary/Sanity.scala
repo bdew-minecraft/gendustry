@@ -12,7 +12,7 @@ package net.bdew.gendustry.machines.apiary
 import _root_.forestry.api.apiculture.IBeeRoot
 import _root_.forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.{ChatComponentTranslation, EnumChatFormatting}
 
 object Sanity {
   def check(house: TileApiary) {
@@ -30,9 +30,10 @@ object Sanity {
         }
       }
       if (found) {
-        val player = house.worldObj.getClosestPlayer(house.xCoord, house.yCoord, house.zCoord, 20)
+        val player = house.getWorld.getClosestPlayer(house.xCoord, house.yCoord, house.zCoord, 20)
         if (player != null) {
-          player.addChatMessage(EnumChatFormatting.RED + "[Gendustry] WARNING! Possibly bugged mutations detected, check the log for details.")
+          player.addChatMessage(new ChatComponentTranslation(
+            EnumChatFormatting.RED + "[Gendustry] WARNING! Possibly bugged mutations detected, check the log for details."))
         }
       }
     } catch {
