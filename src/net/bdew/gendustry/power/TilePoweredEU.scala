@@ -26,29 +26,34 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   lazy val maxSafe = Tuning.getSection("Power").getSection("IC2").getInt("MaxSafeInput")
 
-  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
-    serverTick.listen(() => {
-      if (!sentLoaded) {
-        MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
-        sentLoaded = true
-      }
-    })
-  }
+  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled)
+    serverTick.listen(sendLoad)
 
   override def invalidate() {
-    sendUnload()
+    if (PowerProxy.haveIC2 && PowerProxy.EUEnabled)
+      sendUnload()
     super.invalidate()
   }
 
-  override def onChunkUnload() = {
-    sendUnload()
+  override def onChunkUnload() {
+    if (PowerProxy.haveIC2 && PowerProxy.EUEnabled)
+      sendUnload()
     super.onChunkUnload()
   }
 
+  @Optional.Method(modid = PowerProxy.IC2_MOD_ID)
   def sendUnload() {
     if (PowerProxy.haveIC2 && sentLoaded) {
       MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
       sentLoaded = false
+    }
+  }
+
+  @Optional.Method(modid = PowerProxy.IC2_MOD_ID)
+  def sendLoad() {
+    if (PowerProxy.haveIC2 && !sentLoaded) {
+      MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
+      sentLoaded = true
     }
   }
 
