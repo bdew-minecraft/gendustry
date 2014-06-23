@@ -92,7 +92,7 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
       try {
         tip += Misc.toLocal("gendustry.label.template." + tag.getString("species"))
         val root = getSpecies(stack)
-        val samples = getSamples(stack).map(x => x.chromosome -> x.getText).toMap
+        val samples = getSamples(stack).map(x => x.chromosome -> x.getLocalizedName).toMap
         val required = getRequiredChromosomes(root)
 
         tip +=

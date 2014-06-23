@@ -20,8 +20,10 @@ import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
 
-class TileLiquifier extends TileBaseProcessor with TilePowered with ExposeTank {
+class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = MachineLiquifier
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.protein.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
@@ -76,4 +78,6 @@ class TileLiquifier extends TileBaseProcessor with TilePowered with ExposeTank {
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
   override def canFill(from: ForgeDirection, fluid: Fluid) = false
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

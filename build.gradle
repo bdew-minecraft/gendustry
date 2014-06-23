@@ -25,6 +25,7 @@ apply plugin: 'forge'
 version = "1.2.0"
 ext.bdlibver = "1.3.0.10"
 ext.versuffix = "mc172"
+ext.apiVer = version
 
 if (project.hasProperty('buildnum')) {
     project.version = project.version + '.' + project.buildnum
@@ -41,6 +42,7 @@ minecraft {
     version = "1.7.2-10.12.2.1126"
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
+    replace("GENDUSTRY_APIVER", project.apiVer)
 }
 
 repositories {
@@ -99,8 +101,16 @@ processResources {
     }
 }
 
+task apiJar(type: Jar, dependsOn: 'classes') {
+    from (sourceSets.main.output) {
+        include 'net/bdew/gendustry/api/**'
+    }
+
+    extension = 'jar'
+    classifier = 'api'
+}
+
 task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
 }
 
 task deobfJar(type: Jar) {
@@ -108,14 +118,24 @@ task deobfJar(type: Jar) {
     exclude "**/*.psd"
 }
 
+
 jar {
     exclude "**/*.psd"
     appendix = project.versuffix
 }
 
+afterEvaluate { project ->
+    // Fudge the inputs of api/source jars so we get the version after replacements
+    tasks.getByPath(":sourceJar").from(tasks.getByPath(":sourceMainScala").outputs.files)
+    tasks.getByPath(":apiJar").from(tasks.getByPath(":sourceMainScala").outputs.files, {
+        include 'net/bdew/gendustry/api/**'
+    })
+}
+
 artifacts {
     archives sourceJar
     archives deobfJar
+    archives apiJar
 }
 
 apply plugin: 'maven-publish'
@@ -128,6 +148,8 @@ publishing {
             artifact sourceJar {
                 classifier "sources"
             }
+
+            artifact apiJar
         }
     }
     repositories {

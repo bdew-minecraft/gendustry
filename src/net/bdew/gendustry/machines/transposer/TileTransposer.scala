@@ -16,7 +16,7 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.items.IStack
 import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
 
-class TileTransposer extends TileItemProcessor with TilePowered {
+class TileTransposer extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = MachineTransposer
 
   val outputSlots = Seq(slots.outCopy)
@@ -79,4 +79,6 @@ class TileTransposer extends TileItemProcessor with TilePowered {
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) =
     slot == slots.outCopy || (slot == slots.inTemplate && inv(slots.inBlank) == null && (output :== null))
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

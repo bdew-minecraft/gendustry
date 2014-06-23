@@ -19,8 +19,11 @@ import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.minecraftforge.common.util.ForgeDirection
+import net.bdew.gendustry.api.blocks.IAdvancedMutatron
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
 
-class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank {
+class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron with TileCoverable {
   lazy val cfg = MachineMutatronAdv
   val outputSlots = Seq(slots.outIndividual)
 
@@ -57,6 +60,16 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
         }
       }
     }
+  }
+
+  override def setMutation(mutation: Int) {
+    if (!isWorking && slots.selectors.contains(mutation) && inv(mutation) != null)
+      selectedMutation := mutation
+  }
+
+  override def getPossibleMutations = {
+    import scala.collection.JavaConverters._
+    (slots.selectors map (x => Integer.valueOf(x) -> inv(x)) filterNot (_._2 != null)).toMap.asJava
   }
 
   def canStart =
@@ -113,4 +126,6 @@ class TileMutatronAdv extends TileItemProcessor with TilePowered with ExposeTank
   override def canDrain(from: ForgeDirection, fluid: Fluid): Boolean = false
   override def drain(from: ForgeDirection, resource: FluidStack, doDrain: Boolean): FluidStack = null
   override def drain(from: ForgeDirection, maxDrain: Int, doDrain: Boolean): FluidStack = null
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

@@ -76,6 +76,8 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
   }
 
   override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, xoffs: Float, yoffs: Float, zoffs: Float): Boolean = {
+   // If the click can be handled by something else - ignore it
+    if (super.onBlockActivated(world, x, y, z, player, side, xoffs, yoffs, zoffs)) return true
     if (player.isSneaking) {
       val equipped = if (player.getCurrentEquippedItem != null) player.getCurrentEquippedItem.getItem else null
       if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, x, y, z)) {

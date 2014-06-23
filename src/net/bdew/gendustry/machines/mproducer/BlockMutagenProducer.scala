@@ -19,8 +19,9 @@ import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-object BlockMutagenProducer extends Block(Material.rock) with HasTE[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockMutagenProducer extends Block(Material.rock) with HasTE[TileMutagenProducer] with BlockCoverable[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileMutagenProducer]
   lazy val guiId = MachineMutagenProducer.guiId

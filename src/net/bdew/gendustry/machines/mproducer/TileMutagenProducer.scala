@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.mproducer
 
-import net.bdew.gendustry.config.Fluids
+import net.bdew.gendustry.config.{Items, Fluids, Machines}
 import net.bdew.gendustry.fluids.MutagenSources
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
@@ -20,8 +20,10 @@ import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
 
-class TileMutagenProducer extends TileBaseProcessor with TilePowered with ExposeTank {
+class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = MachineMutagenProducer
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
@@ -72,4 +74,6 @@ class TileMutagenProducer extends TileBaseProcessor with TilePowered with Expose
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
   override def canFill(from: ForgeDirection, fluid: Fluid) = false
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = cover.getItem == Items.coverImport
 }

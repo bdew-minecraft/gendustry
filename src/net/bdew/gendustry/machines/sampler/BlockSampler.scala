@@ -19,8 +19,9 @@ import net.minecraft.util.IIcon
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-object BlockSampler extends Block(Material.rock) with HasTE[TileSampler] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockSampler extends Block(Material.rock) with HasTE[TileSampler] with BlockCoverable[TileSampler] with BreakableInventoryBlock with BlockGuiWrenchable {
   val TEClass = classOf[TileSampler]
   private var icons: Array[IIcon] = null
   lazy val guiId: Int = MachineSampler.guiId

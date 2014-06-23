@@ -19,8 +19,10 @@ import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
 
-class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
+class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = MachineMutatron
   val outputSlots = Seq(slots.outIndividual)
 
@@ -77,4 +79,6 @@ class TileMutatron extends TileItemProcessor with TilePowered with ExposeTank {
   override def canDrain(from: ForgeDirection, fluid: Fluid): Boolean = false
   override def drain(from: ForgeDirection, resource: FluidStack, doDrain: Boolean): FluidStack = null
   override def drain(from: ForgeDirection, maxDrain: Int, doDrain: Boolean): FluidStack = null
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

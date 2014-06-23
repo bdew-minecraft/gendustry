@@ -7,14 +7,11 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry.api;
+package net.bdew.gendustry.apiimpl
 
-import net.minecraft.item.ItemStack;
+import net.bdew.lib.power.TileBaseProcessor
+import net.bdew.gendustry.api.blocks.IWorkerMachine
 
-public interface IApiaryUpgrade {
-    void applyModifiers(ApiaryModifiers mods, ItemStack stack);
-
-    long getStackingId(ItemStack stack);
-
-    int getMaxNumber(ItemStack stack);
+trait TileWorker extends TileBaseProcessor with IWorkerMachine {
+  override def getProgress = progress
 }
