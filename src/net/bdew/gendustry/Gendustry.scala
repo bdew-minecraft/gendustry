@@ -90,5 +90,6 @@ object Gendustry {
     val commandHandler = event.getServer.getCommandManager.asInstanceOf[CommandHandler]
     commandHandler.registerCommand(new CommandGiveTemplate)
     commandHandler.registerCommand(new CommandGiveSample)
+    commandHandler.registerCommand(new CommandDumpAlleles)
   }
 }
