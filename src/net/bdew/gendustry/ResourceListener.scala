@@ -34,7 +34,7 @@ object ResourceListener extends ResourceManagerReloadListener {
 
   override def onResourceManagerReload(resourcemanager: ResourceManager) {
     val newLang = FMLClientHandler.instance().getCurrentLanguage
-    Gendustry.logInfo("Resouece manager reload, new language: %s", newLang)
+    Gendustry.logInfo("Resource manager reload, new language: %s", newLang)
     val configFiles = Gendustry.configDir.list().sorted
     configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile)
     if (newLang != "en_US")
