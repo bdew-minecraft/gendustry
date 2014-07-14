@@ -57,8 +57,8 @@ object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.Ha
              if dy + y > 0 && dy + y < world.getHeight) {
           val bl = world.getBlock(x + dx, y + dy, z + dz)
           if (bl != null && bl.getMaterial == Material.leaves && hasCharges(stack)) {
-            bl.removedByPlayer(world, player.asInstanceOf[EntityPlayer], x + dx, y + dy, z + dz)
-            useCharge(stack, 1, player)
+            if (bl.removedByPlayer(world, player.asInstanceOf[EntityPlayer], x + dx, y + dy, z + dz, false))
+              useCharge(stack, 1, player)
           }
         }
       }

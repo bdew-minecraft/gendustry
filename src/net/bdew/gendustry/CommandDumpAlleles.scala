@@ -28,10 +28,10 @@ class CommandDumpAlleles extends CommandBase {
       dumpWriter.write("==== ALLELES ====\n")
       dumpWriter.write(AlleleManager.alleleRegistry.getRegisteredAlleles.keySet().toList.sorted.mkString("\n"))
       dumpWriter.write("\n\n")
-      CommandBase.notifyAdmins(sender, "Alleles dumped to " + dumpFile.getCanonicalPath)
+      CommandBase.func_152373_a(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
     } catch {
       case e: Throwable =>
-        CommandBase.notifyAdmins(sender, "Failed to save registry dump: " + e)
+        CommandBase.func_152373_a(sender, this, "Failed to save registry dump: " + e)
         Gendustry.logErrorException("Failed to save registry dump", e)
     } finally {
       dumpWriter.close()

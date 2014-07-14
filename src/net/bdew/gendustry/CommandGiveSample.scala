@@ -62,7 +62,7 @@ class CommandGiveSample extends CommandBase {
     val entityitem = player.entityDropItem(sample, 0)
     entityitem.delayBeforeCanPickup = 0
 
-    CommandBase.notifyAdmins(sender, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
+    CommandBase.func_152373_a(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
   }
 
   override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): List[_] = {

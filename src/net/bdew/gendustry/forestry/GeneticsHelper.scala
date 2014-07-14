@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.forestry
 
+import com.mojang.authlib.GameProfile
 import forestry.api.apiculture.EnumBeeType
 import forestry.api.apiculture.IBee
 import forestry.api.apiculture.IBeeRoot
@@ -155,7 +156,7 @@ object GeneticsHelper {
     }
   }
 
-  def addMutationToTracker(in1: ItemStack, in2: ItemStack, out: ItemStack, player: String, world: World) {
+  def addMutationToTracker(in1: ItemStack, in2: ItemStack, out: ItemStack, player: GameProfile, world: World) {
     val root = AlleleManager.alleleRegistry.getSpeciesRoot(in1)
     if (root == null || !root.isMember(in1) || !root.isMember(in2) || !root.isMember(out)) return
     val sp1 = root.getMember(in1).getGenome.getPrimary

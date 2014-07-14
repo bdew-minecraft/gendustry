@@ -20,7 +20,7 @@ import net.bdew.gendustry.nei.NEIDrawTarget
 class FluidComponent(rect: Rect, fstack: FluidStack, capacity: Int) extends RecipeComponent(rect) {
   val formater = new DecimalFormat("#,###")
 
-  def getTooltip = List(fstack.getFluid.getLocalizedName, "%s mB".format(formater.format(fstack.amount)))
+  def getTooltip = List(fstack.getFluid.getLocalizedName(fstack), "%s mB".format(formater.format(fstack.amount)))
 
   def mouseClick(button: Int) = button match {
     case 0 => GuiCraftingRecipe.openRecipeGui("liquid", fstack)

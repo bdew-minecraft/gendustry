@@ -42,7 +42,7 @@ class CommandGiveTemplate extends CommandBase {
     val entityitem = player.entityDropItem(GeneticsHelper.templateFromSpeciesUID(uid), 0)
     entityitem.delayBeforeCanPickup = 0
 
-    CommandBase.notifyAdmins(sender, "gendustry.givetemplate.success", uid, player.getDisplayName)
+    CommandBase.func_152373_a(sender, this, "gendustry.givetemplate.success", uid, player.getDisplayName)
   }
 
   override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): List[_] = {

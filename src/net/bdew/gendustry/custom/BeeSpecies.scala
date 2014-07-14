@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.custom
 
+import com.mojang.authlib.GameProfile
 import forestry.api.apiculture._
 import forestry.api.core.{EnumTemperature, EnumHumidity}
 import net.minecraft.item.ItemStack
@@ -120,7 +121,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     return 0
   }
 
-  override def getResearchBounty(world: World, researcher: String, individual: IIndividual, bountyLevel: Int): Array[ItemStack] = {
+  override def getResearchBounty(world: World, researcher: GameProfile, individual: IIndividual, bountyLevel: Int): Array[ItemStack] = {
     import scala.collection.JavaConversions._
     var res = List.empty[ItemStack]
     if (world.rand.nextFloat() < 10F / bountyLevel) {

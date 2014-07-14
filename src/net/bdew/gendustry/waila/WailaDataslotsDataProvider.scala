@@ -32,16 +32,16 @@ object WailaDataslotsDataProvider extends BaseDataProvider(classOf[TileDataSlots
       case (name, slot: DataSlotTankRestricted) =>
         val fstack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
         if (fstack != null && fstack.getFluid != null) {
-          List("%s / %s mB %s".format(dec.format(fstack.amount), dec.format(slot.size), fstack.getFluid.getLocalizedName))
+          List("%s / %s mB %s".format(dec.format(fstack.amount), dec.format(slot.size), fstack.getFluid.getLocalizedName(fstack)))
         } else {
           val fluid = FluidRegistry.getFluid(slot.fluidID)
-          List("0 / %s mB %s".format(dec.format(slot.size), fluid.getLocalizedName))
+          List("0 / %s mB %s".format(dec.format(slot.size), fluid.getLocalizedName(fstack)))
         }
 
       case (name, slot: DataSlotTank) =>
         val fstack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
         if (fstack != null && fstack.getFluid != null) {
-          List("[V] %s / %s mB %s".format(dec.format(fstack.amount), dec.format(slot.size), fstack.getFluid.getLocalizedName))
+          List("[V] %s / %s mB %s".format(dec.format(fstack.amount), dec.format(slot.size), fstack.getFluid.getLocalizedName(fstack)))
         } else {
           None
         }

@@ -12,7 +12,7 @@ package net.bdew.gendustry.machines.advmutatron
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids._
-import net.bdew.lib.data.{DataSlotString, DataSlotInt, DataSlotTankRestricted}
+import net.bdew.lib.data.{DataSlotGameProfile, DataSlotString, DataSlotInt, DataSlotTankRestricted}
 import net.bdew.lib.tile.ExposeTank
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
@@ -37,7 +37,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID)
   val selectedMutation = DataSlotInt("selected", this, -1).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
-  val lastPlayer = DataSlotString("player", this).setUpdate(UpdateKind.SAVE)
+  val lastPlayer = DataSlotGameProfile("player", this).setUpdate(UpdateKind.SAVE)
 
   def getSizeInventory = 10
 
@@ -84,7 +84,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
     if (canStart) {
       output := GeneticsHelper.applyMutationDecayChance(getStackInSlot(selectedMutation.cval), getStackInSlot(0))
       tank.drain(cfg.mutagenPerItem, true)
-      if (lastPlayer.cval != null && lastPlayer.cval > "")
+      if (lastPlayer.cval != null)
         GeneticsHelper.addMutationToTracker(inv(0), inv(1), output, lastPlayer, worldObj)
       decrStackSize(slots.inIndividual1, 1)
       decrStackSize(slots.inIndividual2, 1)

@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.machines.apiary
 
+import net.bdew.gendustry.Gendustry
 import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.gui.{BaseContainer, SlotValidating}
 import net.minecraft.item.ItemStack
@@ -23,6 +24,11 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
 
   addSlotToContainer(new SlotValidating(te, 0, 39, 29))
   addSlotToContainer(new SlotValidating(te, 1, 39, 52))
+
+  if (!te.getWorld.isRemote && (te.owner :== null)) {
+    Gendustry.logInfo("Owner information missing on apiary at (%d,%d,%d), assigning: %s".format(te.getXCoord, te.getYCoord, te.getZCoord, player.getGameProfile))
+    te.owner := player.getGameProfile
+  }
 
   class SlotUpgrade(inv: IInventory, slot: Int, x: Int, y: Int) extends SlotValidating(inv, slot, x, y) {
     // Fixes glitch in nei mouse scroll support

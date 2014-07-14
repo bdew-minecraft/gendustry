@@ -54,6 +54,6 @@ object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with Bloc
 
   override def onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, player: EntityLivingBase, stack: ItemStack) {
     if (player.isInstanceOf[EntityPlayerMP])
-      getTE(world, x, y, z).owner := player.asInstanceOf[EntityPlayerMP].getCommandSenderName
+      getTE(world, x, y, z).owner := player.asInstanceOf[EntityPlayerMP].getGameProfile
   }
 }
