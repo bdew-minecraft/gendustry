@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   var sentLoaded = false
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
-  lazy val maxSafe = Tuning.getSection("Power").getSection("IC2").getInt("MaxSafeInput")
+  lazy val sinkTier = Tuning.getSection("Power").getSection("IC2").getInt("SinkTier")
 
   if (PowerProxy.haveIC2 && PowerProxy.EUEnabled)
     serverTick.listen(sendLoad)
@@ -57,14 +57,14 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
     }
   }
 
-  def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = PowerProxy.EUEnabled
-  def getMaxSafeInput = maxSafe
-  def demandedEnergyUnits() = Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
-  def injectEnergyUnits(directionFrom: ForgeDirection, amount: Double) = {
+  override def getDemandedEnergy =  Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
+  override def getSinkTier = sinkTier
+  override def injectEnergy(directionFrom: ForgeDirection, amount: Double, p3: Double) = {
     // IC2 is borked and is ignoring the return value, we need to store everything otherwise energy will be wasted
     // We go around power.inject so that all energy can be added
     power.stored += (amount / ratio).toFloat
     power.parent.dataSlotChanged(power)
     0
   }
+  override def acceptsEnergyFrom(emitter: TileEntity, direction: ForgeDirection) = PowerProxy.EUEnabled
 }
