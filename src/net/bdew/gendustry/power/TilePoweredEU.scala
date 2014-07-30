@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection
 trait TilePoweredEU extends TilePoweredBase with IEnergySink {
   var sentLoaded = false
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
-  lazy val sinkTier = Tuning.getSection("Power").getSection("IC2").getInt("SinkTier")
+  lazy val sinkTier = Tuning.getSection("Power").getSection("EU").getInt("SinkTier")
 
   if (PowerProxy.haveIC2 && PowerProxy.EUEnabled)
     serverTick.listen(sendLoad)
