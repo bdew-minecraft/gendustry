@@ -1,0 +1,245 @@
+# ==== BLOCKS ====
+
+tile.gendustry.mutagen.producer.name=Мутагенный производитель
+tile.gendustry.mutatron.name=Мутатрон
+tile.gendustry.mutatron.adv.name=Продвинутый мутатрон
+tile.gendustry.apiary.name=Промышленная пасека
+tile.gendustry.imprinter.name=Генетический импринтер
+tile.gendustry.sampler.name=Генетический пробоотборник
+tile.gendustry.extractor.name=Экстрактор ДНК
+tile.gendustry.liquifier.name=Протеиновый разжижитель
+tile.gendustry.replicator.name=Генетический репликатор
+tile.gendustry.transposer.name=Генетический транспозер
+
+# ==== GENERAL ITEMS ====
+
+item.gendustry.MutagenTank.name=Резервуар для мутагена
+item.gendustry.BeeReceptacle.name=Сосуд для пчелы
+item.gendustry.PowerModule.name=Модуль энергии
+item.gendustry.GeneticsProcessor.name=Генетический процессор
+item.gendustry.EnvProcessor.name=Экологический процессор
+item.gendustry.UpgradeFrame.name=Рамка улучшения
+item.gendustry.ClimateModule.name=Модуль «Климатический контроль»
+item.gendustry.Labware.name=Генетическая лабораторная посуда
+item.gendustry.GeneSample.name=Образец гена
+item.gendustry.GeneTemplate.name=Генетический шаблон
+item.gendustry.GeneSampleBlank.name=Образец пустого гена
+item.gendustry.Waste.name=Генетические отходы
+item.gendustry.grafter.name=Промышленный садовый нож
+item.gendustry.scoop.name=Скупоратор MX200 турбо
+item.gendustry.ImportCover.name=Item Import Cover
+item.gendustry.EjectCover.name=Item Eject Cover
+
+# ==== FLUIDS ====
+
+fluid.gendustry.mutagen=Мутаген
+fluid.gendustry.liquiddna=Жидкий ДНК
+fluid.gendustry.protein=Протеин
+
+tile.gendustry.mutagen.name=Мутаген
+tile.gendustry.liquiddna.name=Жидкий ДНК
+tile.gendustry.protein.name=Протеин
+
+# ==== FLUID CONTAINERS ====
+
+item.gendustry.mutagen.bucket.name=Ведро мутагена
+item.gendustry.mutagen.can.name=Банка мутагена
+item.gendustry.liquiddna.bucket.name=Ведро жидкого ДНК
+item.gendustry.liquiddna.can.name=Банка жидкого ДНК
+item.gendustry.protein.bucket.name=Ведро протеина
+item.gendustry.protein.can.name=Банка протеина
+
+
+# ==== UPGRADES ====
+
+gendustry.upgrades.prod.name=Улучшение «Производство»
+gendustry.upgrades.life.name=Улучшение «Продолжительность жизни»
+gendustry.upgrades.flowering.name=Улучшение «Цветение»
+gendustry.upgrades.territory.name=Улучшение «Территория»
+gendustry.upgrades.sealing.name=Улучшение «Уплотнение»
+gendustry.upgrades.light.name=Улучшение «Свет»
+gendustry.upgrades.sky.name=Улучшение «Открытое небо»
+gendustry.upgrades.hell.name=Улучшение «Эмуляция Ада»
+gendustry.upgrades.auto.name=Улучшение «Автоматизация»
+gendustry.upgrades.humidifier.name=Улучшение «Увлажнение»
+gendustry.upgrades.dryer.name=Улучшение «Сушка»
+gendustry.upgrades.heater.name=Улучшение «Нагревание»
+gendustry.upgrades.sieve.name=Улучшение «Сито»
+gendustry.upgrades.cooler.name=Улучшение «Охлаждение»
+gendustry.upgrades.desert.name=Улучшение «Эмуляция пустыни»
+gendustry.upgrades.plains.name=Улучшение «Эмуляция равнин»
+gendustry.upgrades.jungle.name=Улучшение «Эмуляция джунглей»
+gendustry.upgrades.stabilizer.name=Улучшение «Генетическая стабилизация»
+
+# ==== GUI AND TOOLTIPS ====
+
+gendustry.label.template.crafting=Генетические образцы могут быть добавлены к шаблону. Объедините их в любом верстаке. Несколько образцов могут быть добавлены сразу.
+
+gendustry.label.charges=Заряды: %s
+gendustry.label.select=Выбрать:
+gendustry.label.status=Статус: %s
+gendustry.label.control=Контроль: %s
+
+gendustry.label.breeding=Размножение
+gendustry.label.working=Работа
+gendustry.label.maxinstall=Максимум установлено:
+gendustry.label.temperature=Температура: %s
+gendustry.label.humidity=Влажность: %s
+gendustry.label.energy=Требуется энергии: %s %s/т
+gendustry.label.lifespan=Модификатор продолж. жизни: %s
+gendustry.label.flowering=Шанс цветения: %s
+gendustry.label.production=Модификатор производства: %s
+gendustry.label.territory=Территория: %s
+
+gendustry.label.erase=Поместите в печь, чтобы стереть генетическое содержание
+gendustry.label.recipes=Нажмите, чтобы увидеть рецепты
+gendustry.label.consume=Шанс потребления: %s%%
+gendustry.label.mutatron.death=Шанс смерти (ignoble): %s%%
+gendustry.label.mutatron.degrade=Шанс смерти (pristine): %s%%
+
+gendustry.label.mod.automated=* Автоматизация
+gendustry.label.mod.biome=* Замена биома: %s
+gendustry.label.mod.sealed=* Защита от дождя
+gendustry.label.mod.selflighted=* Внутреннее освещение
+gendustry.label.mod.sky=* Симуляция открытого неба
+gendustry.label.mod.energy=* Потребление энергии
+gendustry.label.mod.lifespan=* Продолжительность жизни
+gendustry.label.mod.flowering=* Цветение и опыление
+gendustry.label.mod.geneticDecay=* Генетический распад
+gendustry.label.mod.mutation=* Шанс мутации
+gendustry.label.mod.production=* Продуктивность
+gendustry.label.mod.territory=* Территория
+gendustry.label.mod.sieve=* Сбор пыльцы
+gendustry.label.mod.temperature=* Температура
+gendustry.label.mod.humidity=* Влажность
+
+gendustry.error.power=Недостаточно энергии
+gendustry.error.disabled=Отключено настройками
+
+gendustry.label.sample.rootBees=Взято из пчелы
+gendustry.label.sample.rootTrees=Взято из саженца
+gendustry.label.sample.rootButterflies=Взято из бабочки
+
+gendustry.label.template.rootBees=Может применяться к пчеле
+gendustry.label.template.rootTrees=Может применяться к саженцу
+gendustry.label.template.rootButterflies=Может применяться к бабочке
+gendustry.label.template.blank=Образцы генов могут быть добавлены
+gendustry.label.template.missing=Отсутствует
+gendustry.label.template.chromosomes=Хромосомы: %s/%s
+
+gendustry.rsmode.always=Всегда ВКЛ.
+gendustry.rsmode.never=Отключен
+gendustry.rsmode.rs_on=Включен по сигналу красного камня
+gendustry.rsmode.rs_off=Выключен  по сигналу красного камня
+
+# ==== CHROMOSOMES (should match forestry) ====
+
+gendustry.chromosome.FLOWER_PROVIDER=Цветы
+gendustry.chromosome.GIRTH=Размер
+gendustry.chromosome.SPEED=Скорость
+gendustry.chromosome.YIELD=Доход
+gendustry.chromosome.HEIGHT=Высота
+gendustry.chromosome.GROWTH=Рост
+gendustry.chromosome.FLOWERING=Цветение
+gendustry.chromosome.METABOLISM=Метаболизм
+gendustry.chromosome.LIFESPAN=Продолж. жизни
+gendustry.chromosome.TERRITORY=Территория
+gendustry.chromosome.FERTILITY=Плодовитость
+gendustry.chromosome.SIZE=Размер
+gendustry.chromosome.HUMIDITY=Влажность
+gendustry.chromosome.SPECIES=Разновидность
+gendustry.chromosome.FIRE_RESIST=Сопротивление огню
+gendustry.chromosome.TEMPERATURE_TOLERANCE=Допустимая температура
+gendustry.chromosome.HUMIDITY_TOLERANCE=Допустимая влажность
+gendustry.chromosome.PLANT=Растение
+gendustry.chromosome.EFFECT=Эффект
+gendustry.chromosome.CAVE_DWELLING=Жизнь в пещерах
+gendustry.chromosome.MATURATION=Созревание
+gendustry.chromosome.NOCTURNAL=Игнорирует День/Ночь
+gendustry.chromosome.TOLERANT_FLYER=Tolerant flyer
+gendustry.chromosome.FRUITS=Фрукты
+gendustry.chromosome.SAPPINESS=Жизнеспособность
+
+gendustry.allele.false=False
+gendustry.allele.true=True
+
+# ==== BC TRIGGERS ====
+
+gendustry.trigger.power0=Нет энергии
+gendustry.trigger.power25=Энергия >= 25%
+gendustry.trigger.power50=Энергия >= 50%
+gendustry.trigger.power75=Энергия >= 75%
+gendustry.trigger.power100=Энергия полная
+gendustry.trigger.working=Механизм работает
+
+# ==== COMMANDS ====
+gendustry.givetemplate.usage=/givetemplate <uid>
+gendustry.givetemplate.success=Дан генетический шаблон: %s игроку %s
+
+gendustry.givesample.usage=/givesample <вид> <хромосома> <аллель>
+gendustry.givesample.error.root=Вид не найден: %s
+gendustry.givesample.error.allele=Аллель не найдена: %s
+gendustry.givesample.error.chromosome=Хромосома не найдена: %s
+gendustry.givesample.error.invalid=Неверная аллель для запрошенной хромосомы
+gendustry.givesample.success=Дан образец (Вид=%s, Хромосома=%s, Аллель=%s) игроку %s
+
+# ==== MUTATION REQUIREMENTS ====
+gendustry.req.temperature=Требуется температура: %s
+gendustry.req.humidity=Требуется влажность: %s
+
+# ==== BEE SPECIES ====
+gendustry.bee.species.black=Чёрн.
+gendustry.bee.species.red=Красн.
+gendustry.bee.species.green=Зелён.
+gendustry.bee.species.brown=Коричнев.
+gendustry.bee.species.blue=Син.
+gendustry.bee.species.purple=Фиолетов.
+gendustry.bee.species.cyan=Бирюзов.
+gendustry.bee.species.silver=Светло-сер.
+gendustry.bee.species.gray=Сер.
+gendustry.bee.species.pink=Розов.
+gendustry.bee.species.lime=Лаймов.
+gendustry.bee.species.yellow=Жёлт.
+gendustry.bee.species.lightblue=Светло-син.
+gendustry.bee.species.magenta=Сиренев.
+gendustry.bee.species.orange=Оранжев.
+gendustry.bee.species.white=Бел.
+
+# ==== COMBS ====
+
+gendustry.honeycomb.black.name=Чёрная сота
+gendustry.honeycomb.red.name=Красная  сота
+gendustry.honeycomb.green.name=Зелёная сота
+gendustry.honeycomb.brown.name=Коричневая сота
+gendustry.honeycomb.blue.name=Синяя сота
+gendustry.honeycomb.purple.name=Фиолетовая сота
+gendustry.honeycomb.cyan.name=Бирюзовая сота
+gendustry.honeycomb.silver.name=Светло-серая сота
+gendustry.honeycomb.gray.name=Серая сота
+gendustry.honeycomb.pink.name=Розовая сота
+gendustry.honeycomb.lime.name=Лаймовая сота
+gendustry.honeycomb.yellow.name=Жёлтая сота
+gendustry.honeycomb.lightblue.name=Светло-синяя сота
+gendustry.honeycomb.magenta.name=Сиреневая сота
+gendustry.honeycomb.orange.name=Оранжевая сота
+gendustry.honeycomb.white.name=Белая сота
+
+gendustry.honeydrop.black.name=Чёрная капля мёда
+gendustry.honeydrop.red.name=Красная капля мёда
+gendustry.honeydrop.green.name=Зелёная капля мёда
+gendustry.honeydrop.brown.name=Коричневая капля мёда
+gendustry.honeydrop.blue.name=Синяя капля мёда
+gendustry.honeydrop.purple.name=Фиолетовая капля мёда
+gendustry.honeydrop.cyan.name=Бирюзовая капля мёда
+gendustry.honeydrop.silver.name=Светло-серая капля мёда
+gendustry.honeydrop.gray.name=Серая капля мёда
+gendustry.honeydrop.pink.name=Розовая капля мёда
+gendustry.honeydrop.lime.name=Лаймовая капля мёда
+gendustry.honeydrop.yellow.name=Жёлтая капля мёда
+gendustry.honeydrop.lightblue.name=Светло-синяя капля мёда
+gendustry.honeydrop.magenta.name=Сиреневая капля мёда
+gendustry.honeydrop.orange.name=Оранжевая капля мёда
+gendustry.honeydrop.white.name=Белая капля мёда
+
+#this will be moved to bdlib at some point
+bdlib.label.empty=Пусто
