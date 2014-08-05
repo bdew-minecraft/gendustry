@@ -9,32 +9,28 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import net.bdew.lib.data._
-import net.bdew.lib.tile.inventory.{BreakableInventoryTile, SidedInventory, PersistentInventoryTile}
 import forestry.api.apiculture._
-import forestry.api.genetics.{AlleleManager, IIndividual}
-import net.minecraft.item.ItemStack
-import forestry.api.core.{EnumHumidity, EnumTemperature}
-import net.bdew.lib.Misc
 import forestry.api.arboriculture.EnumGermlingType
-import net.bdew.lib.tile.TileExtended
-import net.bdew.gendustry.config.Config
-import net.bdew.lib.items.ItemUtils
+import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.bdew.gendustry.api.ApiaryModifiers
-import net.minecraft.world.biome.BiomeGenBase
-import net.bdew.lib.data.base.{UpdateKind, TileDataSlots}
-import net.bdew.lib.data.DataSlotFloat
-import net.bdew.lib.data.DataSlotInt
-import net.bdew.lib.data.DataSlotString
-import net.bdew.lib.data.DataSlotBoolean
-import net.bdew.gendustry.power.TilePowered
-import net.bdew.lib.power.DataSlotPower
-import net.bdew.gendustry.compat.triggers.ForestryErrorSource
-import net.bdew.gendustry.gui.rscontrol.TileRSContollable
-import net.minecraftforge.common.util.ForgeDirection
-import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.gendustry.api.blocks.IIndustrialApiary
+import net.bdew.gendustry.api.items.IApiaryUpgrade
+import net.bdew.gendustry.compat.triggers.ForestryErrorSource
+import net.bdew.gendustry.config.Config
+import net.bdew.gendustry.gui.rscontrol.TileRSContollable
+import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.Misc
 import net.bdew.lib.covers.TileCoverable
+import net.bdew.lib.data.{DataSlotBoolean, DataSlotFloat, DataSlotInt, _}
+import net.bdew.lib.data.base.{TileDataSlots, UpdateKind}
+import net.bdew.lib.items.ItemUtils
+import net.bdew.lib.power.DataSlotPower
+import net.bdew.lib.tile.TileExtended
+import net.bdew.lib.tile.inventory.{BreakableInventoryTile, PersistentInventoryTile, SidedInventory}
+import net.minecraft.item.ItemStack
+import net.minecraft.world.biome.BiomeGenBase
+import net.minecraftforge.common.util.ForgeDirection
 
 class TileApiary extends TileExtended
 with TileDataSlots
@@ -183,7 +179,7 @@ with IIndustrialApiary {
   }
 
   // Misc
-  lazy val getBiome = worldObj.getBiomeGenForCoordsBody(xCoord, zCoord)
+  def getBiome = worldObj.getBiomeGenForCoordsBody(xCoord, zCoord)
   def getPowerDataslot(from: ForgeDirection) = power
   def getSizeInventory = 15
 
@@ -226,7 +222,7 @@ with IIndustrialApiary {
   def isSealed = mods.isSealed
   def isSelfLighted = mods.isSelfLighted
   def isSunlightSimulated = mods.isSunlightSimulated
-  def isHellish = mods.biomeOverride == BiomeGenBase.hell
+  def isHellish = getModifiedBiome == BiomeGenBase.hell
 
   // IBeeHousing
   def setQueen(itemstack: ItemStack) = setInventorySlotContents(0, itemstack)
