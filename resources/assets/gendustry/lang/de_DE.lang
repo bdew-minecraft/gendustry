@@ -6,6 +6,10 @@ tile.gendustry.mutatron.adv.name=Erweitertes Mutatron
 tile.gendustry.apiary.name=Industrieller Bienenstock
 tile.gendustry.imprinter.name=Gen-Drucker
 tile.gendustry.sampler.name=Gen-Abtaster
+tile.gendustry.extractor.name=DNA-Extraktor
+tile.gendustry.liquifier.name=Proteinverflüssiger
+tile.gendustry.replicator.name=Genetischer Replikator
+tile.gendustry.transposer.name=Genetischer Wandler
 
 # ==== GENERAL ITEMS ====
 
@@ -13,6 +17,7 @@ item.gendustry.MutagenTank.name=Mutagen-Tank
 item.gendustry.BeeReceptacle.name=Bienenbehälter
 item.gendustry.PowerModule.name=Energiemodul
 item.gendustry.GeneticsProcessor.name=Genetik-Prozessor
+item.gendustry.EnvProcessor.name=Umwelt-Prozessor
 item.gendustry.UpgradeFrame.name=Upgrade-Rahmen
 item.gendustry.ClimateModule.name=Klimakontrollmodul
 item.gendustry.Labware.name=Genlabor-Utensilien
@@ -21,6 +26,9 @@ item.gendustry.GeneTemplate.name=Genetische Schablone
 item.gendustry.GeneSampleBlank.name=Leere Genprobe
 item.gendustry.Waste.name=Genetischer Abfall
 item.gendustry.grafter.name=Industrielles Pfropfmesser
+item.gendustry.scoop.name=Scooporator MX200 Turbo
+item.gendustry.ImportCover.name=Item-Import-Blende
+item.gendustry.EjectCover.name=Item-Auswurf-Blende
 
 # ==== FLUIDS ====
 
@@ -58,6 +66,10 @@ gendustry.upgrades.dryer.name=Trockner-Upgrade
 gendustry.upgrades.heater.name=Heizungs-Upgrade
 gendustry.upgrades.sieve.name=Sieb-Upgrade
 gendustry.upgrades.cooler.name=Kühlungs-Upgrade
+gendustry.upgrades.desert.name=Wüstensimulations-Upgrade
+gendustry.upgrades.plains.name=Ebenen-Simulations-Upgrade
+gendustry.upgrades.jungle.name=Dschungelsimulations-Upgrade
+gendustry.upgrades.stabilizer.name=Gen-Stabilisierungs-Upgrade
 
 # ==== GUI AND TOOLTIPS ====
 
@@ -65,6 +77,8 @@ gendustry.label.template.crafting=Genetische Proben können an jeder Werkbank zu
 
 gendustry.label.charges=Benutzungen: %s
 gendustry.label.select=Auswahl:
+gendustry.label.status=Status: %s
+gendustry.label.control=Kontrolle: %s
 
 gendustry.label.breeding=Züchten
 gendustry.label.working=Arbeiten
@@ -100,6 +114,7 @@ gendustry.label.mod.temperature=* Temperatur
 gendustry.label.mod.humidity=* Feuchtigkeit
 
 gendustry.error.power=Nicht genug Energie
+gendustry.error.disabled=Ausgeschaltet durch Einstellung
 
 gendustry.label.sample.rootBees=Von einer Biene
 gendustry.label.sample.rootTrees=Von einem Setzling
@@ -109,6 +124,13 @@ gendustry.label.template.rootBees=Kann mit einer Biene verwendet werden
 gendustry.label.template.rootTrees=Kann mit einem Setzling verwendet werden
 gendustry.label.template.rootButterflies=Kann mit einem Schmetterling verwendet werden
 gendustry.label.template.blank=Genprobe kann hinzugefügt werden
+gendustry.label.template.missing=Fehlend
+gendustry.label.template.chromosomes=%s/%s Chromosomen
+
+gendustry.rsmode.always=Immer AN
+gendustry.rsmode.never=Ausgeschaltet
+gendustry.rsmode.rs_on=Eingeschaltet bei Redstone
+gendustry.rsmode.rs_off=Ausgeschaltet bei Redstone
 
 # ==== CHROMOSOMES (should match forestry) ====
 
@@ -149,6 +171,75 @@ gendustry.trigger.power50=Energie >= 50%
 gendustry.trigger.power75=Energie >= 75%
 gendustry.trigger.power100=Energie voll
 gendustry.trigger.working=Maschine arbeitet
+
+# ==== COMMANDS ====
+gendustry.givetemplate.usage=/givetemplate <uid>
+gendustry.givetemplate.success=Given genetic template %s to %s
+
+gendustry.givesample.usage=/givesample <species> <chromosome> <allele>
+gendustry.givesample.error.root=Species root not found: %s
+gendustry.givesample.error.allele=Allele not found: %s
+gendustry.givesample.error.chromosome=Chromosome not found: %s
+gendustry.givesample.error.invalid=Invalid allele for requested chromosome
+gendustry.givesample.success=Given sample (Species=%s, Chromosome=%s, Allele=%s) to %s
+
+# ==== MUTATION REQUIREMENTS ====
+gendustry.req.temperature=Benötigt Temperatur: %s
+gendustry.req.humidity=Benötigt Feuchtigkeit: %s
+
+# ==== BEE SPECIES ====
+gendustry.bee.species.black=Schwarz
+gendustry.bee.species.red=Rot
+gendustry.bee.species.green=Grün
+gendustry.bee.species.brown=Braun
+gendustry.bee.species.blue=Blau
+gendustry.bee.species.purple=Violett
+gendustry.bee.species.cyan=Cyan
+gendustry.bee.species.silver=Hellgrau
+gendustry.bee.species.gray=Grau
+gendustry.bee.species.pink=Pink
+gendustry.bee.species.lime=Hellgrün
+gendustry.bee.species.yellow=Gelb
+gendustry.bee.species.lightblue=Hellblau
+gendustry.bee.species.magenta=Magenta
+gendustry.bee.species.orange=Orange
+gendustry.bee.species.white=Weiß
+
+# ==== COMBS ====
+
+gendustry.honeycomb.black.name=Schwarze Wabe
+gendustry.honeycomb.red.name=Rote Wabe
+gendustry.honeycomb.green.name=Grüne Wabe
+gendustry.honeycomb.brown.name=Braune Wabe
+gendustry.honeycomb.blue.name=Blaue Wabe
+gendustry.honeycomb.purple.name=Violette Wabe
+gendustry.honeycomb.cyan.name=Cyanfarbene Wabe
+gendustry.honeycomb.silver.name=Hellgraue Wabe
+gendustry.honeycomb.gray.name=Graue Wabe
+gendustry.honeycomb.pink.name=Pinke Wabe
+gendustry.honeycomb.lime.name=Hellgrüne Wabe
+gendustry.honeycomb.yellow.name=Gelbe Wabe
+gendustry.honeycomb.lightblue.name=Hellblaue Wabe
+gendustry.honeycomb.magenta.name=Magentafarbene Wabe
+gendustry.honeycomb.orange.name=Orangefarbene Wabe
+gendustry.honeycomb.white.name=Weiße Wabe
+
+gendustry.honeydrop.black.name=Schwarzer Honigtropfen
+gendustry.honeydrop.red.name=RotperHonigtropfen
+gendustry.honeydrop.green.name=Grüner Honigtropfen
+gendustry.honeydrop.brown.name=Brauner Honigtropfen
+gendustry.honeydrop.blue.name=Blauer Honigtropfen
+gendustry.honeydrop.purple.name=Violetter Honigtropfen
+gendustry.honeydrop.cyan.name=Cyanfarbener Honigtropfen
+gendustry.honeydrop.silver.name=Hellgrauer Honigtropfen
+gendustry.honeydrop.gray.name=Grauer Honigtropfen
+gendustry.honeydrop.pink.name=Pinker Honigtropfen
+gendustry.honeydrop.lime.name=Hellgrüner Honigtropfen
+gendustry.honeydrop.yellow.name=Gelber Honigtropfen
+gendustry.honeydrop.lightblue.name=Hellblauer Honigtropfen
+gendustry.honeydrop.magenta.name=Magentafarbener Honigtropfen
+gendustry.honeydrop.orange.name=Orangefarbener Honigtropfen
+gendustry.honeydrop.white.name=Weißer Honigtropfen
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Leer
