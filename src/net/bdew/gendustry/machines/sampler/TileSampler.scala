@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.machines.sampler
 
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.gendustry.config.Items
 import net.minecraft.item.ItemStack
 import forestry.api.genetics.AlleleManager
 import scala.util.Random
@@ -17,17 +17,28 @@ import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.compat.ExtraBeesProxy
+import net.bdew.gendustry.items.GeneSample
+import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.lib.covers.TileCoverable
+import net.minecraftforge.common.util.ForgeDirection
 
-class TileSampler extends TileItemProcessor with TilePowered {
-  lazy val cfg = Machines.sampler
-  val outputSlots = Seq(3)
+class TileSampler extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
+  lazy val cfg = MachineSampler
+  val outputSlots = Seq(slots.outSample)
+
+  object slots {
+    val inSampleBlank = 0
+    val inLabware = 1
+    val inIndividual = 2
+    val outSample = 3
+  }
 
   def getSizeInventory = 4
 
   def selectRandomAllele(stack: ItemStack): ItemStack = {
     if (cfg.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
       val sample = ExtraBeesProxy.getSerumSample(stack)
-      if (sample != null) return Items.geneSample.newStack(sample)
+      if (sample != null) return GeneSample.newStack(sample)
     }
 
     val root = AlleleManager.alleleRegistry.getSpeciesRoot(stack)
@@ -41,18 +52,21 @@ class TileSampler extends TileItemProcessor with TilePowered {
 
     val rand = new Random()
     val (chr, allele) = alleles(rand.nextInt(alleles.length))
-    return Items.geneSample.newStack(GeneSampleInfo(root, chr, allele))
+    return GeneSample.newStack(GeneSampleInfo(root, chr, allele))
   }
 
+  def canStart =
+    getStackInSlot(slots.inSampleBlank) != null &&
+      getStackInSlot(slots.inLabware) != null &&
+      getStackInSlot(slots.inIndividual) != null
+
   def tryStart(): Boolean = {
-    if (getStackInSlot(0) != null && getStackInSlot(1) != null && getStackInSlot(2) != null) {
-
-      output := selectRandomAllele(getStackInSlot(2))
-
-      decrStackSize(0, 1)
-      decrStackSize(2, 1)
+    if (canStart) {
+      output := selectRandomAllele(getStackInSlot(slots.inIndividual))
+      decrStackSize(slots.inSampleBlank, 1)
+      decrStackSize(slots.inIndividual, 1)
       if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
-        decrStackSize(1, 1)
+        decrStackSize(slots.inLabware, 1)
 
       return true
     } else return false
@@ -61,11 +75,11 @@ class TileSampler extends TileItemProcessor with TilePowered {
   override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
     if (itemstack == null || itemstack.getItem == null) return false
     slot match {
-      case 0 =>
+      case slots.inSampleBlank =>
         return itemstack.getItem == Items.geneSampleBlank
-      case 1 =>
+      case slots.inLabware =>
         return itemstack.getItem == Items.labware
-      case 2 =>
+      case slots.inIndividual =>
         return AlleleManager.alleleRegistry.getIndividual(itemstack) != null || (cfg.convertEBSerums && ExtraBeesProxy.isSerum(itemstack))
       case _ =>
         return false
@@ -73,5 +87,7 @@ class TileSampler extends TileItemProcessor with TilePowered {
   }
 
   allowSided = true
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == 3
+  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outSample
+
+  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
 }

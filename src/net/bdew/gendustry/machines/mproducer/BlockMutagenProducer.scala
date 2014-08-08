@@ -12,24 +12,24 @@ package net.bdew.gendustry.machines.mproducer
 import net.bdew.gendustry.Gendustry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.util.Icon
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.util.IIcon
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-class BlockMutagenProducer(id: Int) extends Block(id, Material.rock) with HasTE[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
-  private var icons: Array[Icon] = null
+object BlockMutagenProducer extends Block(Material.rock) with HasTE[TileMutagenProducer] with BlockCoverable[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
+  private var icons: Array[IIcon] = null
   val TEClass = classOf[TileMutagenProducer]
-  lazy val guiId = Machines.mutagenProducer.guiId
+  lazy val guiId = MachineMutagenProducer.guiId
 
-  setUnlocalizedName(Gendustry.modId + ".mutagen.producer")
+  setBlockName(Gendustry.modId + ".mutagen.producer")
   setHardness(5)
 
-  override def getIcon(side: Int, meta: Int): Icon = {
+  override def getIcon(side: Int, meta: Int): IIcon = {
     side match {
       case 0 =>
         return icons(0)
@@ -41,8 +41,8 @@ class BlockMutagenProducer(id: Int) extends Block(id, Material.rock) with HasTE[
   }
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
-    icons = new Array[Icon](3)
+  override def registerBlockIcons(reg: IIconRegister) {
+    icons = new Array(3)
     icons(0) = reg.registerIcon(Gendustry.modId + ":mutagenproducer/bottom")
     icons(1) = reg.registerIcon(Gendustry.modId + ":mutagenproducer/top")
     icons(2) = reg.registerIcon(Gendustry.modId + ":mutagenproducer/side")

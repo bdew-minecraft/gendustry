@@ -1,4 +1,5 @@
-tile.gendustry.mutagen.name=Mutagen
+# ==== BLOCKS ====
+
 tile.gendustry.mutagen.producer.name=Mutagen-Erzeuger
 tile.gendustry.mutatron.name=Mutatron
 tile.gendustry.mutatron.adv.name=Erweitertes Mutatron
@@ -6,8 +7,7 @@ tile.gendustry.apiary.name=Industrieller Bienenstock
 tile.gendustry.imprinter.name=Gen-Drucker
 tile.gendustry.sampler.name=Gen-Abtaster
 
-item.gendustry.mutagen.bucket.name=Mutagen-Eimer
-item.gendustry.mutagen.can.name=Mutagen-Zelle
+# ==== GENERAL ITEMS ====
 
 item.gendustry.MutagenTank.name=Mutagen-Tank
 item.gendustry.BeeReceptacle.name=Bienenbehälter
@@ -21,6 +21,28 @@ item.gendustry.GeneTemplate.name=Genetische Schablone
 item.gendustry.GeneSampleBlank.name=Leere Genprobe
 item.gendustry.Waste.name=Genetischer Abfall
 item.gendustry.grafter.name=Industrielles Pfropfmesser
+
+# ==== FLUIDS ====
+
+fluid.gendustry.mutagen=Mutagen
+fluid.gendustry.liquiddna=Flüssige DNA
+fluid.gendustry.protein=Protein
+
+tile.gendustry.mutagen.name=Mutagen
+tile.gendustry.liquiddna.name=Flüssige DNA
+tile.gendustry.protein.name=Protein
+
+# ==== FLUID CONTAINERS ====
+
+item.gendustry.mutagen.bucket.name=Mutagen-Eimer
+item.gendustry.mutagen.can.name=Mutagen-Zelle
+item.gendustry.liquiddna.bucket.name=Eimer mit flüssiger DNA
+item.gendustry.liquiddna.can.name=Zelle mit flüssiger DNA
+item.gendustry.protein.bucket.name=Protein-Eimner
+item.gendustry.protein.can.name=Protein-Zelle
+
+
+# ==== UPGRADES ====
 
 gendustry.upgrades.prod.name=Produktions-Upgrade
 gendustry.upgrades.life.name=Lebensdauer-Upgrade
@@ -37,7 +59,7 @@ gendustry.upgrades.heater.name=Heizungs-Upgrade
 gendustry.upgrades.sieve.name=Sieb-Upgrade
 gendustry.upgrades.cooler.name=Kühlungs-Upgrade
 
-fluid.gendustry.mutagen=Mutagen
+# ==== GUI AND TOOLTIPS ====
 
 gendustry.label.template.crafting=Genetische Proben können an jeder Werkbank zu einer Schablone hinzugefügt werden. Mehrere Proben können gleichzeitig hinzugefügt werden.
 
@@ -88,6 +110,8 @@ gendustry.label.template.rootTrees=Kann mit einem Setzling verwendet werden
 gendustry.label.template.rootButterflies=Kann mit einem Schmetterling verwendet werden
 gendustry.label.template.blank=Genprobe kann hinzugefügt werden
 
+# ==== CHROMOSOMES (should match forestry) ====
+
 gendustry.chromosome.FLOWER_PROVIDER=Blumen
 gendustry.chromosome.GIRTH=Umfang
 gendustry.chromosome.SPEED=Geschwindigkeit
@@ -116,6 +140,15 @@ gendustry.chromosome.SAPPINESS=Saftigkeit
 
 gendustry.allele.false=Falsch
 gendustry.allele.true=Wahr
+
+# ==== BC TRIGGERS ====
+
+gendustry.trigger.power0=Keine Energie
+gendustry.trigger.power25=Energie >= 25%
+gendustry.trigger.power50=Energie >= 50%
+gendustry.trigger.power75=Energie >= 75%
+gendustry.trigger.power100=Energie voll
+gendustry.trigger.working=Maschine arbeitet
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Leer

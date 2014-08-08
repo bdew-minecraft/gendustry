@@ -14,22 +14,22 @@ import cpw.mods.fml.relauncher.SideOnly
 import net.bdew.gendustry.Gendustry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.util.Icon
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.util.IIcon
 import net.bdew.lib.block.HasTE
 import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.config.Machines
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.covers.BlockCoverable
 
-class BlockSampler(id: Int) extends Block(id, Material.rock) with HasTE[TileSampler] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockSampler extends Block(Material.rock) with HasTE[TileSampler] with BlockCoverable[TileSampler] with BreakableInventoryBlock with BlockGuiWrenchable {
   val TEClass = classOf[TileSampler]
-  private var icons: Array[Icon] = null
-  lazy val guiId: Int = Machines.sampler.guiId
+  private var icons: Array[IIcon] = null
+  lazy val guiId: Int = MachineSampler.guiId
 
-  setUnlocalizedName(Gendustry.modId + ".sampler")
+  setBlockName(Gendustry.modId + ".sampler")
   setHardness(5)
 
-  override def getIcon(side: Int, meta: Int): Icon = {
+  override def getIcon(side: Int, meta: Int): IIcon = {
     side match {
       case 0 =>
         return icons(0)
@@ -41,8 +41,8 @@ class BlockSampler(id: Int) extends Block(id, Material.rock) with HasTE[TileSamp
   }
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IconRegister) {
-    icons = new Array[Icon](3)
+  override def registerBlockIcons(reg: IIconRegister) {
+    icons = new Array[IIcon](3)
     icons(0) = reg.registerIcon(Gendustry.modId + ":sampler/bottom")
     icons(1) = reg.registerIcon(Gendustry.modId + ":sampler/top")
     icons(2) = reg.registerIcon(Gendustry.modId + ":sampler/side")

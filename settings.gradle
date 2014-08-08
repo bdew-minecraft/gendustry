@@ -1,1 +1,1 @@
-include "deps"
+rootProject.name = 'gendustry'

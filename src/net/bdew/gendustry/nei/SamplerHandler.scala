@@ -9,15 +9,13 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.{Rect, Point}
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.lib.gui.Rect
+import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.nei.helpers.PowerComponent
 import forestry.api.genetics._
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import net.minecraft.item.ItemStack
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.recipe.GuiRecipe
 import java.util
@@ -25,9 +23,11 @@ import net.bdew.lib.Misc
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import scala.Some
 import net.bdew.gendustry.compat.ExtraBeesProxy
+import net.bdew.gendustry.items.GeneSample
+import net.bdew.gendustry.machines.sampler.MachineSampler
+import net.bdew.lib.items.IStack
 
-class SamplerHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class SamplerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -35,12 +35,12 @@ class SamplerHandler extends BaseRecipeHandler {
   import NEICache.SampleOrdering
 
   class SamplerRecipe(sample: GeneSampleInfo, input: ItemStack) extends CachedRecipeWithComponents {
-    val getResult = position(Items.geneSample.newStack(sample), 137, 49)
+    val getResult = position(GeneSample.newStack(sample), 137, 49)
     val individual = position(input, 41, 49)
     val sampleBlank = position(new ItemStack(Items.geneSampleBlank), 74, 28)
     val labware = position(new ItemStack(Items.labware), 98, 28)
 
-    components :+= new PowerComponent(mjRect, Machines.sampler.mjPerItem, Machines.sampler.maxStoredEnergy)
+    components :+= new PowerComponent(mjRect, MachineSampler.mjPerItem, MachineSampler.maxStoredEnergy)
 
     override def getOtherStacks = List(individual, sampleBlank, labware)
   }
@@ -59,14 +59,14 @@ class SamplerHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[SamplerRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(63 - offset.x, 49 - offset.y, 66, 15), "Sampler"))
+    addTransferRect(Rect(63, 49, 66, 15), "Sampler")
   }
 
   def addAllRecipes() {
     for (info <- NEICache.geneSamples; species <- NEICache.speciesChromosomes(info)) {
       arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
     }
-    if (Machines.sampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
+    if (MachineSampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
       for (sample <- NEICache.geneSamples if sample.root.isInstanceOf[IBeeRoot]) {
         val serum = ExtraBeesProxy.makeSerumFromSample(sample)
         if (serum != null) arecipes.add(new SamplerRecipe(sample, serum))
@@ -76,8 +76,8 @@ class SamplerHandler extends BaseRecipeHandler {
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("item", Seq(x: ItemStack)) if x.itemID == Items.labware.itemID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Items.geneSampleBlank.itemID => addAllRecipes()
+      case ("item", Seq(IStack(x))) if x == Items.labware => addAllRecipes()
+      case ("item", Seq(IStack(x))) if x == Items.geneSampleBlank => addAllRecipes()
       case ("item", Seq(stack: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(stack)
         if (individual != null) {
@@ -90,7 +90,7 @@ class SamplerHandler extends BaseRecipeHandler {
               alleles += GeneSampleInfo(root, n, chromosome.getSecondaryAllele)
           }
           alleles.foreach(sample => arecipes.add(new SamplerRecipe(sample, stack)))
-        } else if (Machines.sampler.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
+        } else if (MachineSampler.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
           val sample = ExtraBeesProxy.getSerumSample(stack)
           if (sample != null)
             arecipes.add(new SamplerRecipe(sample, stack))
@@ -101,15 +101,15 @@ class SamplerHandler extends BaseRecipeHandler {
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneSample.itemID =>
-        val info = Items.geneSample.getInfo(stack)
+      case ("item", Seq(stack: ItemStack)) if stack.getItem == GeneSample =>
+        val info = GeneSample.getInfo(stack)
         if (info == null) {
           addAllRecipes()
         } else {
           for (species <- NEICache.speciesChromosomes(info)) {
             arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
           }
-          if (Machines.sampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
+          if (MachineSampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
             val serum = ExtraBeesProxy.makeSerumFromSample(info)
             if (serum != null) arecipes.add(new SamplerRecipe(info, serum))
           }
@@ -120,7 +120,7 @@ class SamplerHandler extends BaseRecipeHandler {
 
   override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip += Misc.toLocalF("gendustry.label.consume", Machines.mutatron.labwareConsumeChance.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.consume", MachineSampler.labwareConsumeChance.toInt)
     super.handleItemTooltip(gui, stack, currenttip, recipe)
   }
 

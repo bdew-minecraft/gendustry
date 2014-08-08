@@ -10,18 +10,17 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.gui.{Rect, Point}
-import net.bdew.gendustry.config.{Fluids, Blocks, Machines}
+import net.bdew.lib.gui.Rect
+import net.bdew.gendustry.config.Fluids
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
-import net.bdew.gendustry.mutagen.MutagenRegistry
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
+import net.bdew.gendustry.fluids.MutagenSources
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import net.bdew.lib.Misc
+import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
+import net.bdew.lib.items.IStackBlock
 
-class MutagenProducerHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(152, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -32,8 +31,8 @@ class MutagenProducerHandler extends BaseRecipeHandler {
     val inPositioned = position(in, 44, 41)
     val getResult = null
 
-    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, out), Machines.mutagenProducer.tankSize)
-    components :+= new PowerComponent(mjRect, Machines.mutagenProducer.mjPerItem, Machines.mutagenProducer.maxStoredEnergy)
+    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, out), MachineMutagenProducer.tankSize)
+    components :+= new PowerComponent(mjRect, MachineMutagenProducer.mjPerItem, MachineMutagenProducer.maxStoredEnergy)
 
     override def getOtherStacks = List(inPositioned)
   }
@@ -41,24 +40,24 @@ class MutagenProducerHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[MutagenProducerRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(79 - offset.x, 41 - offset.y, 53, 15), "MutagenProducer"))
+    addTransferRect(Rect(79, 41, 53, 15), "MutagenProducer")
   }
 
   def addAllRecipes() {
-    for ((id, vals) <- MutagenRegistry.values; (meta, out) <- vals)
+    for ((id, vals) <- MutagenSources.values; (meta, out) <- vals)
       arecipes.add(new MutagenProducerRecipe(new ItemStack(id, 1, meta), out))
   }
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
+      case ("item", Seq(IStackBlock(x))) if x == Fluids.mutagen.getBlock => addAllRecipes()
       case ("MutagenProducer", _) => addAllRecipes()
     }
   }
 
   override def loadUsageRecipes(stack: ItemStack) {
-    val res = MutagenRegistry.getValue(stack)
+    val res = MutagenSources.getValue(stack)
     if (res > 0) {
       arecipes.add(new MutagenProducerRecipe(stack, res))
     }

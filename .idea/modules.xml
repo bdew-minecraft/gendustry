@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../bdlib/bdlib.iml" filepath="$PROJECT_DIR$/../bdlib/bdlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/gendustry.iml" filepath="$PROJECT_DIR$/gendustry.iml" />
     </modules>
   </component>

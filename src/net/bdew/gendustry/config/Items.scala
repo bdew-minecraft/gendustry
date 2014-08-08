@@ -9,44 +9,38 @@
 
 package net.bdew.gendustry.config
 
-import cpw.mods.fml.common.registry.GameRegistry
-import forestry.api.core.ItemInterface
-import net.bdew.gendustry.mutagen.ItemMutagenBucket
-import net.bdew.gendustry.mutagen.ItemMutagenCan
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraftforge.fluids.FluidContainerRegistry
-import net.bdew.gendustry.items.{IndustrialGrafter, GeneTemplate, GeneSample}
+import net.bdew.gendustry.items._
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
 import net.bdew.lib.config.ItemManager
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.custom.{CustomHoneyDrop, CustomHoneyComb}
 
-object Items extends ItemManager(Config.IDs) {
+object Items extends ItemManager {
+  val labware = regSimpleItem("Labware")
+  val waste = regSimpleItem("Waste")
+  val geneSampleBlank = regSimpleItem("GeneSampleBlank")
 
-  val mutagenBucket = regItemCls(classOf[ItemMutagenBucket], "MutagenBucket")
-  val mutagenCan = regItemCls(classOf[ItemMutagenCan], "MutagenCan")
+  regItem(GeneSample)
+  regItem(GeneTemplate)
 
-  FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenBucket), new ItemStack(Item.bucketEmpty))
-  FluidContainerRegistry.registerFluidContainer(Fluids.mutagen, new ItemStack(mutagenCan), ItemInterface.getItem("canEmpty"))
+  regItem(ItemApiaryUpgrade)
 
-  val geneSample = regItem(new GeneSample(ids.getItemId("GeneSample")))
-  val geneTemplate = regItem(new GeneTemplate(ids.getItemId("GeneTemplate")))
+  regItem(IndustrialGrafter)
+  regItem(IndustrialScoop)
 
-  val upgradeItem = regItemCls(classOf[ItemApiaryUpgrade], "ApiaryUpgrade")
-
-  val grafter = regItemCls(classOf[IndustrialGrafter], "IndustrialGrafter", false)
-  GameRegistry.registerCustomItemStack("IndustrialGrafter", grafter.stackWithCharge(0))
+  regItem(CustomHoneyComb)
+  regItem(CustomHoneyDrop)
 
   regSimpleItem("MutagenTank")
   regSimpleItem("BeeReceptacle")
   regSimpleItem("PowerModule")
   regSimpleItem("GeneticsProcessor")
+  regSimpleItem("EnvProcessor")
   regSimpleItem("UpgradeFrame")
   regSimpleItem("ClimateModule")
 
-  val labware = regSimpleItem("Labware")
-  val waste = regSimpleItem("Waste")
-  val geneSampleBlank = regSimpleItem("GeneSampleBlank")
+  val coverEject = regItem(EjectCover)
+  val coverImport = regItem(ImportCover)
 
   Gendustry.logInfo("Items loaded")
 }

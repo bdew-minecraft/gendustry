@@ -23,10 +23,10 @@ class ContainerMutatron(val te: TileMutatron, player: EntityPlayer) extends Base
   addSlotToContainer(new SlotValidating(te, 3, 98, 17))
   bindPlayerInventory(player.inventory, 8, 84, 142)
 
-  te.lastPlayer := player.username
+  te.lastPlayer := player.getGameProfile
 
   override def slotClick(slotnum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
-    te.lastPlayer := player.username
+    te.lastPlayer := player.getGameProfile
     super.slotClick(slotnum, button, modifiers, player)
   }
 

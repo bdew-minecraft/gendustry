@@ -9,23 +9,22 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.{Rect, Point}
-import net.bdew.gendustry.config.{Fluids, Items, Blocks, Machines}
+import net.bdew.lib.gui.Rect
+import net.bdew.gendustry.config.{Fluids, Items}
 import net.minecraftforge.fluids.FluidStack
 import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
 import forestry.api.genetics.{AlleleManager, ISpeciesRoot, IMutation}
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import net.minecraft.item.ItemStack
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.recipe.GuiRecipe
 import java.util
 import net.bdew.lib.Misc
+import net.bdew.gendustry.machines.mutatron.MachineMutatron
+import net.bdew.lib.items.{IStackBlock, IStack}
 
-class MutatronHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class MutatronHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -37,8 +36,8 @@ class MutatronHandler extends BaseRecipeHandler {
     val in2 = position(getRecipeStack(1, mutation), 60, 53)
     val labware = position(new ItemStack(Items.labware), 98, 17)
 
-    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, Machines.mutatron.mutagenPerItem), Machines.mutatron.tankSize)
-    components :+= new PowerComponent(mjRect, Machines.mutatron.mjPerItem, Machines.mutatron.maxStoredEnergy)
+    components :+= new FluidComponent(mutagenRect, new FluidStack(Fluids.mutagen, MachineMutatron.mutagenPerItem), MachineMutatron.tankSize)
+    components :+= new PowerComponent(mjRect, MachineMutatron.mjPerItem, MachineMutatron.maxStoredEnergy)
 
     override def getOtherStacks = List(in1, in2, labware)
   }
@@ -65,7 +64,7 @@ class MutatronHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[MutatronRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(89 - offset.x, 41 - offset.y, 40, 15), "Mutatron"))
+    addTransferRect(Rect(89, 41, 40, 15), "Mutatron")
   }
 
   def addAllRecipes() {
@@ -77,8 +76,8 @@ class MutatronHandler extends BaseRecipeHandler {
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
       case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Blocks.mutagen.blockID => addAllRecipes()
-      case ("item", Seq(x: ItemStack)) if x.itemID == Items.labware.itemID => addAllRecipes()
+      case ("item", Seq(IStackBlock(x))) if x == Fluids.mutagen.getBlock => addAllRecipes()
+      case ("item", Seq(IStack(x))) if x == Items.labware => addAllRecipes()
       case ("item", Seq(x: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(x)
         if (individual != null) {
@@ -103,10 +102,10 @@ class MutatronHandler extends BaseRecipeHandler {
 
   override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip += Misc.toLocalF("gendustry.label.consume", Machines.mutatron.labwareConsumeChance.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.consume", MachineMutatron.labwareConsumeChance.toInt)
     if (stack == getRecipe(recipe).getResult.item) {
-      currenttip += Misc.toLocalF("gendustry.label.mutatron.degrade", Machines.mutatron.degradeChanceNatural.toInt)
-      currenttip += Misc.toLocalF("gendustry.label.mutatron.death", Machines.mutatron.deathChanceArtificial.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.mutatron.degrade", MachineMutatron.degradeChanceNatural.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.mutatron.death", MachineMutatron.deathChanceArtificial.toInt)
     }
     super.handleItemTooltip(gui, stack, currenttip, recipe)
   }

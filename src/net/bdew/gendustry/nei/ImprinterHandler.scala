@@ -9,15 +9,13 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.{Rect, Point}
-import net.bdew.gendustry.config.{Items, Machines}
+import net.bdew.lib.gui.Rect
+import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.nei.helpers.PowerComponent
 import forestry.api.genetics._
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import net.minecraft.item.ItemStack
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
 import net.bdew.gendustry.Gendustry
 import codechicken.nei.recipe.GuiRecipe
 import java.util
@@ -25,9 +23,11 @@ import net.bdew.lib.Misc
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import scala.Some
 import forestry.api.lepidopterology.IButterflyRoot
+import net.bdew.gendustry.machines.imprinter.MachineImprinter
+import net.bdew.gendustry.items.GeneTemplate
+import net.bdew.lib.items.IStack
 
-class ImprinterHandler extends BaseRecipeHandler {
-  lazy val offset = new Point(5, 13)
+class ImprinterHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)
   val mjRect = new Rect(8, 19, 16, 58)
 
@@ -39,13 +39,13 @@ class ImprinterHandler extends BaseRecipeHandler {
     val template = position(tpl, 74, 28)
     val labware = position(new ItemStack(Items.labware), 98, 28)
 
-    components :+= new PowerComponent(mjRect, Machines.imprinter.mjPerItem, Machines.imprinter.maxStoredEnergy)
+    components :+= new PowerComponent(mjRect, MachineImprinter.mjPerItem, MachineImprinter.maxStoredEnergy)
 
     override def getOtherStacks = List(input, template, labware)
   }
 
   def getExampleStack(template: ItemStack, modded: Boolean): ItemStack = {
-    val root = Items.geneTemplate.getSpecies(template)
+    val root = GeneTemplate.getSpecies(template)
 
     val tpl = root match {
       case bees: IBeeRoot => bees.getTemplate("forestry.speciesForest").clone()
@@ -54,7 +54,7 @@ class ImprinterHandler extends BaseRecipeHandler {
     }
 
     if (modded) {
-      for (sample <- Items.geneTemplate.getSamples(template))
+      for (sample <- GeneTemplate.getSamples(template))
         tpl(sample.chromosome) = sample.allele
     }
 
@@ -71,22 +71,22 @@ class ImprinterHandler extends BaseRecipeHandler {
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[ImprinterRecipe]
 
   override def loadTransferRects() {
-    transferRects.add(new RecipeTransferRect(new Rectangle(63 - offset.x, 49 - offset.y, 66, 15), "Imprinter"))
+    addTransferRect(Rect(63, 49, 66, 15), "Imprinter")
   }
 
   def addExample() {
     val bees = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees")
     val cult = AlleleManager.alleleRegistry.getAllele("forestry.speciesCultivated")
-    val template = new ItemStack(Items.geneTemplate)
-    Items.geneTemplate.addSample(template, GeneSampleInfo(bees, 0, cult))
+    val template = new ItemStack(GeneTemplate)
+    GeneTemplate.addSample(template, GeneSampleInfo(bees, 0, cult))
     arecipes.add(new ImprinterRecipe(template))
   }
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("item", Seq(x: ItemStack)) if x.itemID == Items.labware.itemID => addExample()
-      case ("item", Seq(stack: ItemStack)) if stack.itemID == Items.geneTemplate.itemID =>
-        if (Items.geneTemplate.getSpecies(stack) == null)
+      case ("item", Seq(IStack(x))) if x == Items.labware => addExample()
+      case ("item", Seq(stack: ItemStack)) if stack.getItem == GeneTemplate =>
+        if (GeneTemplate.getSpecies(stack) == null)
           addExample()
         else
           arecipes.add(new ImprinterRecipe(stack))
@@ -102,7 +102,7 @@ class ImprinterHandler extends BaseRecipeHandler {
 
   override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip += Misc.toLocalF("gendustry.label.consume", Machines.mutatron.labwareConsumeChance.toInt)
+      currenttip += Misc.toLocalF("gendustry.label.consume", MachineImprinter.labwareConsumeChance.toInt)
     super.handleItemTooltip(gui, stack, currenttip, recipe)
   }
 

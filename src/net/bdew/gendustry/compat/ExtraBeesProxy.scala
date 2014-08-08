@@ -25,8 +25,7 @@ object ExtraBeesProxy {
         Class.forName("binnie.extrabees.ExtraBees").getField("serum").get(null).asInstanceOf[Item]
       } catch {
         case e: Throwable =>
-          Gendustry.logWarn("Failed to load ExtraBees serum item")
-          e.printStackTrace()
+          Gendustry.logWarnException("Failed to load ExtraBees serum item", e)
           null
       }
     else
@@ -34,7 +33,7 @@ object ExtraBeesProxy {
 
   if (itemSerum != null) Gendustry.logInfo("ExtraBees serum item: %s", itemSerum)
 
-  def isSerum(stack: ItemStack) = if (itemSerum != null) stack.itemID == itemSerum.itemID else false
+  def isSerum(stack: ItemStack) = if (itemSerum != null) stack.getItem == itemSerum else false
 
   def getSerumSample(stack: ItemStack): GeneSampleInfo = {
     if (!isSerum(stack)) return null

@@ -11,19 +11,15 @@ package net.bdew.gendustry.nei.helpers
 
 import net.bdew.lib.gui.{Point, Rect}
 import java.text.DecimalFormat
-import net.minecraft.client.Minecraft
 import net.bdew.gendustry.gui.Textures
-import codechicken.core.gui.GuiDraw
 import net.bdew.gendustry.config.Config
+import net.bdew.gendustry.nei.NEIDrawTarget
 
 class PowerComponent(rect: Rect, power: Float, capacity: Float) extends RecipeComponent(rect) {
   val formater = new DecimalFormat("#,###")
   def getTooltip = List("%s %s".format(formater.format(power * Config.powerShowMultiplier), Config.powerShowUnits))
   def mouseClick(button: Int) = false
   def render(offset: Point) {
-    Minecraft.getMinecraft.renderEngine.bindTexture(Textures.powerFill.resource)
-    val orect = rect - offset
-    val fillArea = (orect.h * (power / capacity)).round
-    GuiDraw.drawTexturedModalRect(orect.x, orect.y + orect.h - fillArea, Textures.powerFill.x, Textures.powerFill.y + orect.h - fillArea, orect.w, fillArea)
+    NEIDrawTarget.drawTextureInterpolate(rect - offset, Textures.powerFill, 0, 1 - (power / capacity), 1, 1)
   }
 }

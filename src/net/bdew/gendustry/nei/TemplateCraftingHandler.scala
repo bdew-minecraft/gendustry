@@ -11,28 +11,28 @@ package net.bdew.gendustry.nei
 
 import codechicken.nei.recipe.ShapelessRecipeHandler
 import net.minecraft.item.ItemStack
-import net.bdew.gendustry.config.Items
 import net.bdew.lib.Misc
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.inventory.Container
-import codechicken.core.gui.GuiDraw
+import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
+import codechicken.lib.gui.GuiDraw
 
 class TemplateCraftingHandler extends ShapelessRecipeHandler {
 
   def addRecipe() {
     import scala.collection.JavaConversions._
-    val rec = List(new ItemStack(Items.geneTemplate), new ItemStack(Items.geneSample), new ItemStack(Items.geneSample))
-    val out = new ItemStack(Items.geneTemplate)
+    val rec = List(new ItemStack(GeneTemplate), new ItemStack(GeneSample), new ItemStack(GeneSample))
+    val out = new ItemStack(GeneTemplate)
     arecipes.add(new CachedShapelessRecipe(rec, out))
   }
 
   override def loadCraftingRecipes(result: ItemStack) {
-    if (result.itemID == Items.geneTemplate.itemID)
+    if (result.getItem == GeneTemplate)
       addRecipe()
   }
 
   override def loadUsageRecipes(ingredient: ItemStack) {
-    if (ingredient.itemID == Items.geneTemplate.itemID || ingredient.itemID == Items.geneSample.itemID)
+    if (ingredient.getItem == GeneTemplate || ingredient.getItem == GeneSample)
       addRecipe()
   }
 

@@ -9,32 +9,86 @@
 
 package net.bdew.gendustry.api;
 
+import net.minecraft.world.biome.BiomeGenBase;
+
+/**
+ * Stores current modifiers from all upgrades in an apiary
+ */
 public class ApiaryModifiers {
+    /**
+     * Territory modifier, multiplicative
+     */
     public float territory = 1;
 
-    //max safe = 10 (degenerating - offspring become unnatural)
+    /**
+     * Mutation chance modifier, multiplicative
+     * max safe = 10 (degenerating - offspring become unnatural)
+     */
     public float mutation = 1;
 
-    //increases lifespan
+    /**
+     * Lifespan modifier, multiplicative, higher = longer
+     */
     public float lifespan = 1;
 
-    //increases chance to get products each cycle, max safe = 16 (overworked - becomes unnatural)
+    /**
+     * Production modifier - increases chance to get products each tick, multiplicative
+     * max safe = 10 (overworked - becomes unnatural)
+     */
     public float production = 1;
 
+    /**
+     * Flowering and pollination chance modifier, multiplicative
+     */
     public float flowering = 1;
 
-    // set to 0 to reduce decay from fatigue
+    /**
+     * Genetic decay chance, applies to fatigued unnatural bees, multiplicative
+     */
     public float geneticDecay = 1;
 
+    /**
+     * Sealed - bees can work in rain without the required traits
+     */
     public boolean isSealed = false;
+
+    /**
+     * Self lighted - bees can work in the night without the required traits, makes block emit light
+     */
     public boolean isSelfLighted = false;
+
+    /**
+     * Sunlight simulated - bees can work in caves without the required traits
+     */
     public boolean isSunlightSimulated = false;
-    public boolean isHellish = false;
+
+    /**
+     * Automated - will auto move offspring to the right slots to allow further breeding
+     */
     public boolean isAutomated = false;
+
+    /**
+     * Allows collection of pollen from trees
+     */
     public boolean isCollectingPollen = false;
 
+    /**
+     * If set - overrides biome as seen by jubilance checks, etc.
+     */
+    public BiomeGenBase biomeOverride = null;
+
+    /**
+     * Energy use modifier, multiplicative
+     */
     public float energy = 1;
 
+    /**
+     * Temperature modifier, additive, same units as {@link BiomeGenBase#temperature}
+     */
     public float temperature = 0;
+
+    /**
+     * Humidity modifier, additive, same units as {@link BiomeGenBase#rainfall}
+     */
     public float humidity = 0;
 }

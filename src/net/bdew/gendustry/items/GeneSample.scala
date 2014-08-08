@@ -18,7 +18,7 @@ import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.config.Items
 import net.bdew.lib.items.SimpleItem
 
-class GeneSample(id: Int) extends SimpleItem(id, "GeneSample") {
+object GeneSample extends SimpleItem("GeneSample") {
 
   setMaxStackSize(1)
   setContainerItem(Items.geneSampleBlank)
@@ -39,7 +39,7 @@ class GeneSample(id: Int) extends SimpleItem(id, "GeneSample") {
       val tip = l.asInstanceOf[util.List[String]].asScala
       val info = getInfo(stack)
       tip += Misc.toLocal("gendustry.label.sample." + info.root.getUID)
-      tip += info.getText
+      tip += info.getLocalizedName
     }
   }
 }

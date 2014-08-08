@@ -11,18 +11,43 @@ package net.bdew.gendustry.items
 
 import net.minecraft.item.ItemStack
 import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo}
-import net.bdew.lib.Misc
+import net.bdew.lib.{Client, Misc}
 import net.minecraft.nbt.{NBTTagList, NBTTagCompound}
 import net.minecraft.entity.player.EntityPlayer
 import java.util
 import cpw.mods.fml.common.registry.GameRegistry
 import forestry.api.genetics.{ISpeciesRoot, AlleleManager}
 import net.bdew.lib.items.SimpleItem
+import forestry.api.apiculture.{IBeeRoot, EnumBeeChromosome}
+import forestry.api.arboriculture.{ITreeRoot, EnumTreeChromosome}
+import forestry.api.lepidopterology.{IButterflyRoot, EnumButterflyChromosome}
+import net.minecraft.util.EnumChatFormatting
+import net.bdew.gendustry.Gendustry
 
-class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
+object GeneTemplate extends SimpleItem("GeneTemplate") {
   setMaxStackSize(1)
 
+  val unusedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
+  val unusedButterflyChromosomes = Set(EnumButterflyChromosome.TERRITORY)
+
   GameRegistry.addRecipe(new GeneRecipe)
+
+  def getRequiredChromosomes(sp: ISpeciesRoot) = sp match {
+    case x: IBeeRoot =>
+      EnumBeeChromosome.values().filterNot(unusedBeeChromosomes.contains).map(_.ordinal())
+    case x: ITreeRoot =>
+      EnumTreeChromosome.values().map(_.ordinal())
+    case x: IButterflyRoot =>
+      EnumButterflyChromosome.values().filterNot(unusedButterflyChromosomes.contains).map(_.ordinal())
+  }
+
+  def isComplete(stack: ItemStack) = {
+    val sp = getSpecies(stack)
+    if (sp == null)
+      false
+    else
+      (getRequiredChromosomes(sp).toSet -- getSamples(stack).map(_.chromosome).toSet).isEmpty
+  }
 
   def getSpecies(stack: ItemStack): ISpeciesRoot =
     if (stack.hasTagCompound) AlleleManager.alleleRegistry.getSpeciesRoot(stack.getTagCompound.getString("species")) else null
@@ -30,7 +55,7 @@ class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
   def getSamples(stack: ItemStack): Iterable[GeneSampleInfo] = {
     val tag = stack.getTagCompound
     if (tag != null)
-      return Misc.iterNbtList[NBTTagCompound](tag.getTagList("samples")).map(x => GeneSampleInfo.fromNBT(x))
+      return Misc.iterNbtCompoundList(tag, "samples").map(x => GeneSampleInfo.fromNBT(x))
     else
       return Seq.empty[GeneSampleInfo]
   }
@@ -66,10 +91,29 @@ class GeneTemplate(id: Int) extends SimpleItem(id, "GeneTemplate") {
     if (tag != null && tag.hasKey("species")) {
       try {
         tip += Misc.toLocal("gendustry.label.template." + tag.getString("species"))
-        tip ++= getSamples(stack).map(_.getText)
+        val root = getSpecies(stack)
+        val samples = getSamples(stack).map(x => x.chromosome -> x.getLocalizedName).toMap
+        val required = getRequiredChromosomes(root)
+
+        tip +=
+          (if (isComplete(stack)) EnumChatFormatting.GREEN else EnumChatFormatting.RED) +
+            Misc.toLocalF("gendustry.label.template.chromosomes", samples.size, required.size) +
+            EnumChatFormatting.RESET
+
+        for (chr <- required)
+          if (samples.contains(chr))
+            tip += samples(chr)
+          else if (Client.shiftDown)
+            tip += "%s%s: %s%s".format(
+              EnumChatFormatting.RED,
+              Misc.toLocal("gendustry.chromosome." + GeneSampleInfo.getChromosomeName(root, chr)),
+              Misc.toLocal("gendustry.label.template.missing"),
+              EnumChatFormatting.RESET
+            )
+
       } catch {
         case e: Throwable =>
-          e.printStackTrace()
+          Gendustry.logWarnException("Exception while generating template tooltip", e)
           tip += "Error"
       }
     } else {

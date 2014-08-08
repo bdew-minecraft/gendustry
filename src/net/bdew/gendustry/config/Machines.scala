@@ -17,14 +17,22 @@ import net.bdew.gendustry.machines.sampler.MachineSampler
 import net.bdew.lib.config.MachineManager
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.machines.advmutatron.MachineMutatronAdv
+import net.bdew.gendustry.machines.liquifier.MachineLiquifier
+import net.bdew.gendustry.machines.extractor.MachineExtractor
+import net.bdew.gendustry.machines.transposer.MachineTransposer
+import net.bdew.gendustry.machines.replicator.MachineReplicator
 
-object Machines extends MachineManager(Config.IDs, Tuning.getSection("Machines"), Config.guiHandler) {
-  val mutagenProducer = registerMachine(new MachineMutagenProducer)
-  val mutatron = registerMachine(new MachineMutatron)
-  val apiary = registerMachine(new MachineApiary)
-  val imprinter = registerMachine(new MachineImprinter)
-  val sampler = registerMachine(new MachineSampler)
-  val mutatronAdv = registerMachine(new MachineMutatronAdv)
+object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler) {
+  registerMachine(MachineMutagenProducer)
+  registerMachine(MachineMutatron)
+  registerMachine(MachineApiary)
+  registerMachine(MachineImprinter)
+  registerMachine(MachineSampler)
+  registerMachine(MachineMutatronAdv)
+  registerMachine(MachineLiquifier)
+  registerMachine(MachineExtractor)
+  registerMachine(MachineTransposer)
+  registerMachine(MachineReplicator)
 
   Gendustry.logInfo("Machines loaded")
 }

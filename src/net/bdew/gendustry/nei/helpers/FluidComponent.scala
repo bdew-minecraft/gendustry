@@ -9,20 +9,18 @@
 
 package net.bdew.gendustry.nei.helpers
 
-import net.bdew.lib.gui.{Point, Rect}
+import net.bdew.lib.gui.{Texture, Point, Rect}
 import codechicken.nei.recipe.{GuiUsageRecipe, GuiCraftingRecipe}
 import net.minecraftforge.fluids.FluidStack
 import java.text.DecimalFormat
 import org.lwjgl.opengl.GL11
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.texture.TextureMap
-import codechicken.core.gui.GuiDraw
 import net.bdew.gendustry.gui.Textures
+import net.bdew.gendustry.nei.NEIDrawTarget
 
 class FluidComponent(rect: Rect, fstack: FluidStack, capacity: Int) extends RecipeComponent(rect) {
   val formater = new DecimalFormat("#,###")
 
-  def getTooltip = List(fstack.getFluid.getLocalizedName, "%s mB".format(formater.format(fstack.amount)))
+  def getTooltip = List(fstack.getFluid.getLocalizedName(fstack), "%s mB".format(formater.format(fstack.amount)))
 
   def mouseClick(button: Int) = button match {
     case 0 => GuiCraftingRecipe.openRecipeGui("liquid", fstack)
@@ -37,17 +35,16 @@ class FluidComponent(rect: Rect, fstack: FluidStack, capacity: Int) extends Reci
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 
     if (fstack.getFluid.getStillIcon != null) {
-      val icon = fstack.getFluid.getStillIcon
-      Minecraft.getMinecraft.renderEngine.bindTexture(TextureMap.locationBlocksTexture)
-      var fillHeight: Int = (orect.h * fstack.amount / capacity).round
-      var yStart: Int = 0
+      val icon = Texture(Texture.BLOCKS, fstack.getFluid.getStillIcon)
+      var fillHeight = orect.h * fstack.amount / capacity
+      var yStart = 0
 
       while (fillHeight > 0) {
         if (fillHeight > 16) {
-          GuiDraw.gui.drawTexturedModelRectFromIcon(orect.x, orect.y + orect.h - 16 - yStart, icon, 16, 16)
+          NEIDrawTarget.drawTexture(new Rect(orect.x, orect.y2 - 16 - yStart, orect.w, 16), icon)
           fillHeight -= 16
         } else {
-          GuiDraw.gui.drawTexturedModelRectFromIcon(orect.x, orect.y + orect.h - fillHeight - yStart, icon, 16, fillHeight)
+          NEIDrawTarget.drawTextureInterpolate(new Rect(orect.x, orect.y2 - 16 - yStart, orect.w, 16), icon, 0, 1 - fillHeight / 16, 1, 1)
           fillHeight = 0
         }
         yStart = yStart + 16
@@ -55,8 +52,6 @@ class FluidComponent(rect: Rect, fstack: FluidStack, capacity: Int) extends Reci
     }
 
     GL11.glDisable(GL11.GL_BLEND)
-
-    Minecraft.getMinecraft.renderEngine.bindTexture(Textures.tankOverlay.resource)
-    GuiDraw.drawTexturedModalRect(orect.x, orect.y, Textures.tankOverlay.x, Textures.tankOverlay.y, orect.w, orect.h)
+    NEIDrawTarget.drawTexture(orect, Textures.tankOverlay)
   }
 }

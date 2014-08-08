@@ -11,7 +11,6 @@ package net.bdew.gendustry.machines.apiary
 
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect}
-import net.minecraft.client.renderer.texture.TextureMap
 import scala.collection.mutable
 import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
@@ -22,25 +21,27 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
   override def draw(mouse: Point) {
     val err = apiary.errorState.cval
     if (err == -1) {
-      parent.drawTexture(rect, Textures.texturePowerError)
+      parent.drawTexture(rect, Textures.errors.noPower)
+    } else if (err == -2) {
+      parent.drawTexture(rect, Textures.errors.disabled)
+    } else if (ErrorCodes.isValid(err)) {
+      parent.drawTexture(rect, ErrorCodes.getIcon(err))
     } else {
-      bindTexture(TextureMap.locationItemsTexture)
-      if (ErrorCodes.isValid(err)) {
-        parent.drawIcon(rect, ErrorCodes.getIcon(err))
-      } else {
-        parent.drawIcon(rect, ErrorCodes.getIcon(0))
-      }
+      parent.drawTexture(rect, ErrorCodes.getIcon(0))
     }
   }
+
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
     val err = apiary.errorState.cval
     if (err == -1) {
       tip += Misc.toLocal(Gendustry.modId + ".error.power")
+    } else if (err == -2) {
+      tip += Misc.toLocal(Gendustry.modId + ".error.disabled")
     } else if (ErrorCodes.isValid(err)) {
       tip += ErrorCodes.getDescription(err)
     } else {
       tip += ErrorCodes.getDescription(0)
     }
-    apiary.addStats(tip)
+    tip ++= apiary.getStats
   }
 }

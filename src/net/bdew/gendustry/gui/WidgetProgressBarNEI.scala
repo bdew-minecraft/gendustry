@@ -10,14 +10,14 @@
 package net.bdew.gendustry.gui
 
 import net.bdew.lib.gui.widgets.WidgetProgressBar
-import net.bdew.lib.gui.{Point, TextureLocation, Rect}
+import net.bdew.lib.gui.{Texture, Point, Rect}
 import net.bdew.lib.data.DataSlotFloat
 import scala.collection.mutable
+
 import net.bdew.gendustry.nei.NEIRecipeProxy
 import net.bdew.lib.Misc
 
-class WidgetProgressBarNEI(rect: Rect, texture: TextureLocation, dslot: DataSlotFloat, recipeid: String) extends WidgetProgressBar(rect, texture, dslot) {
-
+class WidgetProgressBarNEI(rect: Rect, texture: Texture, dslot: DataSlotFloat, recipeid: String) extends WidgetProgressBar(rect, texture, dslot) {
   override def mouseClicked(p: Point, button: Int) {
     if (NEIRecipeProxy.hasNei)
       NEIRecipeProxy.openRecipes(recipeid)

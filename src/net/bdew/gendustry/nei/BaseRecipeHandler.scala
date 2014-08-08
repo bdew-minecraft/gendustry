@@ -10,31 +10,36 @@
 package net.bdew.gendustry.nei
 
 import codechicken.nei.recipe.{GuiRecipe, TemplateRecipeHandler}
-import net.bdew.lib.gui.Point
-import codechicken.core.gui.GuiDraw
+import net.bdew.lib.gui._
 import org.lwjgl.opengl.GL11
-import codechicken.core.gui.GuiDraw._
 import net.bdew.gendustry.nei.helpers.RecipeComponent
 import java.util
 import net.minecraft.item.ItemStack
 import codechicken.nei.PositionedStack
+import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
+import java.awt.Rectangle
 
-abstract class BaseRecipeHandler extends TemplateRecipeHandler {
-  val offset: Point
+abstract class BaseRecipeHandler(val offX: Int, val offY: Int) extends TemplateRecipeHandler {
+
+  import codechicken.lib.gui.GuiDraw._
 
   abstract class CachedRecipeWithComponents extends CachedRecipe {
     var components = List.empty[RecipeComponent]
-    def position(s: ItemStack, x: Int, y: Int) = new PositionedStack(s, x - offset.x, y - offset.y)
+    def position(s: ItemStack, x: Int, y: Int) = new PositionedStack(s, x - offX, y - offY)
+  }
+
+  def addTransferRect(r: Rect, id: String) {
+    transferRects.add(new RecipeTransferRect(new Rectangle(r.x.round - offX, r.y.round - offY, r.w.round, r.h.round), id))
   }
 
   override def drawExtras(recipe: Int) {
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
-      component.render(offset)
+      component.render(Point(offX, offY))
     super.drawExtras(recipe)
   }
 
   override def mouseClicked(gui: GuiRecipe, button: Int, recipe: Int): Boolean = {
-    val mrel = new Point(GuiDraw.getMousePosition) - gui.getRecipePosition(recipe) + offset - ((gui.guiLeft, gui.guiTop))
+    val mrel = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
       if (component.rect.contains(mrel) && component.mouseClick(button)) return true
     super.mouseClicked(gui, button, recipe)
@@ -42,7 +47,7 @@ abstract class BaseRecipeHandler extends TemplateRecipeHandler {
 
   override def handleTooltip(gui: GuiRecipe, currenttip: util.List[String], recipe: Int) = {
     import scala.collection.JavaConversions._
-    val mrel = new Point(GuiDraw.getMousePosition) - gui.getRecipePosition(recipe) + offset - ((gui.guiLeft, gui.guiTop))
+    val mrel = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
       if (component.rect.contains(mrel)) currenttip.addAll(component.getTooltip)
     super.handleTooltip(gui, currenttip, recipe)
@@ -51,6 +56,6 @@ abstract class BaseRecipeHandler extends TemplateRecipeHandler {
   override def drawBackground(recipe: Int) {
     GL11.glColor4f(1, 1, 1, 1)
     changeTexture(getGuiTexture)
-    drawTexturedModalRect(0, 0, offset.x, offset.y, 166, 65)
+    drawTexturedModalRect(0, 0, offX, offY, 166, 65)
   }
 }

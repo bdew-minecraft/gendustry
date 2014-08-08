@@ -9,16 +9,33 @@
 
 package net.bdew.gendustry.gui
 
-import net.bdew.lib.gui.TextureLocation
-import net.minecraft.util.ResourceLocation
+import net.bdew.lib.gui._
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.gui.rscontrol.RSMode
 
 object Textures {
-  val texture = new ResourceLocation(Gendustry.modId + ":textures/gui/widgets.png")
-  val tankOverlay = new TextureLocation(texture, 16, 0)
-  val powerFill = new TextureLocation(texture, 0, 0)
-  val texturePowerError = new TextureLocation(texture, 32, 0)
-  val slotSelect = new TextureLocation(texture, 48, 0)
-  def greenProgress(width: Int) = new TextureLocation(texture, 136 - width, 58)
-  def whiteProgress(width: Int) = new TextureLocation(texture, 136 - width, 73)
+  val texture = new ScaledResourceLocation(Gendustry.modId, "textures/gui/widgets.png", 256)
+  val tankOverlay = Texture(texture, 16, 0, 16, 58)
+  val powerFill = Texture(texture, 0, 0, 16, 58)
+  val slotSelect = Texture(texture, 64, 0, 18, 18)
+  def greenProgress(width: Float) = Texture(texture, 136 - width, 58, width, 15)
+  def whiteProgress(width: Float) = Texture(texture, 136 - width, 73, width, 15)
+
+  object errors {
+    val noPower = Texture(texture, 32, 0, 16, 16)
+    val disabled = Texture(texture, 48, 0, 16, 16)
+  }
+
+  object button16 {
+    val base = Texture(texture, 32, 18, 16, 16)
+    val hover = Texture(texture, 48, 18, 16, 16)
+
+    val iconRSMode = Map(
+      RSMode.ALWAYS -> Texture(texture, 65, 35, 14, 14),
+      RSMode.NEVER -> Texture(texture, 81, 35, 14, 14),
+      RSMode.RS_ON -> Texture(texture, 49, 35, 14, 14),
+      RSMode.RS_OFF -> Texture(texture, 33, 35, 14, 14)
+    )
+  }
+
 }
