@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.nei
 
+import net.bdew.gendustry.misc.GeneticsCache
 import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.minecraftforge.fluids.FluidStack
@@ -81,7 +82,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
       case ("item", Seq(x: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(x)
         if (individual != null) {
-          for (mutation <- NEICache.speciesUsedMutations(individual.getGenome.getPrimary))
+          for (mutation <- GeneticsCache.speciesUsedMutations(individual.getGenome.getPrimary))
             arecipes.add(new MutatronRecipe(mutation))
         }
       case ("Mutatron", _) => addAllRecipes()
@@ -93,7 +94,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
       case ("item", Seq(x: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(x)
         if (individual != null) {
-          for (mutation <- NEICache.speciesResultMutations(individual.getGenome.getPrimary))
+          for (mutation <- GeneticsCache.speciesResultMutations(individual.getGenome.getPrimary))
             arecipes.add(new MutatronRecipe(mutation))
         }
       case ("Mutatron", _) => addAllRecipes()

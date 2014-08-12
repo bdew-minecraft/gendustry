@@ -7,12 +7,14 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry
+package net.bdew.gendustry.misc
+
+import java.io.{BufferedWriter, File, FileWriter}
 
 import _root_.forestry.api.genetics.AlleleManager
-import net.minecraft.command.{CommandBase, ICommandSender}
 import cpw.mods.fml.relauncher.FMLInjectionData
-import java.io.{FileWriter, BufferedWriter, File}
+import net.bdew.gendustry.Gendustry
+import net.minecraft.command.{CommandBase, ICommandSender}
 
 class CommandDumpAlleles extends CommandBase {
   def getCommandName = "dumpalleles"

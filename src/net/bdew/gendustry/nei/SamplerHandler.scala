@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.nei
 
+import net.bdew.gendustry.misc.GeneticsCache
 import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.nei.helpers.PowerComponent
@@ -32,7 +33,7 @@ class SamplerHandler extends BaseRecipeHandler(5, 13) {
   val mjRect = new Rect(8, 19, 16, 58)
 
   import scala.collection.JavaConversions._
-  import NEICache.SampleOrdering
+  import GeneticsCache.SampleOrdering
 
   class SamplerRecipe(sample: GeneSampleInfo, input: ItemStack) extends CachedRecipeWithComponents {
     val getResult = position(GeneSample.newStack(sample), 137, 49)
@@ -63,11 +64,11 @@ class SamplerHandler extends BaseRecipeHandler(5, 13) {
   }
 
   def addAllRecipes() {
-    for (info <- NEICache.geneSamples; species <- NEICache.speciesChromosomes(info)) {
+    for (info <- GeneticsCache.geneSamples; species <- GeneticsCache.speciesChromosomes(info)) {
       arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
     }
     if (MachineSampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
-      for (sample <- NEICache.geneSamples if sample.root.isInstanceOf[IBeeRoot]) {
+      for (sample <- GeneticsCache.geneSamples if sample.root.isInstanceOf[IBeeRoot]) {
         val serum = ExtraBeesProxy.makeSerumFromSample(sample)
         if (serum != null) arecipes.add(new SamplerRecipe(sample, serum))
       }
@@ -106,7 +107,7 @@ class SamplerHandler extends BaseRecipeHandler(5, 13) {
         if (info == null) {
           addAllRecipes()
         } else {
-          for (species <- NEICache.speciesChromosomes(info)) {
+          for (species <- GeneticsCache.speciesChromosomes(info)) {
             arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
           }
           if (MachineSampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {

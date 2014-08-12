@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.config
 
+import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.config.FluidManager
 import net.bdew.gendustry.fluids.{ItemFluidCan, ItemFluidBucket, BlockFluid}
 import net.bdew.gendustry.Gendustry
@@ -47,6 +48,7 @@ object Fluids extends FluidManager {
     if (fluid.getBlock == null) {
       val block = new BlockFluid(fluid, ownFluid)
       GameRegistry.registerBlock(block, "fluid." + id)
+      block.setCreativeTab(GendustryCreativeTabs.main)
       fluid.setBlock(block)
     }
     if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyBucket) == null) {

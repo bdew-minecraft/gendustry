@@ -24,6 +24,7 @@ import net.bdew.gendustry.machines.liquifier.MachineLiquifier
 import net.bdew.gendustry.machines.replicator.MachineReplicator
 import net.bdew.gendustry.machines.transposer.MachineTransposer
 import codechicken.nei.guihook.GuiContainerManager
+import net.bdew.gendustry.misc.GeneticsCache
 
 class NEIGendustryConfig extends IConfigureNEI {
   def getName: String = "Gendustry"
@@ -35,9 +36,8 @@ class NEIGendustryConfig extends IConfigureNEI {
   }
 
   def loadConfig() {
-    NEICache.load()
     if (Config.neiAddSamples)
-      NEICache.geneSamples.foreach(x => API.addItemListEntry(GeneSample.newStack(x))) // TODO: is this right?
+      GeneticsCache.geneSamples.foreach(x => API.addItemListEntry(GeneSample.newStack(x))) // TODO: is this right?
 
     addRecipeHandler(new TemplateCraftingHandler)
 

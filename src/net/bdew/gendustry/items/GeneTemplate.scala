@@ -9,20 +9,23 @@
 
 package net.bdew.gendustry.items
 
-import net.minecraft.item.ItemStack
-import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo}
-import net.bdew.lib.{Client, Misc}
-import net.minecraft.nbt.{NBTTagList, NBTTagCompound}
-import net.minecraft.entity.player.EntityPlayer
 import java.util
+
 import cpw.mods.fml.common.registry.GameRegistry
-import forestry.api.genetics.{ISpeciesRoot, AlleleManager}
-import net.bdew.lib.items.SimpleItem
-import forestry.api.apiculture.{IBeeRoot, EnumBeeChromosome}
-import forestry.api.arboriculture.{ITreeRoot, EnumTreeChromosome}
-import forestry.api.lepidopterology.{IButterflyRoot, EnumButterflyChromosome}
-import net.minecraft.util.EnumChatFormatting
+import forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
+import forestry.api.arboriculture.{EnumTreeChromosome, ITreeRoot}
+import forestry.api.genetics.{AlleleManager, IAlleleSpecies, ISpeciesRoot}
+import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo, GeneticsHelper}
+import net.bdew.gendustry.misc.GendustryCreativeTabs
+import net.bdew.lib.items.SimpleItem
+import net.bdew.lib.{Client, Misc}
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
+import net.minecraft.util.EnumChatFormatting
 
 object GeneTemplate extends SimpleItem("GeneTemplate") {
   setMaxStackSize(1)
@@ -31,6 +34,22 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
   val unusedButterflyChromosomes = Set(EnumButterflyChromosome.TERRITORY)
 
   GameRegistry.addRecipe(new GeneRecipe)
+
+  override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.templates)
+
+  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[_]) {
+    import scala.collection.JavaConversions._
+    val l = list.asInstanceOf[util.List[ItemStack]]
+    tab match {
+      case GendustryCreativeTabs.main => l.add(new ItemStack(this))
+      case GendustryCreativeTabs.templates =>
+        l.addAll(
+          Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])
+            .toList.sortBy(_.getUID)
+            .map(sp => GeneticsHelper.templateFromSpeciesUID(sp.getUID)))
+      case _ =>
+    }
+  }
 
   def getRequiredChromosomes(sp: ISpeciesRoot) = sp match {
     case x: IBeeRoot =>

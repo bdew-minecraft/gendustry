@@ -7,14 +7,14 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry.nei
+package net.bdew.gendustry.misc
 
 import forestry.api.genetics._
-import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.lib.Misc
 
-object NEICache {
+object GeneticsCache {
 
   implicit object MutationOrdering extends Ordering[IMutation] {
     def compare(x: IMutation, y: IMutation): Int =

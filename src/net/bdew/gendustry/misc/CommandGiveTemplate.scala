@@ -7,14 +7,13 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry
+package net.bdew.gendustry.misc
 
-import _root_.forestry.api.genetics.{IAlleleSpecies, AlleleManager}
-import net.minecraft.command.CommandBase
-import net.minecraft.command.ICommandSender
-import net.minecraft.command.WrongUsageException
 import java.util.List
+
+import _root_.forestry.api.genetics.{AlleleManager, IAlleleSpecies}
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.minecraft.command.{CommandBase, ICommandSender, WrongUsageException}
 
 class CommandGiveTemplate extends CommandBase {
   def getCommandName = "givetemplate"

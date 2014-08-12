@@ -7,16 +7,17 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry
+package net.bdew.gendustry.misc
+
+import java.util.List
 
 import _root_.forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
-import _root_.forestry.api.arboriculture.{ITreeRoot, EnumTreeChromosome}
-import _root_.forestry.api.genetics.{IAllele, ISpeciesRoot, AlleleManager}
+import _root_.forestry.api.arboriculture.{EnumTreeChromosome, ITreeRoot}
+import _root_.forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
 import _root_.forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
-import net.minecraft.command.{CommandException, CommandBase, ICommandSender, WrongUsageException}
-import java.util.List
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.GeneSample
+import net.minecraft.command.{CommandBase, CommandException, ICommandSender, WrongUsageException}
 
 class CommandGiveSample extends CommandBase {
   def getCommandName = "givesample"

@@ -241,5 +241,9 @@ gendustry.honeydrop.magenta.name=Magenta Colored Honey Drop
 gendustry.honeydrop.orange.name=Orange Colored Honey Drop
 gendustry.honeydrop.white.name=White Colored Honey Drop
 
+itemGroup.bdew.gendustry=Gendustry
+itemGroup.bdew.templates=Genetic Templates
+itemGroup.bdew.samples=Genetic Samples
+
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty

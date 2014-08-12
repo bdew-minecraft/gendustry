@@ -68,9 +68,9 @@ dependencies {
     compile "codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev"
     compile "codechicken:CodeChickenLib:1.7.10-1.1.1.88:dev"
     compile "com.mod-buildcraft:buildcraft:6.0.17:dev"
-    compile "net.industrial-craft:industrialcraft-2:2.2.509-experimental:api"
+    compile "net.industrial-craft:industrialcraft-2:2.2.541-experimental:api"
     compile "net.sengir.forestry:forestry_1.7.10:2.4.2.30:api"
-    compile("mcp.mobius.waila:Waila:1.5.3_1.7.10")
+    compile "mcp.mobius.waila:Waila:1.5.3_1.7.10"
     compile "net.bdew.thirdparty:CoFHLib:R1.0.1:api"
 }
 

@@ -7,13 +7,15 @@
  * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
  */
 
-package net.bdew.gendustry
+package net.bdew.gendustry.misc
 
-import net.bdew.lib.Client
-import cpw.mods.fml.client.FMLClientHandler
-import net.minecraft.util.StringTranslate
 import java.io.{File, FileInputStream}
-import net.minecraft.client.resources.{IResourceManager, IResourceManagerReloadListener, IReloadableResourceManager}
+
+import cpw.mods.fml.client.FMLClientHandler
+import net.bdew.gendustry.Gendustry
+import net.bdew.lib.Client
+import net.minecraft.client.resources.{IReloadableResourceManager, IResourceManager, IResourceManagerReloadListener}
+import net.minecraft.util.StringTranslate
 
 object ResourceListener extends IResourceManagerReloadListener {
   def init() {

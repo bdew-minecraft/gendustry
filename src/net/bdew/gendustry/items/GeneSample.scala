@@ -9,7 +9,9 @@
 
 package net.bdew.gendustry.items
 
-import net.minecraft.item.ItemStack
+import net.bdew.gendustry.misc.{GeneticsCache, GendustryCreativeTabs}
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.entity.player.EntityPlayer
 import java.util
@@ -22,6 +24,19 @@ object GeneSample extends SimpleItem("GeneSample") {
 
   setMaxStackSize(1)
   setContainerItem(Items.geneSampleBlank)
+
+  override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.samples)
+
+  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[_]) {
+    import scala.collection.JavaConversions._
+    val l = list.asInstanceOf[util.List[ItemStack]]
+    tab match {
+      case GendustryCreativeTabs.main => l.add(new ItemStack(this))
+      case GendustryCreativeTabs.samples =>
+        l.addAll(GeneticsCache.geneSamples map newStack)
+      case _ =>
+    }
+  }
 
   def newStack(info: GeneSampleInfo): ItemStack = {
     val stack = new ItemStack(this)

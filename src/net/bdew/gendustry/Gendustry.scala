@@ -9,26 +9,28 @@
 
 package net.bdew.gendustry
 
-import net.bdew.gendustry.config._
+import java.io.File
+
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event._
 import cpw.mods.fml.common.network.NetworkRegistry
-import java.io.File
-import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
-import net.bdew.gendustry.compat.PowerProxy
 import cpw.mods.fml.relauncher.Side
-import net.bdew.gendustry.gui.HintIcons
-import net.bdew.gendustry.compat.triggers.TriggerProvider
-import net.minecraft.command.CommandHandler
-import net.bdew.gendustry.custom.CustomContent
-import net.bdew.gendustry.config.loader.TuningLoader
-import org.apache.logging.log4j.Logger
-import net.minecraftforge.oredict.RecipeSorter
-import net.bdew.gendustry.forestry.GeneRecipe
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl}
+import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.compat.itempush.ItemPush
+import net.bdew.gendustry.compat.triggers.TriggerProvider
+import net.bdew.gendustry.config._
+import net.bdew.gendustry.config.loader.TuningLoader
+import net.bdew.gendustry.custom.CustomContent
+import net.bdew.gendustry.forestry.GeneRecipe
+import net.bdew.gendustry.gui.HintIcons
+import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
+import net.bdew.gendustry.misc._
+import net.minecraft.command.CommandHandler
+import net.minecraftforge.oredict.RecipeSorter
+import org.apache.logging.log4j.Logger
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[2.4.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 object Gendustry {
@@ -83,6 +85,10 @@ object Gendustry {
   def postInit(event: FMLPostInitializationEvent) {
     CustomContent.registerTemplates()
     CustomContent.registerMuations()
+    if (event.getSide == Side.CLIENT) {
+      GeneticsCache.load()
+      GendustryCreativeTabs.init()
+    }
   }
 
   @EventHandler
