@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.compat.itempush
 
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.item.ItemStack
-import net.bdew.lib.Misc
 import cofh.api.transport.IItemDuct
+import net.bdew.lib.Misc
+import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
 object CofhConduitPushProxy extends ItemPushProxy {

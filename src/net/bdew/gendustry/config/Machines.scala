@@ -9,19 +9,19 @@
 
 package net.bdew.gendustry.config
 
-import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
-import net.bdew.gendustry.machines.mutatron.MachineMutatron
-import net.bdew.gendustry.machines.apiary.MachineApiary
-import net.bdew.gendustry.machines.imprinter.MachineImprinter
-import net.bdew.gendustry.machines.sampler.MachineSampler
-import net.bdew.gendustry.misc.GendustryCreativeTabs
-import net.bdew.lib.config.MachineManager
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.machines.advmutatron.MachineMutatronAdv
-import net.bdew.gendustry.machines.liquifier.MachineLiquifier
+import net.bdew.gendustry.machines.apiary.MachineApiary
 import net.bdew.gendustry.machines.extractor.MachineExtractor
-import net.bdew.gendustry.machines.transposer.MachineTransposer
+import net.bdew.gendustry.machines.imprinter.MachineImprinter
+import net.bdew.gendustry.machines.liquifier.MachineLiquifier
+import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
+import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.bdew.gendustry.machines.replicator.MachineReplicator
+import net.bdew.gendustry.machines.sampler.MachineSampler
+import net.bdew.gendustry.machines.transposer.MachineTransposer
+import net.bdew.gendustry.misc.GendustryCreativeTabs
+import net.bdew.lib.config.MachineManager
 
 object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, GendustryCreativeTabs.main) {
   registerMachine(MachineMutagenProducer)

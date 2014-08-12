@@ -9,15 +9,15 @@
 
 package net.bdew.gendustry.config
 
-import net.bdew.gendustry.misc.GendustryCreativeTabs
-import net.bdew.lib.config.FluidManager
-import net.bdew.gendustry.fluids.{ItemFluidCan, ItemFluidBucket, BlockFluid}
-import net.bdew.gendustry.Gendustry
-import net.minecraftforge.fluids.{FluidStack, FluidContainerRegistry, FluidRegistry, Fluid}
-import net.bdew.lib.Misc
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.item.ItemStack
+import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.fluids.{BlockFluid, ItemFluidBucket, ItemFluidCan}
 import net.bdew.gendustry.forestry.ForestryItems
+import net.bdew.gendustry.misc.GendustryCreativeTabs
+import net.bdew.lib.Misc
+import net.bdew.lib.config.FluidManager
+import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.{Fluid, FluidContainerRegistry, FluidRegistry, FluidStack}
 
 object Fluids extends FluidManager {
   val emptyBucket = new ItemStack(GameRegistry.findItem("minecraft", "bucket"))

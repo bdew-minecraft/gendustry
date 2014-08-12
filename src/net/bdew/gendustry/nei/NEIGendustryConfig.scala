@@ -10,20 +10,20 @@
 package net.bdew.gendustry.nei
 
 import codechicken.nei.api.{API, IConfigureNEI}
-import net.bdew.gendustry.config.Config
+import codechicken.nei.guihook.GuiContainerManager
+import codechicken.nei.recipe.{ICraftingHandler, IUsageHandler}
 import cpw.mods.fml.common.event.FMLInterModComms
 import net.bdew.gendustry.Gendustry
-import codechicken.nei.recipe.{ICraftingHandler, IUsageHandler}
+import net.bdew.gendustry.config.Config
 import net.bdew.gendustry.items.GeneSample
+import net.bdew.gendustry.machines.extractor.MachineExtractor
+import net.bdew.gendustry.machines.imprinter.MachineImprinter
+import net.bdew.gendustry.machines.liquifier.MachineLiquifier
 import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
-import net.bdew.gendustry.machines.sampler.MachineSampler
-import net.bdew.gendustry.machines.imprinter.MachineImprinter
-import net.bdew.gendustry.machines.extractor.MachineExtractor
-import net.bdew.gendustry.machines.liquifier.MachineLiquifier
 import net.bdew.gendustry.machines.replicator.MachineReplicator
+import net.bdew.gendustry.machines.sampler.MachineSampler
 import net.bdew.gendustry.machines.transposer.MachineTransposer
-import codechicken.nei.guihook.GuiContainerManager
 import net.bdew.gendustry.misc.GeneticsCache
 
 class NEIGendustryConfig extends IConfigureNEI {

@@ -10,6 +10,7 @@
 package net.bdew.gendustry.config
 
 import java.io.File
+
 import net.bdew.lib.gui.GuiHandler
 import net.minecraftforge.common.config.Configuration
 

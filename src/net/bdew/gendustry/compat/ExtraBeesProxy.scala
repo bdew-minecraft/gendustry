@@ -9,13 +9,13 @@
 
 package net.bdew.gendustry.compat
 
-import net.bdew.lib.Misc
-import net.minecraft.item.{ItemStack, Item}
+import forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
+import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.lib.Misc
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
-import forestry.api.apiculture.{IBeeRoot, EnumBeeChromosome}
-import forestry.api.genetics.AlleleManager
 
 object ExtraBeesProxy {
   val ebLoaded = Misc.haveModVersion("ExtraBees@[1.6-pre15,)")

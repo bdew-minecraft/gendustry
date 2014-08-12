@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.advmutatron
 
-import net.minecraft.entity.player.EntityPlayer
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.gui.GuiProvider
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.minecraft.entity.player.EntityPlayer
 
 object MachineMutatronAdv extends Machine("MutatronAdv", BlockMutatronAdv) with GuiProvider with ProcessorMachine {
   def guiId = 6

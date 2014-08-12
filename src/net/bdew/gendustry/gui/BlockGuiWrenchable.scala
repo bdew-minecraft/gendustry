@@ -9,19 +9,16 @@
 
 package net.bdew.gendustry.gui
 
-import net.minecraft.world.World
-import net.minecraft.entity.player.EntityPlayer
 import buildcraft.api.tools.IToolWrench
 import net.bdew.gendustry.Gendustry
-import net.minecraft.block.Block
-import net.minecraftforge.fluids.{IFluidHandler, FluidContainerRegistry}
-import net.minecraftforge.common.util.ForgeDirection
-
-//import cofh.api.block.IDismantleable
-
-import net.minecraft.item.ItemStack
-import net.bdew.lib.tile.inventory.BreakableInventoryTile
 import net.bdew.lib.items.ItemUtils
+import net.bdew.lib.tile.inventory.BreakableInventoryTile
+import net.minecraft.block.Block
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
+import net.minecraft.world.World
+import net.minecraftforge.common.util.ForgeDirection
+import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
 //FIXME Reenable when TE support is readded
 //@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.block.IDismantleable")

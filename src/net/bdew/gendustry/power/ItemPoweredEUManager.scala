@@ -11,9 +11,9 @@ package net.bdew.gendustry.power
 
 import ic2.api.item.{ElectricItem, IElectricItemManager}
 import net.bdew.gendustry.config.Tuning
-import net.minecraft.item.ItemStack
 import net.bdew.lib.Misc
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
 
 class ItemPoweredEUManager(item: ItemPoweredEU) extends IElectricItemManager {
   private lazy val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")

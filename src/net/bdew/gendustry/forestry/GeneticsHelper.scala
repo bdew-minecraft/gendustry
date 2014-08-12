@@ -9,19 +9,18 @@
 
 package net.bdew.gendustry.forestry
 
-import com.mojang.authlib.GameProfile
-import forestry.api.apiculture.EnumBeeType
-import forestry.api.apiculture.IBee
-import forestry.api.apiculture.IBeeRoot
-import forestry.api.arboriculture.{ITree, EnumGermlingType, ITreeRoot}
-import forestry.api.genetics._
-import net.minecraft.item.ItemStack
 import java.util.Random
-import net.bdew.gendustry.config.Items
-import net.minecraft.world.World
+
+import com.mojang.authlib.GameProfile
+import forestry.api.apiculture.{EnumBeeType, IBee, IBeeRoot}
+import forestry.api.arboriculture.{EnumGermlingType, ITree, ITreeRoot}
+import forestry.api.genetics._
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
+import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
+import net.minecraft.item.ItemStack
+import net.minecraft.world.World
 
 object GeneticsHelper {
   val random = new Random

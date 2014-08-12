@@ -9,9 +9,9 @@
 
 package net.bdew.gendustry.gui
 
-import net.bdew.lib.gui._
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.rscontrol.RSMode
+import net.bdew.lib.gui._
 
 object Textures {
   val texture = new ScaledResourceLocation(Gendustry.modId, "textures/gui/widgets.png", 256)

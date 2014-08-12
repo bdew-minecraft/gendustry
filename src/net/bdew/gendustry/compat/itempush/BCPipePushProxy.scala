@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.compat.itempush
 
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.item.ItemStack
 import buildcraft.api.transport.IPipeTile
 import net.bdew.lib.Misc
+import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
 object BCPipePushProxy extends ItemPushProxy {

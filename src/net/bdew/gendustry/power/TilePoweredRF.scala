@@ -10,9 +10,9 @@
 package net.bdew.gendustry.power
 
 import cofh.api.energy.IEnergyHandler
-import net.bdew.gendustry.config.Tuning
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.power.TilePoweredBase
 import net.minecraftforge.common.util.ForgeDirection
 

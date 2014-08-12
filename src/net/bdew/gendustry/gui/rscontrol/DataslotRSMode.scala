@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.gui.rscontrol
 
-import net.bdew.lib.data.base.{UpdateKind, DataSlotVal, TileDataSlots}
+import net.bdew.lib.data.base.{DataSlotVal, TileDataSlots, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
 case class DataslotRSMode(name: String, parent: TileDataSlots) extends DataSlotVal[RSMode.Value] {

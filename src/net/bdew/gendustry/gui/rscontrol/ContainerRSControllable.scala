@@ -9,8 +9,8 @@
 
 package net.bdew.gendustry.gui.rscontrol
 
-import net.minecraft.entity.player.EntityPlayer
 import net.bdew.lib.data.base.ContainerDataSlots
+import net.minecraft.entity.player.EntityPlayer
 
 trait ContainerRSControllable extends ContainerDataSlots {
   val dataSource: TileRSContollable

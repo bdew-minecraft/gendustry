@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.nei.helpers
 
-import net.bdew.lib.gui.{Texture, Point, Rect}
-import codechicken.nei.recipe.{GuiUsageRecipe, GuiCraftingRecipe}
-import net.minecraftforge.fluids.FluidStack
 import java.text.DecimalFormat
-import org.lwjgl.opengl.GL11
+
+import codechicken.nei.recipe.{GuiCraftingRecipe, GuiUsageRecipe}
 import net.bdew.gendustry.gui.Textures
 import net.bdew.gendustry.nei.NEIDrawTarget
+import net.bdew.lib.gui.{Point, Rect, Texture}
+import net.minecraftforge.fluids.FluidStack
+import org.lwjgl.opengl.GL11
 
 class FluidComponent(rect: Rect, fstack: FluidStack, capacity: Int) extends RecipeComponent(rect) {
   val formater = new DecimalFormat("#,###")

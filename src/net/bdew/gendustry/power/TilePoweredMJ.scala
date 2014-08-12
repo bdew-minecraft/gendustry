@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.power
 
-import buildcraft.api.power.{PowerHandler, IPowerReceptor}
+import buildcraft.api.power.{IPowerReceptor, PowerHandler}
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.config.Tuning

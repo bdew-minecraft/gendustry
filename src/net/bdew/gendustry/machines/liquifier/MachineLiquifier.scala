@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.liquifier
 
-import net.minecraft.entity.player.EntityPlayer
-import cpw.mods.fml.relauncher.{SideOnly, Side}
-import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.minecraft.entity.player.EntityPlayer
 
 object MachineLiquifier extends Machine("Liquifier", BlockLiquifier) with GuiProvider with ProcessorMachine {
   def guiId = 7

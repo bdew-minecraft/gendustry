@@ -9,9 +9,9 @@
 
 package net.bdew.gendustry.machines.imprinter
 
+import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.gui.{BaseContainer, SlotValidating}
 import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.data.base.ContainerDataSlots
 
 class ContainerImprinter(val te: TileImprinter, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots {
   lazy val dataSource = te

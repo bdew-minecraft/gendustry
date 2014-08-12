@@ -9,17 +9,18 @@
 
 package net.bdew.gendustry.custom
 
-import net.bdew.lib.items.SimpleItem
-import net.minecraft.client.renderer.texture.IIconRegister
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.minecraft.item.{Item, ItemStack}
-import net.bdew.gendustry.Gendustry
-import net.minecraft.util.IIcon
-import net.bdew.gendustry.config.Tuning
-import net.bdew.lib.recipes.gencfg.ConfigSection
-import net.minecraft.creativetab.CreativeTabs
 import java.util
+
 import cpw.mods.fml.common.registry.GameRegistry
+import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.config.Tuning
+import net.bdew.lib.items.SimpleItem
+import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.IIcon
 
 object CustomHoneyComb extends SimpleItem("HoneyComb") {
 

@@ -9,10 +9,11 @@
 
 package net.bdew.gendustry.gui
 
-import net.bdew.lib.power.{DataSlotPower, WidgetPowerGauge}
-import net.bdew.lib.gui.{Texture, Rect, Point}
-import scala.collection.mutable
 import net.bdew.gendustry.config.Config
+import net.bdew.lib.gui.{Point, Rect, Texture}
+import net.bdew.lib.power.{DataSlotPower, WidgetPowerGauge}
+
+import scala.collection.mutable
 
 class WidgetPowerCustom(rect: Rect, texture: Texture, dslot: DataSlotPower) extends WidgetPowerGauge(rect, texture, dslot) {
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) =

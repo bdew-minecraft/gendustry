@@ -9,18 +9,18 @@
 
 package net.bdew.gendustry.config.loader
 
-import net.bdew.lib.recipes.{StackRef, DelayedStatement, RecipeParser, RecipeLoader}
-import net.bdew.lib.recipes.gencfg.GenericConfigLoader
-import net.bdew.lib.recipes.lootlist.LootListLoader
-import net.bdew.gendustry.fluids.{ProteinSources, LiquidDNASources, MutagenSources}
-import net.minecraftforge.oredict.OreDictionary
-import net.bdew.gendustry.config.Tuning
-import net.minecraft.item.ItemStack
-import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
+import buildcraft.core.recipes.AssemblyRecipeManager
+import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
 import forestry.api.recipes.RecipeManagers
 import net.bdew.gendustry.Gendustry
-import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
-import buildcraft.core.recipes.AssemblyRecipeManager
+import net.bdew.gendustry.config.Tuning
+import net.bdew.gendustry.fluids.{LiquidDNASources, MutagenSources, ProteinSources}
+import net.bdew.lib.recipes.gencfg.GenericConfigLoader
+import net.bdew.lib.recipes.lootlist.LootListLoader
+import net.bdew.lib.recipes.{DelayedStatement, RecipeLoader, RecipeParser, StackRef}
+import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
+import net.minecraftforge.oredict.OreDictionary
 
 class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
   val cfgStore = Tuning

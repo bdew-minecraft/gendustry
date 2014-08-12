@@ -9,9 +9,9 @@
 
 package net.bdew.gendustry.compat.itempush
 
+import net.bdew.lib.Misc
 import net.bdew.lib.items.ItemUtils
 import net.minecraft.inventory.IInventory
-import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection

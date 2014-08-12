@@ -9,11 +9,11 @@
 
 package net.bdew.gendustry.compat.triggers
 
-import buildcraft.api.gates.{ITriggerParameter, ITrigger}
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
+import buildcraft.api.gates.{ITrigger, ITriggerParameter}
 import net.bdew.lib.Misc
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
 
 abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, tileClass: Class[T]) extends ITrigger {

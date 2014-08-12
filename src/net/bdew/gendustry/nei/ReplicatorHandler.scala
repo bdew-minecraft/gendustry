@@ -9,16 +9,16 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.Fluids
-import net.minecraftforge.fluids.FluidStack
-import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
-import net.minecraft.item.ItemStack
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.Misc
+import net.bdew.gendustry.config.Fluids
 import net.bdew.gendustry.forestry.GeneticsHelper
-import net.bdew.gendustry.machines.replicator.MachineReplicator
 import net.bdew.gendustry.items.GeneTemplate
+import net.bdew.gendustry.machines.replicator.MachineReplicator
+import net.bdew.gendustry.nei.helpers.{FluidComponent, PowerComponent}
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.Rect
+import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.FluidStack
 
 class ReplicatorHandler extends BaseRecipeHandler(5, 13) {
   val dnaRect = Rect(32, 19, 16, 58)

@@ -9,23 +9,24 @@
 
 package net.bdew.gendustry.items
 
-import net.minecraft.item.{Item, ItemStack, ItemTool}
-import net.minecraft.world.World
-import net.minecraft.entity.player.EntityPlayer
+import java.util
+
+import com.google.common.collect.ImmutableSet
+import cpw.mods.fml.relauncher.{Side, SideOnly}
+import forestry.api.core.IToolScoop
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
-import net.bdew.lib.Misc
-import net.minecraft.block.Block
-import net.minecraft.entity.EntityLivingBase
-import java.util
-import net.minecraft.creativetab.CreativeTabs
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.minecraft.client.renderer.texture.IIconRegister
 import net.bdew.gendustry.power.ItemPowered
-import forestry.api.core.IToolScoop
-import net.minecraftforge.common.ForgeHooks
+import net.bdew.lib.Misc
 import net.bdew.lib.items.NamedItem
-import com.google.common.collect.ImmutableSet
+import net.minecraft.block.Block
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.{Item, ItemStack, ItemTool}
+import net.minecraft.world.World
+import net.minecraftforge.common.ForgeHooks
 
 object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolScoop {
   def name = "IndustrialScoop"

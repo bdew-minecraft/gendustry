@@ -10,10 +10,10 @@
 package net.bdew.gendustry.custom
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import forestry.api.core.IIconProvider
-import net.minecraft.util.IIcon
-import net.minecraft.client.renderer.texture.IIconRegister
 import forestry.api.apiculture.EnumBeeType
+import forestry.api.core.IIconProvider
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.util.IIcon
 
 object BeeIconProvider extends IIconProvider {
   var icons: Array[Array[IIcon]] = null

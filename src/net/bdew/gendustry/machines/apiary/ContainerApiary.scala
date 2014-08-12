@@ -10,14 +10,14 @@
 package net.bdew.gendustry.machines.apiary
 
 import net.bdew.gendustry.Gendustry
-import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.gui.{BaseContainer, SlotValidating}
-import net.minecraft.item.ItemStack
-import net.minecraft.inventory.{IInventory, Slot}
-import net.bdew.lib.items.ItemUtils
-import net.bdew.lib.data.base.ContainerDataSlots
-import net.bdew.lib.Misc
 import net.bdew.gendustry.gui.rscontrol.ContainerRSControllable
+import net.bdew.lib.Misc
+import net.bdew.lib.data.base.ContainerDataSlots
+import net.bdew.lib.gui.{BaseContainer, SlotValidating}
+import net.bdew.lib.items.ItemUtils
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.{IInventory, Slot}
+import net.minecraft.item.ItemStack
 
 class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots with ContainerRSControllable {
   lazy val dataSource = te

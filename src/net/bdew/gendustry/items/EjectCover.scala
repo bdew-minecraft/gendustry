@@ -9,13 +9,13 @@
 
 package net.bdew.gendustry.items
 
-import net.bdew.lib.items.SimpleItem
-import net.bdew.lib.covers.{TileCoverable, ItemCover}
-import net.minecraft.inventory.{IInventory, ISidedInventory}
-import net.minecraft.client.renderer.texture.IIconRegister
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.itempush.ItemPush
+import net.bdew.lib.covers.{ItemCover, TileCoverable}
+import net.bdew.lib.items.SimpleItem
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 

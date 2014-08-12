@@ -22,7 +22,7 @@ import net.bdew.gendustry.gui.rscontrol.TileRSContollable
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.Misc
 import net.bdew.lib.covers.TileCoverable
-import net.bdew.lib.data.{DataSlotBoolean, DataSlotFloat, DataSlotInt, _}
+import net.bdew.lib.data._
 import net.bdew.lib.data.base.{TileDataSlots, UpdateKind}
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.power.DataSlotPower

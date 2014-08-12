@@ -9,9 +9,9 @@
 
 package net.bdew.gendustry.config
 
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.config.BlockManager
-import net.bdew.gendustry.Gendustry
 
 object Blocks extends BlockManager(GendustryCreativeTabs.main) {
   Gendustry.logInfo("Blocks loaded")

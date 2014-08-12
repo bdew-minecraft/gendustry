@@ -9,21 +9,22 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.gendustry.misc.GeneticsCache
-import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Fluids, Items}
-import net.minecraftforge.fluids.FluidStack
-import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
-import forestry.api.genetics.{AlleleManager, ISpeciesRoot, IMutation}
+import java.util
+
+import codechicken.nei.recipe.GuiRecipe
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
-import net.minecraft.item.ItemStack
+import forestry.api.genetics.{AlleleManager, IMutation, ISpeciesRoot}
 import net.bdew.gendustry.Gendustry
-import codechicken.nei.recipe.GuiRecipe
-import java.util
-import net.bdew.lib.Misc
+import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
-import net.bdew.lib.items.{IStackBlock, IStack}
+import net.bdew.gendustry.misc.GeneticsCache
+import net.bdew.gendustry.nei.helpers.{FluidComponent, PowerComponent}
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.Rect
+import net.bdew.lib.items.{IStack, IStackBlock}
+import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.FluidStack
 
 class MutatronHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)

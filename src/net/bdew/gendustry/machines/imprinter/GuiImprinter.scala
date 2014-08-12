@@ -10,11 +10,11 @@
 package net.bdew.gendustry.machines.imprinter
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
-import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.gui.{Color, Texture, Rect, BaseScreen}
-import net.bdew.lib.gui.widgets.WidgetLabel
+import net.bdew.gendustry.gui.{HintIcons, Textures, WidgetPowerCustom, WidgetProgressBarNEI}
 import net.bdew.lib.Misc
+import net.bdew.lib.gui.widgets.WidgetLabel
+import net.bdew.lib.gui.{BaseScreen, Color, Rect, Texture}
+import net.minecraft.entity.player.EntityPlayer
 
 class GuiImprinter(val te: TileImprinter, player: EntityPlayer) extends BaseScreen(new ContainerImprinter(te, player), 176, 166) {
   val background = Texture(Gendustry.modId, "textures/gui/imprinter.png", rect)

@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.advmutatron
 
+import net.bdew.gendustry.gui.Textures
+import net.bdew.lib.data.DataSlotInt
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect}
-import net.bdew.lib.data.DataSlotInt
-import net.bdew.gendustry.gui.Textures
 
 class WidgetSelector(origin: Point, dslot: DataSlotInt, slotOffset: Int) extends Widget {
   val rect = new Rect(origin, 0, 0)

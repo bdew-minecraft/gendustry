@@ -9,13 +9,13 @@
 
 package net.bdew.gendustry.nei
 
+import codechicken.lib.gui.GuiDraw
 import codechicken.nei.recipe.ShapelessRecipeHandler
-import net.minecraft.item.ItemStack
+import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 import net.bdew.lib.Misc
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.inventory.Container
-import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
-import codechicken.lib.gui.GuiDraw
+import net.minecraft.item.ItemStack
 
 class TemplateCraftingHandler extends ShapelessRecipeHandler {
 

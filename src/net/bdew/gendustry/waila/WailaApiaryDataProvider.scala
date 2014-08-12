@@ -9,11 +9,11 @@
 
 package net.bdew.gendustry.waila
 
-import net.bdew.gendustry.machines.apiary.{ErrorCodes, TileApiary}
-import net.minecraft.item.ItemStack
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
-import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.machines.apiary.{ErrorCodes, TileApiary}
+import net.bdew.lib.Misc
+import net.minecraft.item.ItemStack
 
 object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
   override def getBodyStrings(target: TileApiary, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {

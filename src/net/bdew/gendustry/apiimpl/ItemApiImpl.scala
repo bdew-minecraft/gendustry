@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.apiimpl
 
-import net.minecraft.item.ItemStack
-import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.api.items.IItemAPI
-import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
+import net.bdew.gendustry.config.Items
+import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
+import net.minecraft.item.ItemStack
 
 object ItemApiImpl extends IItemAPI {
 

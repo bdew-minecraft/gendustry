@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.extractor
 
-import net.minecraft.entity.player.EntityPlayer
-import cpw.mods.fml.relauncher.{SideOnly, Side}
-import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.minecraft.entity.player.EntityPlayer
 
 object MachineExtractor extends Machine("Extractor", BlockExtractor) with GuiProvider with ProcessorMachine {
   def guiId = 8

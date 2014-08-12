@@ -9,11 +9,11 @@
 
 package net.bdew.gendustry.forestry
 
-import net.minecraft.item.crafting.IRecipe
-import net.minecraft.item.ItemStack
+import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 import net.minecraft.inventory.InventoryCrafting
+import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.IRecipe
 import net.minecraft.world.World
-import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
 
 class GeneRecipe extends IRecipe {
   def matches(inv: InventoryCrafting, world: World): Boolean = getCraftingResult(inv) != null

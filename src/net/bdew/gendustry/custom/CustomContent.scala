@@ -9,14 +9,14 @@
 
 package net.bdew.gendustry.custom
 
-import net.bdew.gendustry.config.Tuning
-import net.bdew.lib.recipes.gencfg.ConfigSection
+import forestry.api.apiculture.IAlleleBeeSpecies
+import forestry.api.core.{EnumHumidity, EnumTemperature}
 import forestry.api.genetics.AlleleManager
 import forestry.api.genetics.IClassification.EnumClassLevel
 import net.bdew.gendustry.Gendustry
-import forestry.api.apiculture.IAlleleBeeSpecies
-import forestry.api.core.{EnumTemperature, EnumHumidity}
-import net.bdew.gendustry.config.loader.{TuningLoader, MReqHumidity, MReqTemperature}
+import net.bdew.gendustry.config.Tuning
+import net.bdew.gendustry.config.loader.{MReqHumidity, MReqTemperature, TuningLoader}
+import net.bdew.lib.recipes.gencfg.ConfigSection
 
 object CustomContent {
   val reg = AlleleManager.alleleRegistry

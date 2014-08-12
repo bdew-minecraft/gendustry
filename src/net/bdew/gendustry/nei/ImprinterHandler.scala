@@ -9,23 +9,23 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.Items
-import net.bdew.gendustry.nei.helpers.PowerComponent
-import forestry.api.genetics._
+import java.util
+
+import codechicken.nei.recipe.GuiRecipe
 import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
-import net.minecraft.item.ItemStack
-import net.bdew.gendustry.Gendustry
-import codechicken.nei.recipe.GuiRecipe
-import java.util
-import net.bdew.lib.Misc
-import net.bdew.gendustry.forestry.GeneSampleInfo
-import scala.Some
+import forestry.api.genetics._
 import forestry.api.lepidopterology.IButterflyRoot
-import net.bdew.gendustry.machines.imprinter.MachineImprinter
+import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.config.Items
+import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.GeneTemplate
+import net.bdew.gendustry.machines.imprinter.MachineImprinter
+import net.bdew.gendustry.nei.helpers.PowerComponent
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.Rect
 import net.bdew.lib.items.IStack
+import net.minecraft.item.ItemStack
 
 class ImprinterHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)

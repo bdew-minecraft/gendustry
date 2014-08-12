@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.gui.rscontrol
 
-import net.bdew.lib.data.base.{UpdateKind, TileDataSlots}
+import net.bdew.lib.data.base.{TileDataSlots, UpdateKind}
 
 trait TileRSContollable extends TileDataSlots {
   val rsmode = DataslotRSMode("rsmode", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI, UpdateKind.WORLD)

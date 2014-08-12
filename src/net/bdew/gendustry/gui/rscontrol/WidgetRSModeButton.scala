@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.gui.rscontrol
 
-import net.bdew.lib.gui.{Texture, Rect, Point}
-import net.bdew.lib.gui.widgets.Widget
 import net.bdew.gendustry.gui.Textures
-import scala.collection.mutable
-import net.bdew.lib.{Misc, Client}
+import net.bdew.lib.gui.widgets.Widget
+import net.bdew.lib.gui.{Point, Rect, Texture}
+import net.bdew.lib.{Client, Misc}
 import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.util.ResourceLocation
+
+import scala.collection.mutable
 
 class WidgetRSModeButton(p: Point, te: TileRSContollable, container: ContainerRSControllable) extends Widget {
   val rect = new Rect(p, 16, 16)

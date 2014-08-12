@@ -9,12 +9,12 @@
 
 package net.bdew.gendustry.machines.transposer
 
+import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.lib.gui.GuiProvider
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
-import net.minecraft.client.gui.inventory.GuiContainer
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.lib.machine.{Machine, ProcessorMachine}
-import net.bdew.lib.gui.GuiProvider
 
 object MachineTransposer extends Machine("Transposer", BlockTransposer) with GuiProvider with ProcessorMachine {
   def guiId = 9

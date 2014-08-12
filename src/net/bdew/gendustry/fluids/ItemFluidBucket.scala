@@ -9,17 +9,16 @@
 
 package net.bdew.gendustry.fluids
 
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.common.eventhandler.Event.Result
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.registry.GameRegistry
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.item.{ItemStack, ItemBucket}
-import net.minecraftforge.fluids.Fluid
-import net.minecraftforge.event.entity.player.FillBucketEvent
+import net.minecraft.item.{ItemBucket, ItemStack}
 import net.minecraftforge.common.MinecraftForge
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.common.eventhandler.Event.Result
-import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraftforge.event.entity.player.FillBucketEvent
+import net.minecraftforge.fluids.Fluid
 
 class ItemFluidBucket(fluid: Fluid) extends ItemBucket(fluid.getBlock) {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase + ".bucket")

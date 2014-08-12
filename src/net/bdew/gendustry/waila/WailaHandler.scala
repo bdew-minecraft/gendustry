@@ -11,8 +11,8 @@ package net.bdew.gendustry.waila
 
 import mcp.mobius.waila.api.IWailaRegistrar
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.power.TilePowered
 import net.bdew.gendustry.machines.apiary.TileApiary
+import net.bdew.gendustry.power.TilePowered
 
 object WailaHandler {
   def loadCallabck(reg: IWailaRegistrar) {

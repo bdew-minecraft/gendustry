@@ -9,22 +9,23 @@
 
 package net.bdew.gendustry.items
 
-import net.minecraft.item.{Item, ItemStack, ItemTool}
+import java.util
+
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.arboriculture.IToolGrafter
-import net.minecraft.world.World
-import net.minecraft.entity.player.EntityPlayer
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
+import net.bdew.gendustry.power.ItemPowered
 import net.bdew.lib.Misc
+import net.bdew.lib.items.NamedItem
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.entity.EntityLivingBase
-import java.util
-import net.minecraft.creativetab.CreativeTabs
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.bdew.gendustry.power.ItemPowered
-import net.bdew.lib.items.NamedItem
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.{Item, ItemStack, ItemTool}
+import net.minecraft.world.World
 
 object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolGrafter {
   def name = "IndustrialGrafter"

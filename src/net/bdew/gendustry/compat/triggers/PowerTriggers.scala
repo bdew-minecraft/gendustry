@@ -9,8 +9,8 @@
 
 package net.bdew.gendustry.compat.triggers
 
-import net.bdew.gendustry.power.TilePowered
 import buildcraft.api.gates.ActionManager
+import net.bdew.gendustry.power.TilePowered
 import net.minecraftforge.common.util.ForgeDirection
 
 object TriggerPower0 extends BaseTrigger("power0", "z1", classOf[TilePowered]) {

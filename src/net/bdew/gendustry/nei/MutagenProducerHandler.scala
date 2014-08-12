@@ -10,15 +10,15 @@
 package net.bdew.gendustry.nei
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.gui.Rect
 import net.bdew.gendustry.config.Fluids
+import net.bdew.gendustry.fluids.MutagenSources
+import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
+import net.bdew.gendustry.nei.helpers.{FluidComponent, PowerComponent}
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.Rect
+import net.bdew.lib.items.IStackBlock
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
-import net.bdew.gendustry.fluids.MutagenSources
-import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
-import net.bdew.lib.Misc
-import net.bdew.gendustry.machines.mproducer.MachineMutagenProducer
-import net.bdew.lib.items.IStackBlock
 
 class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(152, 19, 16, 58)

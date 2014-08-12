@@ -10,11 +10,11 @@
 package net.bdew.gendustry.machines.extractor
 
 import net.bdew.gendustry.Gendustry
-import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.gui.{Texture, Color, Rect, BaseScreen}
-import net.bdew.lib.gui.widgets.{WidgetLabel, WidgetFluidGauge}
+import net.bdew.gendustry.gui.{HintIcons, Textures, WidgetPowerCustom, WidgetProgressBarNEI}
 import net.bdew.lib.Misc
-import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
+import net.bdew.lib.gui.widgets.{WidgetFluidGauge, WidgetLabel}
+import net.bdew.lib.gui.{BaseScreen, Color, Rect, Texture}
+import net.minecraft.entity.player.EntityPlayer
 
 class GuiExtractor(val te: TileExtractor, player: EntityPlayer) extends BaseScreen(new ContainerExtractor(te, player), 176, 166) {
   val background = Texture(Gendustry.modId, "textures/gui/extractor.png", rect)

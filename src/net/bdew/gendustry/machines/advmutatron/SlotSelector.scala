@@ -10,8 +10,8 @@
 package net.bdew.gendustry.machines.advmutatron
 
 import net.bdew.lib.gui.SlotClickable
-import net.minecraft.inventory.Slot
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.Slot
 import net.minecraft.item.ItemStack
 
 class SlotSelector(inv: TileMutatronAdv, slot: Int, x: Int, y: Int) extends Slot(inv, slot, x, y) with SlotClickable {

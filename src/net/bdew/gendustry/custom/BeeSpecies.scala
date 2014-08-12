@@ -10,21 +10,22 @@
 package net.bdew.gendustry.custom
 
 import com.mojang.authlib.GameProfile
-import forestry.api.apiculture._
-import forestry.api.core.{EnumTemperature, EnumHumidity}
-import net.minecraft.item.ItemStack
-import net.minecraft.world.World
-import forestry.api.genetics.{IAllele, AlleleManager, IIndividual}
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.lib.recipes.gencfg.{EntryStr, ConfigSection}
-import net.bdew.lib.Misc
+import forestry.api.apiculture._
+import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.genetics.{AlleleManager, IAllele, IIndividual}
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.recipes.lootlist.EntryLootList
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.forestry.ForestryItems
-import net.minecraftforge.oredict.OreDictionary
+import net.bdew.lib.Misc
 import net.bdew.lib.items.ItemUtils
-import collection.mutable
+import net.bdew.lib.recipes.gencfg.{ConfigSection, EntryStr}
+import net.bdew.lib.recipes.lootlist.EntryLootList
+import net.minecraft.item.ItemStack
+import net.minecraft.world.World
+import net.minecraftforge.oredict.OreDictionary
+
+import scala.collection.mutable
 
 class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   // IAllele

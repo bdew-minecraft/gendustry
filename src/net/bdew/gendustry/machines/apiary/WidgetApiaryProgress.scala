@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import net.bdew.lib.gui.{Point, Rect}
-import net.bdew.lib.gui.widgets.Widget
-import net.bdew.lib.data.DataSlotFloat
-import net.bdew.gendustry.gui.Textures
-import scala.collection.mutable
-import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.gui.Textures
+import net.bdew.lib.Misc
+import net.bdew.lib.data.DataSlotFloat
+import net.bdew.lib.gui.widgets.Widget
+import net.bdew.lib.gui.{Point, Rect}
+
+import scala.collection.mutable
 
 class WidgetApiaryProgress(val rect: Rect, breeding: DataSlotFloat, progress: DataSlotFloat) extends Widget {
   val texture = Textures.whiteProgress(rect.w)

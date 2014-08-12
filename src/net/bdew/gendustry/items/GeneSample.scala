@@ -9,16 +9,17 @@
 
 package net.bdew.gendustry.items
 
-import net.bdew.gendustry.misc.{GeneticsCache, GendustryCreativeTabs}
+import java.util
+
+import net.bdew.gendustry.config.Items
+import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.gendustry.misc.{GendustryCreativeTabs, GeneticsCache}
+import net.bdew.lib.Misc
+import net.bdew.lib.items.SimpleItem
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.entity.player.EntityPlayer
-import java.util
-import net.bdew.lib.Misc
-import net.bdew.gendustry.forestry.GeneSampleInfo
-import net.bdew.gendustry.config.Items
-import net.bdew.lib.items.SimpleItem
 
 object GeneSample extends SimpleItem("GeneSample") {
 

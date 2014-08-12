@@ -9,18 +9,19 @@
 
 package net.bdew.gendustry.machines.imprinter
 
-import net.bdew.gendustry.config.Items
-import net.minecraft.item.ItemStack
+import forestry.api.apiculture.{EnumBeeType, IBee, IBeeRoot}
 import forestry.api.genetics.AlleleManager
-import net.minecraft.nbt.NBTTagCompound
-import forestry.api.apiculture.{EnumBeeType, IBeeRoot, IBee}
-import scala.util.Random
-import net.bdew.lib.power.TileItemProcessor
-import net.bdew.gendustry.power.TilePowered
-import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.gendustry.config.Items
+import net.bdew.gendustry.items.GeneTemplate
+import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.covers.TileCoverable
+import net.bdew.lib.power.TileItemProcessor
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
+
+import scala.util.Random
 
 class TileImprinter extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
   lazy val cfg = MachineImprinter

@@ -9,8 +9,8 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.Misc
 import codechicken.nei.recipe.GuiCraftingRecipe
+import net.bdew.lib.Misc
 
 object NEIRecipeProxy {
   val hasNei = Misc.haveModVersion("NotEnoughItems")

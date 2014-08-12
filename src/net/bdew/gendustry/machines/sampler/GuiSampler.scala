@@ -10,11 +10,11 @@
 package net.bdew.gendustry.machines.sampler
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
-import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.gui.{Texture, Color, Rect, BaseScreen}
-import net.bdew.lib.gui.widgets.WidgetLabel
+import net.bdew.gendustry.gui.{HintIcons, Textures, WidgetPowerCustom, WidgetProgressBarNEI}
 import net.bdew.lib.Misc
+import net.bdew.lib.gui.widgets.WidgetLabel
+import net.bdew.lib.gui.{BaseScreen, Color, Rect, Texture}
+import net.minecraft.entity.player.EntityPlayer
 
 class GuiSampler(val te: TileSampler, player: EntityPlayer) extends BaseScreen(new ContainerSampler(te, player), 176, 166) {
   val background = Texture(Gendustry.modId, "textures/gui/sampler.png", rect)

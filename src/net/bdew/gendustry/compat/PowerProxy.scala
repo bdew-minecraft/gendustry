@@ -9,9 +9,10 @@
 
 package net.bdew.gendustry.compat
 
-import cpw.mods.fml.common.{ModAPIManager, ModContainer, Loader}
-import net.bdew.gendustry.Gendustry
 import java.util
+
+import cpw.mods.fml.common.{Loader, ModAPIManager, ModContainer}
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 
 object PowerProxy {

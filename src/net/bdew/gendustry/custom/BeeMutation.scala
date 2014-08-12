@@ -9,9 +9,9 @@
 
 package net.bdew.gendustry.custom
 
-import forestry.api.apiculture.{IAlleleBeeSpecies, IBeeRoot, IBeeHousing, IBeeMutation}
-import forestry.api.genetics.{AlleleManager, IGenome, IAllele}
+import forestry.api.apiculture.{IAlleleBeeSpecies, IBeeHousing, IBeeMutation, IBeeRoot}
 import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.genetics.{AlleleManager, IAllele, IGenome}
 import net.bdew.lib.Misc
 
 class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result: IAlleleBeeSpecies, chance: Float) extends IBeeMutation {

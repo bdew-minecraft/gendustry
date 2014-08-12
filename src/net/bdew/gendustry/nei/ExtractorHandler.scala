@@ -9,22 +9,23 @@
 
 package net.bdew.gendustry.nei
 
+import java.util
+
+import codechicken.nei.recipe.GuiRecipe
+import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
+import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
+import forestry.api.genetics.{AlleleManager, IAlleleSpecies}
+import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.config.{Fluids, Items}
+import net.bdew.gendustry.fluids.LiquidDNASources
+import net.bdew.gendustry.machines.extractor.MachineExtractor
+import net.bdew.gendustry.nei.helpers.{FluidComponent, PowerComponent}
+import net.bdew.lib.Misc
 import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.{Items, Fluids}
+import net.bdew.lib.items.IStackBlock
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
-import net.bdew.gendustry.fluids.LiquidDNASources
-import net.bdew.gendustry.nei.helpers.{PowerComponent, FluidComponent}
-import net.bdew.lib.Misc
-import codechicken.nei.recipe.GuiRecipe
-import java.util
-import forestry.api.genetics.{IAlleleSpecies, AlleleManager}
-import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
-import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
-import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
-import net.bdew.gendustry.machines.extractor.MachineExtractor
-import net.bdew.lib.items.IStackBlock
 
 class ExtractorHandler extends BaseRecipeHandler(5, 13) {
   val dnaRect = new Rect(152, 19, 16, 58)

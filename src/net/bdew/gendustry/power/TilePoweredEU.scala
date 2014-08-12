@@ -9,15 +9,15 @@
 
 package net.bdew.gendustry.power
 
-import net.bdew.gendustry.compat.PowerProxy
-import net.minecraftforge.common.MinecraftForge
-import ic2.api.energy.event.{EnergyTileUnloadEvent, EnergyTileLoadEvent}
-import ic2.api.energy.tile.IEnergySink
-import net.bdew.gendustry.config.Tuning
-import net.minecraft.tileentity.TileEntity
 import cpw.mods.fml.common.Optional
-import net.bdew.lib.power.TilePoweredBase
+import ic2.api.energy.event.{EnergyTileLoadEvent, EnergyTileUnloadEvent}
+import ic2.api.energy.tile.IEnergySink
+import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.Misc
+import net.bdew.lib.power.TilePoweredBase
+import net.minecraft.tileentity.TileEntity
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.energy.tile.IEnergySink")
@@ -57,7 +57,7 @@ trait TilePoweredEU extends TilePoweredBase with IEnergySink {
     }
   }
 
-  override def getDemandedEnergy =  Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
+  override def getDemandedEnergy = Misc.clamp(power.capacity - power.stored, 0F, power.maxReceive) * ratio
   override def getSinkTier = sinkTier
   override def injectEnergy(directionFrom: ForgeDirection, amount: Double, p3: Double) = {
     // IC2 is borked and is ignoring the return value, we need to store everything otherwise energy will be wasted

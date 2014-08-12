@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.mproducer
 
-import net.minecraft.entity.player.EntityPlayer
-import cpw.mods.fml.relauncher.{SideOnly, Side}
-import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
+import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.minecraft.entity.player.EntityPlayer
 
 object MachineMutagenProducer extends Machine("MutagenProducer", BlockMutagenProducer) with GuiProvider with ProcessorMachine {
   def guiId = 1

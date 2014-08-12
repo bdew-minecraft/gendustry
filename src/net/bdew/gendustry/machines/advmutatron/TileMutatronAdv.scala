@@ -9,19 +9,19 @@
 
 package net.bdew.gendustry.machines.advmutatron
 
-import net.bdew.gendustry.config.{Fluids, Items}
-import net.minecraft.item.ItemStack
-import net.minecraftforge.fluids._
-import net.bdew.lib.data.{DataSlotGameProfile, DataSlotString, DataSlotInt, DataSlotTankRestricted}
-import net.bdew.lib.tile.ExposeTank
-import net.bdew.lib.power.TileItemProcessor
-import net.bdew.gendustry.power.TilePowered
-import net.bdew.lib.data.base.UpdateKind
-import net.bdew.gendustry.forestry.GeneticsHelper
-import net.minecraftforge.common.util.ForgeDirection
 import net.bdew.gendustry.api.blocks.IAdvancedMutatron
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.gendustry.config.{Fluids, Items}
+import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.covers.TileCoverable
+import net.bdew.lib.data.base.UpdateKind
+import net.bdew.lib.data.{DataSlotGameProfile, DataSlotInt, DataSlotTankRestricted}
+import net.bdew.lib.power.TileItemProcessor
+import net.bdew.lib.tile.ExposeTank
+import net.minecraft.item.ItemStack
+import net.minecraftforge.common.util.ForgeDirection
+import net.minecraftforge.fluids._
 
 class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron with TileCoverable {
   lazy val cfg = MachineMutatronAdv

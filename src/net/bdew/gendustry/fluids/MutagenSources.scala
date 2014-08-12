@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.fluids
 
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import scala.collection.mutable
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraftforge.oredict.OreDictionary
+
+import scala.collection.mutable
 
 class FluidRegistry {
   val values = mutable.Map.empty[Item, mutable.Map[Int, Int]]

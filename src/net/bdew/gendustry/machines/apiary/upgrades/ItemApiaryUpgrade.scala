@@ -9,18 +9,19 @@
 
 package net.bdew.gendustry.machines.apiary.upgrades
 
-import net.minecraft.item.{ItemStack, Item}
-import net.bdew.gendustry.api.ApiaryModifiers
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.bdew.gendustry.Gendustry
-import net.minecraft.util.IIcon
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.minecraft.creativetab.CreativeTabs
 import java.util
-import net.minecraft.entity.player.EntityPlayer
+
+import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.api.ApiaryModifiers
+import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.lib.Misc
 import net.bdew.lib.items.NamedItem
-import net.bdew.gendustry.api.items.IApiaryUpgrade
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.IIcon
 
 object ItemApiaryUpgrade extends Item with IApiaryUpgrade with NamedItem {
   var icons = Map.empty[Int, IIcon]

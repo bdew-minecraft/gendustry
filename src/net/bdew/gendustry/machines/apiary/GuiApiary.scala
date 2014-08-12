@@ -10,12 +10,12 @@
 package net.bdew.gendustry.machines.apiary
 
 import net.bdew.gendustry.Gendustry
-import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.gui.{Texture, Color, Rect, BaseScreen, Point}
-import net.bdew.lib.gui.widgets.WidgetLabel
-import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, Textures}
-import net.bdew.lib.Misc
 import net.bdew.gendustry.gui.rscontrol.WidgetRSModeButton
+import net.bdew.gendustry.gui.{HintIcons, Textures, WidgetPowerCustom}
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.widgets.WidgetLabel
+import net.bdew.lib.gui.{BaseScreen, Color, Point, Rect, Texture}
+import net.minecraft.entity.player.EntityPlayer
 
 class GuiApiary(val te: TileApiary, player: EntityPlayer, cont: ContainerApiary) extends BaseScreen(cont, 176, 166) {
   val background = Texture(Gendustry.modId, "textures/gui/apiary.png", rect)

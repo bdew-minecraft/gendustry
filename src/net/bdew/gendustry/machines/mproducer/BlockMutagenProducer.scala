@@ -9,17 +9,16 @@
 
 package net.bdew.gendustry.machines.mproducer
 
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.lib.block.HasTE
+import net.bdew.lib.covers.BlockCoverable
+import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
-import net.bdew.lib.block.HasTE
-import net.bdew.lib.tile.inventory.BreakableInventoryBlock
-import net.bdew.gendustry.gui.BlockGuiWrenchable
-import net.bdew.lib.covers.BlockCoverable
 
 object BlockMutagenProducer extends Block(Material.rock) with HasTE[TileMutagenProducer] with BlockCoverable[TileMutagenProducer] with BreakableInventoryBlock with BlockGuiWrenchable {
   private var icons: Array[IIcon] = null

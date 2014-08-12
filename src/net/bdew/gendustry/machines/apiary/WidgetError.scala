@@ -9,12 +9,13 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import net.bdew.lib.gui.widgets.Widget
-import net.bdew.lib.gui.{Point, Rect}
-import scala.collection.mutable
-import net.bdew.lib.Misc
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.Textures
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.widgets.Widget
+import net.bdew.lib.gui.{Point, Rect}
+
+import scala.collection.mutable
 
 class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
   val rect: Rect = new Rect(x, y, 16, 16)

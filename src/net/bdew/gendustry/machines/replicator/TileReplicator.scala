@@ -9,17 +9,17 @@
 
 package net.bdew.gendustry.machines.replicator
 
+import net.bdew.gendustry.apiimpl.TileWorker
 import net.bdew.gendustry.config.Fluids
+import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.items.GeneTemplate
+import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.covers.TileCoverable
+import net.bdew.lib.data.DataSlotTankRestricted
+import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
-import net.bdew.lib.data.DataSlotTankRestricted
-import net.bdew.lib.power.TileItemProcessor
-import net.bdew.gendustry.power.TilePowered
-import net.bdew.gendustry.forestry.GeneticsHelper
-import net.bdew.gendustry.items.GeneTemplate
-import net.bdew.gendustry.apiimpl.TileWorker
-import net.bdew.lib.covers.TileCoverable
 
 class TileReplicator extends TileItemProcessor with TileWorker with TilePowered with IFluidHandler with TileCoverable {
   lazy val cfg = MachineReplicator

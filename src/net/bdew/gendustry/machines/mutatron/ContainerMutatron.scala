@@ -9,9 +9,9 @@
 
 package net.bdew.gendustry.machines.mutatron
 
+import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.gui.{BaseContainer, SlotValidating}
 import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.data.base.ContainerDataSlots
 import net.minecraft.item.ItemStack
 
 class ContainerMutatron(val te: TileMutatron, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots {

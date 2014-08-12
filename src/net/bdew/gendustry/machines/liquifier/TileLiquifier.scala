@@ -9,19 +9,19 @@
 
 package net.bdew.gendustry.machines.liquifier
 
+import net.bdew.gendustry.apiimpl.TileWorker
 import net.bdew.gendustry.config.Fluids
 import net.bdew.gendustry.fluids.ProteinSources
+import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.covers.TileCoverable
+import net.bdew.lib.data._
+import net.bdew.lib.data.base.UpdateKind
+import net.bdew.lib.power.TileBaseProcessor
+import net.bdew.lib.tile.ExposeTank
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
-import net.bdew.lib.data._
-import net.bdew.lib.tile.ExposeTank
-import net.bdew.lib.data.base.UpdateKind
-import net.bdew.lib.power.TileBaseProcessor
-import net.bdew.gendustry.power.TilePowered
-import net.bdew.gendustry.apiimpl.TileWorker
-import net.bdew.lib.covers.TileCoverable
 
 class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = MachineLiquifier

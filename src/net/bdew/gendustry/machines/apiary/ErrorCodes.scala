@@ -9,8 +9,8 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import net.minecraft.util.IIcon
 import net.bdew.lib.gui.Texture
+import net.minecraft.util.IIcon
 
 object ErrorCodes {
 

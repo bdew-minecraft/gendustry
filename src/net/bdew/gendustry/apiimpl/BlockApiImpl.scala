@@ -10,9 +10,9 @@
 package net.bdew.gendustry.apiimpl
 
 import net.bdew.gendustry.api.blocks.IBlockAPI
-import net.minecraft.world.World
 import net.bdew.gendustry.machines.advmutatron.TileMutatronAdv
 import net.bdew.gendustry.machines.apiary.TileApiary
+import net.minecraft.world.World
 
 object BlockApiImpl extends IBlockAPI {
   private def getTypedTileEntity[T](w: World, x: Int, y: Int, z: Int, cls: Class[T]) =

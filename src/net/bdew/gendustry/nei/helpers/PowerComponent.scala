@@ -9,11 +9,12 @@
 
 package net.bdew.gendustry.nei.helpers
 
-import net.bdew.lib.gui.{Point, Rect}
 import java.text.DecimalFormat
-import net.bdew.gendustry.gui.Textures
+
 import net.bdew.gendustry.config.Config
+import net.bdew.gendustry.gui.Textures
 import net.bdew.gendustry.nei.NEIDrawTarget
+import net.bdew.lib.gui.{Point, Rect}
 
 class PowerComponent(rect: Rect, power: Float, capacity: Float) extends RecipeComponent(rect) {
   val formater = new DecimalFormat("#,###")

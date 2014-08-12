@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import net.minecraft.entity.player.EntityPlayer
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.lib.machine.{Machine, PoweredMachine}
 import net.bdew.lib.gui.GuiProvider
+import net.bdew.lib.machine.{Machine, PoweredMachine}
+import net.minecraft.entity.player.EntityPlayer
 
 object MachineApiary extends Machine("IndustrialApiary", BlockApiary) with GuiProvider with PoweredMachine {
   def guiId = 3

@@ -9,11 +9,11 @@
 
 package net.bdew.gendustry.compat.triggers
 
+import buildcraft.api.gates.ActionManager
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.machines.apiary.{ErrorCodes, TileApiary}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
-import net.bdew.gendustry.Gendustry
-import buildcraft.api.gates.ActionManager
 import net.minecraftforge.common.util.ForgeDirection
 
 trait ForestryErrorSource extends TileEntity {

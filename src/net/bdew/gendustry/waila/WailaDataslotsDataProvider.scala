@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.waila
 
-import net.bdew.lib.data.base.TileDataSlots
 import java.text.DecimalFormat
-import net.minecraft.item.ItemStack
+
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
-import net.bdew.lib.power.DataSlotPower
 import net.bdew.gendustry.config.Config
+import net.bdew.lib.data.base.TileDataSlots
 import net.bdew.lib.data.{DataSlotTank, DataSlotTankRestricted}
+import net.bdew.lib.power.DataSlotPower
+import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
 
 object WailaDataslotsDataProvider extends BaseDataProvider(classOf[TileDataSlots]) {

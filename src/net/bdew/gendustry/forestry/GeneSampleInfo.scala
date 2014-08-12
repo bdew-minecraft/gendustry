@@ -9,13 +9,13 @@
 
 package net.bdew.gendustry.forestry
 
-import forestry.api.genetics._
-import net.minecraft.nbt.NBTTagCompound
 import forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
-import forestry.api.arboriculture.{IAlleleGrowth, IAlleleFruit, EnumTreeChromosome, ITreeRoot}
+import forestry.api.arboriculture.{EnumTreeChromosome, IAlleleFruit, IAlleleGrowth, ITreeRoot}
+import forestry.api.genetics._
 import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
-import net.bdew.lib.Misc
 import net.bdew.gendustry.api.items.IGeneSample
+import net.bdew.lib.Misc
+import net.minecraft.nbt.NBTTagCompound
 
 case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) extends IGeneSample {
   def writeToNBT(t: NBTTagCompound) {

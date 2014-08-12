@@ -9,14 +9,15 @@
 
 package net.bdew.gendustry.compat.triggers
 
+import java.util
+
 import buildcraft.api.gates.{ActionManager, ITrigger, ITriggerProvider}
-import net.minecraft.block.Block
-import net.minecraft.tileentity.TileEntity
 import buildcraft.api.transport.IPipeTile
 import net.bdew.gendustry.machines.apiary.TileApiary
-import java.util
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.TileBaseProcessor
+import net.minecraft.block.Block
+import net.minecraft.tileentity.TileEntity
 
 object TriggerProvider extends ITriggerProvider {
   def getPipeTriggers(pipe: IPipeTile) = null

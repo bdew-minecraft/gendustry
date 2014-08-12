@@ -10,11 +10,11 @@
 package net.bdew.gendustry.machines.advmutatron
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.gui.{HintIcons, WidgetPowerCustom, WidgetProgressBarNEI, Textures}
-import net.minecraft.entity.player.EntityPlayer
-import net.bdew.lib.gui._
-import net.bdew.lib.gui.widgets.{WidgetLabel, WidgetFluidGauge}
+import net.bdew.gendustry.gui.{HintIcons, Textures, WidgetPowerCustom, WidgetProgressBarNEI}
 import net.bdew.lib.Misc
+import net.bdew.lib.gui._
+import net.bdew.lib.gui.widgets.{WidgetFluidGauge, WidgetLabel}
+import net.minecraft.entity.player.EntityPlayer
 
 class GuiMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extends BaseScreen(new ContainerMutatronAdv(te, player), 176, 188) {
   val background = Texture(Gendustry.modId, "textures/gui/mutatron_adv.png", rect)

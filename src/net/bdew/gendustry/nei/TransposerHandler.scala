@@ -9,20 +9,20 @@
 
 package net.bdew.gendustry.nei
 
-import net.bdew.lib.gui.Rect
-import net.bdew.gendustry.config.Items
-import net.bdew.gendustry.nei.helpers.PowerComponent
-import forestry.api.genetics._
-import net.minecraft.item.ItemStack
-import net.bdew.gendustry.Gendustry
-import codechicken.nei.recipe.GuiRecipe
 import java.util
-import net.bdew.lib.Misc
+
+import codechicken.nei.recipe.GuiRecipe
+import forestry.api.genetics._
+import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.forestry.GeneSampleInfo
-import scala.Some
-import net.bdew.lib.items.IStack
-import net.bdew.gendustry.machines.transposer.MachineTransposer
 import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
+import net.bdew.gendustry.machines.transposer.MachineTransposer
+import net.bdew.gendustry.nei.helpers.PowerComponent
+import net.bdew.lib.Misc
+import net.bdew.lib.gui.Rect
+import net.bdew.lib.items.IStack
+import net.minecraft.item.ItemStack
 
 class TransposerHandler extends BaseRecipeHandler(5, 13) {
   val mutagenRect = new Rect(32, 19, 16, 58)

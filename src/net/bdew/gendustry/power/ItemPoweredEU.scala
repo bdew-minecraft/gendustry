@@ -9,13 +9,13 @@
 
 package net.bdew.gendustry.power
 
-import ic2.api.item.{IElectricItemManager, ElectricItem, ISpecialElectricItem}
-import net.minecraft.item.ItemStack
-import net.bdew.gendustry.config.Tuning
-import net.minecraft.entity.EntityLivingBase
-import net.bdew.gendustry.compat.PowerProxy
 import cpw.mods.fml.common.Optional
+import ic2.api.item.{ElectricItem, IElectricItemManager, ISpecialElectricItem}
+import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.power.ItemPoweredBase
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
 
 @Optional.Interface(modid = PowerProxy.IC2_MOD_ID, iface = "ic2.api.item.ISpecialElectricItem")
 trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {

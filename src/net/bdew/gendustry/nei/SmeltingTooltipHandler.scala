@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.nei
 
+import java.util
+
+import codechicken.nei.guihook.IContainerTooltipHandler
+import codechicken.nei.recipe.{FurnaceRecipeHandler, GuiRecipe}
+import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
+import net.bdew.lib.Misc
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.item.ItemStack
-import java.util
-import codechicken.nei.recipe.{FurnaceRecipeHandler, GuiRecipe}
-import net.bdew.lib.Misc
-import codechicken.nei.guihook.IContainerTooltipHandler
-import net.bdew.gendustry.items.{GeneTemplate, GeneSample}
 
 class SmeltingTooltipHandler extends IContainerTooltipHandler {
   override def handleItemDisplayName(gui: GuiContainer, itemstack: ItemStack, currenttip: util.List[String]) = currenttip

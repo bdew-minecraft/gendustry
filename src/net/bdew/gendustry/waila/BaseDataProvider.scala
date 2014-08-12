@@ -9,11 +9,12 @@
 
 package net.bdew.gendustry.waila
 
-import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor, IWailaDataProvider}
-import net.minecraft.item.ItemStack
-import net.bdew.gendustry.Gendustry
-import net.minecraft.util.EnumChatFormatting
 import java.util
+
+import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor, IWailaDataProvider}
+import net.bdew.gendustry.Gendustry
+import net.minecraft.item.ItemStack
+import net.minecraft.util.EnumChatFormatting
 
 class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
   def getTailStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = None

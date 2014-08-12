@@ -10,8 +10,9 @@
 package net.bdew.gendustry.config.loader
 
 import java.io._
-import net.bdew.gendustry.Gendustry
+
 import cpw.mods.fml.common.FMLCommonHandler
+import net.bdew.gendustry.Gendustry
 
 object TuningLoader {
 

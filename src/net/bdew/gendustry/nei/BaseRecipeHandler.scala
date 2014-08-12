@@ -9,15 +9,16 @@
 
 package net.bdew.gendustry.nei
 
-import codechicken.nei.recipe.{GuiRecipe, TemplateRecipeHandler}
-import net.bdew.lib.gui._
-import org.lwjgl.opengl.GL11
-import net.bdew.gendustry.nei.helpers.RecipeComponent
+import java.awt.Rectangle
 import java.util
-import net.minecraft.item.ItemStack
+
 import codechicken.nei.PositionedStack
 import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
-import java.awt.Rectangle
+import codechicken.nei.recipe.{GuiRecipe, TemplateRecipeHandler}
+import net.bdew.gendustry.nei.helpers.RecipeComponent
+import net.bdew.lib.gui._
+import net.minecraft.item.ItemStack
+import org.lwjgl.opengl.GL11
 
 abstract class BaseRecipeHandler(val offX: Int, val offY: Int) extends TemplateRecipeHandler {
 
