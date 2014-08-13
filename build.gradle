@@ -67,6 +67,7 @@ dependencies {
     compile "net.bdew:bdlib:" + bdlibver
     compile "codechicken:NotEnoughItems:1.7.10-1.0.3.48:dev"
     compile "codechicken:CodeChickenLib:1.7.10-1.1.1.98:dev"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.3.23:dev"
     compile "com.mod-buildcraft:buildcraft:6.0.17:dev"
     compile "net.industrial-craft:industrialcraft-2:2.2.541-experimental:api"
     compile "net.sengir.forestry:forestry_1.7.10:2.4.2.30:api"

@@ -21,8 +21,8 @@ object Items extends ItemManager(GendustryCreativeTabs.main) {
   val waste = regSimpleItem("Waste")
   val geneSampleBlank = regSimpleItem("GeneSampleBlank")
 
-  regItem(GeneSample)
-  regItem(GeneTemplate)
+  regItem(GeneSample).setCreativeTab(GendustryCreativeTabs.samples)
+  regItem(GeneTemplate).setCreativeTab(GendustryCreativeTabs.templates)
 
   regItem(ItemApiaryUpgrade)
 
