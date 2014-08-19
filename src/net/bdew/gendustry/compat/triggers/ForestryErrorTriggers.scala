@@ -24,7 +24,7 @@ case class ForestryErrorTrigger(code: Int) extends BaseTrigger("forestry.error."
   override def getIcon = ErrorCodes.getIcon(code).icon
   override def getDescription = ErrorCodes.getDescription(code)
   override def registerIcons(ir: IIconRegister) {}
-  def getState(side: ForgeDirection, tile: ForestryErrorSource) =
+  override def getState(side: ForgeDirection, tile: ForestryErrorSource) =
     tile.asInstanceOf[TileApiary].getErrorOrdinal == code
 }
 
