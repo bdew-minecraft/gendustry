@@ -45,7 +45,8 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     case _ => 0xFFFFFF
   }
 
-  //FIXME
+  override def getUnlocalizedName = "gendustry.bee.species." + ident
+
   override val isSecret = cfg.getBoolean("Secret")
   override val isCounted = !isSecret
   override val hasEffect = cfg.getBoolean("Glowing")
@@ -112,12 +113,18 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
   override def getResearchSuitability(itemStack: ItemStack): Float = {
     import scala.collection.JavaConversions._
-    if (itemStack == null || itemStack.getItem == null) return 0
-    products.keys.find(itemStack.isItemEqual).foreach(return 1)
-    specialty.keys.find(itemStack.isItemEqual).foreach(return 1)
-    OreDictionary.getOres("beeComb").find(OreDictionary.itemMatches(_, itemStack, false)).foreach(return 0.4F)
-    OreDictionary.getOres("dropHoney").find(OreDictionary.itemMatches(_, itemStack, false)).foreach(return 0.5F)
-    if (itemStack.getItem == ForestryItems.honeydew.getItem) return 0.7F
+    if (itemStack == null || itemStack.getItem == null)
+      0
+    else if (products.keys.exists(itemStack.isItemEqual))
+      1
+    else if (specialty.keys.exists(itemStack.isItemEqual))
+      1
+    else if (OreDictionary.getOres("beeComb").exists(OreDictionary.itemMatches(_, itemStack, false)))
+      0.4F
+    else if (OreDictionary.getOres("dropHoney").exists(OreDictionary.itemMatches(_, itemStack, false)))
+      0.5F
+    else if (itemStack.getItem == ForestryItems.honeydew)
+      0.7F
     getRoot.getResearchCatalysts.find(x => ItemUtils.isSameItem(x._1, itemStack)).foreach(x => return x._2)
     return 0
   }

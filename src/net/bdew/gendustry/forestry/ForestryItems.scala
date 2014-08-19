@@ -9,11 +9,10 @@
 
 package net.bdew.gendustry.forestry
 
-import forestry.api.core.ItemInterface
+import cpw.mods.fml.common.registry.GameRegistry
 
-@SuppressWarnings(Array("deprecation"))
 object ForestryItems {
-  lazy val honeydew = ItemInterface.getItem("honeydew")
-  lazy val canEmpty = ItemInterface.getItem("canEmpty")
+  lazy val honeydew = GameRegistry.findItem("Forestry", "honeydew")
+  lazy val canEmpty = GameRegistry.findItem("Forestry", "canEmpty")
 }
 

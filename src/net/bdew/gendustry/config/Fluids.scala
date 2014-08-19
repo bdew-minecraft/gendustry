@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.{Fluid, FluidContainerRegistry, FluidRegistry, 
 
 object Fluids extends FluidManager {
   val emptyBucket = new ItemStack(GameRegistry.findItem("minecraft", "bucket"))
+  val emptyCan = new ItemStack(ForestryItems.canEmpty)
 
   def registerFluid(id: String,
                     luminosity: Int = 0,
@@ -55,9 +56,9 @@ object Fluids extends FluidManager {
       val bucket = Items.regItem(new ItemFluidBucket(fluid), id + "Bucket")
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
     }
-    if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), ForestryItems.canEmpty) == null) {
+    if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyCan) == null) {
       val can = Items.regItem(new ItemFluidCan(fluid), id + "Can")
-      FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), ForestryItems.canEmpty)
+      FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), emptyCan)
     }
     return fluid
   }
