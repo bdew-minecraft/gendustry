@@ -1,20 +1,20 @@
 # author Team MMKP(@puyo061)
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen.producer.name=뮤타겐 Producer
-tile.gendustry.mutatron.name=Mutatron
-tile.gendustry.mutatron.adv.name=Advanced Mutatron
-tile.gendustry.apiary.name=Industrial Apiary
+tile.gendustry.mutagen.producer.name=뮤타겐 공급기
+tile.gendustry.mutatron.name=뮤타트론
+tile.gendustry.mutatron.adv.name=강화된 뮤타트론
+tile.gendustry.apiary.name=공업용 에파이어리(양봉장)
 tile.gendustry.imprinter.name=Genetic Imprinter
 tile.gendustry.sampler.name=Genetic Sampler
-tile.gendustry.extractor.name=DNA Extractor
-tile.gendustry.liquifier.name=단백질 Liquifier
-tile.gendustry.replicator.name=Genetic Replicator
-tile.gendustry.transposer.name=Genetic Transposer
+tile.gendustry.extractor.name=DNA 추출기
+tile.gendustry.liquifier.name=단백질 액화장치
+tile.gendustry.replicator.name=유전자 복제기
+tile.gendustry.transposer.name=유전자 전환기
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=뮤타겐 Tank
+item.gendustry.MutagenTank.name=뮤타겐 탱크
 item.gendustry.BeeReceptacle.name=Bee Receptacle
 item.gendustry.PowerModule.name=Power Module
 item.gendustry.GeneticsProcessor.name=Genetics Processor
@@ -54,22 +54,22 @@ item.gendustry.protein.can.name=단백질 캔
 # ==== UPGRADES ====
 
 gendustry.upgrades.prod.name=Production 업그레이드
-gendustry.upgrades.life.name=Lifespan 업그레이드
+gendustry.upgrades.life.name=수명 단축 업그레이드
 gendustry.upgrades.flowering.name=Flowering 업그레이드
 gendustry.upgrades.territory.name=Territory 업그레이드
-gendustry.upgrades.sealing.name=Seal 업그레이드
-gendustry.upgrades.light.name=밝은 업그레이드
+gendustry.upgrades.sealing.name=방수 업그레이드
+gendustry.upgrades.light.name=광원 업그레이드
 gendustry.upgrades.sky.name=Open Sky 업그레이드
-gendustry.upgrades.hell.name=Hell Emulation 업그레이드
-gendustry.upgrades.auto.name=Automation 업그레이드
-gendustry.upgrades.humidifier.name=Humidifier 업그레이드
-gendustry.upgrades.dryer.name=Dryer 업그레이드
-gendustry.upgrades.heater.name=Heater 업그레이드
+gendustry.upgrades.hell.name=지옥 구현 업그레이드
+gendustry.upgrades.auto.name=자동화 업그레이드
+gendustry.upgrades.humidifier.name=습기 업그레이드
+gendustry.upgrades.dryer.name=건조 업그레이드
+gendustry.upgrades.heater.name=난방 업그레이드
 gendustry.upgrades.sieve.name=Sieve 업그레이드
-gendustry.upgrades.cooler.name=Cooler 업그레이드
-gendustry.upgrades.desert.name=Desert Emulation 업그레이드
+gendustry.upgrades.cooler.name=냉각 업그레이드
+gendustry.upgrades.desert.name=사막 구현 업그레이드
 gendustry.upgrades.plains.name=Plains Emulation 업그레이드
-gendustry.upgrades.jungle.name=Jungle Emulation 업그레이드
+gendustry.upgrades.jungle.name=정글 구현 업그레이드
 gendustry.upgrades.stabilizer.name=Genetic Stabilizer 업그레이드
 
 # ==== GUI AND TOOLTIPS ====
