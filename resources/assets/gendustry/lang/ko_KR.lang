@@ -98,9 +98,9 @@ gendustry.label.consume=Consume chance: %s%%
 gendustry.label.mutatron.death=Death chance (ignoble): %s%%
 gendustry.label.mutatron.degrade=Degrade chance (pristine): %s%%
 
-gendustry.label.mod.automated=* Automation
+gendustry.label.mod.automated=* 자동화
 gendustry.label.mod.biome=* Biome Override: %s
-gendustry.label.mod.sealed=* Rain Protection
+gendustry.label.mod.sealed=* 방수
 gendustry.label.mod.selflighted=* Internal 밝은ing
 gendustry.label.mod.sky=* Open Sky Simulation
 gendustry.label.mod.energy=* Energy Consumption
@@ -114,7 +114,7 @@ gendustry.label.mod.sieve=* Pollen Collection
 gendustry.label.mod.temperature=* Temperature
 gendustry.label.mod.humidity=* Humidity
 
-gendustry.error.power=Not enough power
+gendustry.error.power=전력이 충분하지 않습니다.
 gendustry.error.disabled=Disabled by settings
 
 gendustry.label.sample.rootBees=Taken from a Bee
@@ -130,8 +130,8 @@ gendustry.label.template.chromosomes=%s/%s Chromosomes
 
 gendustry.rsmode.always=언제나 켜져있음
 gendustry.rsmode.never=비활성화
-gendustry.rsmode.rs_on=Enable on redstone
-gendustry.rsmode.rs_off=Disable on redstone
+gendustry.rsmode.rs_on=레드스톤 신호로 활성화
+gendustry.rsmode.rs_off=레드스톤 신호로 비활성화
 
 # ==== CHROMOSOMES (should match forestry) ====
 
