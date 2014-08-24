@@ -194,15 +194,15 @@ gendustry.bees.species.green=Grün
 gendustry.bees.species.brown=Braun
 gendustry.bees.species.blue=Blau
 gendustry.bees.species.purple=Violett
-gendustry.bees.species.cyan=Cyan
+gendustry.bees.species.cyan=Türkis
 gendustry.bees.species.silver=Hellgrau
 gendustry.bees.species.gray=Grau
 gendustry.bees.species.pink=Pink
 gendustry.bees.species.lime=Hellgrün
 gendustry.bees.species.yellow=Gelb
 gendustry.bees.species.lightblue=Hellblau
-gendustry.bees.species.magenta=Magenta
-gendustry.bees.species.orange=Orange
+gendustry.bees.species.magenta=Magentafarben
+gendustry.bees.species.orange=Orangefarben
 gendustry.bees.species.white=Weiß
 
 # ==== COMBS ====
@@ -213,7 +213,7 @@ gendustry.honeycomb.green.name=Grüne Wabe
 gendustry.honeycomb.brown.name=Braune Wabe
 gendustry.honeycomb.blue.name=Blaue Wabe
 gendustry.honeycomb.purple.name=Violette Wabe
-gendustry.honeycomb.cyan.name=Cyanfarbene Wabe
+gendustry.honeycomb.cyan.name=Türkise Wabe
 gendustry.honeycomb.silver.name=Hellgraue Wabe
 gendustry.honeycomb.gray.name=Graue Wabe
 gendustry.honeycomb.pink.name=Pinke Wabe
@@ -221,16 +221,16 @@ gendustry.honeycomb.lime.name=Hellgrüne Wabe
 gendustry.honeycomb.yellow.name=Gelbe Wabe
 gendustry.honeycomb.lightblue.name=Hellblaue Wabe
 gendustry.honeycomb.magenta.name=Magentafarbene Wabe
-gendustry.honeycomb.orange.name=Orangefarbene Wabe
+gendustry.honeycomb.orange.name=Orange Wabe
 gendustry.honeycomb.white.name=Weiße Wabe
 
 gendustry.honeydrop.black.name=Schwarzer Honigtropfen
-gendustry.honeydrop.red.name=RotperHonigtropfen
+gendustry.honeydrop.red.name=Roter Honigtropfen
 gendustry.honeydrop.green.name=Grüner Honigtropfen
 gendustry.honeydrop.brown.name=Brauner Honigtropfen
 gendustry.honeydrop.blue.name=Blauer Honigtropfen
 gendustry.honeydrop.purple.name=Violetter Honigtropfen
-gendustry.honeydrop.cyan.name=Cyanfarbener Honigtropfen
+gendustry.honeydrop.cyan.name=Türkiser Honigtropfen
 gendustry.honeydrop.silver.name=Hellgrauer Honigtropfen
 gendustry.honeydrop.gray.name=Grauer Honigtropfen
 gendustry.honeydrop.pink.name=Pinker Honigtropfen
@@ -238,7 +238,7 @@ gendustry.honeydrop.lime.name=Hellgrüner Honigtropfen
 gendustry.honeydrop.yellow.name=Gelber Honigtropfen
 gendustry.honeydrop.lightblue.name=Hellblauer Honigtropfen
 gendustry.honeydrop.magenta.name=Magentafarbener Honigtropfen
-gendustry.honeydrop.orange.name=Orangefarbener Honigtropfen
+gendustry.honeydrop.orange.name=Oranger Honigtropfen
 gendustry.honeydrop.white.name=Weißer Honigtropfen
 
 #this will be moved to bdlib at some point
