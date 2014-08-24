@@ -29,7 +29,7 @@ import scala.collection.mutable
 
 class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   // IAllele
-  override val getName = Misc.toLocal("gendustry.bee.species." + ident)
+  override val getName = Misc.toLocal("gendustry.bees.species." + ident)
   override val isDominant = cfg.getBoolean("Dominant")
   override val getUID = "gendustry.bee." + ident
 
@@ -45,7 +45,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     case _ => 0xFFFFFF
   }
 
-  override def getUnlocalizedName = "gendustry.bee.species." + ident
+  override def getUnlocalizedName = "gendustry.bees.species." + ident
 
   override val isSecret = cfg.getBoolean("Secret")
   override val isCounted = !isSecret

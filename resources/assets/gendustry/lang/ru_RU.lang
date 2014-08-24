@@ -188,22 +188,22 @@ gendustry.req.temperature=Требуется температура: %s
 gendustry.req.humidity=Требуется влажность: %s
 
 # ==== BEE SPECIES ====
-gendustry.bee.species.black=Чёрн.
-gendustry.bee.species.red=Красн.
-gendustry.bee.species.green=Зелён.
-gendustry.bee.species.brown=Коричнев.
-gendustry.bee.species.blue=Син.
-gendustry.bee.species.purple=Фиолетов.
-gendustry.bee.species.cyan=Бирюзов.
-gendustry.bee.species.silver=Светло-сер.
-gendustry.bee.species.gray=Сер.
-gendustry.bee.species.pink=Розов.
-gendustry.bee.species.lime=Лаймов.
-gendustry.bee.species.yellow=Жёлт.
-gendustry.bee.species.lightblue=Светло-син.
-gendustry.bee.species.magenta=Сиренев.
-gendustry.bee.species.orange=Оранжев.
-gendustry.bee.species.white=Бел.
+gendustry.bees.species.black=Чёрн.
+gendustry.bees.species.red=Красн.
+gendustry.bees.species.green=Зелён.
+gendustry.bees.species.brown=Коричнев.
+gendustry.bees.species.blue=Син.
+gendustry.bees.species.purple=Фиолетов.
+gendustry.bees.species.cyan=Бирюзов.
+gendustry.bees.species.silver=Светло-сер.
+gendustry.bees.species.gray=Сер.
+gendustry.bees.species.pink=Розов.
+gendustry.bees.species.lime=Лаймов.
+gendustry.bees.species.yellow=Жёлт.
+gendustry.bees.species.lightblue=Светло-син.
+gendustry.bees.species.magenta=Сиренев.
+gendustry.bees.species.orange=Оранжев.
+gendustry.bees.species.white=Бел.
 
 # ==== COMBS ====
 

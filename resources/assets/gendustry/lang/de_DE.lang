@@ -188,22 +188,22 @@ gendustry.req.temperature=Benötigt Temperatur: %s
 gendustry.req.humidity=Benötigt Feuchtigkeit: %s
 
 # ==== BEE SPECIES ====
-gendustry.bee.species.black=Schwarz
-gendustry.bee.species.red=Rot
-gendustry.bee.species.green=Grün
-gendustry.bee.species.brown=Braun
-gendustry.bee.species.blue=Blau
-gendustry.bee.species.purple=Violett
-gendustry.bee.species.cyan=Cyan
-gendustry.bee.species.silver=Hellgrau
-gendustry.bee.species.gray=Grau
-gendustry.bee.species.pink=Pink
-gendustry.bee.species.lime=Hellgrün
-gendustry.bee.species.yellow=Gelb
-gendustry.bee.species.lightblue=Hellblau
-gendustry.bee.species.magenta=Magenta
-gendustry.bee.species.orange=Orange
-gendustry.bee.species.white=Weiß
+gendustry.bees.species.black=Schwarz
+gendustry.bees.species.red=Rot
+gendustry.bees.species.green=Grün
+gendustry.bees.species.brown=Braun
+gendustry.bees.species.blue=Blau
+gendustry.bees.species.purple=Violett
+gendustry.bees.species.cyan=Cyan
+gendustry.bees.species.silver=Hellgrau
+gendustry.bees.species.gray=Grau
+gendustry.bees.species.pink=Pink
+gendustry.bees.species.lime=Hellgrün
+gendustry.bees.species.yellow=Gelb
+gendustry.bees.species.lightblue=Hellblau
+gendustry.bees.species.magenta=Magenta
+gendustry.bees.species.orange=Orange
+gendustry.bees.species.white=Weiß
 
 # ==== COMBS ====
 
