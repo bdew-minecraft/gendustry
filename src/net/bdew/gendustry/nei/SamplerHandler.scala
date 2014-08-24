@@ -16,7 +16,6 @@ import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.genetics._
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.compat.ExtraBeesProxy
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.GeneSample
@@ -68,12 +67,6 @@ import scala.collection.JavaConversions._
     for (info <- GeneticsCache.geneSamples; species <- GeneticsCache.speciesChromosomes(info)) {
       arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
     }
-    if (MachineSampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
-      for (sample <- GeneticsCache.geneSamples if sample.root.isInstanceOf[IBeeRoot]) {
-        val serum = ExtraBeesProxy.makeSerumFromSample(sample)
-        if (serum != null) arecipes.add(new SamplerRecipe(sample, serum))
-      }
-    }
   }
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
@@ -92,10 +85,6 @@ import scala.collection.JavaConversions._
               alleles += GeneSampleInfo(root, n, chromosome.getSecondaryAllele)
           }
           alleles.foreach(sample => arecipes.add(new SamplerRecipe(sample, stack)))
-        } else if (MachineSampler.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
-          val sample = ExtraBeesProxy.getSerumSample(stack)
-          if (sample != null)
-            arecipes.add(new SamplerRecipe(sample, stack))
         }
       case ("Sampler", _) => addAllRecipes()
     }
@@ -110,10 +99,6 @@ import scala.collection.JavaConversions._
         } else {
           for (species <- GeneticsCache.speciesChromosomes(info)) {
             arecipes.add(new SamplerRecipe(info, getRecipeStack(species)))
-          }
-          if (MachineSampler.convertEBSerums && ExtraBeesProxy.ebLoaded) {
-            val serum = ExtraBeesProxy.makeSerumFromSample(info)
-            if (serum != null) arecipes.add(new SamplerRecipe(info, serum))
           }
         }
       case ("Sampler", _) => addAllRecipes()

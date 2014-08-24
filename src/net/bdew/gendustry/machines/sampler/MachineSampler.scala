@@ -21,7 +21,6 @@ object MachineSampler extends Machine("Sampler", BlockSampler) with GuiProvider 
   type TEClass = TileSampler
 
   lazy val labwareConsumeChance = tuning.getInt("LabwareConsumeChance")
-  lazy val convertEBSerums = tuning.getBoolean("ConvertEBSerums")
 
   @SideOnly(Side.CLIENT)
   def getGui(te: TileSampler, player: EntityPlayer): GuiContainer = new GuiSampler(te, player)

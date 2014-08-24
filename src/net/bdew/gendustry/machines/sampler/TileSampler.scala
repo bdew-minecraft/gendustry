@@ -11,7 +11,6 @@ package net.bdew.gendustry.machines.sampler
 
 import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.apiimpl.TileWorker
-import net.bdew.gendustry.compat.ExtraBeesProxy
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.GeneSample
@@ -37,11 +36,6 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
   def getSizeInventory = 4
 
   def selectRandomAllele(stack: ItemStack): ItemStack = {
-    if (cfg.convertEBSerums && ExtraBeesProxy.isSerum(stack)) {
-      val sample = ExtraBeesProxy.getSerumSample(stack)
-      if (sample != null) return GeneSample.newStack(sample)
-    }
-
     val root = AlleleManager.alleleRegistry.getSpeciesRoot(stack)
     if (root == null) return new ItemStack(Items.waste)
     val member = root.getMember(stack)
@@ -81,7 +75,7 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
       case slots.inLabware =>
         return itemstack.getItem == Items.labware
       case slots.inIndividual =>
-        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null || (cfg.convertEBSerums && ExtraBeesProxy.isSerum(itemstack))
+        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null
       case _ =>
         return false
     }
