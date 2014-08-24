@@ -9,12 +9,10 @@
 
 package net.bdew.gendustry.forestry
 
-import forestry.api.apiculture.{EnumBeeChromosome, IAlleleBeeSpecies, IBeeRoot}
+import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.arboriculture._
 import forestry.api.genetics._
-import forestry.api.lepidopterology.{EnumButterflyChromosome, IAlleleButterflySpecies, IButterflyRoot}
 import net.bdew.gendustry.api.items.IGeneSample
-import net.bdew.gendustry.compat.EnumFlowerChromosome
 import net.bdew.lib.Misc
 import net.minecraft.nbt.NBTTagCompound
 
@@ -69,11 +67,7 @@ object GeneSampleInfo {
     val allele = AlleleManager.alleleRegistry.getAllele(t.getString("allele"))
     return GeneSampleInfo(species, t.getInteger("chromosome"), allele)
   }
-  def getChromosomeName(root: ISpeciesRoot, chromosome: Int) = root match {
-    case x: IBeeRoot => EnumBeeChromosome.values()(chromosome).toString
-    case x: ITreeRoot => EnumTreeChromosome.values()(chromosome).toString
-    case x: IButterflyRoot => EnumButterflyChromosome.values()(chromosome).toString
-    case x: ISpeciesRoot if x.getUID == "rootFlowers" => EnumFlowerChromosome.values()(chromosome).toString
-    case _ => "Invalid"
-  }
+
+  def getChromosomeName(root: ISpeciesRoot, chromosome: Int) =
+    GeneticsHelper.getCleanKaryotype(root).get(chromosome).map(_.toString.toUpperCase).getOrElse("Invalid")
 }

@@ -12,12 +12,8 @@ package net.bdew.gendustry.items
 import java.util
 
 import cpw.mods.fml.common.registry.GameRegistry
-import forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
-import forestry.api.arboriculture.{EnumTreeChromosome, ITreeRoot}
 import forestry.api.genetics.{AlleleManager, IAlleleSpecies, ISpeciesRoot}
-import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.compat.EnumFlowerChromosome
 import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo, GeneticsHelper}
 import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.items.SimpleItem
@@ -30,9 +26,6 @@ import net.minecraft.util.EnumChatFormatting
 
 object GeneTemplate extends SimpleItem("GeneTemplate") {
   setMaxStackSize(1)
-
-  val unusedBeeChromosomes = Set(EnumBeeChromosome.HUMIDITY)
-  val unusedButterflyChromosomes = Set(EnumButterflyChromosome.TERRITORY)
 
   GameRegistry.addRecipe(new GeneRecipe)
 
@@ -52,16 +45,7 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
     }
   }
 
-  def getRequiredChromosomes(sp: ISpeciesRoot) = sp match {
-    case x: IBeeRoot =>
-      EnumBeeChromosome.values().filterNot(unusedBeeChromosomes.contains).map(_.ordinal())
-    case x: ITreeRoot =>
-      EnumTreeChromosome.values().map(_.ordinal())
-    case x: IButterflyRoot =>
-      EnumButterflyChromosome.values().filterNot(unusedButterflyChromosomes.contains).map(_.ordinal())
-    case x: ISpeciesRoot if x.getUID == "rootFlowers" =>
-      EnumFlowerChromosome.values().map(_.ordinal())
-  }
+  def getRequiredChromosomes(sp: ISpeciesRoot) = GeneticsHelper.getCleanKaryotype(sp).keys
 
   def isComplete(stack: ItemStack) = {
     val sp = getSpecies(stack)

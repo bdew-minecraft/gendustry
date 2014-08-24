@@ -203,4 +203,12 @@ object GeneticsHelper {
     item
   }
 
+  /**
+   * Returns the list of chromosomes as a map, filtering out unused ones
+   */
+  def getCleanKaryotype(root: ISpeciesRoot) = (
+    root.getKaryotype
+      filter { x => root.getDefaultTemplate()(x.ordinal()) != null }
+      map { x => x.ordinal() -> x }
+    ).toMap
 }
