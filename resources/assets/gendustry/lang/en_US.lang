@@ -119,10 +119,12 @@ gendustry.error.disabled=Disabled by settings
 gendustry.label.sample.rootBees=Taken from a Bee
 gendustry.label.sample.rootTrees=Taken from a Sapling
 gendustry.label.sample.rootButterflies=Taken from a Butterfly
+gendustry.label.sample.rootFlowers=Taken from a Flower
 
 gendustry.label.template.rootBees=Can be applied to a Bee
 gendustry.label.template.rootTrees=Can be applied to a Sapling
 gendustry.label.template.rootButterflies=Can be applied to a Butterfly
+gendustry.label.template.rootFlowers=Can be applied to a Flower
 gendustry.label.template.blank=Gene Samples can be added
 gendustry.label.template.missing=Missing
 gendustry.label.template.chromosomes=%s/%s Chromosomes
@@ -159,6 +161,14 @@ gendustry.chromosome.NOCTURNAL=Ignores Day/Night
 gendustry.chromosome.TOLERANT_FLYER=Tolerant flyer
 gendustry.chromosome.FRUITS=Fruits
 gendustry.chromosome.SAPPINESS=Sappiness
+
+// Botany
+
+    SPECIES,
+gendustry.chromosome.PRIMARY=Primary
+gendustry.chromosome.SECONDARY=Secondary
+gendustry.chromosome.PH_TOLERANCE=pH tolerance
+gendustry.chromosome.STEM=Stem
 
 gendustry.allele.false=False
 gendustry.allele.true=True

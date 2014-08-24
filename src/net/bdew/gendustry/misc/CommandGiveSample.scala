@@ -15,6 +15,7 @@ import _root_.forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
 import _root_.forestry.api.arboriculture.{EnumTreeChromosome, ITreeRoot}
 import _root_.forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
 import _root_.forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
+import net.bdew.gendustry.compat.EnumFlowerChromosome
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.GeneSample
 import net.minecraft.command.{CommandBase, CommandException, ICommandSender, WrongUsageException}
@@ -33,12 +34,14 @@ class CommandGiveSample extends CommandBase {
     case x: IBeeRoot => EnumBeeChromosome.values().zipWithIndex.map({ case (c, n) => c.getName -> n })
     case x: ITreeRoot => EnumTreeChromosome.values().zipWithIndex.map({ case (c, n) => c.getName -> n })
     case x: IButterflyRoot => EnumButterflyChromosome.values().zipWithIndex.map({ case (c, n) => c.getName -> n })
+    case x: ISpeciesRoot if x.getUID == "rootFlowers" => EnumFlowerChromosome.values().zipWithIndex.map({ case (c, n) => c.toString -> n })
   }
 
   def isValidAllele(root: ISpeciesRoot, chromosome: Int, allele: IAllele) = root match {
     case x: IBeeRoot => EnumBeeChromosome.values()(chromosome).getAlleleClass.isInstance(allele)
     case x: ITreeRoot => EnumTreeChromosome.values()(chromosome).getAlleleClass.isInstance(allele)
     case x: IButterflyRoot => EnumButterflyChromosome.values()(chromosome).getAlleleClass.isInstance(allele)
+    case x: ISpeciesRoot if x.getUID == "rootFlowers" => true
   }
 
   def processCommand(sender: ICommandSender, params: Array[String]) {

@@ -187,6 +187,8 @@ object GeneticsHelper {
         trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
       case butterflies: IButterflyRoot =>
         butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal())
+      case other: ISpeciesRoot =>
+        other.getMemberStack(individual, 0)
     }
   }
 

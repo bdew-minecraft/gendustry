@@ -14,6 +14,7 @@ import forestry.api.arboriculture.{EnumTreeChromosome, IAlleleFruit, IAlleleGrow
 import forestry.api.genetics._
 import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
 import net.bdew.gendustry.api.items.IGeneSample
+import net.bdew.gendustry.compat.EnumFlowerChromosome
 import net.bdew.lib.Misc
 import net.minecraft.nbt.NBTTagCompound
 
@@ -36,14 +37,16 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
         case _ => i.getName
       }
       case f: IAlleleFlowers => f.getProvider.getDescription
-      case f: IAlleleFruit => StringUtil.localize(f.getProvider.getDescription)
+      case f: IAlleleFruit => f.getProvider.getDescription
       case p: IAllelePlantType => if (p.getPlantTypes.isEmpty) "-" else p.getPlantTypes.asScala.mkString(", ")
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
       case g: IAlleleGrowth => g.getProvider.getDescription
-      case x => StringUtil.localize(x.getName)
+      case x => x.getName
     }
     if (alstr == "")
       return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), allele.getUID)
+    else if (alstr.startsWith("for."))
+      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr.replace("for.", ""))
     else
       return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr)
   }
@@ -60,6 +63,7 @@ object GeneSampleInfo {
     case x: IBeeRoot => EnumBeeChromosome.values()(chromosome).toString
     case x: ITreeRoot => EnumTreeChromosome.values()(chromosome).toString
     case x: IButterflyRoot => EnumButterflyChromosome.values()(chromosome).toString
+    case x: ISpeciesRoot if x.getUID == "rootFlowers" => EnumFlowerChromosome.values()(chromosome).toString
     case _ => "Invalid"
   }
 }

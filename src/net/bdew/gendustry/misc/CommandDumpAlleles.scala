@@ -28,7 +28,9 @@ class CommandDumpAlleles extends CommandBase {
     import scala.collection.JavaConversions._
     try {
       dumpWriter.write("==== ALLELES ====\n")
-      dumpWriter.write(AlleleManager.alleleRegistry.getRegisteredAlleles.keySet().toList.sorted.mkString("\n"))
+      dumpWriter.write((AlleleManager.alleleRegistry.getRegisteredAlleles map { case (id, allele) =>
+        "%s (%s)".format(id, allele.getName)
+      }).toList.sorted.mkString("\n"))
       dumpWriter.write("\n\n")
       CommandBase.func_152373_a(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
     } catch {

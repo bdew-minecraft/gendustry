@@ -17,6 +17,7 @@ import forestry.api.arboriculture.{EnumTreeChromosome, ITreeRoot}
 import forestry.api.genetics.{AlleleManager, IAlleleSpecies, ISpeciesRoot}
 import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.compat.EnumFlowerChromosome
 import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo, GeneticsHelper}
 import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.items.SimpleItem
@@ -58,6 +59,8 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
       EnumTreeChromosome.values().map(_.ordinal())
     case x: IButterflyRoot =>
       EnumButterflyChromosome.values().filterNot(unusedButterflyChromosomes.contains).map(_.ordinal())
+    case x: ISpeciesRoot if x.getUID == "rootFlowers" =>
+      EnumFlowerChromosome.values().map(_.ordinal())
   }
 
   def isComplete(stack: ItemStack) = {
