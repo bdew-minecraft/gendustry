@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.forestry
 
-import forestry.api.apiculture.{EnumBeeChromosome, IBeeRoot}
-import forestry.api.arboriculture.{EnumTreeChromosome, IAlleleFruit, IAlleleGrowth, ITreeRoot}
+import forestry.api.apiculture.{EnumBeeChromosome, IAlleleBeeSpecies, IBeeRoot}
+import forestry.api.arboriculture._
 import forestry.api.genetics._
-import forestry.api.lepidopterology.{EnumButterflyChromosome, IButterflyRoot}
+import forestry.api.lepidopterology.{EnumButterflyChromosome, IAlleleButterflySpecies, IButterflyRoot}
 import net.bdew.gendustry.api.items.IGeneSample
 import net.bdew.gendustry.compat.EnumFlowerChromosome
 import net.bdew.lib.Misc
@@ -30,6 +30,19 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
     import scala.collection.JavaConverters._
     val chr = GeneSampleInfo.getChromosomeName(root, chromosome)
     val alstr = allele match {
+      // Custom localized names, see https://github.com/bdew/gendustry/issues/41
+      case a: IAlleleTreeSpecies =>
+        val k = "for.trees.custom.treealyzer.sapling." + a.getUnlocalizedName.replace("trees.species.", "")
+        if (Misc.hasLocal(k))
+          Misc.toLocal(k)
+        else
+          a.getName
+      case a: IAlleleBeeSpecies =>
+        val k = "for.bees.custom.beealyzer.drone." + a.getUnlocalizedName.replace("bees.species.", "")
+        if (Misc.hasLocal(k))
+          Misc.toLocal(k)
+        else
+          a.getName
       case i: IAlleleInteger => chr match {
         case "GIRTH" => "%d x %d".format(i.getValue, i.getValue)
         case "FERTILITY" if !root.isInstanceOf[ITreeRoot] => i.getValue.toString
