@@ -181,7 +181,7 @@ with IIndustrialApiary {
   // Misc
   def getBiome = worldObj.getBiomeGenForCoordsBody(xCoord, zCoord)
   def getPowerDataslot(from: ForgeDirection) = power
-  def getSizeInventory = 15
+  override def getSizeInventory = 15
 
   override def canInsertItem(slot: Int, stack: ItemStack, side: Int) = slots.bees.contains(slot) && isItemValidForSlot(slot, stack)
   override def canExtractItem(slot: Int, stack: ItemStack, side: Int) = slots.output.contains(slot)
@@ -195,15 +195,15 @@ with IIndustrialApiary {
   override def getModifiers = mods
 
   // IBeeListener
-  def onPostQueenDeath(queen: IBee) {
+  override def onPostQueenDeath(queen: IBee) {
     if (mods.isAutomated) movePrincess = true
   }
 
-  def onQueenDeath(queen: IBee) {}
-  def wearOutEquipment(amount: Int) {}
-  def onQueenChange(stack: ItemStack) {}
-  def onEggLaid(queen: IBee) = false
-  def onPollenRetrieved(queen: IBee, pollen: IIndividual, isHandled: Boolean): Boolean = {
+  override def onQueenDeath(queen: IBee) {}
+  override def wearOutEquipment(amount: Int) {}
+  override def onQueenChange(stack: ItemStack) {}
+  override def onEggLaid(queen: IBee) = false
+  override def onPollenRetrieved(queen: IBee, pollen: IIndividual, isHandled: Boolean): Boolean = {
     if (isHandled) return true
     if (!mods.isCollectingPollen) return false
     val sproot = pollen.getGenome.getSpeciesRoot
@@ -213,41 +213,43 @@ with IIndustrialApiary {
   }
 
   // IBeeModifier
-  def getTerritoryModifier(genome: IBeeGenome, currentModifier: Float) = Misc.min(mods.territory, 5)
-  def getMutationModifier(genome: IBeeGenome, mate: IBeeGenome, currentModifier: Float) = mods.mutation
-  def getLifespanModifier(genome: IBeeGenome, mate: IBeeGenome, currentModifier: Float) = mods.lifespan
-  def getProductionModifier(genome: IBeeGenome, currentModifier: Float) = mods.production
-  def getFloweringModifier(genome: IBeeGenome, currentModifier: Float) = mods.flowering
-  def getGeneticDecay(genome: IBeeGenome, currentModifier: Float) = mods.geneticDecay
-  def isSealed = mods.isSealed
-  def isSelfLighted = mods.isSelfLighted
-  def isSunlightSimulated = mods.isSunlightSimulated
-  def isHellish = getModifiedBiome == BiomeGenBase.hell
+  override def getTerritoryModifier(genome: IBeeGenome, currentModifier: Float) = Misc.min(mods.territory, 5)
+  override def getMutationModifier(genome: IBeeGenome, mate: IBeeGenome, currentModifier: Float) = mods.mutation
+  override def getLifespanModifier(genome: IBeeGenome, mate: IBeeGenome, currentModifier: Float) = mods.lifespan
+  override def getProductionModifier(genome: IBeeGenome, currentModifier: Float) = mods.production
+  override def getFloweringModifier(genome: IBeeGenome, currentModifier: Float) = mods.flowering
+  override def getGeneticDecay(genome: IBeeGenome, currentModifier: Float) = mods.geneticDecay
+  override def isSealed = mods.isSealed
+  override def isSelfLighted = mods.isSelfLighted
+  override def isSunlightSimulated = mods.isSunlightSimulated
+  override def isHellish = getModifiedBiome == BiomeGenBase.hell
 
   // IBeeHousing
-  def setQueen(itemstack: ItemStack) = setInventorySlotContents(0, itemstack)
-  def setDrone(itemstack: ItemStack) = setInventorySlotContents(1, itemstack)
-  def getQueen = getStackInSlot(slots.queen)
-  def getDrone = getStackInSlot(slots.drone)
-  def canBreed = true
+  override def setQueen(itemstack: ItemStack) = setInventorySlotContents(0, itemstack)
+  override def setDrone(itemstack: ItemStack) = setInventorySlotContents(1, itemstack)
+  override def getQueen = getStackInSlot(slots.queen)
+  override def getDrone = getStackInSlot(slots.drone)
+  override def canBreed = true
 
   def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
 
   // IHousing
-  def setErrorState(state: Int) = errorState := state
-  def getOwnerName = owner
-  def getXCoord = xCoord
-  def getYCoord = yCoord
-  def getZCoord = zCoord
-  def getBiomeId = getModifiedBiome.biomeID
-  def getTemperature =
+
+  override def getWorld = worldObj
+  override def setErrorState(state: Int) = errorState := state
+  override def getOwnerName = owner
+  override def getXCoord = xCoord
+  override def getYCoord = yCoord
+  override def getZCoord = zCoord
+  override def getBiomeId = getModifiedBiome.biomeID
+  override def getTemperature =
     if (EnumTemperature.isBiomeHellish(getModifiedBiome))
       EnumTemperature.HELLISH
     else
       EnumTemperature.getFromValue(getModifiedBiome.temperature + mods.temperature)
-  def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.rainfall + mods.humidity)
-  def getErrorOrdinal = errorState
-  def addProduct(product: ItemStack, all: Boolean): Boolean = {
+  override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.rainfall + mods.humidity)
+  override def getErrorOrdinal = errorState
+  override def addProduct(product: ItemStack, all: Boolean): Boolean = {
     var p = product
     if (mods.isAutomated && beeRoot.isMember(product))
       p = ItemUtils.addStackToSlots(p, this, slots.bees, false)
