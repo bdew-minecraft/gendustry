@@ -1,4 +1,4 @@
-# author Team MMKP(@puyo061)
+# author Team MMKP(puyo061 , whffktkw ,clayweb)
 # ==== BLOCKS ====
 
 tile.gendustry.mutagen.producer.name=뮤타젠 공급기
@@ -166,11 +166,10 @@ gendustry.chromosome.SAPPINESS=수액
 // Botany
 
     SPECIES,
-gendustry.chromosome.PRIMARY=Primary
-gendustry.chromosome.SECONDARY=Secondary
+gendustry.chromosome.PRIMARY=기본
+gendustry.chromosome.SECONDARY=두번째
 gendustry.chromosome.PH_TOLERANCE=pH tolerance
-gendustry.chromosome.STEM=Stem
-
+gendustry.chromosome.STEM=줄기
 
 gendustry.allele.false=거절
 gendustry.allele.true=수락
