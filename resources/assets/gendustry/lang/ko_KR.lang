@@ -120,10 +120,12 @@ gendustry.error.disabled=설정이 올바르지 않습니다.
 gendustry.label.sample.rootBees=벌에서 추출
 gendustry.label.sample.rootTrees=묘목에서 추출
 gendustry.label.sample.rootButterflies=나비에서 추출
+gendustry.label.sample.rootFlowers=꽃에서 추출
 
 gendustry.label.template.rootBees=벌에 적용 가능
 gendustry.label.template.rootTrees=묘목에 적용 가능
 gendustry.label.template.rootButterflies=나비에 적용 가능
+gendustry.label.template.rootFlowers=꽃에 적용가능
 gendustry.label.template.blank=유전자 샘플 추가 가능
 gendustry.label.template.missing=추가되지 않음
 gendustry.label.template.chromosomes=%s/%s 크로모좀
@@ -160,6 +162,15 @@ gendustry.chromosome.NOCTURNAL=낮/밤 무시
 gendustry.chromosome.TOLERANT_FLYER=우천시 활동
 gendustry.chromosome.FRUITS=과일
 gendustry.chromosome.SAPPINESS=수액
+
+// Botany
+
+    SPECIES,
+gendustry.chromosome.PRIMARY=Primary
+gendustry.chromosome.SECONDARY=Secondary
+gendustry.chromosome.PH_TOLERANCE=pH tolerance
+gendustry.chromosome.STEM=Stem
+
 
 gendustry.allele.false=거절
 gendustry.allele.true=수락
