@@ -15,7 +15,7 @@ tile.gendustry.transposer.name=유전자 전환기
 # ==== GENERAL ITEMS ====
 
 item.gendustry.MutagenTank.name=뮤타젠 탱크
-item.gendustry.BeeReceptacle.name=벌 소켓
+item.gendustry.beeReceptacle.name=벌 소켓
 item.gendustry.PowerModule.name=동력 부품
 item.gendustry.GeneticsProcessor.name=유전자 가공기
 item.gendustry.EnvProcessor.name=환경 가공기
@@ -117,12 +117,12 @@ gendustry.label.mod.humidity=* 습도
 gendustry.error.power=전력이 충분하지 않습니다.
 gendustry.error.disabled=설정이 올바르지 않습니다.
 
-gendustry.label.sample.rootBees=벌에서 추출
+gendustry.label.sample.rootbees=벌에서 추출
 gendustry.label.sample.rootTrees=묘목에서 추출
 gendustry.label.sample.rootButterflies=나비에서 추출
 gendustry.label.sample.rootFlowers=꽃에서 추출
 
-gendustry.label.template.rootBees=벌에 적용 가능
+gendustry.label.template.rootbees=벌에 적용 가능
 gendustry.label.template.rootTrees=묘목에 적용 가능
 gendustry.label.template.rootButterflies=나비에 적용 가능
 gendustry.label.template.rootFlowers=꽃에 적용가능
@@ -165,10 +165,10 @@ gendustry.chromosome.SAPPINESS=수액
 
 // Botany
 
-    SPECIES,
+
 gendustry.chromosome.PRIMARY=기본
 gendustry.chromosome.SECONDARY=두번째
-gendustry.chromosome.PH_TOLERANCE=pH tolerance
+gendustry.chromosome.PH_TOLERANCE=pH 저항력
 gendustry.chromosome.STEM=줄기
 
 gendustry.allele.false=거절
@@ -199,22 +199,22 @@ gendustry.req.temperature=필요 기온: %s
 gendustry.req.humidity=필요 습도: %s
 
 # ==== BEE SPECIES ====
-gendustry.bee.species.black=검은색
-gendustry.bee.species.red=빨강색
-gendustry.bee.species.green=초록색
-gendustry.bee.species.brown=갈색
-gendustry.bee.species.blue=파랑색
-gendustry.bee.species.purple=보라색
-gendustry.bee.species.cyan=청록색
-gendustry.bee.species.silver=밝은 회색
-gendustry.bee.species.gray=회색
-gendustry.bee.species.pink=분홍색
-gendustry.bee.species.lime=연두색
-gendustry.bee.species.yellow=노랑색
-gendustry.bee.species.lightblue=하늘색
-gendustry.bee.species.magenta=밝은자주색
-gendustry.bee.species.orange=주황색
-gendustry.bee.species.white=하얀색
+gendustry.bees.species.black=검은색
+gendustry.bees.species.red=빨강색
+gendustry.bees.species.green=초록색
+gendustry.bees.species.brown=갈색
+gendustry.bees.species.blue=파랑색
+gendustry.bees.species.purple=보라색
+gendustry.bees.species.cyan=청록색
+gendustry.bees.species.silver=밝은 회색
+gendustry.bees.species.gray=회색
+gendustry.bees.species.pink=분홍색
+gendustry.bees.species.lime=연두색
+gendustry.bees.species.yellow=노랑색
+gendustry.bees.species.lightblue=하늘색
+gendustry.bees.species.magenta=밝은자주색
+gendustry.bees.species.orange=주황색
+gendustry.bees.species.white=하얀색
 
 # ==== COMBS ====
 
