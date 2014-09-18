@@ -164,7 +164,6 @@ gendustry.chromosome.SAPPINESS=Sappiness
 
 // Botany
 
-    SPECIES,
 gendustry.chromosome.PRIMARY=Primary
 gendustry.chromosome.SECONDARY=Secondary
 gendustry.chromosome.PH_TOLERANCE=pH tolerance
