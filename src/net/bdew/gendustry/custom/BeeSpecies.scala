@@ -56,8 +56,8 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override val getAuthority = cfg.getString("Authority")
   override val getBinomial = cfg.getString("Binominal")
   override val getDescription =
-    if (Misc.hasLocal("gendustry.bee.species." + ident + ".description"))
-      Misc.toLocal("gendustry.bee.species." + ident + ".description")
+    if (Misc.hasLocal("gendustry.bees.species." + ident + ".description"))
+      Misc.toLocal("gendustry.bees.species." + ident + ".description")
     else ""
 
   // IAlleleBeeSpecies
