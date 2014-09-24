@@ -171,7 +171,7 @@ with IIndustrialApiary {
         strings :+= Misc.toLocalF("gendustry.label.flowering", "%.0f%%".format(mods.flowering * genome.getFlowering))
         strings :+= Misc.toLocalF("gendustry.label.lifespan", "%.0f%%".format(mods.lifespan * genome.getLifespan))
         val t = genome.getTerritory.toSeq.map(mods.territory * _)
-        strings :+= Misc.toLocalF("gendustry.label.territory", "%.0f x %.0f x %.0f".format(t: _*))
+        strings :+= Misc.toLocalF("gendustry.label.territory", "%.0f x %.0f x %.0f".format(t(0), t(1), t(2)))
       }
     }
 
