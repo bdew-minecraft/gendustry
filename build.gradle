@@ -37,7 +37,7 @@ group = "net.bdew"
 archivesBaseName = "gendustry"
 
 minecraft {
-    version = "1.7.10-10.13.0.1180"
+    version = "1.7.10-10.13.0.1207"
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
     replace("GENDUSTRY_APIVER", project.apiVer)
@@ -70,7 +70,7 @@ dependencies {
     compile "codechicken:CodeChickenCore:1.7.10-1.0.3.23:dev"
     compile "com.mod-buildcraft:buildcraft:6.0.17:dev"
     compile "net.industrial-craft:industrialcraft-2:2.2.541-experimental:api"
-    compile "net.sengir.forestry:forestry_1.7.10:3.0.0.90:api"
+    compile "net.sengir.forestry:forestry_1.7.10:3.0.0.184:api"
     compile "mcp.mobius.waila:Waila:1.5.3_1.7.10"
     compile "net.bdew.thirdparty:CoFHLib:R1.0.1:api"
 }
