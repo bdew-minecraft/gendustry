@@ -15,8 +15,12 @@ import forestry.api.genetics.AlleleManager
 import forestry.api.genetics.IClassification.EnumClassLevel
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
-import net.bdew.gendustry.config.loader.{MReqHumidity, MReqTemperature, TuningLoader}
+import net.bdew.gendustry.config.loader._
+import net.bdew.lib.Misc
+import net.bdew.lib.recipes.StackBlock
 import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.minecraft.block.Block
+import net.minecraftforge.oredict.OreDictionary
 
 object CustomContent {
   val reg = AlleleManager.alleleRegistry
@@ -71,6 +75,15 @@ object CustomContent {
             mutation.reqHumidity = Some(EnumHumidity.valueOf(hum.toUpperCase))
           case MReqTemperature(temp: String) =>
             mutation.reqTemperature = Some(EnumTemperature.valueOf(temp.toUpperCase))
+          case MReqBlock(ref: StackBlock) =>
+            val stack = TuningLoader.loader.getConcreteStack(ref)
+            val block = Block.getBlockFromItem(stack.getItem)
+            if (block == null) sys.error("Ivalid block reference: %s".format(ref))
+            mutation.reqBlock = Some(block)
+            if (stack.getItemDamage != OreDictionary.WILDCARD_VALUE)
+              mutation.reqBlockMeta = Some(stack.getItemDamage)
+          case MReqBiome(name: String) =>
+            mutation.reqBiome = Option(Misc.getBiomeByName(name))
         }
 
         mutation.getRoot.registerMutation(mutation)

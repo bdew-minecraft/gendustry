@@ -63,8 +63,10 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
 
   def mrTemperature = "Req" ~> "Temperature" ~> ident ^^ MReqTemperature
   def mrHumidity = "Req" ~> "Humidity" ~> ident ^^ MReqHumidity
+  def mrBiome = "Req" ~> "Biome" ~> str ^^ MReqBiome
+  def mrBlock = "Req" ~> "Block" ~> specBlock ^^ MReqBlock
 
-  def mutationReq = mrTemperature | mrHumidity
+  def mutationReq = mrTemperature | mrHumidity | mrBiome | mrBlock
 
   def stMutation = "secret".? ~ ("mutation" ~> ":") ~ (decimalNumber <~ "%") ~ str ~ "+" ~ str ~ "=" ~ str ~ mutationReq.* ^^ {
     case secret ~ mutation ~ chance ~ p1 ~ plus ~ p2 ~ eq ~ res ~ req =>

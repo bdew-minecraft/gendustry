@@ -9,8 +9,9 @@
 
 package net.bdew.gendustry.config.loader
 
+import net.bdew.lib.block.BlockRef
 import net.bdew.lib.recipes.gencfg.CfgEntry
-import net.bdew.lib.recipes.{CraftingStatement, DelayedStatement, StackRef}
+import net.bdew.lib.recipes.{StackBlock, CraftingStatement, DelayedStatement, StackRef}
 
 case class FluidSpec(id: String, amount: Int)
 
@@ -56,3 +57,6 @@ case class MReqTemperature(temperature: String) extends MutationRequirement
 
 case class MReqHumidity(humidity: String) extends MutationRequirement
 
+case class MReqBlock(block: StackBlock) extends MutationRequirement
+
+case class MReqBiome(biome: String) extends MutationRequirement
