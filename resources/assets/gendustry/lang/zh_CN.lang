@@ -62,6 +62,7 @@ gendustry.upgrades.sealing.name=气密性升级
 gendustry.upgrades.light.name=光照升级
 gendustry.upgrades.sky.name=露天环境升级
 gendustry.upgrades.hell.name=地狱环境升级
+gendustry.upgrades.winter.name=严寒环境升级
 gendustry.upgrades.auto.name=自动化升级
 gendustry.upgrades.humidifier.name=加湿器升级
 gendustry.upgrades.dryer.name=干燥升级
@@ -149,7 +150,7 @@ gendustry.chromosome.METABOLISM=新陈代谢
 gendustry.chromosome.LIFESPAN=寿命
 gendustry.chromosome.TERRITORY=活动范围
 gendustry.chromosome.FERTILITY=生育能力
-gendustry.chromosome.SIZE=Size
+gendustry.chromosome.SIZE=大小
 gendustry.chromosome.HUMIDITY=湿度
 gendustry.chromosome.SPECIES=品种
 gendustry.chromosome.FIRE_RESIST=耐火性
@@ -169,7 +170,7 @@ gendustry.chromosome.SAPPINESS=树汁
     SPECIES,
 gendustry.chromosome.PRIMARY=原生种
 gendustry.chromosome.SECONDARY=次生种
-gendustry.chromosome.PH_TOLERANCE=pH tolerance
+gendustry.chromosome.PH_TOLERANCE=pH耐受性
 gendustry.chromosome.STEM=血统
 
 gendustry.allele.false=否
@@ -198,6 +199,8 @@ gendustry.givesample.success=基因样本 (品种=%s, 染色体=%s, 基因=%s) �
 # ==== MUTATION REQUIREMENTS ====
 gendustry.req.temperature=温度需求: %s
 gendustry.req.humidity=湿度需求: %s
+gendustry.req.biome=生态群系需求: %s
+gendustry.req.block=方块需要: %s
 
 # ==== BEE SPECIES ====
 gendustry.bees.species.black=黑色
