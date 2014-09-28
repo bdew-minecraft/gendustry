@@ -61,6 +61,7 @@ gendustry.upgrades.sealing.name=방수 업그레이드
 gendustry.upgrades.light.name=광원 업그레이드
 gendustry.upgrades.sky.name=하늘 개방 업그레이드
 gendustry.upgrades.hell.name=지옥 구현 업그레이드
+gendustry.upgrades.winter.name=설원 구현 업그레이드
 gendustry.upgrades.auto.name=자동화 업그레이드
 gendustry.upgrades.humidifier.name=습도 업그레이드
 gendustry.upgrades.dryer.name=건조 업그레이드
@@ -197,6 +198,8 @@ gendustry.givesample.success=(종=%s, 염색체=%s, 대립유전자=%s)샘플을
 # ==== MUTATION REQUIREMENTS ====
 gendustry.req.temperature=필요 기온: %s
 gendustry.req.humidity=필요 습도: %s
+gendustry.req.biome=필요 바이옴: %s
+gendustry.req.block=필요 블럭: %s
 
 # ==== BEE SPECIES ====
 gendustry.bees.species.black=검은색
