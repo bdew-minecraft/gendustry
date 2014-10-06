@@ -14,24 +14,20 @@ import net.bdew.lib.recipes.gencfg.{CfgVal, GenericConfigParser}
 import net.bdew.lib.recipes.lootlist.LootListParser
 
 class Parser extends RecipeParser with GenericConfigParser with LootListParser {
-  override def delayedStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | regOreDict | super.delayedStatement
-
-  def regOreDict = "regOreDict" ~> ":" ~> spec ~ "@WILDCARD".? ~ ("->" ~> str) ^^ {
-    case spec ~ wildcard ~ id => StRegOredict(id, spec, wildcard.isDefined)
-  }
+  override def recipeStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | super.recipeStatement
 
   // === Machine Recipes ===
 
-  def mutagen = "mutagen" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
-    case sp ~ n => StMutagen(sp, n)
+  def mutagen = "mutagen" ~> ":" ~> spec ~ ("=>" ~> int <~ "mb") ^^ {
+    case sp ~ n => RsMutagen(sp, n)
   }
 
-  def dna = "dna" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
-    case sp ~ n => StLiquidDNA(sp, n)
+  def dna = "dna" ~> ":" ~> spec ~ ("=>" ~> int <~ "mb") ^^ {
+    case sp ~ n => RsLiquidDNA(sp, n)
   }
 
-  def protein = "protein" ~> ":" ~> spec ~ ("->" ~> int) ^^ {
-    case sp ~ n => StProtein(sp, n)
+  def protein = "protein" ~> ":" ~> spec ~ ("=>" ~> int <~ "mb") ^^ {
+    case sp ~ n => RsProtein(sp, n)
   }
 
   def charWithCount = recipeChar ~ ("*" ~> int).? ^^ {
@@ -39,7 +35,7 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
   }
 
   def assembly = "assembly" ~> ":" ~> (charWithCount <~ ",").+ ~ (int <~ "mj") ~ ("=>" ~> specWithCount) ^^ {
-    case r ~ p ~ (s ~ n) => StAssembly(r, p, s, n.getOrElse(1))
+    case r ~ p ~ (s ~ n) => RsAssembly(r, p, s, n.getOrElse(1))
   }
 
   def oneOrManyDrops = (
@@ -51,12 +47,12 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
   def fluidSpec = str ~ (wholeNumber <~ "mb") ^^ { case id ~ amount => FluidSpec(id, amount.toInt) }
 
   def squeezer = "squeezer" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> fluidSpec) ~ ("+" ~> dropsEntry).? ^^ {
-    case stack ~ ticks ~ fluid ~ Some((chance, res)) => StSqueezer(stack, fluid, ticks.toInt, res, chance)
-    case stack ~ ticks ~ fluid ~ None => StSqueezer(stack, fluid, ticks.toInt, null, 0)
+    case stack ~ ticks ~ fluid ~ Some((chance, res)) => RsSqueezer(stack, fluid, ticks.toInt, res, chance)
+    case stack ~ ticks ~ fluid ~ None => RsSqueezer(stack, fluid, ticks.toInt, null, 0)
   }
 
   def centrifuge = "centrifuge" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> oneOrManyDrops) ^^ {
-    case stack ~ ticks ~ drops => StCentrifuge(stack, drops, ticks.toInt)
+    case stack ~ ticks ~ drops => RsCentrifuge(stack, drops, ticks.toInt)
   }
 
   // === Mutations ===
@@ -68,15 +64,15 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
 
   def mutationReq = mrTemperature | mrHumidity | mrBiome | mrBlock
 
-  def stMutation = "secret".? ~ ("mutation" ~> ":") ~ (decimalNumber <~ "%") ~ str ~ "+" ~ str ~ "=" ~ str ~ mutationReq.* ^^ {
+  def stMutation = "secret".? ~ ("mutation" ~> ":") ~ (decimalNumber <~ "%") ~ str ~ "+" ~ str ~ "=>" ~ str ~ mutationReq.* ^^ {
     case secret ~ mutation ~ chance ~ p1 ~ plus ~ p2 ~ eq ~ res ~ req =>
-      StMutation(parent1 = p1, parent2 = p2, result = res,
+      RsMutation(parent1 = p1, parent2 = p2, result = res,
         chance = chance.toFloat, secret = secret.isDefined, requirements = req)
   }
 
   // === Apiary Modifiers ===
 
-  override def cfgStatement = cfgAdd | cfgMul | cfgSub | cfgDiv | super.cfgStatement
+  override def cfgEntry = cfgAdd | cfgMul | cfgSub | cfgDiv | super.cfgEntry
 
   def cfgAdd = ident ~ ("+" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierAdd(n.toFloat)) }
   def cfgMul = ident ~ ("*" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierMul(n.toFloat)) }

@@ -20,7 +20,7 @@ object TuningLoader {
 
   val loader = new Loader
 
-  def loadDealayed() = loader.processDelayedStatements()
+  def loadDealayed() = loader.processRecipeStatements()
 
   def loadConfigFiles() {
     val listReader = new BufferedReader(new InputStreamReader(

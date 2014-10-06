@@ -9,18 +9,14 @@
 
 package net.bdew.gendustry.config.loader
 
-import net.bdew.lib.block.BlockRef
-import net.bdew.lib.recipes.gencfg.CfgEntry
-import net.bdew.lib.recipes.{StackBlock, CraftingStatement, DelayedStatement, StackRef}
+import net.bdew.lib.recipes.gencfg.ConfigEntry
+import net.bdew.lib.recipes.{CraftingStatement, RecipeStatement, StackBlock, StackRef}
 
 case class FluidSpec(id: String, amount: Int)
 
-// Register OreDict statement
-case class StRegOredict(id: String, spec: StackRef, wildcard: Boolean) extends DelayedStatement
-
 // === Modifiers for apiary upgrades ===
 
-abstract class EntryModifier extends CfgEntry
+abstract class EntryModifier extends ConfigEntry
 
 case class EntryModifierAdd(v: Float) extends EntryModifier
 
@@ -32,26 +28,26 @@ case class EntryModifierDiv(v: Float) extends EntryModifier
 
 // === Machine Recipes ===
 
-case class StMutagen(st: StackRef, mb: Int) extends DelayedStatement
+case class RsMutagen(st: StackRef, mb: Int) extends RecipeStatement
 
-case class StLiquidDNA(st: StackRef, mb: Int) extends DelayedStatement
+case class RsLiquidDNA(st: StackRef, mb: Int) extends RecipeStatement
 
-case class StProtein(st: StackRef, mb: Int) extends DelayedStatement
+case class RsProtein(st: StackRef, mb: Int) extends RecipeStatement
 
 // BC Assembly Table
-case class StAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
+case class RsAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
 // Forestry Centrifuge
-case class StCentrifuge(st: StackRef, out: List[(Int, StackRef)], time: Int) extends DelayedStatement
+case class RsCentrifuge(st: StackRef, out: List[(Int, StackRef)], time: Int) extends RecipeStatement
 
 // Forestry Squeezer
-case class StSqueezer(st: StackRef, fluid: FluidSpec, time: Int, remnants: StackRef, chance: Int) extends DelayedStatement
+case class RsSqueezer(st: StackRef, fluid: FluidSpec, time: Int, remnants: StackRef, chance: Int) extends RecipeStatement
 
 // === Mutations ===
 
 abstract class MutationRequirement
 
-case class StMutation(parent1: String, parent2: String, result: String, chance: Float, secret: Boolean, requirements: List[MutationRequirement]) extends DelayedStatement
+case class RsMutation(parent1: String, parent2: String, result: String, chance: Float, secret: Boolean, requirements: List[MutationRequirement]) extends RecipeStatement
 
 case class MReqTemperature(temperature: String) extends MutationRequirement
 

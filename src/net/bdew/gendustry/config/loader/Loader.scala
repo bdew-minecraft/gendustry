@@ -17,7 +17,7 @@ import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.fluids.{LiquidDNASources, MutagenSources, ProteinSources}
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.lootlist.LootListLoader
-import net.bdew.lib.recipes.{DelayedStatement, RecipeLoader, RecipeParser, StackRef}
+import net.bdew.lib.recipes.{RecipeLoader, RecipeParser, RecipeStatement, StackRef}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
 import net.minecraftforge.oredict.OreDictionary
@@ -25,7 +25,7 @@ import net.minecraftforge.oredict.OreDictionary
 class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
   val cfgStore = Tuning
 
-  var mutations = List.empty[StMutation]
+  var mutations = List.empty[RsMutation]
 
   override def newParser(): RecipeParser = new Parser()
 
@@ -41,26 +41,26 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
   def resolveFluid(s: FluidSpec) =
     new FluidStack(Option(FluidRegistry.getFluid(s.id)).getOrElse(error("Fluid %s not found", s.id)), s.amount)
 
-  override def processDelayedStatement(s: DelayedStatement): Unit = s match {
-    case StMutagen(st, mb) =>
+  override def processRecipeStatement(s: RecipeStatement): Unit = s match {
+    case RsMutagen(st, mb) =>
       for (x <- getAllConcreteStacks(st)) {
         MutagenSources.register(x, mb)
         Gendustry.logInfo("Added Mutagen source %s -> %d mb", x, mb)
       }
 
-    case StLiquidDNA(st, mb) =>
+    case RsLiquidDNA(st, mb) =>
       for (x <- getAllConcreteStacks(st)) {
         LiquidDNASources.register(x, mb)
         Gendustry.logInfo("Added Liquid DNA source %s -> %d mb", x, mb)
       }
 
-    case StProtein(st, mb) =>
+    case RsProtein(st, mb) =>
       for (x <- getAllConcreteStacks(st)) {
         ProteinSources.register(x, mb)
         Gendustry.logInfo("Added Protein source %s -> %d mb", x, mb)
       }
 
-    case StAssembly(rec, power, out, cnt) =>
+    case RsAssembly(rec, power, out, cnt) =>
       Gendustry.logInfo("Adding assembly recipe: %s + %d mj => %s * %d", rec, power, out, cnt)
       val outStack = getConcreteStack(out, cnt)
       val stacks = rec.map {
@@ -73,7 +73,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
       AssemblyRecipeManager.INSTANCE.getRecipes.add(new AssemblyRecipe(outStack, power, stacks: _*))
       Gendustry.logInfo("Done")
 
-    case StCentrifuge(stack, out, time) =>
+    case RsCentrifuge(stack, out, time) =>
       Gendustry.logInfo("Adding centrifuge recipe: %s => %s", stack, out)
 
       // forestry API is stupid and requires a hashmap, build one for it
@@ -86,7 +86,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
       Gendustry.logInfo("Done %s -> %s", inStack, outStacks)
 
-    case StSqueezer(in, fluid, time, out, chance) =>
+    case RsSqueezer(in, fluid, time, out, chance) =>
       Gendustry.logInfo("Adding squeezer recipe: %s => %s + %s", in, fluid, out)
 
       val inStack = getConcreteStackNoWildcard(in)
@@ -97,18 +97,8 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
       Gendustry.logInfo("Done %s -> %s + %s", inStack, outStack, outFluid)
 
-    case x: StMutation => mutations +:= x
+    case x: RsMutation => mutations +:= x
 
-    case StRegOredict(id, spec, wildcard) =>
-      Gendustry.logInfo("Registering ore dictionary entry: %s -> %s", spec, id)
-      val stack = getConcreteStack(spec)
-      if (wildcard) {
-        Gendustry.logInfo("Forcing wildcard damage (was %d)", stack.getItemDamage)
-        stack.setItemDamage(OreDictionary.WILDCARD_VALUE)
-      }
-      Gendustry.logInfo("Actual stack: %s", stack)
-      OreDictionary.registerOre(id, stack)
-
-    case _ => super.processDelayedStatement(s)
+    case _ => super.processRecipeStatement(s)
   }
 }
