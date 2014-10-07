@@ -23,7 +23,7 @@ apply plugin: 'scala'
 apply plugin: 'forge'
 
 version = "1.4.0"
-ext.bdlibver = "1.5.0.25"
+ext.bdlibver = "1.5.0.27"
 ext.versuffix = "mc1710"
 ext.apiVer = version
 
