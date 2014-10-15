@@ -21,7 +21,9 @@ trait TilePoweredRF extends TilePoweredBase with IEnergyHandler {
   private lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
   override def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean) =
-    (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt
+    if (PowerProxy.RFEnabled)
+      (power.inject(maxReceive / ratio, simulate) * ratio).floor.toInt
+    else 0
 
   override def extractEnergy(from: ForgeDirection, maxExtract: Int, simulate: Boolean) = 0
   override def canConnectEnergy(from: ForgeDirection) = PowerProxy.RFEnabled

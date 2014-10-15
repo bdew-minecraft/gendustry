@@ -22,6 +22,7 @@ trait ItemPoweredRF extends ItemPoweredBase with IEnergyContainerItem {
   private lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
   def receiveEnergy(container: ItemStack, maxReceive: Int, simulate: Boolean): Int = {
+    if (!PowerProxy.RFEnabled) return 0
     val charge = getCharge(container)
     val canCharge = Misc.clamp(maxCharge.toFloat - charge, 0F, maxReceive.toFloat / ratio).floor.toInt
     if (!simulate) setCharge(container, charge + canCharge)
