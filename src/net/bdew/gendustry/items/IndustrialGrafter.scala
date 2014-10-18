@@ -55,11 +55,15 @@ object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.Ha
         for (dx <- -1 * aoe to aoe;
              dy <- -1 * aoe to aoe;
              dz <- -1 * aoe to aoe
-             if dy + y > 0 && dy + y < world.getHeight) {
+             if dy + y > 0 && dy + y < world.getHeight && (dx != 0 || dy != 0 || dz != 0)) {
           val bl = world.getBlock(x + dx, y + dy, z + dz)
           if (bl != null && bl.getMaterial == Material.leaves && hasCharges(stack)) {
-            if (bl.removedByPlayer(world, player.asInstanceOf[EntityPlayer], x + dx, y + dy, z + dz, false))
+            val meta = world.getBlockMetadata(x + dx, y + dy, z + dz)
+            bl.onBlockHarvested(world, x + dx, y + dy, z + dz, meta, player.asInstanceOf[EntityPlayer])
+            if (bl.removedByPlayer(world, player.asInstanceOf[EntityPlayer], x + dx, y + dy, z + dz, false)) {
               useCharge(stack, 1, player)
+              bl.harvestBlock(world, player.asInstanceOf[EntityPlayer], x + dx, y + dy, z + dz, meta)
+            }
           }
         }
       }
