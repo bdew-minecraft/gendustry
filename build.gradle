@@ -23,7 +23,7 @@ apply plugin: 'scala'
 apply plugin: 'forge'
 
 version = "1.4.0"
-ext.bdlibver = "1.5.0.30"
+ext.bdlibver = "1.5.0.31"
 ext.versuffix = "mc1710"
 ext.apiVer = version
 
@@ -37,7 +37,7 @@ group = "net.bdew"
 archivesBaseName = "gendustry"
 
 minecraft {
-    version = "1.7.10-10.13.0.1207"
+    version = "1.7.10-10.13.2.1231"
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
     replace("GENDUSTRY_APIVER", project.apiVer)
@@ -65,13 +65,13 @@ repositories {
 
 dependencies {
     compile "net.bdew:bdlib:" + bdlibver
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.48:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.98:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.3.23:dev"
-    compile "com.mod-buildcraft:buildcraft:6.0.17:dev"
-    compile "net.industrial-craft:industrialcraft-2:2.2.541-experimental:api"
-    compile "net.sengir.forestry:forestry_1.7.10:3.1.0.3:api"
-    compile "mcp.mobius.waila:Waila:1.5.3_1.7.10"
+    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.56:dev"
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.104:dev"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.3.26:dev"
+    compile "com.mod-buildcraft:buildcraft:6.0.18:dev"
+    compile "net.industrial-craft:industrialcraft-2:2.2.650-experimental:api"
+    compile "net.sengir.forestry:forestry_1.7.10:3.1.1.4:api"
+    compile "mcp.mobius.waila:Waila:1.5.5_1.7.10"
     compile "net.bdew.thirdparty:CoFHLib:R1.0.1:api"
 }
 
