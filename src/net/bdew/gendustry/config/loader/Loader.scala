@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
 import net.minecraftforge.oredict.OreDictionary
 
 class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
+  // Mutations are collected here for later processing
   val cfgStore = Tuning
 
   var mutations = List.empty[RsMutation]

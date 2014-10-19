@@ -101,7 +101,7 @@ with IIndustrialApiary {
   }
 
   clientTick.listen(() =>
-    if (beeRoot.isMated(queen) && (errorState :== 1)) {
+    if (beeRoot.isMated(queen) && (errorState :== 1) && Config.renderBeeEffects) {
       beeRoot.getMember(queen).doFX(logic.getEffectData, this)
     }
   )

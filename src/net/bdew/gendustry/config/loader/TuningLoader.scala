@@ -11,68 +11,29 @@ package net.bdew.gendustry.config.loader
 
 import java.io._
 
-import cpw.mods.fml.common.FMLCommonHandler
 import net.bdew.gendustry.Gendustry
+import net.bdew.lib.recipes.RecipesHelper
 
 object TuningLoader {
-
-  // Mutations are collected here for later processing
-
   val loader = new Loader
 
   def loadDealayed() = loader.processRecipeStatements()
 
   def loadConfigFiles() {
-    val listReader = new BufferedReader(new InputStreamReader(
-      getClass.getResourceAsStream("/assets/gendustry/config/files.lst")))
-    val list = Iterator.continually(listReader.readLine)
-      .takeWhile(_ != null)
-      .map(_.trim)
-      .filterNot(_.startsWith("#"))
-      .filterNot(_.isEmpty)
-      .toList
-    listReader.close()
-
     if (!Gendustry.configDir.exists()) {
       Gendustry.configDir.mkdir()
+      val nl = System.getProperty("line.separator")
       val f = new FileWriter(new File(Gendustry.configDir, "readme.txt"))
-      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order\n")
-      f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration\n")
+      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order" + nl)
+      f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration" + nl)
       f.close()
     }
 
-    val overrideDir = new File(Gendustry.configDir, "overrides")
-    if (!overrideDir.exists()) overrideDir.mkdir()
-
-    Gendustry.logInfo("Loading internal config files")
-
-    for (fileName <- list) {
-      val overrideFile = new File(overrideDir, fileName)
-      if (overrideFile.exists()) {
-        tryLoadConfig(new FileReader(overrideFile), overrideFile.getCanonicalPath)
-      } else {
-        val resname = "/assets/gendustry/config/" + fileName
-        tryLoadConfig(new InputStreamReader(getClass.getResourceAsStream(resname)), getClass.getResource(resname).toString)
-      }
-    }
-
-    Gendustry.logInfo("Loading user config files")
-
-    for (fileName <- Gendustry.configDir.list().sorted if fileName.endsWith(".cfg")) {
-      val file = new File(Gendustry.configDir, fileName)
-      if (file.canRead) tryLoadConfig(new FileReader(file), file.getCanonicalPath)
-    }
-  }
-
-  def tryLoadConfig(reader: Reader, path: String) {
-    Gendustry.logInfo("Loading config: %s", path)
-    try {
-      loader.load(reader)
-    } catch {
-      case e: Throwable =>
-        FMLCommonHandler.instance().raiseException(e, "Gendustry config loading failed in file %s: %s".format(path, e.getMessage), true)
-    } finally {
-      reader.close()
-    }
+    RecipesHelper.loadConfigs(
+      modName = "Gendustry",
+      listResource = "/assets/gendustry/config/files.lst",
+      configDir = Gendustry.configDir,
+      resBaseName = "/assets/gendustry/config/",
+      loader = loader)
   }
 }

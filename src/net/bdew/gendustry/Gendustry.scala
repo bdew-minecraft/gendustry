@@ -41,7 +41,6 @@ object Gendustry {
   final val channel = "bdew.gendustry"
 
   var configDir: File = null
-  var configFile: File = null
 
   def logInfo(msg: String, args: Any*) = log.info(msg.format(args: _*))
   def logWarn(msg: String, args: Any*) = log.warn(msg.format(args: _*))
@@ -60,9 +59,14 @@ object Gendustry {
     ItemPush.init()
 
     configDir = new File(event.getModConfigurationDirectory, "gendustry")
-    configFile = event.getSuggestedConfigurationFile
     TuningLoader.loadConfigFiles()
     TriggerProvider.registerTriggers()
+
+    Fluids.load()
+    Blocks.load()
+    Items.load()
+    Machines.load()
+
     if (event.getSide == Side.CLIENT) {
       ResourceListener.init()
       HintIcons.init()
@@ -71,7 +75,8 @@ object Gendustry {
 
   @EventHandler
   def init(event: FMLInitializationEvent) {
-    Config.load(configFile)
+    if (event.getSide.isClient)
+      Config.load(new File(configDir, "client.config"))
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
     Upgrades.init()
