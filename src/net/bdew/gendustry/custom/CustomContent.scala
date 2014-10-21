@@ -28,7 +28,7 @@ object CustomContent {
 
   def registerBranches() {
     Gendustry.logInfo("Registering branches")
-    val added = (Tuning.getSection("Branches").filterType(classOf[ConfigSection]) collect {
+    val added = (Tuning.getOrAddSection("Branches").filterType(classOf[ConfigSection]) collect {
       case (_, cfg) =>
         Gendustry.logInfo("%s -> %s (%s)", cfg.getString("Parent"), cfg.getString("UID"), cfg.getString("Scientific"))
         val cls = reg.createAndRegisterClassification(EnumClassLevel.GENUS, cfg.getString("UID"), cfg.getString("Scientific"))
@@ -39,7 +39,7 @@ object CustomContent {
 
   def registerSpecies() {
     Gendustry.logInfo("Registering bees")
-    val added = (Tuning.getSection("Bees").filterType(classOf[ConfigSection]) collect {
+    val added = (Tuning.getOrAddSection("Bees").filterType(classOf[ConfigSection]) collect {
       case (uid, cfg) =>
         val species = new BeeSpecies(cfg, uid)
         Gendustry.logInfo("Registering %s", species.getUID)
