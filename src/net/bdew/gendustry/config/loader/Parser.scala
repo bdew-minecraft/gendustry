@@ -78,4 +78,9 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
   def cfgMul = ident ~ ("*" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierMul(n.toFloat)) }
   def cfgSub = ident ~ ("-" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierSub(n.toFloat)) }
   def cfgDiv = ident ~ ("/" ~> "=" ~> decimalNumber) ^^ { case id ~ n => CfgVal(id, EntryModifierDiv(n.toFloat)) }
+
+  // === Conditions ===
+
+  def cndHaveRoot = "HaveForestryModule" ~> str ^^ CndHaveRoot
+  override def condition = cndHaveRoot | super.condition
 }

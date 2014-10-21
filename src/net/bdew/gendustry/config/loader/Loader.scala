@@ -13,11 +13,12 @@ import buildcraft.core.recipes.AssemblyRecipeManager
 import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
 import forestry.api.recipes.RecipeManagers
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.fluids.{LiquidDNASources, MutagenSources, ProteinSources}
+import net.bdew.lib.recipes._
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.lootlist.LootListLoader
-import net.bdew.lib.recipes.{RecipeLoader, RecipeParser, RecipeStatement, StackRef}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
 import net.minecraftforge.oredict.OreDictionary
@@ -37,6 +38,11 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
       Gendustry.logInfo("meta/damage is unset in %s, defaulting to 0", ref)
     }
     resolved
+  }
+
+  override def resolveCondition(cond: Condition) = cond match {
+    case CndHaveRoot(root) => ForestryHelper.haveRoot(root)
+    case _ => super.resolveCondition(cond)
   }
 
   def resolveFluid(s: FluidSpec) =

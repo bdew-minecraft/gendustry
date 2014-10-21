@@ -9,8 +9,8 @@
 
 package net.bdew.gendustry.config.loader
 
+import net.bdew.lib.recipes._
 import net.bdew.lib.recipes.gencfg.ConfigEntry
-import net.bdew.lib.recipes.{CraftingStatement, RecipeStatement, StackBlock, StackRef}
 
 case class FluidSpec(id: String, amount: Int)
 
@@ -56,3 +56,7 @@ case class MReqHumidity(humidity: String) extends MutationRequirement
 case class MReqBlock(block: StackBlock) extends MutationRequirement
 
 case class MReqBiome(biome: String) extends MutationRequirement
+
+// === Conditions ===
+
+case class CndHaveRoot(name: String) extends Condition
