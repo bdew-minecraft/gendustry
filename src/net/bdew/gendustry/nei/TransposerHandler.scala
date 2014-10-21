@@ -54,15 +54,24 @@ class TransposerHandler extends BaseRecipeHandler(5, 13) {
     addTransferRect(Rect(63, 49, 66, 15), "Transposer")
   }
 
-  lazy val forestSampleInfo = GeneSampleInfo(AlleleManager.alleleRegistry.getSpeciesRoot("rootBees"), 0,
-    AlleleManager.alleleRegistry.getAllele("forestry.speciesForest"))
-
-  def addSampleRecipe() = addRecipe(GeneSample.newStack(forestSampleInfo))
+  def addSampleRecipe() = {
+    import scala.collection.JavaConversions._
+    for ((name, root) <- AlleleManager.alleleRegistry.getSpeciesRoot) {
+      val allele = root.getDefaultTemplate()(0)
+      val sample = GeneSampleInfo(root, 0, allele)
+      addRecipe(GeneSample.newStack(sample))
+    }
+  }
 
   def addTemplateRecipe() {
-    val tpl = new ItemStack(GeneTemplate)
-    GeneTemplate.addSample(tpl, forestSampleInfo)
-    addRecipe(tpl)
+    import scala.collection.JavaConversions._
+    for ((name, root) <- AlleleManager.alleleRegistry.getSpeciesRoot) {
+      val allele = root.getDefaultTemplate()(0)
+      val sample = GeneSampleInfo(root, 0, allele)
+      val tpl = new ItemStack(GeneTemplate)
+      GeneTemplate.addSample(tpl, sample)
+      addRecipe(tpl)
+    }
   }
 
   def addAllRecipes() {
