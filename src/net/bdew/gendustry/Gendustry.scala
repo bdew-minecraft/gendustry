@@ -18,9 +18,9 @@ import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl}
-import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.compat.itempush.ItemPush
 import net.bdew.gendustry.compat.triggers.TriggerProvider
+import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
 import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.custom.CustomContent
@@ -58,6 +58,8 @@ object Gendustry {
     PowerProxy.logModVersions()
     ItemPush.init()
 
+    ForestryHelper.logAvailableRoots()
+
     configDir = new File(event.getModConfigurationDirectory, "gendustry")
     TuningLoader.loadConfigFiles()
     TriggerProvider.registerTriggers()
@@ -81,15 +83,21 @@ object Gendustry {
     RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
     Upgrades.init()
     TuningLoader.loadDealayed()
-    CustomContent.registerBranches()
-    CustomContent.registerSpecies()
+    if (ForestryHelper.haveRoot("Bees")) {
+      CustomContent.registerBranches()
+      CustomContent.registerSpecies()
+    } else {
+      logInfo("Apiculture module seems to be disabled in Forestry, not registering custom bees")
+    }
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallabck")
   }
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
-    CustomContent.registerTemplates()
-    CustomContent.registerMuations()
+    if (ForestryHelper.haveRoot("Bees")) {
+      CustomContent.registerTemplates()
+      CustomContent.registerMuations()
+    }
     if (event.getSide == Side.CLIENT) {
       GeneticsCache.load()
       GendustryCreativeTabs.init()

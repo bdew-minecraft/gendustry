@@ -10,6 +10,7 @@
 package net.bdew.gendustry.config
 
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.machines.advmutatron.MachineMutatronAdv
 import net.bdew.gendustry.machines.apiary.MachineApiary
 import net.bdew.gendustry.machines.extractor.MachineExtractor
@@ -26,7 +27,10 @@ import net.bdew.lib.config.MachineManager
 object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, GendustryCreativeTabs.main) {
   registerMachine(MachineMutagenProducer)
   registerMachine(MachineMutatron)
-  registerMachine(MachineApiary)
+  if (ForestryHelper.haveRoot("Bees"))
+    registerMachine(MachineApiary)
+  else
+    Gendustry.logInfo("Apiculture module seems to be disabled in Forestry, not registering Industrial Apiary")
   registerMachine(MachineImprinter)
   registerMachine(MachineSampler)
   registerMachine(MachineMutatronAdv)
