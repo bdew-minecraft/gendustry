@@ -13,6 +13,7 @@ import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import forestry.api.genetics.{AlleleManager, IIndividual}
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.api.blocks.IIndustrialApiary
 import net.bdew.gendustry.api.items.IApiaryUpgrade
@@ -250,6 +251,14 @@ with IIndustrialApiary {
   override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.rainfall + mods.humidity)
   override def getErrorOrdinal = errorState
   override def addProduct(product: ItemStack, all: Boolean): Boolean = {
+    if (product == null || product.getItem == null) {
+      Gendustry.logError("Industrial Apiary at %d,%d,%d received an invalid bee product, one of your bee-adding mods is borked.", xCoord, yCoord, zCoord)
+      if (getQueen != null) {
+        val genome = beeRoot.getMember(getQueen).getGenome
+        Gendustry.logInfo("Bee in the apiary: %s/%s", genome.getPrimary.getName, genome.getSecondary.getName)
+      }
+      return true
+    }
     var p = product
     if (mods.isAutomated && beeRoot.isMember(product))
       p = ItemUtils.addStackToSlots(p, this, slots.bees, false)
