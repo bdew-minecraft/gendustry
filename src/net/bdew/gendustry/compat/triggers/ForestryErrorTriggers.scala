@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.compat.triggers
 
-import buildcraft.api.gates.ActionManager
+import buildcraft.api.statements.StatementManager
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.machines.apiary.{ErrorCodes, TileApiary}
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -37,7 +37,7 @@ object ForestryErrorTriggers {
   val apiaryTriggers = apiaryTriggerCodes.map(validTriggers)
 
   def register() {
-    validTriggers.values.foreach(ActionManager.registerTrigger(_))
+    validTriggers.values.foreach(StatementManager.registerStatement)
     Gendustry.logInfo("Created %d BC triggers for Forestry error codes", validTriggers.size)
   }
 }

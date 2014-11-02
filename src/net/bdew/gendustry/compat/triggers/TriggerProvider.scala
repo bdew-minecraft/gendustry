@@ -11,20 +11,19 @@ package net.bdew.gendustry.compat.triggers
 
 import java.util
 
-import buildcraft.api.gates.{ActionManager, ITrigger, ITriggerProvider}
-import buildcraft.api.transport.IPipeTile
+import buildcraft.api.statements._
 import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.TileBaseProcessor
-import net.minecraft.block.Block
 import net.minecraft.tileentity.TileEntity
+import net.minecraftforge.common.util.ForgeDirection
 
 object TriggerProvider extends ITriggerProvider {
-  def getPipeTriggers(pipe: IPipeTile) = null
+  override def getInternalTriggers(container: IStatementContainer) = null
 
-  def getNeighborTriggers(block: Block, tile: TileEntity) = {
+  override def getExternalTriggers(side: ForgeDirection, tile: TileEntity) = {
     import scala.collection.JavaConversions._
-    val triggers = new util.LinkedList[ITrigger]()
+    val triggers = new util.LinkedList[ITriggerExternal]()
 
     if (tile.isInstanceOf[TileApiary])
       triggers.addAll(ForestryErrorTriggers.apiaryTriggers)
@@ -39,8 +38,8 @@ object TriggerProvider extends ITriggerProvider {
   }
 
   def registerTriggers() {
-    ActionManager.registerTriggerProvider(this)
-    ActionManager.registerTrigger(TriggerWorking)
+    StatementManager.registerTriggerProvider(this)
+    StatementManager.registerStatement(TriggerWorking)
     ForestryErrorTriggers.register()
     PowerTriggers.register()
   }

@@ -9,27 +9,29 @@
 
 package net.bdew.gendustry.compat.triggers
 
-import buildcraft.api.gates.{ITileTrigger, ITriggerParameter}
+import buildcraft.api.statements.{IStatementContainer, IStatementParameter, ITriggerExternal}
 import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
 
-abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, tileClass: Class[T]) extends ITileTrigger {
+abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, tileClass: Class[T]) extends ITriggerExternal {
   var icon: IIcon = null
   override def getUniqueTag = "gendustry." + ordering + "." + id
   override def getIcon = icon
   override def registerIcons(ir: IIconRegister) =
     icon = ir.registerIcon("gendustry:trigger/" + id)
-  override def hasParameter = false
-  override def requiresParameter = false
   override def getDescription = Misc.toLocal("gendustry.trigger." + id)
-  override def createParameter() = null
   override def rotateLeft() = this
-  override def isTriggerActive(side: ForgeDirection, tile: TileEntity, parameter: ITriggerParameter) =
-    if (tileClass.isInstance(tile))
-      getState(side, tile.asInstanceOf[T])
+
+  override def createParameter(index: Int) = null
+  override def maxParameters() = 0
+  override def minParameters() = 0
+
+  override def isTriggerActive(target: TileEntity, side: ForgeDirection, source: IStatementContainer, parameters: Array[IStatementParameter]) =
+    if (tileClass.isInstance(target))
+      getState(side, target.asInstanceOf[T])
     else
       false
 

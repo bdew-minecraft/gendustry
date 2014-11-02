@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.compat.triggers
 
-import buildcraft.api.gates.ActionManager
+import buildcraft.api.statements.StatementManager
 import net.bdew.gendustry.power.TilePowered
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -36,6 +36,6 @@ object TriggerPower100 extends BaseTrigger("power100", "z5", classOf[TilePowered
 object PowerTriggers {
   val triggers = Seq(TriggerPower0, TriggerPower25, TriggerPower50, TriggerPower75, TriggerPower100)
   def register() {
-    triggers.foreach(ActionManager.registerTrigger(_))
+    triggers.foreach(StatementManager.registerStatement)
   }
 }
