@@ -35,7 +35,7 @@ case class RsLiquidDNA(st: StackRef, mb: Int) extends RecipeStatement
 case class RsProtein(st: StackRef, mb: Int) extends RecipeStatement
 
 // BC Assembly Table
-case class RsAssembly(rec: List[(Char, Int)], power: Int, result: StackRef, cnt: Int) extends CraftingStatement
+case class RsAssembly(rec: List[(Char, Int)], id: String, power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
 // Forestry Centrifuge
 case class RsCentrifuge(st: StackRef, out: List[(Int, StackRef)], time: Int) extends RecipeStatement

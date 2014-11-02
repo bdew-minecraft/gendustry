@@ -34,8 +34,8 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
     case ch ~ cnt => (ch, cnt.getOrElse(1))
   }
 
-  def assembly = "assembly" ~> ":" ~> (charWithCount <~ ",").+ ~ (int <~ "mj") ~ ("=>" ~> specWithCount) ^^ {
-    case r ~ p ~ (s ~ n) => RsAssembly(r, p, s, n.getOrElse(1))
+  def assembly = "assembly" ~> ":" ~> ("id" ~> "=" ~> str <~ ";") ~ (charWithCount <~ ",").+ ~ (int <~ "mj") ~ ("=>" ~> specWithCount) ^^ {
+    case id ~ r ~ p ~ (s ~ n) => RsAssembly(r, id, p, s, n.getOrElse(1))
   }
 
   def oneOrManyDrops = (

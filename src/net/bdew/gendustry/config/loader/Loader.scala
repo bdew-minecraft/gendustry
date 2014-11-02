@@ -10,7 +10,6 @@
 package net.bdew.gendustry.config.loader
 
 import buildcraft.core.recipes.AssemblyRecipeManager
-import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe
 import forestry.api.recipes.RecipeManagers
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.ForestryHelper
@@ -67,7 +66,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
         Gendustry.logInfo("Added Protein source %s -> %d mb", x, mb)
       }
 
-    case RsAssembly(rec, power, out, cnt) =>
+    case RsAssembly(rec, id, power, out, cnt) =>
       Gendustry.logInfo("Adding assembly recipe: %s + %d mj => %s * %d", rec, power, out, cnt)
       val outStack = getConcreteStack(out, cnt)
       val stacks = rec.map {
@@ -77,7 +76,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
           s
       }
       Gendustry.logInfo("Output: %s", outStack)
-      AssemblyRecipeManager.INSTANCE.getRecipes.add(new AssemblyRecipe(outStack, power, stacks: _*))
+      AssemblyRecipeManager.INSTANCE.addRecipe(id, power, outStack, stacks: _*)
       Gendustry.logInfo("Done")
 
     case RsCentrifuge(stack, out, time) =>
