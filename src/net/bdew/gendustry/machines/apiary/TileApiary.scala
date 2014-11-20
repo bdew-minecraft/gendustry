@@ -11,7 +11,7 @@ package net.bdew.gendustry.machines.apiary
 
 import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
-import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.core.{EnumErrorCode, EnumHumidity, EnumTemperature}
 import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
@@ -117,7 +117,7 @@ with IIndustrialApiary {
       if ((logic.getQueen != null || logic.getBreedingTime > 0) && (errorState :== 1))
         power.extract(cfg.baseMjPerTick * mods.energy, false)
     } else {
-      setErrorState(-1)
+      setErrorState(EnumErrorCode.NOPOWER)
     }
 
     if (movePrincess && getStackInSlot(slots.queen) == null)
@@ -238,6 +238,8 @@ with IIndustrialApiary {
 
   override def getWorld = worldObj
   override def setErrorState(state: Int) = errorState := state
+  override def getErrorState = ErrorCodes.getValueSafe(errorState)
+  override def setErrorState(state: EnumErrorCode) = errorState := state.ordinal()
   override def getOwnerName = owner
   override def getXCoord = xCoord
   override def getYCoord = yCoord

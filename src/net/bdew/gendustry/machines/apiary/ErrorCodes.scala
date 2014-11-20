@@ -9,24 +9,15 @@
 
 package net.bdew.gendustry.machines.apiary
 
+import forestry.api.core.EnumErrorCode
 import net.bdew.lib.Misc
 import net.bdew.lib.gui.Texture
-import net.minecraft.util.IIcon
 
 object ErrorCodes {
-
-  import scala.language.existentials
-
-  private val cEnumErrorCode = Class.forName("forestry.core.EnumErrorCode")
-  private val mGetIcon = cEnumErrorCode.getMethod("getIcon")
-  private val mGetDescription = cEnumErrorCode.getMethod("getDescription")
-  private val mGetHelp = cEnumErrorCode.getMethod("getHelp")
-
-  val values = cEnumErrorCode.getEnumConstants
-
+  val values = EnumErrorCode.values().zipWithIndex.map(_.swap).toMap
+  def getValueSafe(i: Int) = values.getOrElse(i, EnumErrorCode.UNKNOWN)
   def isValid(i: Int) = values.isDefinedAt(i)
-
-  def getIcon(i: Int) = Texture(Texture.ITEMS, mGetIcon.invoke(values(i)).asInstanceOf[IIcon])
-  def getDescription(i: Int) = Misc.toLocal("for." + mGetDescription.invoke(values(i)).asInstanceOf[String])
-  def getHelp(i: Int) = Misc.toLocal("for." + mGetHelp.invoke(values(i)).asInstanceOf[String])
+  def getIcon(i: Int) = Texture(Texture.ITEMS, values(i).getIcon)
+  def getDescription(i: Int) = Misc.toLocal("for." + values(i).getDescription)
+  def getHelp(i: Int) = Misc.toLocal("for." + values(i).getHelp)
 }
