@@ -34,7 +34,7 @@ if (project.hasProperty('buildnum')) {
 }
 
 group = "net.bdew"
-archivesBaseName = "gendustry"
+archivesBaseName = "gendustry-fu"
 
 minecraft {
     version = "1.7.10-10.13.2.1231"
