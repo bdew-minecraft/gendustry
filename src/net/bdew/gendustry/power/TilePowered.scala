@@ -11,4 +11,4 @@ package net.bdew.gendustry.power
 
 import net.bdew.lib.power.TilePoweredBase
 
-trait TilePowered extends TilePoweredBase with TilePoweredMJ with TilePoweredRF with TilePoweredEU
+trait TilePowered extends TilePoweredBase with TilePoweredRF with TilePoweredEU
