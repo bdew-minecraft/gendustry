@@ -19,7 +19,7 @@ object ItemPush {
 
   def init() {
     register(VanillaPush)
-    if (PowerProxy.haveBC) register(BCPipePushProxy)
+    if (PowerProxy.haveModVersion("BuildCraftAPI|core")) register(BCPipePushProxy)
     if (PowerProxy.haveTE) register(CofhConduitPushProxy)
   }
 
