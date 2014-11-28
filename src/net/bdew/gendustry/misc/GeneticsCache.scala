@@ -12,6 +12,7 @@ package net.bdew.gendustry.misc
 import forestry.api.genetics._
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.lib.Misc
 
 object GeneticsCache {
 
