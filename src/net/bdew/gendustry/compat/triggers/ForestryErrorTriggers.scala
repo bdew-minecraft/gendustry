@@ -10,8 +10,9 @@
 package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.statements.StatementManager
-import forestry.api.core.EnumErrorCode
+import forestry.api.core.IErrorState
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.machines.apiary.ErrorCodes
 import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
@@ -19,10 +20,10 @@ import net.minecraftforge.common.util.ForgeDirection
 
 trait ForestryErrorSource extends TileEntity {
   def getErrorOrdinal: Int
-  def getErrorState: EnumErrorCode
+  def getErrorState: IErrorState
 }
 
-case class ForestryErrorTrigger(state: EnumErrorCode) extends BaseTrigger("forestry.error." + state.ordinal(), "y%03d".format(state.ordinal()), classOf[ForestryErrorSource]) {
+case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestry.error." + state.getID, "y%03d".format(state.getID), classOf[ForestryErrorSource]) {
   override def getIcon = state.getIcon
   override def getDescription = Misc.toLocal("for." + state.getDescription)
   override def registerIcons(ir: IIconRegister) {}
@@ -32,20 +33,21 @@ case class ForestryErrorTrigger(state: EnumErrorCode) extends BaseTrigger("fores
 
 object ForestryErrorTriggers {
 
-  val apiaryTriggerStates = Seq(
-    EnumErrorCode.OK,
-    EnumErrorCode.INVALIDBIOME,
-    EnumErrorCode.NOTGLOOMY,
-    EnumErrorCode.NOTLUCID,
-    EnumErrorCode.NOTDAY,
-    EnumErrorCode.NOTNIGHT,
-    EnumErrorCode.NOFLOWER,
-    EnumErrorCode.NOQUEEN,
-    EnumErrorCode.NODRONE,
-    EnumErrorCode.NOSKY,
-    EnumErrorCode.NOSPACE,
-    EnumErrorCode.NOPOWER
-  )
+  val apiaryTriggerStates = List(
+    "ok",
+    "invalidBiome",
+    "isRaining",
+    "notGloomy",
+    "notLucid",
+    "notDay",
+    "notNight",
+    "noFlower",
+    "noQueen",
+    "noDrone",
+    "noSky",
+    "noSpace",
+    "noPower"
+  ) map ErrorCodes.getErrorByName
 
   val validTriggerStates = apiaryTriggerStates.toSet
   val validTriggers = validTriggerStates.map(x => x -> ForestryErrorTrigger(x)).toMap
