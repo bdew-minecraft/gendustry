@@ -114,9 +114,6 @@ gendustry.label.mod.sieve=* Pollen Collection
 gendustry.label.mod.temperature=* Temperature
 gendustry.label.mod.humidity=* Humidity
 
-gendustry.error.power=Not enough power
-gendustry.error.disabled=Disabled by settings
-
 gendustry.label.sample.rootBees=Taken from a Bee
 gendustry.label.sample.rootTrees=Taken from a Sapling
 gendustry.label.sample.rootButterflies=Taken from a Butterfly
@@ -256,6 +253,9 @@ gendustry.honeydrop.white.name=White Colored Honey Drop
 itemGroup.bdew.gendustry=Gendustry
 itemGroup.bdew.templates=Genetic Templates
 itemGroup.bdew.samples=Genetic Samples
+
+for.gendustry.errorstate.disabled.description=Disabled
+for.gendustry.errorstate.disabled.help=The machine is disabled by it's configuration
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty

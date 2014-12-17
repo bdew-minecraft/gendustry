@@ -34,19 +34,19 @@ case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestr
 object ForestryErrorTriggers {
 
   val apiaryTriggerStates = List(
-    "ok",
-    "invalidBiome",
-    "isRaining",
-    "notGloomy",
-    "notLucid",
-    "notDay",
-    "notNight",
-    "noFlower",
-    "noQueen",
-    "noDrone",
-    "noSky",
-    "noSpace",
-    "noPower"
+    "Forestry:ok",
+    "Forestry:invalidBiome",
+    "Forestry:isRaining",
+    "Forestry:notGloomy",
+    "Forestry:notLucid",
+    "Forestry:notDay",
+    "Forestry:notNight",
+    "Forestry:noFlower",
+    "Forestry:noQueen",
+    "Forestry:noDrone",
+    "Forestry:noSky",
+    "Forestry:noSpace",
+    "Forestry:noPower"
   ) map ErrorCodes.getErrorByName
 
   val validTriggerStates = apiaryTriggerStates.toSet

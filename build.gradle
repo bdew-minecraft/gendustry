@@ -70,8 +70,8 @@ dependencies {
     compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
     compile "com.mod-buildcraft:buildcraft:6.2.0:dev"
     compile "net.industrial-craft:industrialcraft-2:2.2.650-experimental:api"
-    compile "net.sengir.forestry:forestry_1.7.10:3.3.0.334-unstable:api"
-    compile "mcp.mobius.waila:Waila:1.5.5_1.7.10"
+    compile "net.sengir.forestry:forestry_1.7.10:3.3.0.337-unstable:api"
+    compile "mcp.mobius.waila:Waila:1.5.6a_1.7.10"
     compile "net.bdew.thirdparty:CoFHLib:R1.0.1:api"
 }
 
@@ -85,6 +85,7 @@ sourceSets {
         resources {
             srcDir 'resources'
         }
+        output.resourcesDir = output.classesDir // Hack for IDEA
     }
 }
 

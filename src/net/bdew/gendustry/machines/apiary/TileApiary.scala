@@ -111,13 +111,13 @@ with IIndustrialApiary {
     movePrincess = false
 
     if (!canWork) {
-      setErrorState(-2)
+      setErrorState(GendustryErrorStates.Disabled)
     } else if (power.stored >= cfg.baseMjPerTick * mods.energy) {
       logic.update()
       if ((logic.getQueen != null || logic.getBreedingTime > 0) && (errorState :== 1))
         power.extract(cfg.baseMjPerTick * mods.energy, false)
     } else {
-      setErrorState(ErrorCodes.map("noPower"))
+      setErrorState(ErrorCodes.getErrorByName("Forestry:noPower"))
     }
 
     if (movePrincess && getStackInSlot(slots.queen) == null)
@@ -238,7 +238,7 @@ with IIndustrialApiary {
 
   override def getWorld = worldObj
   override def setErrorState(state: Int) = errorState := state
-  override def getErrorState = ErrorCodes.getValueSafe(errorState)
+  override def getErrorState = ErrorCodes.getErrorById(errorState)
   override def setErrorState(state: IErrorState) = errorState := state.getID
   override def getOwnerName = owner
   override def getXCoord = xCoord

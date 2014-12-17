@@ -9,24 +9,45 @@
 
 package net.bdew.gendustry.machines.apiary
 
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.{ErrorStateRegistry, IErrorState}
 import net.bdew.lib.Misc
 import net.bdew.lib.gui.Texture
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.util.IIcon
 
 object ErrorCodes {
-  private val cEnumErrorCode = Class.forName("forestry.core.EnumErrorCode").asInstanceOf[Class[IErrorState]]
-  private val fName = cEnumErrorCode.getDeclaredField("name")
-  fName.setAccessible(true)
+  val UNKNOWN = ErrorStateRegistry.getErrorState("Forestry:unknown")
 
-  val map = cEnumErrorCode.getEnumConstants.map(c => fName.get(c).asInstanceOf[String] -> c).toMap
+  def getErrorById(i: Int) = Option(ErrorStateRegistry.getErrorState(i.toShort)).getOrElse(UNKNOWN)
+  def getErrorByName(n: String) = Option(ErrorStateRegistry.getErrorState(n)).getOrElse(UNKNOWN)
 
-  val UNKNOWN = ErrorStateRegistry.getErrorStateFromCode(0)
+  def isValid(i: Int) = ErrorStateRegistry.getErrorState(i.toShort) != null
+  def getIcon(i: Int) = Texture(Texture.ITEMS, getErrorById(i).getIcon)
+  def getDescription(i: Int) = Misc.toLocal("for." + getErrorById(i).getDescription)
+  def getHelp(i: Int) = Misc.toLocal("for." + getErrorById(i).getHelp)
 
-  def getValueSafe(i: Int) = Option(ErrorStateRegistry.getErrorStateFromCode(i.toShort)).getOrElse(UNKNOWN)
-  def getErrorByName(n: String) = map.getOrElse(n, UNKNOWN)
+  def init() {
+    ErrorStateRegistry.registerErrorState(GendustryErrorStates.Disabled)
+  }
+}
 
-  def isValid(i: Int) = ErrorStateRegistry.getErrorStateFromCode(i.toShort) != null
-  def getIcon(i: Int) = Texture(Texture.ITEMS, getValueSafe(i).getIcon)
-  def getDescription(i: Int) = Misc.toLocal("for." + getValueSafe(i).getDescription)
-  def getHelp(i: Int) = Misc.toLocal("for." + getValueSafe(i).getHelp)
+case class GendustryErrorState(name: String, id: Short) extends IErrorState {
+  var icon: IIcon = null
+  override def getID = id
+  override def getUniqueName = "gendustry:" + name
+  override def getDescription = "gendustry.errorstate." + name + ".description"
+  override def getHelp = "gendustry.errorstate." + name + ".help"
+
+  @SideOnly(Side.CLIENT)
+  override def getIcon = icon
+
+  @SideOnly(Side.CLIENT)
+  override def registerIcons(register: IIconRegister) {
+    icon = register.registerIcon("gendustry:error/" + name)
+  }
+}
+
+object GendustryErrorStates {
+  val Disabled = GendustryErrorState("disabled", 500)
 }
