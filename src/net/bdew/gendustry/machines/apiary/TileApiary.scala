@@ -11,7 +11,7 @@ package net.bdew.gendustry.machines.apiary
 
 import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
-import forestry.api.core.{EnumErrorCode, EnumHumidity, EnumTemperature}
+import forestry.api.core.{BiomeHelper, EnumErrorCode, EnumHumidity, EnumTemperature}
 import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
@@ -246,7 +246,7 @@ with IIndustrialApiary {
   override def getZCoord = zCoord
   override def getBiomeId = getModifiedBiome.biomeID
   override def getTemperature =
-    if (EnumTemperature.isBiomeHellish(getModifiedBiome))
+    if (BiomeHelper.isBiomeHellish(getModifiedBiome))
       EnumTemperature.HELLISH
     else
       EnumTemperature.getFromValue(getModifiedBiome.temperature + mods.temperature)

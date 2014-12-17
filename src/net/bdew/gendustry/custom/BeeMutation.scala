@@ -45,7 +45,7 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
     if (!((allele0 == parent1 && allele1 == parent2) || (allele0 == parent2 && allele1 == parent1))) 0
     else if (!testReq(reqTemperature, housing.getTemperature)) 0
     else if (!testReq(reqHumidity, housing.getHumidity)) 0
-    else if (!testReq(reqBiomeId, housing.getBiomeId)) 0
+    else if (!testReq(reqBiomeId, housing.getBiome.biomeID)) 0
     else if (!testReq(reqBlock, getBlockUnderHousing(housing))) 0
     else if (!testReq(reqBlockMeta, getBlockMetaUnderHousing(housing))) 0
     else chance
