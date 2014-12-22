@@ -10,6 +10,7 @@
 package net.bdew.gendustry.gui
 
 import net.bdew.gendustry.config.Config
+import net.bdew.lib.DecFormat
 import net.bdew.lib.gui.{Point, Rect, Texture}
 import net.bdew.lib.power.{DataSlotPower, WidgetPowerGauge}
 
@@ -17,5 +18,5 @@ import scala.collection.mutable
 
 class WidgetPowerCustom(rect: Rect, texture: Texture, dslot: DataSlotPower) extends WidgetPowerGauge(rect, texture, dslot) {
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) =
-    tip += formater.format(dslot.stored * Config.powerShowMultiplier) + "/" + formater.format(dslot.capacity * Config.powerShowMultiplier) + " " + Config.powerShowUnits
+    tip += DecFormat.round(dslot.stored * Config.powerShowMultiplier) + "/" + DecFormat.round(dslot.capacity * Config.powerShowMultiplier) + " " + Config.powerShowUnits
 }
