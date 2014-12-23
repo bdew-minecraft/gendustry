@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.nei
@@ -53,25 +53,25 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
 
   def getRecipeIndividuals(sp: IAlleleSpecies) = {
     val root = sp.getRoot
-    val indiv = root.templateAsIndividual(root.getTemplate(sp.getUID))
-    indiv.analyze()
+    val individual = root.templateAsIndividual(root.getTemplate(sp.getUID))
+    individual.analyze()
     root match {
       case bees: IBeeRoot =>
         List(
-          bees.getMemberStack(indiv, EnumBeeType.PRINCESS.ordinal()),
-          bees.getMemberStack(indiv, EnumBeeType.QUEEN.ordinal()),
-          bees.getMemberStack(indiv, EnumBeeType.DRONE.ordinal())
+          bees.getMemberStack(individual, EnumBeeType.PRINCESS.ordinal()),
+          bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal()),
+          bees.getMemberStack(individual, EnumBeeType.DRONE.ordinal())
         )
       case trees: ITreeRoot =>
         List(
-          trees.getMemberStack(indiv, EnumGermlingType.POLLEN.ordinal()),
-          trees.getMemberStack(indiv, EnumGermlingType.SAPLING.ordinal())
+          trees.getMemberStack(individual, EnumGermlingType.POLLEN.ordinal()),
+          trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
         )
       case butterflies: IButterflyRoot =>
         List(
-          butterflies.getMemberStack(indiv, EnumFlutterType.BUTTERFLY.ordinal()),
-          butterflies.getMemberStack(indiv, EnumFlutterType.SERUM.ordinal()),
-          butterflies.getMemberStack(indiv, EnumFlutterType.CATERPILLAR.ordinal())
+          butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal()),
+          butterflies.getMemberStack(individual, EnumFlutterType.SERUM.ordinal()),
+          butterflies.getMemberStack(individual, EnumFlutterType.CATERPILLAR.ordinal())
         )
     }
   }
@@ -97,10 +97,10 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
     }
   }
 
-  override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
+  override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, tip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip.add(Misc.toLocalF("gendustry.label.consume", MachineExtractor.labwareConsumeChance.toInt))
-    super.handleItemTooltip(gui, stack, currenttip, recipe)
+      tip.add(Misc.toLocalF("gendustry.label.consume", MachineExtractor.labwareConsumeChance.toInt))
+    super.handleItemTooltip(gui, stack, tip, recipe)
   }
 
   def getGuiTexture = Gendustry.modId + ":textures/gui/extractor.png"

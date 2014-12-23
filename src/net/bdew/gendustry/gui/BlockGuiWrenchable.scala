@@ -4,13 +4,16 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.gui
 
 import buildcraft.api.tools.IToolWrench
+import cofh.api.block.IDismantleable
+import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.tile.inventory.BreakableInventoryTile
 import net.minecraft.block.Block
@@ -20,9 +23,8 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
-//FIXME Reenable when TE support is readded
-//@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.block.IDismantleable")
-trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
+@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.block.IDismantleable")
+trait BlockGuiWrenchable extends Block with IDismantleable {
   val guiId: Int
 
   def dismantleBlock(player: EntityPlayer, world: World, x: Int, y: Int, z: Int, returnBlock: Boolean): ItemStack = {
@@ -48,9 +50,9 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     if (activeItem != null && tileEntity != null && tileEntity.isInstanceOf[IFluidHandler]) {
       val fluidHandler = tileEntity.asInstanceOf[IFluidHandler]
       if (FluidContainerRegistry.isEmptyContainer(activeItem)) {
-        val fstack = fluidHandler.drain(side, Int.MaxValue, false)
-        if (fstack != null) {
-          val filled = FluidContainerRegistry.fillFluidContainer(fstack, activeItem)
+        val fStack = fluidHandler.drain(side, Int.MaxValue, false)
+        if (fStack != null) {
+          val filled = FluidContainerRegistry.fillFluidContainer(fStack, activeItem)
           if (filled != null) {
             fluidHandler.drain(side, FluidContainerRegistry.getFluidForFilledItem(filled), true)
             player.inventory.decrStackSize(player.inventory.currentItem, 1)
@@ -59,9 +61,9 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
           }
         }
       } else if (FluidContainerRegistry.isFilledContainer(activeItem)) {
-        val fstack = FluidContainerRegistry.getFluidForFilledItem(activeItem)
-        if (fstack != null && (fluidHandler.fill(side, fstack, false) == fstack.amount)) {
-          fluidHandler.fill(side, fstack, true)
+        val fStack = FluidContainerRegistry.getFluidForFilledItem(activeItem)
+        if (fStack != null && (fluidHandler.fill(side, fStack, false) == fStack.amount)) {
+          fluidHandler.fill(side, fStack, true)
           val cont = activeItem.getItem.getContainerItem(activeItem)
           player.inventory.decrStackSize(player.inventory.currentItem, 1)
           if (cont != null) ItemUtils.dropItemToPlayer(world, player, cont)
@@ -72,9 +74,9 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     return false
   }
 
-  override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, xoffs: Float, yoffs: Float, zoffs: Float): Boolean = {
+  override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, xOffs: Float, yOffs: Float, zOffs: Float): Boolean = {
     // If the click can be handled by something else - ignore it
-    if (super.onBlockActivated(world, x, y, z, player, side, xoffs, yoffs, zoffs)) return true
+    if (super.onBlockActivated(world, x, y, z, player, side, xOffs, yOffs, zOffs)) return true
     if (player.isSneaking) {
       val equipped = if (player.getCurrentEquippedItem != null) player.getCurrentEquippedItem.getItem else null
       if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, x, y, z)) {

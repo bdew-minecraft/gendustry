@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.waila
@@ -15,9 +15,9 @@ import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.gendustry.power.TilePowered
 
 object WailaHandler {
-  def loadCallabck(reg: IWailaRegistrar) {
-    Gendustry.logInfo("Waila callback recieved, loading...")
-    reg.registerBodyProvider(WailaDataslotsDataProvider, classOf[TilePowered])
+  def loadCallback(reg: IWailaRegistrar) {
+    Gendustry.logInfo("WAILA callback received, loading...")
+    reg.registerBodyProvider(WailaDataSlotsDataProvider, classOf[TilePowered])
     reg.registerBodyProvider(WailaApiaryDataProvider, classOf[TileApiary])
     reg.registerSyncedNBTKey("*", classOf[TilePowered])
   }

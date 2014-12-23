@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.replicator
@@ -25,7 +25,7 @@ class GuiReplicator(val te: TileReplicator, player: EntityPlayer) extends BaseSc
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(32, 19, 16, 58), Textures.tankOverlay, te.dnaTank))
     widgets.add(new WidgetFluidGauge(new Rect(56, 19, 16, 58), Textures.tankOverlay, te.proteinTank))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.replicator.name"), 8, 6, Color.darkgray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.replicator.name"), 8, 6, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundIcon(HintIcons.template)
   }

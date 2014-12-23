@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.api.blocks;
@@ -12,7 +12,7 @@ package net.bdew.gendustry.api.blocks;
 import net.minecraft.world.World;
 
 /**
- * Interface to various informations about blocks and TileEntities
+ * Interface to various information about blocks and TileEntities
  * WARNING: Everything retrieved from this interface is not guaranteed to be correct or up to date on client side!
  */
 public interface IBlockAPI {
@@ -42,7 +42,7 @@ public interface IBlockAPI {
     boolean isWorkerMachine(World w, int x, int y, int z);
 
     /**
-     * @return wroker interface
+     * @return worker interface
      */
     IWorkerMachine getWorkerMachine(World w, int x, int y, int z);
 }

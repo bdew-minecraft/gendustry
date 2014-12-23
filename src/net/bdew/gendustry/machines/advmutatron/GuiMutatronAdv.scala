@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.advmutatron
@@ -25,8 +25,8 @@ class GuiMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extends Base
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(32, 19, 16, 58), Textures.tankOverlay, te.tank))
     widgets.add(new WidgetSelector(new Point(7, 84), te.selectedMutation, -1))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutatron.adv.name"), 8, 6, Color.darkgray))
-    widgets.add(new WidgetLabel(Misc.toLocal("gendustry.label.select"), 8, 89, Color.darkgray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutatron.adv.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("gendustry.label.select"), 8, 89, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inIndividual1).setBackgroundIcon(HintIcons.queenOrSapling)
     inventorySlots.getSlotFromInventory(te, te.slots.inIndividual2).setBackgroundIcon(HintIcons.droneOrPollen)

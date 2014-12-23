@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.advmutatron
@@ -77,14 +77,14 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
       getStackInSlot(slots.inIndividual2) != null &&
       getStackInSlot(slots.inLabware) != null &&
       tank.getFluidAmount >= cfg.mutagenPerItem &&
-      slots.selectors.contains(selectedMutation.cval) &&
-      inv(selectedMutation.cval) != null
+      slots.selectors.contains(selectedMutation.value) &&
+      inv(selectedMutation.value) != null
 
   def tryStart(): Boolean = {
     if (canStart) {
-      output := GeneticsHelper.applyMutationDecayChance(getStackInSlot(selectedMutation.cval), getStackInSlot(0))
+      output := GeneticsHelper.applyMutationDecayChance(getStackInSlot(selectedMutation.value), getStackInSlot(0))
       tank.drain(cfg.mutagenPerItem, true)
-      if (lastPlayer.cval != null)
+      if (lastPlayer.value != null)
         GeneticsHelper.addMutationToTracker(inv(0), inv(1), output, lastPlayer, worldObj)
       decrStackSize(slots.inIndividual1, 1)
       decrStackSize(slots.inIndividual2, 1)
@@ -100,14 +100,14 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
     v
   }
 
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
+  override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
     slot match {
       case 0 =>
-        return GeneticsHelper.isPotentialMutationPair(itemstack, getStackInSlot(1))
+        return GeneticsHelper.isPotentialMutationPair(stack, getStackInSlot(1))
       case 1 =>
-        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(0), itemstack)
+        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(0), stack)
       case 3 =>
-        return itemstack.getItem == Items.labware
+        return stack.getItem == Items.labware
       case _ =>
         return false
     }

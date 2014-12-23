@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.nei
@@ -40,18 +40,18 @@ abstract class BaseRecipeHandler(val offX: Int, val offY: Int) extends TemplateR
   }
 
   override def mouseClicked(gui: GuiRecipe, button: Int, recipe: Int): Boolean = {
-    val mrel = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
+    val relative = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
-      if (component.rect.contains(mrel) && component.mouseClick(button)) return true
+      if (component.rect.contains(relative) && component.mouseClick(button)) return true
     super.mouseClicked(gui, button, recipe)
   }
 
-  override def handleTooltip(gui: GuiRecipe, currenttip: util.List[String], recipe: Int) = {
+  override def handleTooltip(gui: GuiRecipe, tip: util.List[String], recipe: Int) = {
     import scala.collection.JavaConversions._
-    val mrel = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
+    val relative = getMousePosition - gui.getRecipePosition(recipe) +(offX, offY) -(gui.guiLeft, gui.guiTop)
     for (component <- arecipes.get(recipe).asInstanceOf[CachedRecipeWithComponents].components)
-      if (component.rect.contains(mrel)) currenttip.addAll(component.getTooltip)
-    super.handleTooltip(gui, currenttip, recipe)
+      if (component.rect.contains(relative)) tip.addAll(component.getTooltip)
+    super.handleTooltip(gui, tip, recipe)
   }
 
   override def drawBackground(recipe: Int) {

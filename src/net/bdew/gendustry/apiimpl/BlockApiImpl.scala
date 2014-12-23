@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.apiimpl
@@ -22,19 +22,19 @@ object BlockApiImpl extends IBlockAPI {
     getTypedTileEntity(w, x, y, z, classOf[TileWorker]).isDefined
 
   override def getWorkerMachine(w: World, x: Int, y: Int, z: Int) =
-    getTypedTileEntity(w, x, y, z, classOf[TileWorker]) getOrElse null
+    getTypedTileEntity(w, x, y, z, classOf[TileWorker]).orNull
 
   override def isAdvancedMutatron(w: World, x: Int, y: Int, z: Int) =
     getTypedTileEntity(w, x, y, z, classOf[TileMutatronAdv]).isDefined
 
   override def getAdvancedMutatron(w: World, x: Int, y: Int, z: Int) =
-    getTypedTileEntity(w, x, y, z, classOf[TileMutatronAdv]) getOrElse null
+    getTypedTileEntity(w, x, y, z, classOf[TileMutatronAdv]).orNull
 
   override def isIndustrialApiary(w: World, x: Int, y: Int, z: Int) =
     getTypedTileEntity(w, x, y, z, classOf[TileApiary]).isDefined
 
   override def getIndustrialApiary(w: World, x: Int, y: Int, z: Int) =
-    getTypedTileEntity(w, x, y, z, classOf[TileApiary]) getOrElse null
+    getTypedTileEntity(w, x, y, z, classOf[TileApiary]).orNull
 }
 
 

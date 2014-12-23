@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.gui
@@ -16,7 +16,7 @@ import net.bdew.lib.power.{DataSlotPower, WidgetPowerGauge}
 
 import scala.collection.mutable
 
-class WidgetPowerCustom(rect: Rect, texture: Texture, dslot: DataSlotPower) extends WidgetPowerGauge(rect, texture, dslot) {
+class WidgetPowerCustom(rect: Rect, texture: Texture, dSlot: DataSlotPower) extends WidgetPowerGauge(rect, texture, dSlot) {
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) =
-    tip += DecFormat.round(dslot.stored * Config.powerShowMultiplier) + "/" + DecFormat.round(dslot.capacity * Config.powerShowMultiplier) + " " + Config.powerShowUnits
+    tip += DecFormat.round(dSlot.stored * Config.powerShowMultiplier) + "/" + DecFormat.round(dSlot.capacity * Config.powerShowMultiplier) + " " + Config.powerShowUnits
 }

@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.apiary.upgrades
@@ -66,10 +66,10 @@ object Upgrades {
       val id = sect.getInt("id")
       val max = sect.getInt("max")
       val mods = sect.flatMap({
-        case (pname, EntryStr(v)) => Some(makeStrMod(name, pname, v))
-        case (pname, x: EntryModifier) => Some(makeNumMod(name, pname, x))
+        case (pName, EntryStr(v)) => Some(makeStrMod(name, pName, v))
+        case (pName, x: EntryModifier) => Some(makeNumMod(name, pName, x))
         case ("id", _) | ("max", _) => None
-        case (pname, v) => sys.error("Unknown upgrade modifier '%s' - %s in upgrade '%s'".format(pname, v, name))
+        case (pName, v) => sys.error("Unknown upgrade modifier '%s' - %s in upgrade '%s'".format(pName, v, name))
       })
       map += id -> Upgrade(id, name, max, mods.toSeq)
       GameRegistry.registerCustomItemStack("upgrade." + name, new ItemStack(ItemApiaryUpgrade, 1, id))

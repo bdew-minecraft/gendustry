@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.nei
@@ -58,13 +58,13 @@ class ImprinterHandler extends BaseRecipeHandler(5, 13) {
         tpl(sample.chromosome) = sample.allele
     }
 
-    val indiv = root.templateAsIndividual(tpl)
-    indiv.analyze()
+    val individual = root.templateAsIndividual(tpl)
+    individual.analyze()
 
     root match {
-      case bees: IBeeRoot => bees.getMemberStack(indiv, EnumBeeType.PRINCESS.ordinal())
-      case trees: ITreeRoot => trees.getMemberStack(indiv, EnumGermlingType.SAPLING.ordinal())
-      case flies: IButterflyRoot => flies.getMemberStack(indiv, 0)
+      case bees: IBeeRoot => bees.getMemberStack(individual, EnumBeeType.PRINCESS.ordinal())
+      case trees: ITreeRoot => trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
+      case flies: IButterflyRoot => flies.getMemberStack(individual, 0)
     }
   }
 
@@ -100,10 +100,10 @@ class ImprinterHandler extends BaseRecipeHandler(5, 13) {
     }
   }
 
-  override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, currenttip: util.List[String], recipe: Int): util.List[String] = {
+  override def handleItemTooltip(gui: GuiRecipe, stack: ItemStack, tip: util.List[String], recipe: Int): util.List[String] = {
     if (stack == getRecipe(recipe).labware.item)
-      currenttip += Misc.toLocalF("gendustry.label.consume", MachineImprinter.labwareConsumeChance.toInt)
-    super.handleItemTooltip(gui, stack, currenttip, recipe)
+      tip += Misc.toLocalF("gendustry.label.consume", MachineImprinter.labwareConsumeChance.toInt)
+    super.handleItemTooltip(gui, stack, tip, recipe)
   }
 
   def getGuiTexture = Gendustry.modId + ":textures/gui/imprinter.png"

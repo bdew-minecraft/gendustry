@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.mutatron
@@ -50,7 +50,7 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
     if (canStart) {
       output := GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2))
       tank.drain(cfg.mutagenPerItem, true)
-      if (lastPlayer.cval != null)
+      if (lastPlayer.value != null)
         GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), output, lastPlayer, worldObj)
       decrStackSize(slots.inIndividual1, 1)
       decrStackSize(slots.inIndividual2, 1)
@@ -60,14 +60,14 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
     } else return false
   }
 
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
+  override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
     slot match {
       case slots.inIndividual1 =>
-        return GeneticsHelper.isPotentialMutationPair(itemstack, getStackInSlot(slots.inIndividual2))
+        return GeneticsHelper.isPotentialMutationPair(stack, getStackInSlot(slots.inIndividual2))
       case slots.inIndividual2 =>
-        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(slots.inIndividual1), itemstack)
+        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(slots.inIndividual1), stack)
       case slots.inLabware =>
-        return itemstack.getItem == Items.labware
+        return stack.getItem == Items.labware
       case _ =>
         return false
     }

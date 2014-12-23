@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.apiary
@@ -59,24 +59,24 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
   }
 
   override def slotClick(slot: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
-    var pstack = player.inventory.getItemStack
-    if (te.slots.upgrades.contains(slot) && te.isUpgrade(pstack)) {
+    var oldStack = player.inventory.getItemStack
+    if (te.slots.upgrades.contains(slot) && te.isUpgrade(oldStack)) {
       val idx = inventorySlots.get(slot).asInstanceOf[Slot].getSlotIndex
       if (te.slots.upgrades.contains(idx) && modifiers == 0 && button <= 1) {
-        if (te.getStackInSlot(idx) == null || ItemUtils.isSameItem(pstack, te.getStackInSlot(idx))) {
-          var canAdd = te.getMaxAdditionalUpgrades(pstack)
+        if (te.getStackInSlot(idx) == null || ItemUtils.isSameItem(oldStack, te.getStackInSlot(idx))) {
+          var canAdd = te.getMaxAdditionalUpgrades(oldStack)
           if (canAdd > 0) {
             if (button == 1) canAdd = 1
-            var nstack: ItemStack = null
-            if (canAdd >= pstack.stackSize) {
-              nstack = pstack
-              pstack = null
+            val newStack = if (canAdd >= oldStack.stackSize) {
+              val t = oldStack
+              oldStack = null
+              t
             } else {
-              nstack = pstack.splitStack(canAdd)
+              oldStack.splitStack(canAdd)
             }
-            player.inventory.setItemStack(nstack)
+            player.inventory.setItemStack(newStack)
             val res = super.slotClick(slot, button, modifiers, player)
-            player.inventory.setItemStack(pstack)
+            player.inventory.setItemStack(oldStack)
             return res
           }
         }
@@ -84,6 +84,4 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
     }
     return super.slotClick(slot, button, modifiers, player)
   }
-
-  def canInteractWith(entityplayer: EntityPlayer): Boolean = te.isUseableByPlayer(entityplayer)
 }

@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.apiary
@@ -20,7 +20,7 @@ import scala.collection.mutable
 class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
   val rect: Rect = new Rect(x, y, 16, 16)
   override def draw(mouse: Point) {
-    val err = apiary.errorState.cval
+    val err = apiary.errorState.value
     if (err == -1) {
       parent.drawTexture(rect, Textures.errors.noPower)
     } else if (err == -2) {
@@ -33,7 +33,7 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
-    val err = apiary.errorState.cval
+    val err = apiary.errorState.value
     if (err == -1) {
       tip += Misc.toLocal(Gendustry.modId + ".error.power")
     } else if (err == -2) {

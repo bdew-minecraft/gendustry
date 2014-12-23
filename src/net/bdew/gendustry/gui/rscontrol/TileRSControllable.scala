@@ -4,15 +4,15 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.gui.rscontrol
 
 import net.bdew.lib.data.base.{TileDataSlots, UpdateKind}
 
-trait TileRSContollable extends TileDataSlots {
-  val rsmode = DataslotRSMode("rsmode", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI, UpdateKind.WORLD)
+trait TileRSControllable extends TileDataSlots {
+  val rsmode = DataSlotRSMode("rsmode", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI, UpdateKind.WORLD)
 
   def canWork = {
     val powered = getWorldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)

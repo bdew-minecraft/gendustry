@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.misc
@@ -19,7 +19,7 @@ import net.minecraft.command.{CommandBase, ICommandSender}
 class CommandDumpAlleles extends CommandBase {
   def getCommandName = "dumpalleles"
   override def getRequiredPermissionLevel = 2
-  def getCommandUsage(icommandsender: ICommandSender) = "dumpalleles"
+  def getCommandUsage(c: ICommandSender) = "dumpalleles"
 
   def processCommand(sender: ICommandSender, params: Array[String]) {
     val mcHome = FMLInjectionData.data()(6).asInstanceOf[File] //is there a better way to get this?
