@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.replicator
@@ -50,8 +50,8 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
     } else return false
   }
 
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack) =
-    slot == slots.inTemplate && itemstack.getItem == GeneTemplate && GeneTemplate.isComplete(itemstack)
+  override def isItemValidForSlot(slot: Int, stack: ItemStack) =
+    slot == slots.inTemplate && stack.getItem == GeneTemplate && GeneTemplate.isComplete(stack)
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outIndividual

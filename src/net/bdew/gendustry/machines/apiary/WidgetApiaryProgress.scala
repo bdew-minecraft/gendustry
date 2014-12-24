@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.apiary
@@ -22,18 +22,18 @@ class WidgetApiaryProgress(val rect: Rect, breeding: DataSlotFloat, progress: Da
   val texture = Textures.whiteProgress(rect.w)
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
-    if (breeding.cval > 0) {
-      tip += "%s - %.0f%%".format(Misc.toLocal(Gendustry.modId + ".label.breeding"), breeding.cval * 100)
-    } else if (progress.cval > 0) {
-      tip += "%s - %.0f%%".format(Misc.toLocal(Gendustry.modId + ".label.working"), progress.cval * 100)
+    if (breeding.value > 0) {
+      tip += "%s - %.0f%%".format(Misc.toLocal(Gendustry.modId + ".label.breeding"), breeding.value * 100)
+    } else if (progress.value > 0) {
+      tip += "%s - %.0f%%".format(Misc.toLocal(Gendustry.modId + ".label.working"), progress.value * 100)
     }
   }
 
   override def draw(mouse: Point) {
-    if (breeding.cval > 0) {
-      parent.drawTextureInterpolate(rect, texture, 0, 0, breeding.cval, 1)
-    } else if (progress.cval > 0) {
-      parent.drawTextureInterpolate(rect, texture, 0, 0, progress.cval, 1)
+    if (breeding.value > 0) {
+      parent.drawTextureInterpolate(rect, texture, 0, 0, breeding.value, 1)
+    } else if (progress.value > 0) {
+      parent.drawTextureInterpolate(rect, texture, 0, 0, progress.value, 1)
     }
   }
 }

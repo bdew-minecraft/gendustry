@@ -4,11 +4,12 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.misc
 
+import java.util
 import java.util.List
 
 import _root_.forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
@@ -19,7 +20,7 @@ import net.minecraft.command.{CommandBase, CommandException, ICommandSender, Wro
 class CommandGiveSample extends CommandBase {
   def getCommandName = "givesample"
   override def getRequiredPermissionLevel = 2
-  def getCommandUsage(icommandsender: ICommandSender) = "gendustry.givesample.usage"
+  def getCommandUsage(c: ICommandSender) = "gendustry.givesample.usage"
 
   import scala.collection.JavaConversions._
 
@@ -53,13 +54,13 @@ class CommandGiveSample extends CommandBase {
     if (!isValidAllele(root, chromosome, allele)) throw new CommandException("gendustry.givesample.error.invalid")
 
     val sample = GeneSample.newStack(GeneSampleInfo(root, chromosome, allele))
-    val entityitem = player.entityDropItem(sample, 0)
-    entityitem.delayBeforeCanPickup = 0
+    val entity = player.entityDropItem(sample, 0)
+    entity.delayBeforeCanPickup = 0
 
     CommandBase.func_152373_a(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
   }
 
-  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): List[_] = {
+  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): util.List[_] = {
     params.toSeq match {
       case Seq(rootUid) => CommandBase.getListOfStringsMatchingLastWord(params, validRoots: _*)
       case Seq(rootUid, chromosomeName) =>

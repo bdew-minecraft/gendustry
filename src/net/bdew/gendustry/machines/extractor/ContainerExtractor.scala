@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.extractor
@@ -19,6 +19,4 @@ class ContainerExtractor(val te: TileExtractor, player: EntityPlayer) extends Ba
   addSlotToContainer(new SlotValidating(te, te.slots.inIndividual, 44, 41))
   addSlotToContainer(new SlotValidating(te, te.slots.inLabware, 94, 19))
   bindPlayerInventory(player.inventory, 8, 84, 142)
-
-  def canInteractWith(entityplayer: EntityPlayer): Boolean = te.isUseableByPlayer(entityplayer)
 }

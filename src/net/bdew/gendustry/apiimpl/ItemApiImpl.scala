@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.apiimpl
@@ -28,7 +28,7 @@ object ItemApiImpl extends IItemAPI {
     stack.getItem == GeneTemplate && GeneTemplate.getSamples(stack).isEmpty
 
   override def isFullTemplate(stack: ItemStack) =
-    stack.getItem == GeneTemplate && !GeneTemplate.getSamples(stack).isEmpty
+    stack.getItem == GeneTemplate && GeneTemplate.getSamples(stack).nonEmpty
 
   override def isCompleteTemplate(stack: ItemStack) =
     stack.getItem == GeneTemplate && GeneTemplate.isComplete(stack)

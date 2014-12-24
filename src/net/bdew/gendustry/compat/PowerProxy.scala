@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.compat
@@ -36,10 +36,10 @@ object PowerProxy {
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
 
-  def haveModVersion(modid: String) = lookup.contains(modid)
+  def haveModVersion(modId: String) = lookup.contains(modId)
 
-  def getModVersion(modid: String): String = {
-    val cont = lookup.getOrElse(modid, return "NOT FOUND")
+  def getModVersion(modId: String): String = {
+    val cont = lookup.getOrElse(modId, return "NOT FOUND")
     cont.getModId + " " + cont.getVersion
   }
 

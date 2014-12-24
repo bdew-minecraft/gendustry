@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.items
@@ -75,8 +75,8 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
   }
 
   override def getItemEnchantability: Int = 0
-  override def getIsRepairable(par1ItemStack: ItemStack, par2ItemStack: ItemStack): Boolean = false
-  override def isBookEnchantable(itemstack1: ItemStack, itemstack2: ItemStack): Boolean = false
+  override def getIsRepairable(stack1: ItemStack, stack2: ItemStack): Boolean = false
+  override def isBookEnchantable(stack1: ItemStack, stack2: ItemStack): Boolean = false
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {

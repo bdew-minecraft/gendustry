@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.apiary
@@ -19,7 +19,7 @@ import net.bdew.gendustry.api.blocks.IIndustrialApiary
 import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.gendustry.compat.triggers.ForestryErrorSource
 import net.bdew.gendustry.config.Config
-import net.bdew.gendustry.gui.rscontrol.TileRSContollable
+import net.bdew.gendustry.gui.rscontrol.TileRSControllable
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.Misc
 import net.bdew.lib.covers.TileCoverable
@@ -40,7 +40,7 @@ with SidedInventory
 with BreakableInventoryTile
 with TilePowered
 with ForestryErrorSource
-with TileRSContollable
+with TileRSControllable
 with TileCoverable
 with IIndustrialApiary {
 
@@ -164,7 +164,7 @@ with IIndustrialApiary {
     strings :+= Misc.toLocalF("gendustry.label.temperature", Misc.toLocal(getTemperature.getName))
     strings :+= Misc.toLocalF("gendustry.label.humidity", Misc.toLocal(getHumidity.getName))
 
-    if (queen.cval != null) {
+    if (queen.value != null) {
       val bee = beeRoot.getMember(queen)
       if (bee != null && bee.isAnalyzed) {
         val genome = bee.getGenome
@@ -181,7 +181,6 @@ with IIndustrialApiary {
 
   // Misc
   def getBiome = worldObj.getBiomeGenForCoordsBody(xCoord, zCoord)
-  def getPowerDataslot(from: ForgeDirection) = power
   override def getSizeInventory = 15
 
   override def canInsertItem(slot: Int, stack: ItemStack, side: Int) = slots.bees.contains(slot) && isItemValidForSlot(slot, stack)
@@ -207,8 +206,8 @@ with IIndustrialApiary {
   override def onPollenRetrieved(queen: IBee, pollen: IIndividual, isHandled: Boolean): Boolean = {
     if (isHandled) return true
     if (!mods.isCollectingPollen) return false
-    val sproot = pollen.getGenome.getSpeciesRoot
-    val stack = sproot.getMemberStack(pollen, EnumGermlingType.POLLEN.ordinal())
+    val spRoot = pollen.getGenome.getSpeciesRoot
+    val stack = spRoot.getMemberStack(pollen, EnumGermlingType.POLLEN.ordinal())
     addProduct(stack, true)
     return true
   }
@@ -226,8 +225,8 @@ with IIndustrialApiary {
   override def isHellish = getModifiedBiome == BiomeGenBase.hell
 
   // IBeeHousing
-  override def setQueen(itemstack: ItemStack) = setInventorySlotContents(0, itemstack)
-  override def setDrone(itemstack: ItemStack) = setInventorySlotContents(1, itemstack)
+  override def setQueen(stack: ItemStack) = setInventorySlotContents(0, stack)
+  override def setDrone(stack: ItemStack) = setInventorySlotContents(1, stack)
   override def getQueen = getStackInSlot(slots.queen)
   override def getDrone = getStackInSlot(slots.drone)
   override def canBreed = true

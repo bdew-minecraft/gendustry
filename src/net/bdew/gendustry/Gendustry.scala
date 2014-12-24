@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry
@@ -86,21 +86,21 @@ object Gendustry {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
     Upgrades.init()
-    TuningLoader.loadDealayed()
+    TuningLoader.loadDelayed()
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerBranches()
       CustomContent.registerSpecies()
     } else {
       logInfo("Apiculture module seems to be disabled in Forestry, not registering custom bees")
     }
-    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallabck")
+    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallback")
   }
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerTemplates()
-      CustomContent.registerMuations()
+      CustomContent.registerMutations()
     }
     if (event.getSide == Side.CLIENT) {
       GeneticsCache.load()

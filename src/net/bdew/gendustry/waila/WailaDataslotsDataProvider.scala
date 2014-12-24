@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.waila
@@ -19,7 +19,7 @@ import net.bdew.lib.power.DataSlotPower
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
 
-object WailaDataslotsDataProvider extends BaseDataProvider(classOf[TileDataSlots]) {
+object WailaDataSlotsDataProvider extends BaseDataProvider(classOf[TileDataSlots]) {
   val dec = new DecimalFormat("#,##0")
 
   override def getBodyStrings(target: TileDataSlots, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
@@ -31,18 +31,18 @@ object WailaDataslotsDataProvider extends BaseDataProvider(classOf[TileDataSlots
         List("%s / %s %s".format(dec.format(stored), dec.format(capacity), Config.powerShowUnits))
 
       case (name, slot: DataSlotTankRestricted) =>
-        val fstack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
-        if (fstack != null && fstack.getFluid != null) {
-          List("%s / %s mB %s".format(dec.format(fstack.amount), dec.format(slot.size), fstack.getFluid.getLocalizedName(fstack)))
+        val fStack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
+        if (fStack != null && fStack.getFluid != null) {
+          List("%s / %s mB %s".format(dec.format(fStack.amount), dec.format(slot.size), fStack.getFluid.getLocalizedName(fStack)))
         } else {
           val fluid = FluidRegistry.getFluid(slot.fluidID)
-          List("0 / %s mB %s".format(dec.format(slot.size), fluid.getLocalizedName(fstack)))
+          List("0 / %s mB %s".format(dec.format(slot.size), fluid.getLocalizedName(fStack)))
         }
 
       case (name, slot: DataSlotTank) =>
-        val fstack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
-        if (fstack != null && fstack.getFluid != null) {
-          List("[V] %s / %s mB %s".format(dec.format(fstack.amount), dec.format(slot.size), fstack.getFluid.getLocalizedName(fstack)))
+        val fStack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
+        if (fStack != null && fStack.getFluid != null) {
+          List("[V] %s / %s mB %s".format(dec.format(fStack.amount), dec.format(slot.size), fStack.getFluid.getLocalizedName(fStack)))
         } else {
           None
         }

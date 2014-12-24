@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.mproducer
@@ -43,7 +43,7 @@ class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePow
   }
 
   def tryFinish(): Boolean = {
-    if (tank.fill(output, false) == output.cval) {
+    if (tank.fill(output, false) == output.value) {
       tank.fill(output, true)
       output := -1
       return true
@@ -69,8 +69,8 @@ class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePow
   }
 
   allowSided = true
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = MutagenSources.getValue(itemstack) > 0
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int): Boolean = false
+  override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = MutagenSources.getValue(stack) > 0
+  override def canExtractItem(slot: Int, stack: ItemStack, side: Int): Boolean = false
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
   override def canFill(from: ForgeDirection, fluid: Fluid) = false

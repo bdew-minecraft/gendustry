@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.extractor
@@ -51,7 +51,7 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
   }
 
   def tryFinish(): Boolean = {
-    if (tank.fill(output, false) == output.cval) {
+    if (tank.fill(output, false) == output.value) {
       tank.fill(output, true)
       output := -1
       return true
@@ -77,9 +77,9 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
   }
 
   allowSided = true
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = slot match {
-    case slots.inIndividual => LiquidDNASources.getValue(itemstack) > 0
-    case slots.inLabware => itemstack.getItem == Items.labware
+  override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = slot match {
+    case slots.inIndividual => LiquidDNASources.getValue(stack) > 0
+    case slots.inLabware => stack.getItem == Items.labware
     case _ => false
   }
   override def canExtractItem(slot: Int, item: ItemStack, side: Int): Boolean = false

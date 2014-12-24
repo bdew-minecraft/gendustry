@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.custom
@@ -54,7 +54,7 @@ object CustomContent {
       .getOrElse(sys.error("Species '%s' not found".format(uid)))
       .asInstanceOf[IAlleleBeeSpecies]
 
-  def registerMuations() {
+  def registerMutations() {
     Gendustry.logInfo("Registering mutations")
 
     val added = TuningLoader.loader.mutations count { st =>
@@ -78,7 +78,7 @@ object CustomContent {
           case MReqBlock(ref: StackBlock) =>
             val stack = TuningLoader.loader.getConcreteStack(ref)
             val block = Block.getBlockFromItem(stack.getItem)
-            if (block == null) sys.error("Ivalid block reference: %s".format(ref))
+            if (block == null) sys.error("Invalid block reference: %s".format(ref))
             mutation.reqBlock = Some(block)
             if (stack.getItemDamage != OreDictionary.WILDCARD_VALUE)
               mutation.reqBlockMeta = Some(stack.getItemDamage)

@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.sampler
@@ -67,15 +67,15 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
     } else return false
   }
 
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = {
-    if (itemstack == null || itemstack.getItem == null) return false
+  override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
+    if (stack == null || stack.getItem == null) return false
     slot match {
       case slots.inSampleBlank =>
-        return itemstack.getItem == Items.geneSampleBlank
+        return stack.getItem == Items.geneSampleBlank
       case slots.inLabware =>
-        return itemstack.getItem == Items.labware
+        return stack.getItem == Items.labware
       case slots.inIndividual =>
-        return AlleleManager.alleleRegistry.getIndividual(itemstack) != null
+        return AlleleManager.alleleRegistry.getIndividual(stack) != null
       case _ =>
         return false
     }

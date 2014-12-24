@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.forestry
@@ -27,7 +27,7 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
   def getLocalizedName: String = {
     import scala.collection.JavaConverters._
     val chr = GeneSampleInfo.getChromosomeName(root, chromosome)
-    val alstr = allele match {
+    val str = allele match {
       // Custom localized names, see https://github.com/bdew/gendustry/issues/41
       case a: IAlleleTreeSpecies =>
         val k = "for.trees.custom.treealyzer.sapling." + a.getUnlocalizedName.replace("trees.species.", "")
@@ -51,12 +51,12 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
       case x => x.getName
     }
-    if (alstr == "")
+    if (str == "")
       return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), allele.getUID)
-    else if (alstr.startsWith("for."))
-      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr.replace("for.", ""))
+    else if (str.startsWith("for."))
+      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), str.replace("for.", ""))
     else
-      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), alstr)
+      return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), str)
   }
 }
 

@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.api.items;
@@ -30,12 +30,12 @@ public interface IApiaryUpgrade {
     List<String> getDisplayDetails(ItemStack stack);
 
     /**
-     * A unique ID for stacking purposes. If 2 itemstacks return the same ID they will
+     * A unique ID for stacking purposes. If 2 item stacks return the same ID they will
      * be added together when counting upgrades to check maximum number.
      * If two stacks return the same stacking ID they should return the same number from
      * getMaxNumber or weirdness will ensue.
      *
-     * @return Uniquie stacking id
+     * @return Unique stacking id
      */
     long getStackingId(ItemStack stack);
 

@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.transposer
@@ -23,7 +23,7 @@ class GuiTransposer(val te: TileTransposer, player: EntityPlayer) extends BaseSc
     super.initGui()
     widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Transposer"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.transposer.name"), 8, 6, Color.darkgray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.transposer.name"), 8, 6, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inBlank).setBackgroundIcon(HintIcons.sampleOrTemplateBlank)
     inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundIcon(HintIcons.labware)

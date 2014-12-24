@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.gui
@@ -17,10 +17,10 @@ import net.bdew.lib.gui.{Point, Rect, Texture}
 
 import scala.collection.mutable
 
-class WidgetProgressBarNEI(rect: Rect, texture: Texture, dslot: DataSlotFloat, recipeid: String) extends WidgetProgressBar(rect, texture, dslot) {
+class WidgetProgressBarNEI(rect: Rect, texture: Texture, dSlot: DataSlotFloat, recipeId: String) extends WidgetProgressBar(rect, texture, dSlot) {
   override def mouseClicked(p: Point, button: Int) {
     if (NEIRecipeProxy.hasNei)
-      NEIRecipeProxy.openRecipes(recipeid)
+      NEIRecipeProxy.openRecipes(recipeId)
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {

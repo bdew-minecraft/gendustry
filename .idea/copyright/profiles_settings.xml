@@ -1,8 +1,0 @@
-<component name="CopyrightManager">
-  <settings default="">
-    <module2copyright>
-      <element module="lib" copyright="MMPL (lib)" />
-      <element module="main" copyright="MMPL (gendustry)" />
-    </module2copyright>
-  </settings>
-</component>

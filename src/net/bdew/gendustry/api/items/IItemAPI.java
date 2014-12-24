@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.api.items;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface IItemAPI {
     /**
-     * @return true if stack is a template with atleast 1 sample added
+     * @return true if stack is a template with at least 1 sample added
      */
     boolean isFullTemplate(ItemStack stack);
 

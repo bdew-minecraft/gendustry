@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.waila
@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack
 
 object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
   override def getBodyStrings(target: TileApiary, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
-    val err = target.errorState.cval
+    val err = target.errorState.value
     val state = if (err == -1) {
       Misc.toLocal(Gendustry.modId + ".error.power")
     } else if (err == -2) {
@@ -30,7 +30,7 @@ object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
 
     List(
       Misc.toLocalF("gendustry.label.status", state),
-      Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.cval.toString.toLowerCase))
+      Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase))
     ) ++ target.getStats
   }
 }

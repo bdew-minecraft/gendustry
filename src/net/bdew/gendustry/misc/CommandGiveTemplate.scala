@@ -4,11 +4,12 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.misc
 
+import java.util
 import java.util.List
 
 import _root_.forestry.api.genetics.{AlleleManager, IAlleleSpecies}
@@ -18,7 +19,7 @@ import net.minecraft.command.{CommandBase, ICommandSender, WrongUsageException}
 class CommandGiveTemplate extends CommandBase {
   def getCommandName = "givetemplate"
   override def getRequiredPermissionLevel = 2
-  def getCommandUsage(icommandsender: ICommandSender) = "gendustry.givetemplate.usage"
+  def getCommandUsage(c: ICommandSender) = "gendustry.givetemplate.usage"
 
   import scala.collection.JavaConversions._
 
@@ -38,13 +39,13 @@ class CommandGiveTemplate extends CommandBase {
     if (!validSpecies.contains(uid))
       throw new WrongUsageException("gendustry.givetemplate.usage")
 
-    val entityitem = player.entityDropItem(GeneticsHelper.templateFromSpeciesUID(uid), 0)
-    entityitem.delayBeforeCanPickup = 0
+    val entity = player.entityDropItem(GeneticsHelper.templateFromSpeciesUID(uid), 0)
+    entity.delayBeforeCanPickup = 0
 
     CommandBase.func_152373_a(sender, this, "gendustry.givetemplate.success", uid, player.getDisplayName)
   }
 
-  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): List[_] = {
+  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): util.List[_] = {
     if (params.length == 1)
       return CommandBase.getListOfStringsMatchingLastWord(params, validSpecies: _*)
     return null

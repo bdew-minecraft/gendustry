@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.misc
@@ -24,9 +24,9 @@ object ResourceListener extends IResourceManagerReloadListener {
   }
 
   def loadLangFile(fileName: String) {
-    val langfile = new File(Gendustry.configDir, fileName)
-    Gendustry.logInfo("Loading language file %s", langfile.getCanonicalPath)
-    val stream = new FileInputStream(langfile)
+    val langFile = new File(Gendustry.configDir, fileName)
+    Gendustry.logInfo("Loading language file %s", langFile.getCanonicalPath)
+    val stream = new FileInputStream(langFile)
     try {
       StringTranslate.inject(stream)
     } finally {
@@ -34,7 +34,7 @@ object ResourceListener extends IResourceManagerReloadListener {
     }
   }
 
-  override def onResourceManagerReload(resourcemanager: IResourceManager) {
+  override def onResourceManagerReload(rm: IResourceManager) {
     val newLang = FMLClientHandler.instance().getCurrentLanguage
     Gendustry.logInfo("Resource manager reload, new language: %s", newLang)
     val configFiles = Gendustry.configDir.list().sorted

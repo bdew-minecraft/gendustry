@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.mutatron
@@ -25,12 +25,8 @@ class ContainerMutatron(val te: TileMutatron, player: EntityPlayer) extends Base
 
   te.lastPlayer := player.getGameProfile
 
-  override def slotClick(slotnum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
+  override def slotClick(slotNum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
     te.lastPlayer := player.getGameProfile
-    super.slotClick(slotnum, button, modifiers, player)
-  }
-
-  def canInteractWith(entityplayer: EntityPlayer): Boolean = {
-    return te.isUseableByPlayer(entityplayer)
+    super.slotClick(slotNum, button, modifiers, player)
   }
 }

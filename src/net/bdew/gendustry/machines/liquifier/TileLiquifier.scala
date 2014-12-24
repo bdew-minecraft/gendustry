@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.liquifier
@@ -47,7 +47,7 @@ class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered w
   }
 
   def tryFinish(): Boolean = {
-    if (tank.fill(output, false) == output.cval) {
+    if (tank.fill(output, false) == output.value) {
       tank.fill(output, true)
       output := -1
       return true
@@ -73,7 +73,7 @@ class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered w
   }
 
   allowSided = true
-  override def isItemValidForSlot(slot: Int, itemstack: ItemStack): Boolean = ProteinSources.getValue(itemstack) > 0
+  override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = ProteinSources.getValue(stack) > 0
   override def canExtractItem(slot: Int, item: ItemStack, side: Int): Boolean = false
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0

@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.forestry
@@ -100,7 +100,7 @@ object GeneticsHelper {
           secret(random.nextInt(secret.size))
         }
       } else {
-        // All calid mutations aren't secret - choose 1 randomly
+        // All valid mutations aren't secret - choose 1 randomly
         normal(random.nextInt(normal.size))
       }
     } else {
@@ -115,13 +115,13 @@ object GeneticsHelper {
     val individual = root.templateAsIndividual(selected.getTemplate)
 
     val res = individual match {
-      case newbee: IBee =>
+      case newBee: IBee =>
         val orig = root.getMember(fromStack).asInstanceOf[IBee]
-        newbee.mate(newbee)
-        newbee.setIsNatural(orig.isNatural)
-        root.getMemberStack(newbee, EnumBeeType.QUEEN.ordinal)
-      case newtree: ITree =>
-        root.getMemberStack(newtree, EnumGermlingType.SAPLING.ordinal)
+        newBee.mate(newBee)
+        newBee.setIsNatural(orig.isNatural)
+        root.getMemberStack(newBee, EnumBeeType.QUEEN.ordinal)
+      case newTree: ITree =>
+        root.getMemberStack(newTree, EnumGermlingType.SAPLING.ordinal)
       case _ =>
         root.getMemberStack(individual, 0)
     }

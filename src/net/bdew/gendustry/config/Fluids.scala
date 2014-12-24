@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.config
@@ -35,14 +35,14 @@ object Fluids extends FluidManager {
       false
     } else {
       Gendustry.logInfo("Registering fluid %s", id)
-      val newfluid = new Fluid(id)
-      newfluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase)
-      newfluid.setLuminosity(luminosity)
-      newfluid.setDensity(density)
-      newfluid.setTemperature(temperature)
-      newfluid.setViscosity(viscosity)
-      newfluid.setGaseous(isGaseous)
-      FluidRegistry.registerFluid(newfluid)
+      val newFluid = new Fluid(id)
+      newFluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase)
+      newFluid.setLuminosity(luminosity)
+      newFluid.setDensity(density)
+      newFluid.setTemperature(temperature)
+      newFluid.setViscosity(viscosity)
+      newFluid.setGaseous(isGaseous)
+      FluidRegistry.registerFluid(newFluid)
       true
     }
     val fluid = FluidRegistry.getFluid(id.toLowerCase)

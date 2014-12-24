@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.gui.rscontrol
@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation
 
 import scala.collection.mutable
 
-class WidgetRSModeButton(p: Point, te: TileRSContollable, container: ContainerRSControllable) extends Widget {
+class WidgetRSModeButton(p: Point, te: TileRSControllable, container: ContainerRSControllable) extends Widget {
   val rect = new Rect(p, 16, 16)
   val iconRect = new Rect(p +(1, 1), 14, 14)
 
@@ -35,7 +35,7 @@ class WidgetRSModeButton(p: Point, te: TileRSContollable, container: ContainerRS
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
-    tip += Misc.toLocal("gendustry.rsmode." + te.rsmode.cval.toString.toLowerCase)
+    tip += Misc.toLocal("gendustry.rsmode." + te.rsmode.value.toString.toLowerCase)
   }
 
   override def mouseClicked(p: Point, button: Int) {

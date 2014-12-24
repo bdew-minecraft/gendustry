@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.machines.advmutatron
@@ -29,19 +29,15 @@ class ContainerMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extend
 
   te.lastPlayer := player.getGameProfile
 
-  override def slotClick(slotnum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
+  override def slotClick(slotNum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
     te.lastPlayer := player.getGameProfile
     // This is a hacky workaround!
     // When a player changes the contents of a slot, playerInventoryBeingManipulated is set to true,
     // preventing updates to OTHER slots from being detected and sent back
     // Here i ensure changes are sent back before returning so NetServerHandler.handleWindowClick doesn't
     // get the opportunity to mess things up
-    val r = super.slotClick(slotnum, button, modifiers, player)
+    val r = super.slotClick(slotNum, button, modifiers, player)
     detectAndSendChanges()
     return r
-  }
-
-  def canInteractWith(entityplayer: EntityPlayer): Boolean = {
-    return te.isUseableByPlayer(entityplayer)
   }
 }

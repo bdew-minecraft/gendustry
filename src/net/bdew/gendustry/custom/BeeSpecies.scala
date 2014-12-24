@@ -4,7 +4,7 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/gendustry/master/MMPL-1.0.txt
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.gendustry.custom
@@ -72,7 +72,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   import scala.collection.JavaConverters._
 
   def prepareLootList(name: String) =
-    TuningLoader.loader.resolveLootList(cfg.rawget(name, classOf[EntryLootList]))
+    TuningLoader.loader.resolveLootList(cfg.getRaw(name, classOf[EntryLootList]))
       .toMap.map(x => x._2 -> new Integer(x._1))
 
   Gendustry.logInfo("Resolving products list for bee '%s'...", ident)
@@ -114,17 +114,17 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override def getResearchSuitability(itemStack: ItemStack): Float = {
     import scala.collection.JavaConversions._
     if (itemStack == null || itemStack.getItem == null)
-      0
+      return 0
     else if (products.keys.exists(itemStack.isItemEqual))
-      1
+      return 1
     else if (specialty.keys.exists(itemStack.isItemEqual))
-      1
+      return 1
     else if (OreDictionary.getOres("beeComb").exists(OreDictionary.itemMatches(_, itemStack, false)))
-      0.4F
+      return 0.4F
     else if (OreDictionary.getOres("dropHoney").exists(OreDictionary.itemMatches(_, itemStack, false)))
-      0.5F
+      return 0.5F
     else if (itemStack.getItem == ForestryItems.honeydew)
-      0.7F
+      return 0.7F
     getRoot.getResearchCatalysts.find(x => ItemUtils.isSameItem(x._1, itemStack)).foreach(x => return x._2)
     return 0
   }
