@@ -66,7 +66,8 @@ object Gendustry {
 
     ErrorCodes.init()
 
-    TriggerProvider.registerTriggers()
+    if (PowerProxy.haveModVersion("BuildCraftAPI|statements"))
+      TriggerProvider.registerTriggers()
 
     Fluids.load()
     Blocks.load()
