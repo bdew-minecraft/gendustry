@@ -13,6 +13,7 @@ import java.util.List
 
 import _root_.forestry.api.genetics.{AlleleManager, IAlleleSpecies}
 import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.lib.Misc
 import net.minecraft.command.{CommandBase, ICommandSender, WrongUsageException}
 
 class CommandGiveTemplate extends CommandBase {
@@ -23,9 +24,10 @@ class CommandGiveTemplate extends CommandBase {
   import scala.collection.JavaConversions._
 
   lazy val validSpecies =
-    AlleleManager.alleleRegistry.getRegisteredAlleles
-      .filter(_._2.isInstanceOf[IAlleleSpecies])
-      .map(_._2.getUID)
+    AlleleManager.alleleRegistry.getRegisteredAlleles.values
+      .flatMap(Misc.asInstanceOpt(classOf[IAlleleSpecies]))
+      .filter(sp => sp.getRoot.getTemplate(sp.getUID) != null)
+      .map(_.getUID)
       .toList
 
   def processCommand(sender: ICommandSender, params: Array[String]) {

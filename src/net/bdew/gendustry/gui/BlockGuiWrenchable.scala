@@ -10,7 +10,10 @@
 package net.bdew.gendustry.gui
 
 import buildcraft.api.tools.IToolWrench
+import cofh.api.block.IDismantleable
+import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.tile.inventory.BreakableInventoryTile
 import net.minecraft.block.Block
@@ -20,9 +23,8 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
-//FIXME Reenable when TE support is readded
-//@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.block.IDismantleable")
-trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
+@Optional.Interface(modid = "CoFHAPI|block", iface = "cofh.api.block.IDismantleable")
+trait BlockGuiWrenchable extends Block with IDismantleable {
   val guiId: Int
 
   def dismantleBlock(player: EntityPlayer, world: World, x: Int, y: Int, z: Int, returnBlock: Boolean): ItemStack = {

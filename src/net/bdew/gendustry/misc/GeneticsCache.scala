@@ -91,9 +91,13 @@ object GeneticsCache {
     Gendustry.logInfo("%d mutation inputs", speciesUsedMutations.size)
 
     for (species <- Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])) {
-      for ((allele, chromosome) <- species.getRoot.getTemplate(species.getUID).zipWithIndex) {
-        if (allele != null && !AlleleManager.alleleRegistry.isBlacklisted(allele.getUID))
-          speciesChromosomes(GeneSampleInfo(species.getRoot, chromosome, allele)) += species
+      if (species.getRoot.getTemplate(species.getUID) == null) {
+        Gendustry.logWarn("getTemplate returned null for species %s (root: %s)", species.getUID, species.getRoot.getUID)
+      } else {
+        for ((allele, chromosome) <- species.getRoot.getTemplate(species.getUID).zipWithIndex) {
+          if (allele != null && !AlleleManager.alleleRegistry.isBlacklisted(allele.getUID))
+            speciesChromosomes(GeneSampleInfo(species.getRoot, chromosome, allele)) += species
+        }
       }
     }
 
