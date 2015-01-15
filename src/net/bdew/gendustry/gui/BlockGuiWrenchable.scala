@@ -23,7 +23,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
-@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.block.IDismantleable")
+@Optional.Interface(modid = "CoFHAPI|block", iface = "cofh.api.block.IDismantleable")
 trait BlockGuiWrenchable extends Block with IDismantleable {
   val guiId: Int
 
