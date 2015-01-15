@@ -62,7 +62,9 @@ object Gendustry {
 
     configDir = new File(event.getModConfigurationDirectory, "gendustry")
     TuningLoader.loadConfigFiles()
-    TriggerProvider.registerTriggers()
+
+    if (PowerProxy.haveModVersion("BuildCraftAPI|statements"))
+      TriggerProvider.registerTriggers()
 
     Fluids.load()
     Blocks.load()
