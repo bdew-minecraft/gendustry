@@ -3,10 +3,8 @@
 /build
 /run
 /deps/run
-/.idea/workspace.xml
-/.idea/dictionaries
+/.idea
 /eclipse
 /.gradle
 /*.iml
 /*.ipr
-/.idea/libraries/Gradle__*
