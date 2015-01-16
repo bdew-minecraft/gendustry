@@ -39,6 +39,7 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
       case GendustryCreativeTabs.templates =>
         l.addAll(
           Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])
+            .filter(sp => sp.getRoot.getTemplate(sp.getUID) != null)
             .toList.sortBy(_.getUID)
             .map(sp => GeneticsHelper.templateFromSpeciesUID(sp.getUID)))
       case _ =>
