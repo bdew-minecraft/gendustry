@@ -53,26 +53,32 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
 
   def getRecipeIndividuals(sp: IAlleleSpecies) = {
     val root = sp.getRoot
-    val indiv = root.templateAsIndividual(root.getTemplate(sp.getUID))
-    indiv.analyze()
-    root match {
-      case bees: IBeeRoot =>
-        List(
-          bees.getMemberStack(indiv, EnumBeeType.PRINCESS.ordinal()),
-          bees.getMemberStack(indiv, EnumBeeType.QUEEN.ordinal()),
-          bees.getMemberStack(indiv, EnumBeeType.DRONE.ordinal())
-        )
-      case trees: ITreeRoot =>
-        List(
-          trees.getMemberStack(indiv, EnumGermlingType.POLLEN.ordinal()),
-          trees.getMemberStack(indiv, EnumGermlingType.SAPLING.ordinal())
-        )
-      case butterflies: IButterflyRoot =>
-        List(
-          butterflies.getMemberStack(indiv, EnumFlutterType.BUTTERFLY.ordinal()),
-          butterflies.getMemberStack(indiv, EnumFlutterType.SERUM.ordinal()),
-          butterflies.getMemberStack(indiv, EnumFlutterType.CATERPILLAR.ordinal())
-        )
+    val template = root.getTemplate(sp.getUID)
+    if (template == null) {
+      List.empty
+    } else {
+      val individual = root.templateAsIndividual(template)
+      individual.analyze()
+      root match {
+        case bees: IBeeRoot =>
+          List(
+            bees.getMemberStack(individual, EnumBeeType.PRINCESS.ordinal()),
+            bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal()),
+            bees.getMemberStack(individual, EnumBeeType.DRONE.ordinal())
+          )
+        case trees: ITreeRoot =>
+          List(
+            trees.getMemberStack(individual, EnumGermlingType.POLLEN.ordinal()),
+            trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
+          )
+        case butterflies: IButterflyRoot =>
+          List(
+            butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal()),
+            butterflies.getMemberStack(individual, EnumFlutterType.SERUM.ordinal()),
+            butterflies.getMemberStack(individual, EnumFlutterType.CATERPILLAR.ordinal())
+          )
+        case _ => List.empty
+      }
     }
   }
 
