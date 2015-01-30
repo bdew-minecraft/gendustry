@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.gui
 
+import java.util
+
 import buildcraft.api.tools.IToolWrench
 import cofh.api.block.IDismantleable
 import cpw.mods.fml.common.Optional
@@ -27,7 +29,7 @@ import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 trait BlockGuiWrenchable extends Block with IDismantleable {
   val guiId: Int
 
-  def dismantleBlock(player: EntityPlayer, world: World, x: Int, y: Int, z: Int, returnBlock: Boolean): ItemStack = {
+  override def dismantleBlock(player: EntityPlayer, world: World, x: Int, y: Int, z: Int, returnDrops: Boolean): util.ArrayList[ItemStack] = {
     val item = new ItemStack(this)
     val te = world.getTileEntity(x, y, z)
 
@@ -36,13 +38,17 @@ trait BlockGuiWrenchable extends Block with IDismantleable {
 
     world.setBlockToAir(x, y, z)
 
-    if (!returnBlock)
+    val ret = new util.ArrayList[ItemStack]()
+
+    if (returnDrops)
+      ret.add(item)
+    else
       ItemUtils.throwItemAt(world, x, y, z, item)
 
-    return item
+    ret
   }
 
-  def canDismantle(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean = true
+  override def canDismantle(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean = true
 
   def tryFluidInteract(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: ForgeDirection): Boolean = {
     val tileEntity = world.getTileEntity(x, y, z)

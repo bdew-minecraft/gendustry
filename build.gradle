@@ -23,7 +23,7 @@ apply plugin: 'scala'
 apply plugin: 'forge'
 
 version = "1.4.4"
-ext.bdlibver = "1.6.0.34"
+ext.bdlibver = "1.6.0.36"
 ext.versuffix = "mc1710"
 ext.apiVer = version
 
@@ -68,11 +68,11 @@ dependencies {
     compile "codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev"
     compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
     compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
-    compile "com.mod-buildcraft:buildcraft:6.2.6:dev"
-    compile "net.industrial-craft:industrialcraft-2:2.2.650-experimental:api"
+    compile "com.mod-buildcraft:buildcraft:6.3.3:dev"
+    compile "net.industrial-craft:industrialcraft-2:2.2.667-experimental:api"
     compile "net.sengir.forestry:forestry_1.7.10:3.4.0.7:api"
     compile "mcp.mobius.waila:Waila:1.5.6a_1.7.10"
-    compile "net.bdew.thirdparty:CoFHLib:R1.0.1:api"
+    compile "net.bdew.thirdparty:CoFHLib:1.7.10R3.0.0.8:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
