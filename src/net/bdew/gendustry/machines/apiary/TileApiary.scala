@@ -11,7 +11,7 @@ package net.bdew.gendustry.machines.apiary
 
 import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
-import forestry.api.core.{BiomeHelper, EnumErrorCode, EnumHumidity, EnumTemperature}
+import forestry.api.core._
 import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
@@ -111,13 +111,13 @@ with IIndustrialApiary {
     movePrincess = false
 
     if (!canWork) {
-      setErrorState(-2)
+      setErrorState(GendustryErrorStates.Disabled)
     } else if (power.stored >= cfg.baseMjPerTick * mods.energy) {
       logic.update()
       if ((logic.getQueen != null || logic.getBreedingTime > 0) && (errorState :== 1))
         power.extract(cfg.baseMjPerTick * mods.energy, false)
     } else {
-      setErrorState(EnumErrorCode.NOPOWER)
+      setErrorState(ErrorCodes.getErrorByName("Forestry:noPower"))
     }
 
     if (movePrincess && getStackInSlot(slots.queen) == null)
@@ -237,8 +237,8 @@ with IIndustrialApiary {
 
   override def getWorld = worldObj
   override def setErrorState(state: Int) = errorState := state
-  override def getErrorState = ErrorCodes.getValueSafe(errorState)
-  override def setErrorState(state: EnumErrorCode) = errorState := state.ordinal()
+  override def getErrorState = ErrorCodes.getErrorById(errorState)
+  override def setErrorState(state: IErrorState) = errorState := state.getID
   override def getOwnerName = owner
   override def getXCoord = xCoord
   override def getYCoord = yCoord

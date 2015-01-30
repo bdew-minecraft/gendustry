@@ -26,6 +26,7 @@ import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.custom.CustomContent
 import net.bdew.gendustry.forestry.GeneRecipe
 import net.bdew.gendustry.gui.HintIcons
+import net.bdew.gendustry.machines.apiary.ErrorCodes
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
 import net.minecraft.command.CommandHandler
@@ -62,6 +63,8 @@ object Gendustry {
 
     configDir = new File(event.getModConfigurationDirectory, "gendustry")
     TuningLoader.loadConfigFiles()
+
+    ErrorCodes.init()
 
     if (PowerProxy.haveModVersion("BuildCraftAPI|statements"))
       TriggerProvider.registerTriggers()
