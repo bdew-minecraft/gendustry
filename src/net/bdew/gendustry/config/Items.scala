@@ -10,6 +10,7 @@
 package net.bdew.gendustry.config
 
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.custom.{CustomHoneyComb, CustomHoneyDrop}
 import net.bdew.gendustry.items._
 import net.bdew.gendustry.machines.apiary.upgrades.ItemApiaryUpgrade
@@ -39,6 +40,10 @@ object Items extends ItemManager(GendustryCreativeTabs.main) {
   regSimpleItem("EnvProcessor")
   regSimpleItem("UpgradeFrame")
   regSimpleItem("ClimateModule")
+
+  if (ForestryHelper.haveRoot("Trees")) {
+    regItem(PollenKit)
+  }
 
   val coverEject = regItem(EjectCover)
   val coverImport = regItem(ImportCover)

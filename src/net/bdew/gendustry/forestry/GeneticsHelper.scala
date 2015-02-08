@@ -12,6 +12,7 @@ package net.bdew.gendustry.forestry
 import java.util.Random
 
 import com.mojang.authlib.GameProfile
+import cpw.mods.fml.common.registry.GameRegistry
 import forestry.api.apiculture.{EnumBeeType, IBee, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITree, ITreeRoot}
 import forestry.api.genetics._
@@ -19,6 +20,7 @@ import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
+import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
@@ -211,4 +213,14 @@ object GeneticsHelper {
       filter { x => root.getDefaultTemplate()(x.ordinal()) != null }
       map { x => x.ordinal() -> x }
     ).toMap
+
+  lazy val leafBlocks = Set(GameRegistry.findBlock("minecraft", "leaves"), GameRegistry.findBlock("minecraft", "leaves2"))
+
+  def getErsatzPollen(bl: Block, meta: Int): Option[IIndividual] = {
+    if (leafBlocks.contains(bl)) {
+      val fixedMeta = bl.damageDropped(meta)
+      import scala.collection.JavaConversions._
+      AlleleManager.ersatzSaplings.find({ case (stack, _) => stack.getItemDamage == fixedMeta }) map (_._2)
+    } else None
+  }
 }
