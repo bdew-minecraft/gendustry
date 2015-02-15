@@ -22,7 +22,7 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "1.4.5"
+version = "1.4.6"
 ext.bdlibver = "1.6.2.41"
 ext.versuffix = "mc1710"
 ext.apiVer = version
@@ -71,7 +71,7 @@ dependencies {
     compile "com.mod-buildcraft:buildcraft:6.3.3:dev"
     compile "net.industrial-craft:industrialcraft-2:2.2.667-experimental:api"
     compile "net.sengir.forestry:forestry_1.7.10:3.4.0.7:api"
-    compile "mcp.mobius.waila:Waila:1.5.6a_1.7.10"
+    compile "mcp.mobius.waila:Waila:1.5.9_1.7.10"
     compile "net.bdew.thirdparty:CoFHLib:1.7.10R3.0.0.8:api"
 }
 
