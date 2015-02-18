@@ -27,10 +27,10 @@ object CustomContent {
   var mySpecies = List.empty[BeeSpecies]
 
   def registerBranches() {
-    Gendustry.logInfo("Registering branches")
+    Gendustry.logDebug("Registering branches")
     val added = (Tuning.getOrAddSection("Branches").filterType(classOf[ConfigSection]) collect {
       case (_, cfg) =>
-        Gendustry.logInfo("%s -> %s (%s)", cfg.getString("Parent"), cfg.getString("UID"), cfg.getString("Scientific"))
+        Gendustry.logDebug("%s -> %s (%s)", cfg.getString("Parent"), cfg.getString("UID"), cfg.getString("Scientific"))
         val cls = reg.createAndRegisterClassification(EnumClassLevel.GENUS, cfg.getString("UID"), cfg.getString("Scientific"))
         reg.getClassification("family." + cfg.getString("Parent")).addMemberGroup(cls)
     }).size
@@ -38,11 +38,11 @@ object CustomContent {
   }
 
   def registerSpecies() {
-    Gendustry.logInfo("Registering bees")
+    Gendustry.logDebug("Registering bees")
     val added = (Tuning.getOrAddSection("Bees").filterType(classOf[ConfigSection]) collect {
       case (uid, cfg) =>
         val species = new BeeSpecies(cfg, uid)
-        Gendustry.logInfo("Registering %s", species.getUID)
+        Gendustry.logDebug("Registering %s", species.getUID)
         mySpecies +:= species
         reg.registerAllele(species)
     }).size
@@ -55,12 +55,12 @@ object CustomContent {
       .asInstanceOf[IAlleleBeeSpecies]
 
   def registerMutations() {
-    Gendustry.logInfo("Registering mutations")
+    Gendustry.logDebug("Registering mutations")
 
     val added = TuningLoader.loader.mutations count { st =>
       try {
 
-        Gendustry.logInfo("Registering mutation %s + %s = %s", st.parent1, st.parent2, st.result)
+        Gendustry.logDebug("Registering mutation %s + %s = %s", st.parent1, st.parent2, st.result)
 
         val mutation = new BeeMutation(
           lookupBeeSpecies(st.parent1),

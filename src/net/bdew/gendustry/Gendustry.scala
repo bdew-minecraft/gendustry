@@ -43,6 +43,7 @@ object Gendustry {
 
   var configDir: File = null
 
+  def logDebug(msg: String, args: Any*) = log.debug(msg.format(args: _*))
   def logInfo(msg: String, args: Any*) = log.info(msg.format(args: _*))
   def logWarn(msg: String, args: Any*) = log.warn(msg.format(args: _*))
   def logError(msg: String, args: Any*) = log.error(msg.format(args: _*))

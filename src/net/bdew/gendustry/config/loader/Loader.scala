@@ -34,7 +34,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
     val resolved = getConcreteStack(ref, cnt)
     if (resolved.getItemDamage == OreDictionary.WILDCARD_VALUE) {
       resolved.setItemDamage(0)
-      Gendustry.logInfo("meta/damage is unset in %s, defaulting to 0", ref)
+      Gendustry.logDebug("meta/damage is unset in %s, defaulting to 0", ref)
     }
     resolved
   }
@@ -51,36 +51,36 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
     case RsMutagen(st, mb) =>
       for (x <- getAllConcreteStacks(st)) {
         MutagenSources.register(x, mb)
-        Gendustry.logInfo("Added Mutagen source %s -> %d mb", x, mb)
+        Gendustry.logDebug("Added Mutagen source %s -> %d mb", x, mb)
       }
 
     case RsLiquidDNA(st, mb) =>
       for (x <- getAllConcreteStacks(st)) {
         LiquidDNASources.register(x, mb)
-        Gendustry.logInfo("Added Liquid DNA source %s -> %d mb", x, mb)
+        Gendustry.logDebug("Added Liquid DNA source %s -> %d mb", x, mb)
       }
 
     case RsProtein(st, mb) =>
       for (x <- getAllConcreteStacks(st)) {
         ProteinSources.register(x, mb)
-        Gendustry.logInfo("Added Protein source %s -> %d mb", x, mb)
+        Gendustry.logDebug("Added Protein source %s -> %d mb", x, mb)
       }
 
     case RsAssembly(rec, id, power, out, cnt) =>
-      Gendustry.logInfo("Adding assembly recipe: %s + %d mj => %s * %d", rec, power, out, cnt)
+      Gendustry.logDebug("Adding assembly recipe: %s + %d mj => %s * %d", rec, power, out, cnt)
       val outStack = getConcreteStack(out, cnt)
       val stacks = rec.map {
         case (c, n) =>
           val s = getConcreteStackNoWildcard(currCharMap(c), n)
-          Gendustry.logInfo("%s -> %s", c, s)
+          Gendustry.logDebug("%s -> %s", c, s)
           s
       }
-      Gendustry.logInfo("Output: %s", outStack)
+      Gendustry.logDebug("Output: %s", outStack)
       AssemblyRecipeManager.INSTANCE.addRecipe(id, power, outStack, stacks: _*)
-      Gendustry.logInfo("Done")
+      Gendustry.logDebug("Done")
 
     case RsCentrifuge(stack, out, time) =>
-      Gendustry.logInfo("Adding centrifuge recipe: %s => %s", stack, out)
+      Gendustry.logDebug("Adding centrifuge recipe: %s => %s", stack, out)
 
       // forestry API is stupid and requires a hashmap, build one for it
       val outStacks = new java.util.HashMap[ItemStack, Integer]
@@ -90,10 +90,10 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
       RecipeManagers.centrifugeManager.addRecipe(time, inStack, outStacks)
 
-      Gendustry.logInfo("Done %s -> %s", inStack, outStacks)
+      Gendustry.logDebug("Done %s -> %s", inStack, outStacks)
 
     case RsSqueezer(in, fluid, time, out, chance) =>
-      Gendustry.logInfo("Adding squeezer recipe: %s => %s + %s", in, fluid, out)
+      Gendustry.logDebug("Adding squeezer recipe: %s => %s + %s", in, fluid, out)
 
       val inStack = getConcreteStackNoWildcard(in)
       val outStack = if (out != null) getConcreteStackNoWildcard(out) else null
@@ -101,7 +101,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
       RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
 
-      Gendustry.logInfo("Done %s -> %s + %s", inStack, outStack, outFluid)
+      Gendustry.logDebug("Done %s -> %s + %s", inStack, outStack, outFluid)
 
     case x: RsMutation => mutations +:= x
 

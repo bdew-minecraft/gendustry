@@ -31,10 +31,10 @@ object Fluids extends FluidManager {
                     isGaseous: Boolean = false): Fluid = {
 
     val ownFluid = if (FluidRegistry.isFluidRegistered(id)) {
-      Gendustry.logInfo("Fluid %s already registered, using existing (%s)", id, FluidRegistry.getFluid(id))
+      Gendustry.logDebug("Fluid %s already registered, using existing (%s)", id, FluidRegistry.getFluid(id))
       false
     } else {
-      Gendustry.logInfo("Registering fluid %s", id)
+      Gendustry.logDebug("Registering fluid %s", id)
       val newFluid = new Fluid(id)
       newFluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase)
       newFluid.setLuminosity(luminosity)

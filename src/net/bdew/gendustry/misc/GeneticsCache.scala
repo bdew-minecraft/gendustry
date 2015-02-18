@@ -62,8 +62,8 @@ object GeneticsCache {
       speciesUsedMutations(mutation.getAllele1.asInstanceOf[IAlleleSpecies]) += mutation
     }
 
-    Gendustry.logInfo("Mutations with multiple results from a single combination:")
-    Gendustry.logInfo("(This is not an error, no need to report it to anybody)")
+    Gendustry.logDebug("Mutations with multiple results from a single combination:")
+    Gendustry.logDebug("(This is not an error, no need to report it to anybody)")
 
     speciesUsedMutations foreach { case (sp1, mutations) =>
       // First make a list of partner -> result
@@ -83,12 +83,12 @@ object GeneticsCache {
             (if (Option(mutation.getSpecialConditions).map(_.size).getOrElse(0) > 0) "*" else "")
         } mkString ", "
         // And print it out
-        Gendustry.logInfo("%s + %s => [%s]", sp1.getName, partner.getName, names)
+        Gendustry.logDebug("%s + %s => [%s]", sp1.getName, partner.getName, names)
       }
     }
 
-    Gendustry.logInfo("%d mutation outputs", speciesResultMutations.size)
-    Gendustry.logInfo("%d mutation inputs", speciesUsedMutations.size)
+    Gendustry.logInfo("Cached %d mutation outputs", speciesResultMutations.size)
+    Gendustry.logInfo("Cached %d mutation inputs", speciesUsedMutations.size)
 
     for (species <- Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])) {
       if (species.getRoot.getTemplate(species.getUID) == null) {
@@ -103,7 +103,6 @@ object GeneticsCache {
 
     geneSamples ++= speciesChromosomes.keys
 
-    Gendustry.logInfo("%d chromosomes", speciesChromosomes.size)
-    Gendustry.logInfo("Done")
+    Gendustry.logInfo("Cached %d chromosomes", speciesChromosomes.size)
   }
 }

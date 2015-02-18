@@ -75,15 +75,15 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     TuningLoader.loader.resolveLootList(cfg.getRaw(name, classOf[EntryLootList]))
       .toMap.map(x => x._2 -> new Integer(x._1))
 
-  Gendustry.logInfo("Resolving products list for bee '%s'...", ident)
+  Gendustry.logDebug("Resolving products list for bee '%s'...", ident)
   val products = prepareLootList("Products")
   override val getProducts = products.asJava
-  products.foreach(x => Gendustry.logInfo("  [%d%%] %s", x._2, x._1))
+  products.foreach(x => Gendustry.logDebug("  [%d%%] %s", x._2, x._1))
 
-  Gendustry.logInfo("Resolving specialty list for bee '%s'...", ident)
+  Gendustry.logDebug("Resolving specialty list for bee '%s'...", ident)
   val specialty = prepareLootList("Specialty")
   override val getSpecialty = specialty.asJava
-  specialty.foreach(x => Gendustry.logInfo("  [%d%%] %s", x._2, x._1))
+  specialty.foreach(x => Gendustry.logDebug("  [%d%%] %s", x._2, x._1))
 
   override val isNocturnal = cfg.getBoolean("Nocturnal")
   override val getRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
