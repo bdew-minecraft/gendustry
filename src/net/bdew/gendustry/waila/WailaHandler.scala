@@ -17,8 +17,12 @@ import net.bdew.gendustry.power.TilePowered
 object WailaHandler {
   def loadCallback(reg: IWailaRegistrar) {
     Gendustry.logInfo("WAILA callback received, loading...")
+
     reg.registerBodyProvider(WailaDataSlotsDataProvider, classOf[TilePowered])
     reg.registerBodyProvider(WailaApiaryDataProvider, classOf[TileApiary])
-    reg.registerSyncedNBTKey("*", classOf[TilePowered])
+
+    reg.registerNBTProvider(WailaDataSlotsDataProvider, classOf[TilePowered])
+    reg.registerNBTProvider(WailaApiaryDataProvider, classOf[TileApiary])
+
   }
 }

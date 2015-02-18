@@ -133,6 +133,8 @@ gendustry.rsmode.never=Disabled
 gendustry.rsmode.rs_on=Enable on redstone
 gendustry.rsmode.rs_off=Disable on redstone
 
+gendustry.label.shift=<Press SHIFT for more info>
+
 # ==== CHROMOSOMES (should match forestry) ====
 
 gendustry.chromosome.FLOWER_PROVIDER=Flowers

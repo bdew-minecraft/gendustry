@@ -9,45 +9,50 @@
 
 package net.bdew.gendustry.waila
 
-import java.text.DecimalFormat
-
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
 import net.bdew.gendustry.config.Config
-import net.bdew.lib.data.base.TileDataSlots
+import net.bdew.lib.data.base.{TileDataSlots, UpdateKind}
 import net.bdew.lib.data.{DataSlotTank, DataSlotTankRestricted}
 import net.bdew.lib.power.DataSlotPower
+import net.bdew.lib.{DecFormat, Misc}
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.world.World
 import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
 
 object WailaDataSlotsDataProvider extends BaseDataProvider(classOf[TileDataSlots]) {
-  val dec = new DecimalFormat("#,##0")
+  override def getNBTTag(player: EntityPlayerMP, te: TileDataSlots, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int) = {
+    tag.setTag("gendustry_dataslots", Misc.applyMutator(new NBTTagCompound) {
+      te.doSave(UpdateKind.GUI, _)
+    })
+    tag
+  }
 
   override def getBodyStrings(target: TileDataSlots, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
-    val nbt = acc.getNBTData
-    target.dataSlots flatMap {
-      case (name, slot: DataSlotPower) =>
-        val capacity = slot.capacity * Config.powerShowMultiplier
-        val stored = nbt.getCompoundTag(name).getFloat("stored") * Config.powerShowMultiplier
-        List("%s / %s %s".format(dec.format(stored), dec.format(capacity), Config.powerShowUnits))
+    if (acc.getNBTData.hasKey("gendustry_dataslots")) {
+      target.doLoad(UpdateKind.GUI, acc.getNBTData.getCompoundTag("gendustry_dataslots"))
+      target.dataSlots.values flatMap {
+        case slot: DataSlotPower =>
+          Some("%s / %s %s".format(DecFormat.round(slot.stored * Config.powerShowMultiplier), DecFormat.round(slot.capacity * Config.powerShowMultiplier), Config.powerShowUnits))
 
-      case (name, slot: DataSlotTankRestricted) =>
-        val fStack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
-        if (fStack != null && fStack.getFluid != null) {
-          List("%s / %s mB %s".format(dec.format(fStack.amount), dec.format(slot.size), fStack.getFluid.getLocalizedName(fStack)))
-        } else {
-          val fluid = FluidRegistry.getFluid(slot.fluidID)
-          List("0 / %s mB %s".format(dec.format(slot.size), fluid.getLocalizedName(fStack)))
-        }
+        case slot: DataSlotTankRestricted =>
+          if (slot.getFluid != null && slot.getFluid.getFluid != null) {
+            Some("%s / %s mB %s".format(DecFormat.round(slot.getFluidAmount), DecFormat.round(slot.size), slot.getFluid.getLocalizedName))
+          } else {
+            val fluid = FluidRegistry.getFluid(slot.fluidID)
+            Some("0 / %s mB %s".format(DecFormat.round(slot.size), fluid.getLocalizedName(new FluidStack(fluid, 1))))
+          }
 
-      case (name, slot: DataSlotTank) =>
-        val fStack = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(name))
-        if (fStack != null && fStack.getFluid != null) {
-          List("[V] %s / %s mB %s".format(dec.format(fStack.amount), dec.format(slot.size), fStack.getFluid.getLocalizedName(fStack)))
-        } else {
-          None
-        }
+        case slot: DataSlotTank =>
+          if (slot.getFluid != null && slot.getFluid.getFluid != null) {
+            Some("%s / %s mB %s".format(DecFormat.round(slot.getFluidAmount), DecFormat.round(slot.size), slot.getFluid.getLocalizedName))
+          } else {
+            None
+          }
 
-      case _ => None
-    }
+        case _ => None
+      }
+    } else List.empty
   }
 }
