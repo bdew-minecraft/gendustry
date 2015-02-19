@@ -9,9 +9,8 @@
 
 package net.bdew.gendustry.items
 
-import forestry.api.arboriculture.EnumGermlingType
+import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.genetics.IPollinatable
-import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.lib.block.BlockRef
 import net.bdew.lib.items.{ItemUtils, SimpleItem}
@@ -29,9 +28,12 @@ object PollenKit extends SimpleItem("PollenKit") {
         // If block is not IPollinatable, check for vanilla leafs conversion
         orElse (blockRef.block(world) flatMap { bl => GeneticsHelper.getErsatzPollen(bl, blockRef.meta(world)) })
         ) map { individual =>
-        // Generate pollen item and consume kit
-        val newStack = ForestryHelper.getRoot("Trees").getMemberStack(individual, EnumGermlingType.POLLEN.ordinal())
-        if (newStack != null) {
+        (individual.getGenome.getSpeciesRoot match {
+          case trees: ITreeRoot => Option(trees.getMemberStack(individual, EnumGermlingType.POLLEN.ordinal()))
+          case root if root.getUID == "rootFlowers" => Option(root.getMemberStack(individual, 2))
+          case _ => None
+        }) map { newStack =>
+          // Generate pollen item and consume kit
           ItemUtils.dropItemToPlayer(world, player, newStack)
           player.inventory.decrStackSize(player.inventory.currentItem, 1)
         }
