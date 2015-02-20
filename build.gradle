@@ -23,7 +23,7 @@ apply plugin: 'scala'
 apply plugin: 'forge'
 
 version = "1.4.6"
-ext.bdlibver = "1.6.3.44"
+ext.bdlibver = "1.6.3.48"
 ext.versuffix = "mc1710"
 ext.apiVer = version
 
@@ -37,7 +37,7 @@ group = "net.bdew"
 archivesBaseName = "gendustry"
 
 minecraft {
-    version = "1.7.10-10.13.2.1231"
+    version = "1.7.10-10.13.2.1291"
     replace("BDLIB_VER", project.bdlibver)
     replace("GENDUSTRY_VER", project.version)
     replace("GENDUSTRY_APIVER", project.apiVer)
