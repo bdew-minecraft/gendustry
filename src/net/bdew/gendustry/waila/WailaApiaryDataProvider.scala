@@ -19,7 +19,7 @@ object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
     List(
       Misc.toLocalF("gendustry.label.status", Misc.toLocal("for." + target.getErrorState.getDescription)),
       Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase))
-    ) ++ (Option(target.queen) map (_.getDisplayName)) ++ (
+    ) ++ (Option(target.queen.value) map (_.getDisplayName)) ++ (
       if (acc.getPlayer.isSneaking)
         target.getStats
       else
