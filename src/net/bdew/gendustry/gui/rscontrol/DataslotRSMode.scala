@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.gui.rscontrol
 
-import net.bdew.lib.data.base.{DataSlotVal, TileDataSlots, UpdateKind}
+import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
-case class DataSlotRSMode(name: String, parent: TileDataSlots) extends DataSlotVal[RSMode.Value] {
+case class DataSlotRSMode(name: String, parent: DataSlotContainer) extends DataSlotVal[RSMode.Value] {
   var value: RSMode.Value = RSMode.ALWAYS
   def save(t: NBTTagCompound, kind: UpdateKind.Value) = t.setByte(name, value.id.toByte)
   def load(t: NBTTagCompound, kind: UpdateKind.Value) = value = RSMode(t.getByte(name))
