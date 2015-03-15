@@ -11,6 +11,7 @@ package net.bdew.gendustry.compat
 
 import java.util
 
+import cpw.mods.fml.common.versioning.VersionParser
 import cpw.mods.fml.common.{Loader, ModAPIManager, ModContainer}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
@@ -36,7 +37,10 @@ object PowerProxy {
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
 
-  def haveModVersion(modId: String) = lookup.contains(modId)
+  def haveModVersion(modId: String) = {
+    val spec = VersionParser.parseVersionReference(modId)
+    lookup.contains(spec.getLabel) && spec.containsVersion(lookup(spec.getLabel).getProcessedVersion)
+  }
 
   def getModVersion(modId: String): String = {
     val cont = lookup.getOrElse(modId, return "NOT FOUND")
