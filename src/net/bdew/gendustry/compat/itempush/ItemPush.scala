@@ -19,8 +19,8 @@ object ItemPush {
 
   def init() {
     register(VanillaPush)
-    if (PowerProxy.haveModVersion("BuildCraftAPI|core")) register(BCPipePushProxy)
-    if (PowerProxy.haveTE) register(CofhConduitPushProxy)
+    if (PowerProxy.haveModVersion("BuildCraftAPI|transport@[3.0,)")) register(BCPipePushProxy)
+    if (PowerProxy.haveModVersion("CoFHAPI|transport")) register(CofhConduitPushProxy)
   }
 
   def register(p: ItemPushProxy) = proxies :+= p
