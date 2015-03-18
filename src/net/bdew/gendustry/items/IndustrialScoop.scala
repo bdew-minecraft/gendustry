@@ -11,14 +11,13 @@ package net.bdew.gendustry.items
 
 import java.util
 
-import com.google.common.collect.ImmutableSet
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.IToolScoop
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.power.ItemPowered
 import net.bdew.lib.Misc
-import net.bdew.lib.items.NamedItem
+import net.bdew.lib.items.{ItemUtils, NamedItem}
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -33,6 +32,7 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialScoop")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
+  lazy val silktouchCharges = cfg.getInt("SilktouchCharges")
 
   setUnlocalizedName(Gendustry.modId + ".scoop")
   setMaxStackSize(1)
@@ -40,15 +40,24 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
 
   efficiencyOnProperMaterial = 32
 
-  override def getHarvestLevel(stack: ItemStack, toolClass: String) =
-    if (toolClass == "scoop") 3 else -1
-
-  override def getToolClasses(stack: ItemStack) = ImmutableSet.of("scoop")
+  setHarvestLevel("scoop", 3)
 
   override def getDigSpeed(stack: ItemStack, block: Block, meta: Int) =
     if (!hasCharges(stack))
       0.1F
     else super.getDigSpeed(stack, block, meta)
+
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, xOff: Float, yOff: Float, zOff: Float): Boolean = {
+    if (!player.isSneaking) return false
+    if (world.isRemote) return true
+    val block = world.getBlock(x, y, z)
+    if (block.getHarvestTool(world.getBlockMetadata(x, y, z)) == "scoop" && getCharge(stack) >= silktouchCharges && getCharge(stack) >= silktouchCharges) {
+      useCharge(stack, silktouchCharges, player)
+      ItemUtils.dropItemToPlayer(world, player, new ItemStack(block, 1, block.getDamageValue(world, x, y, z)))
+      world.setBlockToAir(x, y, z)
+      true
+    } else false
+  }
 
   override def onBlockDestroyed(stack: ItemStack, world: World, block: Block, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
     if (ForgeHooks.isToolEffective(stack, block, world.getBlockMetadata(x, y, z))) {
