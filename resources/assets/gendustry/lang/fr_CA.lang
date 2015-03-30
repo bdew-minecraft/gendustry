@@ -95,9 +95,9 @@ gendustry.label.territory=Territoire : %s
 
 gendustry.label.erase=Placer dans un fourneau pour effacer le contenu génétique
 gendustry.label.recipes=Cliquer pour voir les recettes
-gendustry.label.consume=Change de consommation : %s%%
-gendustry.label.mutatron.death=Change de mort (ignoble) : %s%%
-gendustry.label.mutatron.degrade=Change de dégradation (pristine) : %s%%
+gendustry.label.consume=Chance de consommation : %s%%
+gendustry.label.mutatron.death=Chance de mort (ignoble) : %s%%
+gendustry.label.mutatron.degrade=Chance de dégradation (pristine) : %s%%
 
 gendustry.label.mod.automated=* Automatisation
 gendustry.label.mod.biome=* Outrepasser le biome : %s
