@@ -61,7 +61,7 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
 
   def getSamples(stack: ItemStack): Iterable[GeneSampleInfo] = {
     val tag = stack.getTagCompound
-    import net.bdew.lib.nbt.NBTHelper._
+    import net.bdew.lib.nbt._
     if (tag != null)
       return tag.getList[NBTTagCompound]("samples") map GeneSampleInfo.fromNBT
     else
