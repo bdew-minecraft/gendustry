@@ -60,8 +60,8 @@ class ReplicatorHandler extends BaseRecipeHandler(5, 13) {
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.dna.getID => addAllRecipes()
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.protein.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.getFluid == Fluids.dna => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.getFluid == Fluids.protein => addAllRecipes()
       case ("item", Seq(x: ItemStack)) if x.getItem == GeneTemplate && GeneTemplate.isComplete(x) => addRecipe(x)
       case ("Replicator", _) => addAllRecipes()
     }

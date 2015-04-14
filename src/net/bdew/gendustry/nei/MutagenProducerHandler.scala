@@ -50,7 +50,7 @@ class MutagenProducerHandler extends BaseRecipeHandler(5, 13) {
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.getFluid == Fluids.mutagen => addAllRecipes()
       case ("item", Seq(IStackBlock(x))) if x == Fluids.mutagen.getBlock => addAllRecipes()
       case ("MutagenProducer", _) => addAllRecipes()
     }

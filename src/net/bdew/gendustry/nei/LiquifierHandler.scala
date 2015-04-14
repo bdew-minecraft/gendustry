@@ -50,7 +50,7 @@ class LiquifierHandler extends BaseRecipeHandler(5, 13) {
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.protein.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.getFluid == Fluids.protein => addAllRecipes()
       case ("item", Seq(IStackBlock(x))) if x == Fluids.protein.getBlock => addAllRecipes()
       case ("Liquifier", _) => addAllRecipes()
     }

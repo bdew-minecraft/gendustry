@@ -52,7 +52,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
       case 2 => root.templateAsIndividual(mutation.getTemplate)
     }
     individual.analyze()
-    return (root, slot) match {
+    (root, slot) match {
       case (bees: IBeeRoot, 0) => bees.getMemberStack(individual, EnumBeeType.PRINCESS.ordinal())
       case (bees: IBeeRoot, 1) => bees.getMemberStack(individual, EnumBeeType.DRONE.ordinal())
       case (bees: IBeeRoot, 2) => bees.getMemberStack(individual, EnumBeeType.QUEEN.ordinal())
@@ -77,7 +77,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
 
   override def loadUsageRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.mutagen.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.getFluid == Fluids.mutagen => addAllRecipes()
       case ("item", Seq(IStackBlock(x))) if x == Fluids.mutagen.getBlock => addAllRecipes()
       case ("item", Seq(IStack(x))) if x == Items.labware => addAllRecipes()
       case ("item", Seq(x: ItemStack)) =>

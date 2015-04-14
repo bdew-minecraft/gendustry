@@ -90,7 +90,7 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
 
   override def loadCraftingRecipes(outputId: String, results: AnyRef*): Unit = {
     Some(outputId, results) collect {
-      case ("liquid", Seq(x: FluidStack)) if x.fluidID == Fluids.dna.getID => addAllRecipes()
+      case ("liquid", Seq(x: FluidStack)) if x.getFluid == Fluids.dna => addAllRecipes()
       case ("item", Seq(IStackBlock(x))) if x == Fluids.dna.getBlock => addAllRecipes()
       case ("Extractor", _) => addAllRecipes()
     }
