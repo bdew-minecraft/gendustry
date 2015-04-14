@@ -11,7 +11,7 @@ package net.bdew.gendustry.misc
 
 import forestry.api.genetics._
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.forestry.GeneSampleInfo
+import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
 import net.bdew.lib.Misc
 
 object GeneticsCache {
@@ -80,7 +80,7 @@ object GeneticsCache {
         val names = results map { mutation =>
           mutation.getTemplate()(0).getName +
             // Add * if there are special requirements
-            (if (Option(mutation.getSpecialConditions).map(_.size).getOrElse(0) > 0) "*" else "")
+            (if (GeneticsHelper.safeMutationConditions(mutation).size > 0) "*" else "")
         } mkString ", "
         // And print it out
         Gendustry.logDebug("%s + %s => [%s]", sp1.getName, partner.getName, names)

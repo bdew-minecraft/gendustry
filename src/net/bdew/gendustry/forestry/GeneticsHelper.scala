@@ -17,6 +17,7 @@ import forestry.api.apiculture.{EnumBeeType, IBee, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITree, ITreeRoot}
 import forestry.api.genetics._
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
@@ -107,7 +108,7 @@ object GeneticsHelper {
       }
     } else {
       // only 1 valid mutation - use it
-      valid(0)
+      valid.head
     }
     return getFinalMutationResult(selected, fromStack, true)
   }
@@ -223,4 +224,15 @@ object GeneticsHelper {
       AlleleManager.ersatzSaplings.find({ case (stack, _) => stack.getItemDamage == fixedMeta }) map (_._2)
     } else None
   }
+
+  // Because *insert sarcastic remark*
+  def safeMutationConditions(m: IMutation) =
+    try {
+      import scala.collection.JavaConversions._
+      Option(m.getSpecialConditions) map (_.toList) getOrElse List.empty
+    } catch {
+      case t: Throwable =>
+        Gendustry.logWarnException("Error getting conditions of mutation %s + %s => %s", t, m.getAllele0.getUID, m.getAllele1.getUID, m.getTemplate.head.getUID)
+        List.empty
+    }
 }
