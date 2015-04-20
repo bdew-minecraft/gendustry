@@ -30,8 +30,8 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
     val outIndividual = 1
   }
 
-  val dnaTank = DataSlotTankRestricted("dnaTank", this, cfg.dnaTankSize, Fluids.dna.getID)
-  val proteinTank = DataSlotTankRestricted("proteinTank", this, cfg.proteinTankSize, Fluids.protein.getID)
+  val dnaTank = DataSlotTankRestricted("dnaTank", this, cfg.dnaTankSize, Fluids.dna)
+  val proteinTank = DataSlotTankRestricted("proteinTank", this, cfg.proteinTankSize, Fluids.protein)
 
   def getSizeInventory = 2
 

@@ -26,7 +26,7 @@ import net.minecraftforge.fluids._
 class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = MachineLiquifier
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.protein.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.protein).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val output = DataSlotInt("output", this).setUpdate(UpdateKind.SAVE)
 
   object slots {

@@ -40,8 +40,7 @@ object WailaDataSlotsDataProvider extends BaseDataProvider(classOf[TileDataSlots
           if (slot.getFluid != null && slot.getFluid.getFluid != null) {
             Some("%s / %s mB %s".format(DecFormat.round(slot.getFluidAmount), DecFormat.round(slot.size), slot.getFluid.getLocalizedName))
           } else {
-            val fluid = FluidRegistry.getFluid(slot.fluidID)
-            Some("0 / %s mB %s".format(DecFormat.round(slot.size), fluid.getLocalizedName(new FluidStack(fluid, 1))))
+            Some("0 / %s mB %s".format(DecFormat.round(slot.size), slot.getFluid.getLocalizedName))
           }
 
         case slot: DataSlotTank =>

@@ -33,7 +33,7 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
     val outIndividual = 2
   }
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen)
   val lastPlayer = DataSlotGameProfile("player", this).setUpdate(UpdateKind.SAVE)
 
   def getSizeInventory = 4

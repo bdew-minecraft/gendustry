@@ -26,7 +26,7 @@ import net.minecraftforge.fluids._
 class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
   lazy val cfg = MachineMutagenProducer
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val output = DataSlotInt("output", this).setUpdate(UpdateKind.SAVE)
 
   def getSizeInventory = 1

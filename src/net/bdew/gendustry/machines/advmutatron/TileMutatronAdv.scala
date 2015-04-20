@@ -35,7 +35,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
     val selectors = 4 to 9
   }
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen.getID)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen)
   val selectedMutation = DataSlotInt("selected", this, -1).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
   val lastPlayer = DataSlotGameProfile("player", this).setUpdate(UpdateKind.SAVE)
 

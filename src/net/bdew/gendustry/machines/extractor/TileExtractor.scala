@@ -31,7 +31,7 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
     val inLabware = 1
   }
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.dna.getID).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.dna).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val output = DataSlotInt("output", this).setUpdate(UpdateKind.SAVE)
 
   def getSizeInventory = 2
