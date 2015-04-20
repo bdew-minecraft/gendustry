@@ -22,29 +22,37 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "1.4.10"
-ext.bdlibver = "1.7.0.70"
-ext.versuffix = "mc1710"
-ext.apiVer = version
+file "build.properties" withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+if (project.hasProperty('forgeOverride')) {
+    config.forge.version = forgeOverride
+}
 
 if (project.hasProperty('buildnum')) {
-    project.version = project.version + '.' + project.buildnum
+    ext.simpleVersion = "${config.gendustry.version}.${project.buildnum}"
 } else {
-    project.version = project.version + '-DEV'
+    ext.simpleVersion = "${config.gendustry.version}-DEV"
 }
+
+version += '-mc' + config.minecraft.version
 
 group = "net.bdew"
 archivesBaseName = "gendustry"
 
 minecraft {
-    version = "1.7.10-10.13.2.1291"
-    replace("BDLIB_VER", project.bdlibver)
-    replace("GENDUSTRY_VER", project.version)
-    replace("GENDUSTRY_APIVER", project.apiVer)
+    version = "${config.minecraft.version}-${config.forge.version}"
+    replace("BDLIB_VER", config.bdlib.version)
+    replace("GENDUSTRY_VER", simpleVersion.toString())
+    replace("GENDUSTRY_APIVER", simpleVersion.toString())
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         name = "bdew"
         url = "http://jenkins.bdew.net/maven"
@@ -61,19 +69,24 @@ repositories {
         name "waila"
         url "http://mobiusstrip.eu/maven"
     }
+    ivy {
+        name "CoFHLib"
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.cofhlib.cf}/[module]-[revision](-[classifier])(.[ext])"
+    }
 }
 
 dependencies {
-    compile "net.bdew:bdlib:" + bdlibver
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
-    compile "com.mod-buildcraft:buildcraft:6.4.11:dev"
-    compile "net.industrial-craft:industrialcraft-2:2.2.714-experimental:api"
-    compile "net.sengir.forestry:forestry_1.7.10:3.5.3.11:api"
-    compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
-    compile "net.bdew.thirdparty:CoFHLib:1.7.10R3.0.0.9:api"
+    compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
+    compile "codechicken:NotEnoughItems:${config.minecraft.version}-${config.nei.version}:dev"
+    compile "codechicken:CodeChickenLib:${config.minecraft.version}-${config.ccl.version}:dev"
+    compile "codechicken:CodeChickenCore:${config.minecraft.version}-${config.ccc.version}:dev"
+    compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
+    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+    compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
+    compile "mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}"
+    compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
 }
+
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
@@ -106,22 +119,26 @@ task apiJar(type: Jar, dependsOn: 'classes') {
         include 'net/bdew/gendustry/api/**'
     }
 
+    duplicatesStrategy "exclude"
+
     extension = 'jar'
     classifier = 'api'
 }
 
 task sourceJar(type: Jar) {
+    classifier "sources"
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     exclude "**/*.psd"
+    classifier "dev"
+    duplicatesStrategy "exclude"
 }
 
 
 jar {
     exclude "**/*.psd"
-    appendix = project.versuffix
 }
 
 afterEvaluate { project ->
@@ -144,11 +161,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifact deobfJar
-
-            artifact sourceJar {
-                classifier "sources"
-            }
-
+            artifact sourceJar
             artifact apiJar
         }
     }
