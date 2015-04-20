@@ -38,7 +38,7 @@ if (project.hasProperty('buildnum')) {
     ext.simpleVersion = "${config.gendustry.version}-DEV"
 }
 
-version += '-mc' + config.minecraft.version
+version = simpleVersion + '-mc' + config.minecraft.version
 
 group = "net.bdew"
 archivesBaseName = "gendustry"
