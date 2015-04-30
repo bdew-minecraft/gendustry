@@ -29,6 +29,7 @@ item.gendustry.grafter.name=Промышленный садовый нож
 item.gendustry.scoop.name=Скупоратор MX200 турбо
 item.gendustry.ImportCover.name=Item Import Cover
 item.gendustry.EjectCover.name=Item Eject Cover
+item.gendustry.PollenKit.name=Набор для сбора пыльцы
 
 # ==== FLUIDS ====
 
@@ -60,6 +61,7 @@ gendustry.upgrades.sealing.name=Улучшение «Уплотнение»
 gendustry.upgrades.light.name=Улучшение «Свет»
 gendustry.upgrades.sky.name=Улучшение «Открытое небо»
 gendustry.upgrades.hell.name=Улучшение «Эмуляция Ада»
+gendustry.upgrades.winter.name=Улучшение «Эмуляция зимы»
 gendustry.upgrades.auto.name=Улучшение «Автоматизация»
 gendustry.upgrades.humidifier.name=Улучшение «Увлажнение»
 gendustry.upgrades.dryer.name=Улучшение «Сушка»
@@ -113,9 +115,6 @@ gendustry.label.mod.sieve=* Сбор пыльцы
 gendustry.label.mod.temperature=* Температура
 gendustry.label.mod.humidity=* Влажность
 
-gendustry.error.power=Недостаточно энергии
-gendustry.error.disabled=Отключено настройками
-
 gendustry.label.sample.rootBees=Взято из пчелы
 gendustry.label.sample.rootTrees=Взято из саженца
 gendustry.label.sample.rootButterflies=Взято из бабочки
@@ -133,6 +132,8 @@ gendustry.rsmode.always=Всегда ВКЛ.
 gendustry.rsmode.never=Отключен
 gendustry.rsmode.rs_on=Включен по сигналу красного камня
 gendustry.rsmode.rs_off=Выключен  по сигналу красного камня
+
+gendustry.label.shift=<Нажмите SHIFT для большей информации>
 
 # ==== CHROMOSOMES (should match forestry) ====
 
@@ -164,7 +165,6 @@ gendustry.chromosome.SAPPINESS=Жизнеспособность
 
 // Botany
 
-    SPECIES,
 gendustry.chromosome.PRIMARY=Первичный
 gendustry.chromosome.SECONDARY=Вторичный
 gendustry.chromosome.PH_TOLERANCE=Допустимый pH
@@ -196,6 +196,8 @@ gendustry.givesample.success=Дан образец (Вид=%s, Хромосом�
 # ==== MUTATION REQUIREMENTS ====
 gendustry.req.temperature=Требуется температура: %s
 gendustry.req.humidity=Требуется влажность: %s
+gendustry.req.biome=Требуется биом: %s
+gendustry.req.block=Требуется блок: %s
 
 # ==== BEE SPECIES ====
 gendustry.bees.species.black=Чёрная
@@ -254,6 +256,9 @@ gendustry.honeydrop.white.name=Белая капля мёда
 itemGroup.bdew.gendustry=Gendustry
 itemGroup.bdew.templates=Генетические шаблоны
 itemGroup.bdew.samples=Генетические образцы
+
+for.gendustry.errorstate.disabled.description=Отключено
+for.gendustry.errorstate.disabled.help=Этот механизм отключен в настройках конфигурации
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Пусто
