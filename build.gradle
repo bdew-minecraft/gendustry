@@ -83,7 +83,11 @@ dependencies {
     compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
     compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
-    compile "mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}"
+
+    compile module("mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}") {
+        transitive = false // WAILA is depending on an invalid combination of CCC/NEI that doesn't run...
+    }
+
     compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
 }
 
@@ -170,4 +174,26 @@ publishing {
             url "file://var/www/maven"
         }
     }
+}
+
+apply plugin: 'curseforge'
+
+curse {
+    projectId = config.curseforge.id
+    apiKey = project.hasProperty("curseForgeApiKey") ? project.curseForgeApiKey : ""
+    releaseType = 'alpha'
+
+    artifact = jar
+    changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+
+    additionalArtifact deobfJar
+    additionalArtifact sourceJar
+    additionalArtifact apiJar
+
+    relatedProject 'bdlib': 'requiredLibrary'
+    relatedProject 'forestry': 'requiredLibrary'
+    relatedProject 'cofhcore': 'optionalLibrary'
+    relatedProject 'buildcraft': 'optionalLibrary'
+    relatedProject 'notenoughitems': 'optionalLibrary'
+    relatedProject 'waila': 'optionalLibrary'
 }
