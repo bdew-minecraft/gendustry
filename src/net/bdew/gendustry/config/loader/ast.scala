@@ -38,7 +38,7 @@ case class RsProtein(st: StackRef, mb: Int) extends RecipeStatement
 case class RsAssembly(rec: List[(Char, Int)], id: String, power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
 // Forestry Centrifuge
-case class RsCentrifuge(st: StackRef, out: List[(Int, StackRef)], time: Int) extends RecipeStatement
+case class RsCentrifuge(st: StackRef, out: List[(Double, StackRef)], time: Int) extends RecipeStatement
 
 // Forestry Squeezer
 case class RsSqueezer(st: StackRef, fluid: FluidSpec, time: Int, remnants: StackRef, chance: Int) extends RecipeStatement

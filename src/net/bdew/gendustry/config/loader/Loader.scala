@@ -84,7 +84,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
       // forestry API is stupid and requires a hashmap, build one for it
       val outStacks = new java.util.HashMap[ItemStack, Integer]
-      resolveLootList(out).foreach(x => outStacks.put(x._2, x._1))
+      resolveLootList(out).foreach(x => outStacks.put(x._2, x._1.round.toInt))
 
       val inStack = getConcreteStackNoWildcard(stack)
 

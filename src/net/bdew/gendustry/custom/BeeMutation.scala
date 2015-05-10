@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.custom
 
-import forestry.api.apiculture.{IAlleleBeeSpecies, IBeeHousing, IBeeMutation, IBeeRoot}
+import forestry.api.apiculture._
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import forestry.api.genetics.{AlleleManager, IAllele, IGenome}
 import net.bdew.lib.Misc

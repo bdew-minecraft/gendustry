@@ -40,14 +40,14 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser {
 
   def oneOrManyDrops = (
     dropsEntry ^^ { case d => List(d) }
-      | spec ^^ { case st => List((100, st)) }
+      | spec ^^ { case st => List((100D, st)) }
       | ("{" ~> dropsEntry.+ <~ "}")
     )
 
   def fluidSpec = str ~ (wholeNumber <~ "mb") ^^ { case id ~ amount => FluidSpec(id, amount.toInt) }
 
   def squeezer = "squeezer" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> fluidSpec) ~ ("+" ~> dropsEntry).? ^^ {
-    case stack ~ ticks ~ fluid ~ Some((chance, res)) => RsSqueezer(stack, fluid, ticks.toInt, res, chance)
+    case stack ~ ticks ~ fluid ~ Some((chance, res)) => RsSqueezer(stack, fluid, ticks.toInt, res, chance.round.toInt)
     case stack ~ ticks ~ fluid ~ None => RsSqueezer(stack, fluid, ticks.toInt, null, 0)
   }
 
