@@ -83,8 +83,8 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   val specialty = prepareLootList("Specialty")
   specialty.foreach(x => Gendustry.logDebug("  [%.1f%%] %s", x._2, x._1))
 
-  override val getProducts = products.map(x => x._1 -> Int.box(x._2.round)).asJava
-  override val getSpecialty = specialty.map(x => x._1 -> Int.box(x._2.round)).asJava
+  override val getProducts = products.map(x => x._1 -> Int.box(x._2.round * 100)).asJava
+  override val getSpecialty = specialty.map(x => x._1 -> Int.box(x._2.round * 100)).asJava
 
   override val isNocturnal = cfg.getBoolean("Nocturnal")
   override val getRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
