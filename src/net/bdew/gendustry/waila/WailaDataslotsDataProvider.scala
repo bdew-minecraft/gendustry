@@ -19,7 +19,7 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
-import net.minecraftforge.fluids.{FluidRegistry, FluidStack}
+import net.minecraftforge.fluids.FluidStack
 
 object WailaDataSlotsDataProvider extends BaseDataProvider(classOf[TileDataSlots]) {
   override def getNBTTag(player: EntityPlayerMP, te: TileDataSlots, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int) = {
@@ -40,7 +40,7 @@ object WailaDataSlotsDataProvider extends BaseDataProvider(classOf[TileDataSlots
           if (slot.getFluid != null && slot.getFluid.getFluid != null) {
             Some("%s / %s mB %s".format(DecFormat.round(slot.getFluidAmount), DecFormat.round(slot.size), slot.getFluid.getLocalizedName))
           } else {
-            Some("0 / %s mB %s".format(DecFormat.round(slot.size), slot.getFluid.getLocalizedName))
+            Some("0 / %s mB %s".format(DecFormat.round(slot.size), new FluidStack(slot.filterFluid, 0).getLocalizedName))
           }
 
         case slot: DataSlotTank =>
