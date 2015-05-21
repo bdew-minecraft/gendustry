@@ -217,6 +217,9 @@ gendustry.bees.species.magenta=Magenta
 gendustry.bees.species.orange=Orange
 gendustry.bees.species.white=White
 
+gendustry.bees.species.derpious=Derpious
+gendustry.bees.species.derpious.description=A curious specimen, seems to be mostly interested in spreading flowers and derping around.
+
 # ==== COMBS ====
 
 gendustry.honeycomb.black.name=Black Colored Comb
