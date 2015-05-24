@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.compat.itempush
 
-import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
@@ -19,8 +19,8 @@ object ItemPush {
 
   def init() {
     register(VanillaPush)
-    if (PowerProxy.haveModVersion("BuildCraftAPI|transport@[3.0,)")) register(BCPipePushProxy)
-    if (PowerProxy.haveModVersion("CoFHAPI|transport")) register(CofhConduitPushProxy)
+    if (Misc.haveModVersion("BuildCraftAPI|transport@[3.0,)")) register(BCPipePushProxy)
+    if (Misc.haveModVersion("CoFHAPI|transport")) register(CofhConduitPushProxy)
   }
 
   def register(p: ItemPushProxy) = proxies :+= p

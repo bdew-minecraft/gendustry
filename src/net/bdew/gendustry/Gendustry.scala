@@ -29,6 +29,7 @@ import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.machines.apiary.ErrorCodes
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
+import net.bdew.lib.Misc
 import net.minecraft.command.CommandHandler
 import net.minecraftforge.oredict.RecipeSorter
 import org.apache.logging.log4j.Logger
@@ -67,7 +68,7 @@ object Gendustry {
 
     ErrorCodes.init()
 
-    if (PowerProxy.haveModVersion("BuildCraftAPI|statements"))
+    if (Misc.haveModVersion("BuildCraftAPI|statements"))
       TriggerProvider.registerTriggers()
 
     Fluids.load()
