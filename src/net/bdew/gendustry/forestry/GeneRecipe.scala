@@ -37,5 +37,5 @@ class GeneRecipe extends IRecipe {
     return out
   }
   def getRecipeSize: Int = 9
-  def getRecipeOutput: ItemStack = null
+  def getRecipeOutput: ItemStack = new ItemStack(GeneTemplate)
 }
