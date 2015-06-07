@@ -80,7 +80,7 @@ object GeneticsCache {
         val names = results map { mutation =>
           mutation.getTemplate()(0).getName +
             // Add * if there are special requirements
-            (if (GeneticsHelper.safeMutationConditions(mutation).size > 0) "*" else "")
+            (if (GeneticsHelper.safeMutationConditions(mutation).nonEmpty) "*" else "")
         } mkString ", "
         // And print it out
         Gendustry.logDebug("%s + %s => [%s]", sp1.getName, partner.getName, names)

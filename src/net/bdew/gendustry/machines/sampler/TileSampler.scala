@@ -41,9 +41,9 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
     val member = root.getMember(stack)
     val genome = member.getGenome
     val chromosomes = genome.getChromosomes.zipWithIndex.filter(_._1 != null)
-    val alleles = chromosomes.map({
+    val alleles = chromosomes.flatMap {
       case (x, n) => Seq(n -> x.getPrimaryAllele, n -> x.getSecondaryAllele)
-    }).flatten
+    }
 
     val rand = new Random()
     val (chr, allele) = alleles(rand.nextInt(alleles.length))

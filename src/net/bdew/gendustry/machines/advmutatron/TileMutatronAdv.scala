@@ -54,7 +54,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
         inv(slot) = null
       selectedMutation := -1
       val valid = GeneticsHelper.getValidMutations(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2))
-      if (valid.size > 0) {
+      if (valid.nonEmpty) {
         for ((slot, mp) <- slots.selectors.zipWithIndex if valid.isDefinedAt(mp)) {
           inv(slot) = GeneticsHelper.getFinalMutationResult(valid(mp), getStackInSlot(slots.inIndividual1), false)
         }

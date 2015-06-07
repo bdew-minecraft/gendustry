@@ -80,18 +80,18 @@ object GeneticsHelper {
     if (fromStack == null && toStack == null) return false
     if (toStack == null) return isValidItemForSlot(fromStack, 0)
     if (fromStack == null) return isValidItemForSlot(toStack, 1)
-    return getValidMutations(fromStack, toStack).size > 0
+    return getValidMutations(fromStack, toStack).nonEmpty
   }
 
   def getMutationResult(fromStack: ItemStack, toStack: ItemStack): ItemStack = {
     val valid = getValidMutations(fromStack, toStack)
-    if (valid.size == 0) return null
+    if (valid.isEmpty) return null
 
     val selected = if (valid.size > 1) {
       val secret = valid.filter(_.isSecret)
       val normal = valid.filter(!_.isSecret)
-      if (secret.size > 0) {
-        if (normal.size > 0) {
+      if (secret.nonEmpty) {
+        if (normal.nonEmpty) {
           // Have both, check chance
           if (random.nextInt(100) < MachineMutatron.secretChance) {
             secret(random.nextInt(secret.size))

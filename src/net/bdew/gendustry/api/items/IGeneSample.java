@@ -21,21 +21,21 @@ public interface IGeneSample {
     /**
      * @return Species root object
      */
-    public ISpeciesRoot root();
+    ISpeciesRoot root();
 
     /**
      * Chromosome number, see {@link forestry.api.apiculture.EnumBeeChromosome},
      * {@link forestry.api.arboriculture.EnumTreeChromosome} and {@link forestry.api.lepidopterology.EnumButterflyChromosome}
      */
-    public int chromosome();
+    int chromosome();
 
     /**
      * @return Sampled allele
      */
-    public IAllele allele();
+    IAllele allele();
 
     /**
      * Human-readable, localized string
      */
-    public String getLocalizedName();
+    String getLocalizedName();
 }

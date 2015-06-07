@@ -84,7 +84,7 @@ class ExtractorHandler extends BaseRecipeHandler(5, 13) {
 
   def addAllRecipes() {
     val species = Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])
-    val stacks = species.map(getRecipeIndividuals).flatten.filter(LiquidDNASources.getValue(_) > 0)
+    val stacks = species.flatMap(getRecipeIndividuals).filter(LiquidDNASources.getValue(_) > 0)
     stacks.foreach(x => arecipes.add(new ExtractorRecipe(x, LiquidDNASources.getValue(x))))
   }
 

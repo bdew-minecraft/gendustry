@@ -25,10 +25,10 @@ public interface IIndustrialApiary extends IBeeHousing {
      *
      * @return calculated modifiers from all upgrades
      */
-    public ApiaryModifiers getModifiers();
+    ApiaryModifiers getModifiers();
 
     /**
      * @return List of upgrade item stacks
      */
-    public List<ItemStack> getUpgrades();
+    List<ItemStack> getUpgrades();
 }

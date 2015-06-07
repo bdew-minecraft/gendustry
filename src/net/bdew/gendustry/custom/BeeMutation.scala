@@ -39,7 +39,7 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
       h.getWorld.getBlockMetadata(h.getXCoord, h.getYCoord - 1, h.getZCoord)
     else -1
 
-  def testReq[T](req: Option[T], v: T) = !req.isDefined || req.get == v
+  def testReq[T](req: Option[T], v: T) = req.isEmpty || req.get == v
 
   override def getChance(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome) =
     if (!((allele0 == parent1 && allele1 == parent2) || (allele0 == parent2 && allele1 == parent1))) 0

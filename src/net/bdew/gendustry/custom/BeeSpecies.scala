@@ -135,7 +135,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     var res = List.empty[ItemStack]
     if (world.rand.nextFloat() < 10F / bountyLevel) {
       val combinations = getRoot.getCombinations(this).toList
-      if (combinations.size > 0)
+      if (combinations.nonEmpty)
         res :+= AlleleManager.alleleRegistry.getMutationNoteStack(researcher, combinations(world.rand.nextInt(combinations.size)))
     }
 

@@ -10,7 +10,6 @@
 package net.bdew.gendustry.misc
 
 import java.util
-import java.util.List
 
 import _root_.forestry.api.genetics.{AlleleManager, IAlleleSpecies}
 import net.bdew.gendustry.forestry.GeneticsHelper
@@ -32,7 +31,7 @@ class CommandGiveTemplate extends CommandBase {
       .toList
 
   def processCommand(sender: ICommandSender, params: Array[String]) {
-    if (params.size != 1)
+    if (params.length != 1)
       throw new WrongUsageException("gendustry.givetemplate.usage")
 
     val player = CommandBase.getCommandSenderAsPlayer(sender)

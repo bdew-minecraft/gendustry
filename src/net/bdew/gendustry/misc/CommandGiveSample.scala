@@ -10,7 +10,6 @@
 package net.bdew.gendustry.misc
 
 import java.util
-import java.util.List
 
 import _root_.forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
 import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
@@ -36,7 +35,7 @@ class CommandGiveSample extends CommandBase {
     }
 
   def processCommand(sender: ICommandSender, params: Array[String]) {
-    if (params.size != 3)
+    if (params.length != 3)
       throw new WrongUsageException("gendustry.givesample.usage")
 
     val player = CommandBase.getCommandSenderAsPlayer(sender)
@@ -73,7 +72,7 @@ class CommandGiveSample extends CommandBase {
           val root = AlleleManager.alleleRegistry.getSpeciesRoot(rootUid)
           val chromosome = validChromosomes(root).toMap.getOrElse(chromosomeName, return null)
           val valid = AlleleManager.alleleRegistry.getRegisteredAlleles
-            .filter({ case (n, a) => isValidAllele(root, chromosome, a) }).map(_._1).toSeq
+            .filter({ case (n, a) => isValidAllele(root, chromosome, a) }).keys.toSeq
           CommandBase.getListOfStringsMatchingLastWord(params, valid: _*)
         } else null
       case _ => null
