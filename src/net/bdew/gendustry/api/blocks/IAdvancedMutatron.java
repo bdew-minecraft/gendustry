@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Map;
 
-public interface IAdvancedMutatron extends IWorkerMachine {
+public interface IAdvancedMutatron extends IMutatron {
     /**
      * @return List of possible mutations for current inventory
      */

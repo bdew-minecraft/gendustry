@@ -12,6 +12,7 @@ package net.bdew.gendustry.apiimpl
 import net.bdew.gendustry.api.blocks.IBlockAPI
 import net.bdew.gendustry.machines.advmutatron.TileMutatronAdv
 import net.bdew.gendustry.machines.apiary.TileApiary
+import net.bdew.gendustry.machines.mutatron.TileMutatron
 import net.minecraft.world.World
 
 object BlockApiImpl extends IBlockAPI {
@@ -23,6 +24,12 @@ object BlockApiImpl extends IBlockAPI {
 
   override def getWorkerMachine(w: World, x: Int, y: Int, z: Int) =
     getTypedTileEntity(w, x, y, z, classOf[TileWorker]).orNull
+
+  override def isMutatron(w: World, x: Int, y: Int, z: Int) =
+    getTypedTileEntity(w, x, y, z, classOf[TileMutatron]).isDefined
+
+  override def getMutatron(w: World, x: Int, y: Int, z: Int) =
+    getTypedTileEntity(w, x, y, z, classOf[TileMutatron]).orNull
 
   override def isAdvancedMutatron(w: World, x: Int, y: Int, z: Int) =
     getTypedTileEntity(w, x, y, z, classOf[TileMutatronAdv]).isDefined

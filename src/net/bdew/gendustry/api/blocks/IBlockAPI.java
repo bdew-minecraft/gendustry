@@ -27,6 +27,16 @@ public interface IBlockAPI {
     IIndustrialApiary getIndustrialApiary(World w, int x, int y, int z);
 
     /**
+     * @return True if a valid mutatron
+     */
+    boolean isMutatron(World w, int x, int y, int z);
+
+    /**
+     * @return Mutatron interface
+     */
+    IMutatron getMutatron(World w, int x, int y, int z);
+
+    /**
      * @return True if a valid Advanced mutatron
      */
     boolean isAdvancedMutatron(World w, int x, int y, int z);

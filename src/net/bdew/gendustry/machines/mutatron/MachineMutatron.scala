@@ -10,9 +10,15 @@
 package net.bdew.gendustry.machines.mutatron
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.gui.GuiProvider
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
+import net.bdew.lib.recipes.gencfg.EntryStr
 import net.minecraft.entity.player.EntityPlayer
+
+object MutationSetting extends Enumeration {
+  val ENABLED, DISABLED, REQUIREMENTS = Value
+}
 
 object MachineMutatron extends Machine("Mutatron", BlockMutatron) with GuiProvider with ProcessorMachine {
   def guiId = 2
@@ -24,6 +30,15 @@ object MachineMutatron extends Machine("Mutatron", BlockMutatron) with GuiProvid
   lazy val degradeChanceNatural = tuning.getFloat("DegradeChanceNatural")
   lazy val deathChanceArtificial = tuning.getFloat("DeathChanceArtificial")
   lazy val secretChance = tuning.getFloat("SecretMutationChance")
+
+  lazy val mutatronOverrides =
+    (for ((key, value) <- Tuning.getSection("Genetics").getSection("MutatronOverrides").filterType(classOf[EntryStr]))
+      yield key -> (value.v.toUpperCase match {
+        case "ENABLED" => MutationSetting.ENABLED
+        case "DISABLED" => MutationSetting.DISABLED
+        case "REQUIREMENTS" => MutationSetting.REQUIREMENTS
+        case _ => MutationSetting.ENABLED
+      })).toMap.withDefaultValue(MutationSetting.ENABLED)
 
   @SideOnly(Side.CLIENT)
   def getGui(te: TileMutatron, player: EntityPlayer) = new GuiMutatron(te, player)

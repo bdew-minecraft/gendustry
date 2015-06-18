@@ -11,6 +11,7 @@ package net.bdew.gendustry.machines.advmutatron
 
 import net.bdew.gendustry.api.blocks.IAdvancedMutatron
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.gendustry.compat.FakeMutatronBeeHousing
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.power.TilePowered
@@ -43,6 +44,12 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
 
   def getTankFromDirection(dir: ForgeDirection): IFluidTank = tank
 
+  override def getParent1 = getStackInSlot(slots.inIndividual1)
+  override def getParent2 = getStackInSlot(slots.inIndividual2)
+  override def getOwner = lastPlayer.value
+
+  lazy val fakeBeeHousing = new FakeMutatronBeeHousing(this)
+
   override def markDirty() {
     updateSelectors()
     super.markDirty()
@@ -53,7 +60,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
       for (slot <- slots.selectors)
         inv(slot) = null
       selectedMutation := -1
-      val valid = GeneticsHelper.getValidMutations(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2))
+      val valid = GeneticsHelper.getValidMutations(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2), fakeBeeHousing)
       if (valid.nonEmpty) {
         for ((slot, mp) <- slots.selectors.zipWithIndex if valid.isDefinedAt(mp)) {
           inv(slot) = GeneticsHelper.getFinalMutationResult(valid(mp), getStackInSlot(slots.inIndividual1), false)
@@ -103,9 +110,9 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
     slot match {
       case 0 =>
-        return GeneticsHelper.isPotentialMutationPair(stack, getStackInSlot(1))
+        return GeneticsHelper.isPotentialMutationPair(stack, getStackInSlot(1), fakeBeeHousing)
       case 1 =>
-        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(0), stack)
+        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(0), stack, fakeBeeHousing)
       case 3 =>
         return stack.getItem == Items.labware
       case _ =>

@@ -17,13 +17,15 @@ import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.genetics.{AlleleManager, IMutation, ISpeciesRoot}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.{Fluids, Items}
-import net.bdew.gendustry.machines.mutatron.MachineMutatron
+import net.bdew.gendustry.forestry.GeneticsHelper
+import net.bdew.gendustry.machines.mutatron.{MachineMutatron, MutationSetting}
 import net.bdew.gendustry.misc.GeneticsCache
 import net.bdew.gendustry.nei.helpers.{FluidComponent, PowerComponent}
 import net.bdew.lib.Misc
 import net.bdew.lib.gui.Rect
 import net.bdew.lib.items.{IStack, IStackBlock}
 import net.minecraft.item.ItemStack
+import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.fluids.FluidStack
 
 class MutatronHandler extends BaseRecipeHandler(5, 13) {
@@ -32,7 +34,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
 
   import scala.collection.JavaConversions._
 
-  class MutatronRecipe(mutation: IMutation) extends CachedRecipeWithComponents {
+  class MutatronRecipe(val mutation: IMutation) extends CachedRecipeWithComponents {
     val getResult = position(getRecipeStack(2, mutation), 142, 41)
     val in1 = position(getRecipeStack(0, mutation), 60, 30)
     val in2 = position(getRecipeStack(1, mutation), 60, 53)
@@ -63,6 +65,22 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
     }
   }
 
+  def canShowMutation(mutation: IMutation) = {
+    MachineMutatron.mutatronOverrides(GeneticsHelper.getMutationSpecies(mutation).getUID) match {
+      case MutationSetting.ENABLED => true
+      case MutationSetting.DISABLED => false
+      case MutationSetting.REQUIREMENTS => true
+    }
+  }
+
+  def getMutationRequirementsDisplay(mutation: IMutation) = {
+    if (MachineMutatron.mutatronOverrides(GeneticsHelper.getMutationSpecies(mutation).getUID) == MutationSetting.REQUIREMENTS)
+      List(EnumChatFormatting.RED.toString + EnumChatFormatting.UNDERLINE + Misc.toLocal("gendustry.req.message")) ++
+        (GeneticsHelper.safeMutationConditions(mutation) map (EnumChatFormatting.RED + _))
+    else
+      List()
+  }
+
   def getRecipe(i: Int) = arecipes.get(i).asInstanceOf[MutatronRecipe]
 
   override def loadTransferRects() {
@@ -70,7 +88,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
   }
 
   def addAllRecipes() {
-    for ((_, root) <- AlleleManager.alleleRegistry.getSpeciesRoot; mutation <- root.getMutations(false)) {
+    for ((_, root) <- AlleleManager.alleleRegistry.getSpeciesRoot; mutation <- root.getMutations(false) if canShowMutation(mutation)) {
       arecipes.add(new MutatronRecipe(mutation))
     }
   }
@@ -83,7 +101,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
       case ("item", Seq(x: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(x)
         if (individual != null) {
-          for (mutation <- GeneticsCache.speciesUsedMutations(individual.getGenome.getPrimary))
+          for (mutation <- GeneticsCache.speciesUsedMutations(individual.getGenome.getPrimary) if canShowMutation(mutation))
             arecipes.add(new MutatronRecipe(mutation))
         }
       case ("Mutatron", _) => addAllRecipes()
@@ -95,7 +113,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
       case ("item", Seq(x: ItemStack)) =>
         val individual = AlleleManager.alleleRegistry.getIndividual(x)
         if (individual != null) {
-          for (mutation <- GeneticsCache.speciesResultMutations(individual.getGenome.getPrimary))
+          for (mutation <- GeneticsCache.speciesResultMutations(individual.getGenome.getPrimary) if canShowMutation(mutation))
             arecipes.add(new MutatronRecipe(mutation))
         }
       case ("Mutatron", _) => addAllRecipes()
@@ -108,6 +126,7 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
     if (stack == getRecipe(recipe).getResult.item) {
       tip += Misc.toLocalF("gendustry.label.mutatron.degrade", MachineMutatron.degradeChanceNatural.toInt)
       tip += Misc.toLocalF("gendustry.label.mutatron.death", MachineMutatron.deathChanceArtificial.toInt)
+      tip ++= getMutationRequirementsDisplay(getRecipe(recipe).mutation)
     }
     super.handleItemTooltip(gui, stack, tip, recipe)
   }

@@ -13,14 +13,14 @@ import java.util.Random
 
 import com.mojang.authlib.GameProfile
 import cpw.mods.fml.common.registry.GameRegistry
-import forestry.api.apiculture.{EnumBeeType, IBee, IBeeRoot}
+import forestry.api.apiculture._
 import forestry.api.arboriculture.{EnumGermlingType, ITree, ITreeRoot}
 import forestry.api.genetics._
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
-import net.bdew.gendustry.machines.mutatron.MachineMutatron
+import net.bdew.gendustry.machines.mutatron.{MachineMutatron, MutationSetting}
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
@@ -51,7 +51,7 @@ object GeneticsHelper {
     return false
   }
 
-  def getValidMutations(fromStack: ItemStack, toStack: ItemStack): Seq[IMutation] = {
+  def getValidMutations(fromStack: ItemStack, toStack: ItemStack, beeHousing: IBeeHousing): Seq[IMutation] = {
     val emptyMutations = Seq.empty[IMutation]
 
     if (fromStack == null || toStack == null) return emptyMutations
@@ -73,18 +73,26 @@ object GeneticsHelper {
 
     val mutations = root.getCombinations(fromSpecies).asScala
 
-    return mutations.filter(checkMutation(_, fromSpecies, toSpecies)).toSeq
+    return mutations.filter(checkMutation(_, fromSpecies, toSpecies)).toSeq filter { mutation =>
+      (MachineMutatron.mutatronOverrides(getMutationSpecies(mutation).getUID), mutation) match {
+        case (MutationSetting.ENABLED, _) => true
+        case (MutationSetting.DISABLED, _) => false
+        case (MutationSetting.REQUIREMENTS, beeMutation: IBeeMutation) =>
+          beeMutation.getChance(beeHousing, fromSpecies, toSpecies, fromIndividual.getGenome, toIndividual.getGenome) > 0
+        case _ => true
+      }
+    }
   }
 
-  def isPotentialMutationPair(fromStack: ItemStack, toStack: ItemStack): Boolean = {
+  def isPotentialMutationPair(fromStack: ItemStack, toStack: ItemStack, beeHousing: IBeeHousing): Boolean = {
     if (fromStack == null && toStack == null) return false
     if (toStack == null) return isValidItemForSlot(fromStack, 0)
     if (fromStack == null) return isValidItemForSlot(toStack, 1)
-    return getValidMutations(fromStack, toStack).nonEmpty
+    return getValidMutations(fromStack, toStack, beeHousing).nonEmpty
   }
 
-  def getMutationResult(fromStack: ItemStack, toStack: ItemStack): ItemStack = {
-    val valid = getValidMutations(fromStack, toStack)
+  def getMutationResult(fromStack: ItemStack, toStack: ItemStack, beeHousing: IBeeHousing): ItemStack = {
+    val valid = getValidMutations(fromStack, toStack, beeHousing)
     if (valid.isEmpty) return null
 
     val selected = if (valid.size > 1) {
@@ -169,7 +177,7 @@ object GeneticsHelper {
     import scala.collection.JavaConverters._
 
     root.getCombinations(sp1).asScala.filter(x => {
-      checkMutation(x, sp1, sp2) && x.getTemplate()(0) == spR
+      checkMutation(x, sp1, sp2) && getMutationSpecies(x) == spR
     }).foreach(tracker.registerMutation)
   }
 
@@ -215,6 +223,9 @@ object GeneticsHelper {
       map { x => x.ordinal() -> x }
     ).toMap
 
+  def getMutationSpecies(m: IMutation) =
+    m.getTemplate()(m.getRoot.getKaryotypeKey.ordinal()).asInstanceOf[IAlleleSpecies]
+
   lazy val leafBlocks = Set(GameRegistry.findBlock("minecraft", "leaves"), GameRegistry.findBlock("minecraft", "leaves2"))
 
   def getErsatzPollen(bl: Block, meta: Int): Option[IIndividual] = {
@@ -232,7 +243,7 @@ object GeneticsHelper {
       Option(m.getSpecialConditions) map (_.toList) getOrElse List.empty
     } catch {
       case t: Throwable =>
-        Gendustry.logWarnException("Error getting conditions of mutation %s + %s => %s", t, m.getAllele0.getUID, m.getAllele1.getUID, m.getTemplate.head.getUID)
+        Gendustry.logWarnException("Error getting conditions of mutation %s + %s => %s", t, m.getAllele0.getUID, m.getAllele1.getUID, getMutationSpecies(m).getUID)
         List.empty
     }
 }

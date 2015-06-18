@@ -9,7 +9,9 @@
 
 package net.bdew.gendustry.machines.mutatron
 
+import net.bdew.gendustry.api.blocks.IMutatron
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.gendustry.compat.FakeMutatronBeeHousing
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.power.TilePowered
@@ -22,7 +24,7 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
 
-class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
+class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with IMutatron {
   lazy val cfg = MachineMutatron
   val outputSlots = Seq(slots.outIndividual)
 
@@ -40,6 +42,12 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
 
   def getTankFromDirection(dir: ForgeDirection): IFluidTank = tank
 
+  override def getParent1 = getStackInSlot(slots.inIndividual1)
+  override def getParent2 = getStackInSlot(slots.inIndividual2)
+  override def getOwner = lastPlayer.value
+
+  lazy val fakeBeeHousing = new FakeMutatronBeeHousing(this)
+
   def canStart =
     getStackInSlot(slots.inIndividual1) != null &&
       getStackInSlot(slots.inIndividual2) != null &&
@@ -48,7 +56,7 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
 
   def tryStart(): Boolean = {
     if (canStart) {
-      output := GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2))
+      output := GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2), fakeBeeHousing)
       tank.drain(cfg.mutagenPerItem, true)
       if (lastPlayer.value != null)
         GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), output, lastPlayer, worldObj)
@@ -63,9 +71,9 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
     slot match {
       case slots.inIndividual1 =>
-        return GeneticsHelper.isPotentialMutationPair(stack, getStackInSlot(slots.inIndividual2))
+        return GeneticsHelper.isPotentialMutationPair(stack, getStackInSlot(slots.inIndividual2), fakeBeeHousing)
       case slots.inIndividual2 =>
-        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(slots.inIndividual1), stack)
+        return GeneticsHelper.isPotentialMutationPair(getStackInSlot(slots.inIndividual1), stack, fakeBeeHousing)
       case slots.inLabware =>
         return stack.getItem == Items.labware
       case _ =>
