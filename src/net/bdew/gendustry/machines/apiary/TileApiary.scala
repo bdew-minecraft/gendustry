@@ -61,7 +61,7 @@ with IIndustrialApiary {
 
   val power = DataSlotPower("power", this)
   val errorState = DataSlotInt("error", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE, UpdateKind.WORLD)
-  val owner = DataSlotGameProfile("getOwner", this).setUpdate(UpdateKind.SAVE)
+  val owner = DataSlotGameProfile("owner", this).setUpdate(UpdateKind.SAVE)
   val guiProgress = DataSlotFloat("progress", this)
   val guiBreeding = DataSlotFloat("breeding", this)
 
