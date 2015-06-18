@@ -71,6 +71,7 @@ gendustry.upgrades.cooler.name=Cooler Upgrade
 gendustry.upgrades.desert.name=Desert Emulation Upgrade
 gendustry.upgrades.plains.name=Plains Emulation Upgrade
 gendustry.upgrades.jungle.name=Jungle Emulation Upgrade
+gendustry.upgrades.ocean.name=Ocean Emulation Upgrade
 gendustry.upgrades.stabilizer.name=Genetic Stabilizer Upgrade
 
 # ==== GUI AND TOOLTIPS ====
