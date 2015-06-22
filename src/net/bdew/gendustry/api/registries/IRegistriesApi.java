@@ -24,4 +24,9 @@ public interface IRegistriesApi {
      * @return Protein source registry
      */
     IFluidSourceRegistry getProteinRegistry();
+
+    /**
+     * @return Mutatron overrides
+     */
+    IMutatronOverrides getMutatronOverrides();
 }

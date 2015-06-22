@@ -18,9 +18,10 @@ import forestry.api.arboriculture.{EnumGermlingType, ITree, ITreeRoot}
 import forestry.api.genetics._
 import forestry.api.lepidopterology.{EnumFlutterType, IButterflyRoot}
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.api.EnumMutationSetting
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
-import net.bdew.gendustry.machines.mutatron.{MachineMutatron, MutationSetting}
+import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
@@ -75,9 +76,9 @@ object GeneticsHelper {
 
     return mutations.filter(checkMutation(_, fromSpecies, toSpecies)).toSeq filter { mutation =>
       (MachineMutatron.mutatronOverrides(getMutationSpecies(mutation).getUID), mutation) match {
-        case (MutationSetting.ENABLED, _) => true
-        case (MutationSetting.DISABLED, _) => false
-        case (MutationSetting.REQUIREMENTS, beeMutation: IBeeMutation) =>
+        case (EnumMutationSetting.ENABLED, _) => true
+        case (EnumMutationSetting.DISABLED, _) => false
+        case (EnumMutationSetting.REQUIREMENTS, beeMutation: IBeeMutation) =>
           beeMutation.getChance(beeHousing, fromSpecies, toSpecies, fromIndividual.getGenome, toIndividual.getGenome) > 0
         case _ => true
       }

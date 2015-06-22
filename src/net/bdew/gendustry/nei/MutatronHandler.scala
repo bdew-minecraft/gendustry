@@ -16,9 +16,10 @@ import forestry.api.apiculture.{EnumBeeType, IBeeRoot}
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.genetics.{AlleleManager, IMutation, ISpeciesRoot}
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.api.EnumMutationSetting
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
-import net.bdew.gendustry.machines.mutatron.{MachineMutatron, MutationSetting}
+import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.bdew.gendustry.misc.GeneticsCache
 import net.bdew.gendustry.nei.helpers.{FluidComponent, PowerComponent}
 import net.bdew.lib.Misc
@@ -67,14 +68,14 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
 
   def canShowMutation(mutation: IMutation) = {
     MachineMutatron.mutatronOverrides(GeneticsHelper.getMutationSpecies(mutation).getUID) match {
-      case MutationSetting.ENABLED => true
-      case MutationSetting.DISABLED => false
-      case MutationSetting.REQUIREMENTS => true
+      case EnumMutationSetting.ENABLED => true
+      case EnumMutationSetting.DISABLED => false
+      case EnumMutationSetting.REQUIREMENTS => true
     }
   }
 
   def getMutationRequirementsDisplay(mutation: IMutation) = {
-    if (MachineMutatron.mutatronOverrides(GeneticsHelper.getMutationSpecies(mutation).getUID) == MutationSetting.REQUIREMENTS)
+    if (MachineMutatron.mutatronOverrides(GeneticsHelper.getMutationSpecies(mutation).getUID) == EnumMutationSetting.REQUIREMENTS)
       List(EnumChatFormatting.RED.toString + EnumChatFormatting.UNDERLINE + Misc.toLocal("gendustry.req.message")) ++
         (GeneticsHelper.safeMutationConditions(mutation) map (EnumChatFormatting.RED + _))
     else

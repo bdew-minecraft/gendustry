@@ -16,6 +16,7 @@ object RegistriesApiImpl extends IRegistriesApi {
   override val getMutagenRegistry = new FluidSourceWrapper("Mutagen", MutagenSources)
   override val getProteinRegistry = new FluidSourceWrapper("Protein", ProteinSources)
   override val getLiquidDnaRegistry = new FluidSourceWrapper("LiquidDNA", LiquidDNASources)
+  override def getMutatronOverrides = MutatronOverridesImpl
 
   def mergeToMainRegistry(): Unit = {
     getMutagenRegistry.doMerge()
