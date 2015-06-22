@@ -17,7 +17,7 @@ import cpw.mods.fml.common.event._
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.api.GendustryAPI
-import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl}
+import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl, RegistriesApiImpl}
 import net.bdew.gendustry.compat.itempush.ItemPush
 import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
@@ -57,6 +57,7 @@ object Gendustry {
 
     GendustryAPI.Items = ItemApiImpl
     GendustryAPI.Blocks = BlockApiImpl
+    GendustryAPI.Registries = RegistriesApiImpl
 
     PowerProxy.logModVersions()
     ItemPush.init()
@@ -109,6 +110,7 @@ object Gendustry {
       GeneticsCache.load()
       GendustryCreativeTabs.init()
     }
+    RegistriesApiImpl.mergeToMainRegistry()
   }
 
   @EventHandler

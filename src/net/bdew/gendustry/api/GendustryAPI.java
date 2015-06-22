@@ -11,6 +11,7 @@ package net.bdew.gendustry.api;
 
 import net.bdew.gendustry.api.blocks.IBlockAPI;
 import net.bdew.gendustry.api.items.IItemAPI;
+import net.bdew.gendustry.api.registries.IRegistriesApi;
 
 /**
  * Access to the API. This will be available after Gendustry PreInit runs.
@@ -18,4 +19,5 @@ import net.bdew.gendustry.api.items.IItemAPI;
 public class GendustryAPI {
     public static IItemAPI Items;
     public static IBlockAPI Blocks;
+    public static IRegistriesApi Registries;
 }
