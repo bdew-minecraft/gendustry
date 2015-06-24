@@ -15,6 +15,7 @@ import net.bdew.gendustry.compat.FakeMutatronBeeHousing
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotGameProfile, DataSlotInt, DataSlotTankRestricted}
@@ -24,7 +25,7 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
 
-class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron with TileCoverable {
+class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron with TileCoverable with TileKeepData {
   lazy val cfg = MachineMutatronAdv
   val outputSlots = Seq(slots.outIndividual)
 
@@ -121,12 +122,6 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
   }
 
   allowSided = true
-
-  override def dropItems() {
-    for (slot <- slots.selectors)
-      inv(slot) = null
-    super.dropItems()
-  }
 
   override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outIndividual
 

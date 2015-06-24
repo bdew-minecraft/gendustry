@@ -13,13 +13,14 @@ import net.bdew.gendustry.apiimpl.TileWorker
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.items.IStack
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileTransposer extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
+class TileTransposer extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData {
   lazy val cfg = MachineTransposer
 
   val outputSlots = Seq(slots.outCopy)

@@ -15,6 +15,7 @@ import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.GeneSample
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
@@ -22,7 +23,7 @@ import net.minecraftforge.common.util.ForgeDirection
 
 import scala.util.Random
 
-class TileSampler extends TileItemProcessor with TileWorker with TilePowered with TileCoverable {
+class TileSampler extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData {
   lazy val cfg = MachineSampler
   val outputSlots = Seq(slots.outSample)
 

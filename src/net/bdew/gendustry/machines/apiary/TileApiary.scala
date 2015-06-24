@@ -22,13 +22,14 @@ import net.bdew.gendustry.config.Config
 import net.bdew.gendustry.gui.rscontrol.TileRSControllable
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.Misc
+import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.{TileDataSlots, UpdateKind}
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.lib.tile.TileExtended
-import net.bdew.lib.tile.inventory.{BreakableInventoryTile, PersistentInventoryTile, SidedInventory}
+import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
@@ -37,7 +38,7 @@ class TileApiary extends TileExtended
 with TileDataSlots
 with PersistentInventoryTile
 with SidedInventory
-with BreakableInventoryTile
+with TileKeepData
 with TilePowered
 with ForestryErrorSource
 with TileRSControllable

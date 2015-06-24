@@ -15,7 +15,7 @@ import buildcraft.api.tools.IToolWrench
 import cofh.api.block.IDismantleable
 import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.lib.block.BlockKeepData
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.tile.inventory.BreakableInventoryTile
 import net.minecraft.block.Block
@@ -30,11 +30,18 @@ trait BlockGuiWrenchable extends Block with IDismantleable {
   val guiId: Int
 
   override def dismantleBlock(player: EntityPlayer, world: World, x: Int, y: Int, z: Int, returnDrops: Boolean): util.ArrayList[ItemStack] = {
-    val item = new ItemStack(this)
-    val te = world.getTileEntity(x, y, z)
+    val item =
 
-    if (te != null && te.isInstanceOf[BreakableInventoryTile])
-      te.asInstanceOf[BreakableInventoryTile].dropItems()
+      if (this.isInstanceOf[BlockKeepData]) {
+        this.asInstanceOf[BlockKeepData].getSavedBlock(world, x, y, z, world.getBlockMetadata(x, y, z))
+      } else {
+        val te = world.getTileEntity(x, y, z)
+
+        if (te != null && te.isInstanceOf[BreakableInventoryTile])
+          te.asInstanceOf[BreakableInventoryTile].dropItems()
+
+        new ItemStack(this)
+      }
 
     world.setBlockToAir(x, y, z)
 

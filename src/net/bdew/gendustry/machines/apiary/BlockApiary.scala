@@ -12,19 +12,18 @@ package net.bdew.gendustry.machines.apiary
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.BlockGuiWrenchable
-import net.bdew.lib.block.HasTE
+import net.bdew.gendustry.misc.BlockTooltipHelper
+import net.bdew.lib.block.{BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
-import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.{IBlockAccess, World}
 
-object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with BlockCoverable[TileApiary] with BlockGuiWrenchable with BreakableInventoryBlock {
+object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with BlockCoverable[TileApiary] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileApiary]
   lazy val guiId: Int = MachineApiary.guiId
@@ -51,7 +50,22 @@ object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with Bloc
       return 0
   }
 
-  override def onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, player: EntityLivingBase, stack: ItemStack) {
+  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
+    if (stack.hasTagCompound && stack.getTagCompound.hasKey("data")) {
+      val data = stack.getTagCompound.getCompoundTag("data")
+      val inv = BlockTooltipHelper.getInventory(data)
+
+      List.empty ++
+        (inv.get(0) map (_.getDisplayName)) ++
+        (inv.get(1) map (_.getDisplayName)) ++
+        BlockTooltipHelper.getPowerTooltip(data, "power") ++
+        BlockTooltipHelper.getItemsTooltip(data)
+
+    } else List.empty
+  }
+
+  override def restoreTileEntity(world: World, x: Int, y: Int, z: Int, is: ItemStack, player: EntityPlayer): Unit = {
+    super.restoreTileEntity(world, x, y, z, is, player)
     if (player.isInstanceOf[EntityPlayerMP])
       getTE(world, x, y, z).owner := player.asInstanceOf[EntityPlayerMP].getGameProfile
   }

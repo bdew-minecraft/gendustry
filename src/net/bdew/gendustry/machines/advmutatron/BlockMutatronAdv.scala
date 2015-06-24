@@ -12,15 +12,17 @@ package net.bdew.gendustry.machines.advmutatron
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.BlockGuiWrenchable
-import net.bdew.lib.block.HasTE
+import net.bdew.gendustry.misc.BlockTooltipHelper
+import net.bdew.lib.block.{BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
-import net.bdew.lib.tile.inventory.BreakableInventoryBlock
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 
-object BlockMutatronAdv extends Block(Material.rock) with HasTE[TileMutatronAdv] with BlockCoverable[TileMutatronAdv] with BreakableInventoryBlock with BlockGuiWrenchable {
+object BlockMutatronAdv extends Block(Material.rock) with HasTE[TileMutatronAdv] with BlockCoverable[TileMutatronAdv] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileMutatronAdv]
   private var icons: Array[IIcon] = null
   lazy val guiId = MachineMutatronAdv.guiId
@@ -37,6 +39,17 @@ object BlockMutatronAdv extends Block(Material.rock) with HasTE[TileMutatronAdv]
       case _ =>
         return icons(2)
     }
+  }
+
+  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
+    if (stack.hasTagCompound && stack.getTagCompound.hasKey("data")) {
+      val data = stack.getTagCompound.getCompoundTag("data")
+      List.empty ++
+        BlockTooltipHelper.getPowerTooltip(data, "power") ++
+        BlockTooltipHelper.getTankTooltip(data, "tank") ++
+        BlockTooltipHelper.getItemsTooltip(data)
+
+    } else List.empty
   }
 
   @SideOnly(Side.CLIENT)

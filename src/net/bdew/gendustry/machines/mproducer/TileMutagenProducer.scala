@@ -13,6 +13,7 @@ import net.bdew.gendustry.apiimpl.TileWorker
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.fluids.MutagenSources
 import net.bdew.gendustry.power.TilePowered
+import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
@@ -23,7 +24,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
 
-class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable {
+class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with TileKeepData {
   lazy val cfg = MachineMutagenProducer
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
