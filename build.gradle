@@ -39,6 +39,7 @@ if (project.hasProperty('buildnum')) {
 }
 
 version = simpleVersion + '-mc' + config.minecraft.version
+ext.myApiVersion = config.gendustry.api.version
 
 group = "net.bdew"
 archivesBaseName = "gendustry"
@@ -47,7 +48,7 @@ minecraft {
     version = "${config.minecraft.version}-${config.forge.version}"
     replace("BDLIB_VER", config.bdlib.version)
     replace("GENDUSTRY_VER", simpleVersion.toString())
-    replace("GENDUSTRY_APIVER", simpleVersion.toString())
+    replace("GENDUSTRY_APIVER", myApiVersion)
 }
 
 repositories {
@@ -126,6 +127,8 @@ task apiJar(type: Jar, dependsOn: 'classes') {
     from(sourceSets.main.output) {
         include 'net/bdew/gendustry/api/**'
     }
+    
+    from(file('api-changelog.md'))
 
     duplicatesStrategy "exclude"
 
