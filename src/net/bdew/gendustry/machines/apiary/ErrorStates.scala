@@ -11,26 +11,8 @@ package net.bdew.gendustry.machines.apiary
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.{ErrorStateRegistry, IErrorState}
-import net.bdew.lib.Misc
-import net.bdew.lib.gui.Texture
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
-
-object ErrorCodes {
-  val UNKNOWN = ErrorStateRegistry.getErrorState("Forestry:unknown")
-
-  def getErrorById(i: Int) = Option(ErrorStateRegistry.getErrorState(i.toShort)).getOrElse(UNKNOWN)
-  def getErrorByName(n: String) = Option(ErrorStateRegistry.getErrorState(n)).getOrElse(UNKNOWN)
-
-  def isValid(i: Int) = ErrorStateRegistry.getErrorState(i.toShort) != null
-  def getIcon(i: Int) = Texture(Texture.ITEMS, getErrorById(i).getIcon)
-  def getDescription(i: Int) = Misc.toLocal("for." + getErrorById(i).getDescription)
-  def getHelp(i: Int) = Misc.toLocal("for." + getErrorById(i).getHelp)
-
-  def init() {
-    ErrorStateRegistry.registerErrorState(GendustryErrorStates.Disabled)
-  }
-}
 
 case class GendustryErrorState(name: String, id: Short) extends IErrorState {
   var icon: IIcon = null
@@ -50,4 +32,14 @@ case class GendustryErrorState(name: String, id: Short) extends IErrorState {
 
 object GendustryErrorStates {
   val Disabled = GendustryErrorState("disabled", 500)
+  def init() {
+    ErrorStateRegistry.registerErrorState(GendustryErrorStates.Disabled)
+  }
+}
+
+object ForestryErrorStates {
+  val ok = ErrorStateRegistry.getErrorState("Forestry:ok")
+  val noPower = ErrorStateRegistry.getErrorState("Forestry:noPower")
+  val noRedstone = ErrorStateRegistry.getErrorState("Forestry:noRedstone")
+  val disabledRedstone = ErrorStateRegistry.getErrorState("Forestry:disabledRedstone")
 }

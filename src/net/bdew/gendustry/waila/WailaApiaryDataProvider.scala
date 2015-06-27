@@ -13,17 +13,23 @@ import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
 import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
+import net.minecraft.util.EnumChatFormatting
 
 object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
   override def getBodyStrings(target: TileApiary, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
-    List(
-      Misc.toLocalF("gendustry.label.status", Misc.toLocal("for." + target.getErrorState.getDescription)),
-      Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase))
-    ) ++ (Option(target.queen.value) map (_.getDisplayName)) ++ (
-      if (acc.getPlayer.isSneaking)
-        target.getStats
-      else
-        Some(Misc.toLocal("gendustry.label.shift"))
-      )
+    var strings = target.errorConditions.toList.sortBy(_.getID) map { err =>
+      EnumChatFormatting.RED + Misc.toLocal("for." + err.getDescription)
+    }
+    strings :+= Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase))
+
+    if (target.queen :!= null)
+      strings :+= target.queen.getDisplayName
+
+    if (acc.getPlayer.isSneaking)
+      strings ++= target.getStats
+    else
+      strings :+= Misc.toLocal("gendustry.label.shift")
+
+    strings
   }
 }

@@ -83,8 +83,8 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
       Gendustry.logDebug("Adding centrifuge recipe: %s => %s", stack, out)
 
       // forestry API is stupid and requires a hashmap, build one for it
-      val outStacks = new java.util.HashMap[ItemStack, Integer]
-      resolveLootList(out).foreach(x => outStacks.put(x._2, x._1.round.toInt))
+      val outStacks = new java.util.HashMap[ItemStack, java.lang.Float]
+      resolveLootList(out).foreach(x => outStacks.put(x._2, x._1.toFloat / 100F))
 
       val inStack = getConcreteStackNoWildcard(stack)
 

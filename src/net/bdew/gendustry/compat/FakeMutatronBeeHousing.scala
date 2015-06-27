@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.compat
 
+import java.util
+
 import com.mojang.authlib.GameProfile
 import forestry.api.apiculture.{IBee, IBeeGenome, IBeeHousing}
 import forestry.api.core.{EnumHumidity, EnumTemperature, ErrorStateRegistry, IErrorState}
@@ -52,13 +54,12 @@ class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousin
   override def getFloweringModifier(iBeeGenome: IBeeGenome, v: Float): Float = v
   override def getTerritoryModifier(iBeeGenome: IBeeGenome, v: Float): Float = v
 
-  override def getErrorOrdinal: Int = 0
-  override def setErrorState(state: Int): Unit = {}
+  override def setErrorCondition(b: Boolean, iErrorState: IErrorState): Boolean = false
+  override def getErrorStates: util.Set[IErrorState] = new util.HashSet
   override def setErrorState(state: IErrorState): Unit = {}
   override def getErrorState: IErrorState = ErrorStateRegistry.getErrorState("Forestry:ok")
 
   override def getBiome = tile.getWorldObj.getBiomeGenForCoordsBody(tile.xCoord, tile.zCoord)
-  override def getBiomeId: Int = getBiome.biomeID
   override def getHumidity: EnumHumidity = EnumHumidity.getFromValue(getBiome.rainfall)
   override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.temperature)
 }

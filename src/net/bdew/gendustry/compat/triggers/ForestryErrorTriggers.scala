@@ -10,25 +10,25 @@
 package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.statements.StatementManager
-import forestry.api.core.IErrorState
+import forestry.api.core.{ErrorStateRegistry, IErrorState}
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.machines.apiary.ErrorCodes
+import net.bdew.gendustry.api.blocks.IForestryMultiErrorSource
 import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-trait ForestryErrorSource extends TileEntity {
-  def getErrorOrdinal: Int
-  def getErrorState: IErrorState
-}
+trait TileEntityErrorSource extends TileEntity with IForestryMultiErrorSource
 
-case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestry.error." + state.getID, "y%03d".format(state.getID), classOf[ForestryErrorSource]) {
+case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestry.error." + state.getID, "y%03d".format(state.getID), classOf[TileEntityErrorSource]) {
   override def getIcon = state.getIcon
   override def getDescription = Misc.toLocal("for." + state.getDescription)
   override def registerIcons(ir: IIconRegister) {}
-  override def getState(side: ForgeDirection, tile: ForestryErrorSource) =
-    tile.getErrorState == state
+  override def getState(side: ForgeDirection, tile: TileEntityErrorSource) =
+    if (state.getUniqueName == "Forestry:ok")
+      tile.getErrorStates.isEmpty
+    else
+      tile.getErrorStates.contains(state)
 }
 
 object ForestryErrorTriggers {
@@ -46,8 +46,10 @@ object ForestryErrorTriggers {
     "Forestry:noDrone",
     "Forestry:noSky",
     "Forestry:noSpace",
-    "Forestry:noPower"
-  ) map ErrorCodes.getErrorByName
+    "Forestry:noPower",
+    "Forestry:noRedstone",
+    "Forestry:disabledRedstone"
+  ) map ErrorStateRegistry.getErrorState
 
   val validTriggerStates = apiaryTriggerStates.toSet
   val validTriggers = validTriggerStates.map(x => x -> ForestryErrorTrigger(x)).toMap

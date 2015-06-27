@@ -42,6 +42,12 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
   def testReq[T](req: Option[T], v: T) = req.isEmpty || req.get == v
 
   override def getChance(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome) =
+    getChanceImpl(housing, allele0, allele1, genome0, genome1)
+
+  override def getChance(housing: IBeeHousing, allele0: IAlleleBeeSpecies, allele1: IAlleleBeeSpecies, genome0: IBeeGenome, genome1: IBeeGenome) =
+    getChanceImpl(housing, allele0, allele1, genome0, genome1)
+
+  def getChanceImpl(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome): Float =
     if (!((allele0 == parent1 && allele1 == parent2) || (allele0 == parent2 && allele1 == parent1))) 0
     else if (!testReq(reqTemperature, housing.getTemperature)) 0
     else if (!testReq(reqHumidity, housing.getHumidity)) 0

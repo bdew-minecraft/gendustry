@@ -19,7 +19,7 @@ import java.util.List;
  * Public interface to Industrial Apiary TileEntity
  * Extends forestry IBeeHousing, IBeeModifier, IBeeListener, IHousing so all of those are usable as well
  */
-public interface IIndustrialApiary extends IBeeHousing {
+public interface IIndustrialApiary extends IBeeHousing, IForestryMultiErrorSource {
     /**
      * Do not cache, stored copies will not be updated
      *

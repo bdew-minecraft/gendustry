@@ -5,3 +5,7 @@
  * Added **registries.IMutatronOverrides** and **EnumMutationSetting** - allows overriding what mutations are available
  
 Older changes were not recorded, you can see the commits [here](https://github.com/bdew/gendustry/commits/mc1710/src/net/bdew/gendustry/api).
+
+### 2.1.0
+ * Added blocks.IForestryMultiErrorSource - access to multiple forestry error states (used in industrial apiary)
+
