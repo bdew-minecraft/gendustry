@@ -42,7 +42,7 @@ version = simpleVersion + '-mc' + config.minecraft.version
 ext.myApiVersion = config.gendustry.api.version
 
 group = "net.bdew"
-archivesBaseName = "gendustry"
+archivesBaseName = "gendustry-fu"
 
 minecraft {
     version = "${config.minecraft.version}-${config.forge.version}"
