@@ -110,10 +110,6 @@ with IIndustrialApiary {
     }
   )
 
-  // Internal errors that don't involve beekeeping logic
-  // If any of those errors are present - logic.update will be skipped
-  val ourErrorStates = Set(ForestryErrorStates.disabledRedstone, ForestryErrorStates.noRedstone, GendustryErrorStates.Disabled, ForestryErrorStates.noPower)
-
   serverTick.listen(() => {
 
     movePrincess = false
