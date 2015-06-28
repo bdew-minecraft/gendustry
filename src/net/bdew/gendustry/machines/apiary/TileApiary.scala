@@ -118,18 +118,18 @@ with IIndustrialApiary {
 
     movePrincess = false
 
-    val canWork = logic.canWork()
-
-    val powered = getWorldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)
-    setErrorCondition((rsmode :== RSMode.RS_OFF) && powered, ForestryErrorStates.disabledRedstone)
-    setErrorCondition((rsmode :== RSMode.RS_ON) && !powered, ForestryErrorStates.noRedstone)
-    setErrorCondition(rsmode :== RSMode.NEVER, GendustryErrorStates.Disabled)
-    setErrorCondition(power.stored < cfg.baseMjPerTick * mods.energy, ForestryErrorStates.noPower)
-
-    if (errorConditions.isOk && canWork) {
-      logic.doWork()
-      if (errorConditions.isOk && (logic.getQueen != null || logic.getBreedingTime > 0)) {
-        power.extract(cfg.baseMjPerTick * mods.energy, false)
+    errorConditions.withSuspendedUpdates {
+      val canWork = logic.canWork
+      val powered = getWorldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)
+      setErrorCondition((rsmode :== RSMode.RS_OFF) && powered, ForestryErrorStates.disabledRedstone)
+      setErrorCondition((rsmode :== RSMode.RS_ON) && !powered, ForestryErrorStates.noRedstone)
+      setErrorCondition(rsmode :== RSMode.NEVER, GendustryErrorStates.Disabled)
+      setErrorCondition(power.stored < cfg.baseMjPerTick * mods.energy, ForestryErrorStates.noPower)
+      if (errorConditions.isOk && canWork) {
+        logic.doWork()
+        if (errorConditions.isOk && (logic.getQueen != null || logic.getBreedingTime > 0)) {
+          power.extract(cfg.baseMjPerTick * mods.energy, false)
+        }
       }
     }
 

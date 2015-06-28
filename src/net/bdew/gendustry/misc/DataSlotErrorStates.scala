@@ -13,22 +13,29 @@ import forestry.api.core.{ErrorStateRegistry, IErrorState}
 import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
+import scala.util.DynamicVariable
+
 case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends DataSlotVal[Set[IErrorState]] {
   override var value: Set[IErrorState] = Set.empty
 
+  val suspendUpdates = new DynamicVariable(false)
+
   def set(v: IErrorState): Unit = {
     value += v
-    parent.dataSlotChanged(this)
+    if (!suspendUpdates.value)
+      parent.dataSlotChanged(this)
   }
 
   def clear(v: IErrorState): Unit = {
     value -= v
-    parent.dataSlotChanged(this)
+    if (!suspendUpdates.value)
+      parent.dataSlotChanged(this)
   }
 
   def clearAll(): Unit = {
     value = Set.empty
-    parent.dataSlotChanged(this)
+    if (!suspendUpdates.value)
+      parent.dataSlotChanged(this)
   }
 
   def toggle(v: IErrorState, on: Boolean): Unit = {
@@ -36,6 +43,15 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
       set(v)
     else
       clear(v)
+  }
+
+  def withSuspendedUpdates(f: => Unit) = {
+    val oldValue = value
+    suspendUpdates.withValue(true) {
+      f
+    }
+    if (value != oldValue)
+      parent.dataSlotChanged(this)
   }
 
   def isOk = value.isEmpty
