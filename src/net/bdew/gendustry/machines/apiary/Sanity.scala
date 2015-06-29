@@ -10,12 +10,15 @@
 package net.bdew.gendustry.machines.apiary
 
 import _root_.forestry.api.apiculture.IBeeRoot
-import _root_.forestry.api.genetics.AlleleManager
+import forestry.api.genetics.{AlleleManager, IAllele}
 import net.bdew.gendustry.Gendustry
 import net.minecraft.util.{ChatComponentTranslation, EnumChatFormatting}
 
 object Sanity {
-  def check(house: TileApiary) {
+  var checkDone = false
+  def check(house: TileApiary): Unit = {
+    if (checkDone) return
+    checkDone = true
     import scala.collection.JavaConversions._
     try {
       val bees = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
@@ -23,7 +26,8 @@ object Sanity {
       val defSpecies = defGenome.getPrimary
       var found = false
       for (mutation <- bees.getMutations(false)) {
-        if (mutation.getChance(house, defSpecies, defSpecies, defGenome, defGenome) > 0) {
+        //Have to use the deprecated version because of not-updated other mods
+        if (mutation.getChance(house, defSpecies.asInstanceOf[IAllele], defSpecies, defGenome, defGenome) > 0) {
           found = true
           Gendustry.logWarn("Detected probably bugged mutation! %s+%s (class: %s) doesn't check the species. Please report it to the mod author.",
             mutation.getAllele0.getName, mutation.getAllele1.getName, mutation.getClass.getCanonicalName)
@@ -37,7 +41,7 @@ object Sanity {
         }
       }
     } catch {
-      case t: Throwable => t.printStackTrace()
+      case t: Throwable => Gendustry.logWarnException("Error in mutations sanity check", t)
     }
   }
 }
