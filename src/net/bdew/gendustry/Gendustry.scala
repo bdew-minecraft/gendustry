@@ -23,7 +23,7 @@ import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
 import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
-import net.bdew.gendustry.custom.CustomContent
+import net.bdew.gendustry.custom.{CustomContent, CustomHives}
 import net.bdew.gendustry.forestry.GeneRecipe
 import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.machines.apiary.GendustryErrorStates
@@ -105,6 +105,7 @@ object Gendustry {
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerTemplates()
       CustomContent.registerMutations()
+      CustomHives.registerHives()
     }
     if (event.getSide == Side.CLIENT) {
       GeneticsCache.load()
