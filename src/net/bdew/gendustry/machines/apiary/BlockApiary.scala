@@ -69,4 +69,6 @@ object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with Bloc
     if (player.isInstanceOf[EntityPlayerMP])
       getTE(world, x, y, z).owner := player.asInstanceOf[EntityPlayerMP].getGameProfile
   }
+
+  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
 }
