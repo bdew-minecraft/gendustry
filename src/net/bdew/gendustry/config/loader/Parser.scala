@@ -13,7 +13,7 @@ import net.bdew.lib.recipes.RecipeParser
 import net.bdew.lib.recipes.gencfg.{CfgVal, GenericConfigParser}
 import net.bdew.lib.recipes.lootlist.LootListParser
 
-class Parser extends RecipeParser with GenericConfigParser with LootListParser {
+class Parser extends RecipeParser with GenericConfigParser with LootListParser with ParserHives {
   override def recipeStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | super.recipeStatement
 
   // === Machine Recipes ===

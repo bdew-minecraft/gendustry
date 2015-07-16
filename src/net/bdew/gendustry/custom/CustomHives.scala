@@ -1,0 +1,144 @@
+/*
+ * Copyright (c) bdew, 2013 - 2015
+ * https://github.com/bdew/gendustry
+ *
+ * This mod is distributed under the terms of the Minecraft Mod Public
+ * License 1.0, or MMPL. Please check the contents of the license located in
+ * http://bdew.net/minecraft-mod-public-license/
+ */
+
+package net.bdew.gendustry.custom
+
+import forestry.api.apiculture.hives.HiveManager
+import forestry.api.core.{EnumHumidity, EnumTemperature}
+import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.blocks.BeeHive
+import net.bdew.gendustry.config.Blocks
+import net.bdew.gendustry.config.loader._
+import net.bdew.gendustry.custom.hives._
+import net.bdew.lib.Misc
+import net.minecraft.block.Block
+import net.minecraft.item.ItemBlock
+import net.minecraft.world.biome.BiomeGenBase
+import net.minecraftforge.oredict.OreDictionary
+
+object CustomHives {
+  var definitions = List.empty[CSHiveDefinition]
+
+  def registerHiveDefinition(definition: CSHiveDefinition): Unit = {
+    definitions :+= definition
+    val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
+    val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
+    val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
+    val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
+    val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
+    val block = Blocks.regBlock(BeeHive(
+      hiveId = definition.id,
+      sideIconName = sideTexture,
+      topIconName = topTexture,
+      bottomIconName = bottomTexture,
+      color = color,
+      lightLevel = lightLevel
+    ))
+    Gendustry.logDebug("Registered hive block: %s", block)
+  }
+
+  def getSingleStatement[T <: HiveDefStatement](definition: CSHiveDefinition, cls: Class[T]) = {
+    val l = Misc.filterType(definition.definition, cls)
+    if (l.size > 1)
+      Gendustry.logWarn("Multiple entries of type %s in BeeHive definition '%s' - all but the first one will be ignored", cls.getSimpleName, definition.id)
+    l.headOption
+  }
+
+  def resolveFilter(f: BlockFilterDef) = f match {
+    case BlockFilterDefAir => BlockFilterAir
+    case BlockFilterDefLeaves => BlockFilterLeaves
+    case BlockFilterDefReplaceable => BlockFilterReplaceable
+    case BlockFilterRef(list) =>
+      val blocks = for {
+        ref <- list
+        stack <- TuningLoader.loader.getAllConcreteStacks(ref)
+      } yield {
+          if (stack == null || stack.getItem == null || !stack.getItem.isInstanceOf[ItemBlock]) {
+            Gendustry.logWarn("Error resolving filter %s - stackref %s does not resolve to a block", f, ref)
+            None
+          } else {
+            Some(Block.getBlockFromItem(stack.getItem) -> (if (stack.getItemDamage == OreDictionary.WILDCARD_VALUE) -1 else stack.getItemDamage))
+          }
+        }
+      BlockFilterList(blocks.flatten.toSet)
+  }
+
+  def registerHives(): Unit = {
+
+    val validBiomes = BiomeGenBase.getBiomeGenArray.filterNot(null == _).map(x => x.biomeName.toLowerCase -> x).toMap
+
+    for (definition <- definitions) {
+      Gendustry.logDebug("Processing Beehive definition: %s", definition)
+
+      val failedCondition = Misc.filterType(definition.definition, classOf[HDSpawnIf]) find (c => !TuningLoader.loader.resolveCondition(c.condition))
+
+      if (failedCondition.isDefined) {
+        Gendustry.logDebug("Condition unmet: %s - not registering", failedCondition.get.condition)
+      } else {
+        val spawnChance = getSingleStatement(definition, classOf[HDSpawnChance]) map (_.chance) getOrElse 1F
+
+        val range = getSingleStatement(definition, classOf[HDYRange]) getOrElse HDYRange(0, 255)
+
+        val biomeNames = (Misc.filterType(definition.definition, classOf[HDBiomes]) flatMap (_.biomes) map (_.toLowerCase)).toSet
+        val biomes =
+          if (biomeNames.isEmpty || biomeNames.contains("all"))
+            validBiomes.values.toSet
+          else
+            validBiomes.filterKeys(biomeNames.contains).values.toSet
+
+        val temperatureNames = (Misc.filterType(definition.definition, classOf[HDTemperature]) flatMap (_.temperatures) map (_.toLowerCase)).toSet
+        val temperatures =
+          if (temperatureNames.isEmpty || temperatureNames.contains("all"))
+            EnumTemperature.values().toSet
+          else
+            EnumTemperature.values().filter(x => temperatureNames.contains(x.getName.toLowerCase)).toSet
+
+        val humidityNames = (Misc.filterType(definition.definition, classOf[HDHumidity]) flatMap (_.humidityLevels) map (_.toLowerCase)).toSet
+        val humidities =
+          if (humidityNames.isEmpty || humidityNames.contains("all"))
+            EnumHumidity.values().toSet
+          else
+            EnumHumidity.values().filter(x => humidityNames.contains(x.getName.toLowerCase)).toSet
+
+
+        val conditions = for (condition <- Misc.filterType(definition.definition, classOf[HiveDefCondition])) yield {
+          condition match {
+            case HDLocationUnder(f) => Some(ConditionUnder(resolveFilter(f)))
+            case HDLocationAbove(f) => Some(ConditionAbove(resolveFilter(f)))
+            case HDLocationNextTo(f) => Some(ConditionNextTo(resolveFilter(f)))
+            case HDReplace(f) => Some(ConditionReplace(resolveFilter(f)))
+            case _ =>
+              Gendustry.logWarn("Unknown condition %s", condition)
+              None
+          }
+        }
+
+        val spawnDebug = Misc.filterType(definition.definition, classOf[HDSpawnDebug]).exists(_.debug)
+
+        val hive = HiveDescription(
+          id = definition.id,
+          chance = spawnChance,
+          yMin = range.min,
+          yMax = range.max,
+          validBiome = biomes,
+          validTemperature = temperatures,
+          validHumidity = humidities,
+          conditions = conditions.flatten.toList,
+          spawnDebug = spawnDebug
+        )
+
+        Gendustry.logDebug("Registering hive definition: %s", hive)
+
+        HiveManager.hiveRegistry.registerHive("Gendustry:" + definition.id, hive)
+      }
+    }
+
+    definitions = List.empty // clear definitions
+  }
+}

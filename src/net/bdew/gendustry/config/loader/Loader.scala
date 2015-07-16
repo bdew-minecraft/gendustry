@@ -14,6 +14,7 @@ import forestry.api.recipes.RecipeManagers
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.config.Tuning
+import net.bdew.gendustry.custom.CustomHives
 import net.bdew.gendustry.fluids.{LiquidDNASources, MutagenSources, ProteinSources}
 import net.bdew.lib.recipes._
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
@@ -106,5 +107,11 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
     case x: RsMutation => mutations +:= x
 
     case _ => super.processRecipeStatement(s)
+  }
+
+  override def processConfigStatement(s: ConfigStatement): Unit = s match {
+    case x: CSHiveDefinition =>
+      CustomHives.registerHiveDefinition(x)
+    case _ => super.processConfigStatement(s)
   }
 }
