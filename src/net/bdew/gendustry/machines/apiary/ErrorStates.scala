@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.apiary
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import forestry.api.core.{ErrorStateRegistry, IErrorState}
+import forestry.api.core.{ForestryAPI, IErrorState}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 
@@ -33,13 +33,14 @@ case class GendustryErrorState(name: String, id: Short) extends IErrorState {
 object GendustryErrorStates {
   val Disabled = GendustryErrorState("disabled", 500)
   def init() {
-    ErrorStateRegistry.registerErrorState(GendustryErrorStates.Disabled)
+    ForestryAPI.errorStateRegistry.registerErrorState(GendustryErrorStates.Disabled)
   }
 }
 
 object ForestryErrorStates {
-  val ok = ErrorStateRegistry.getErrorState("Forestry:ok")
-  val noPower = ErrorStateRegistry.getErrorState("Forestry:noPower")
-  val noRedstone = ErrorStateRegistry.getErrorState("Forestry:noRedstone")
-  val disabledRedstone = ErrorStateRegistry.getErrorState("Forestry:disabledRedstone")
+  val errorStates = ForestryAPI.errorStateRegistry
+  val ok = errorStates.getErrorState("Forestry:ok")
+  val noPower = errorStates.getErrorState("Forestry:noPower")
+  val noRedstone = errorStates.getErrorState("Forestry:noRedstone")
+  val disabledRedstone = errorStates.getErrorState("Forestry:disabledRedstone")
 }

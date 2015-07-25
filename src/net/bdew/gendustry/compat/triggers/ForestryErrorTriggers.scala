@@ -10,7 +10,7 @@
 package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.statements.StatementManager
-import forestry.api.core.{ErrorStateRegistry, IErrorState}
+import forestry.api.core.{ForestryAPI, IErrorState}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.blocks.IForestryMultiErrorSource
 import net.bdew.lib.Misc
@@ -33,6 +33,8 @@ case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestr
 
 object ForestryErrorTriggers {
 
+  val errorStateRegistry = ForestryAPI.errorStateRegistry
+
   val apiaryTriggerStates = List(
     "Forestry:ok",
     "Forestry:invalidBiome",
@@ -49,7 +51,7 @@ object ForestryErrorTriggers {
     "Forestry:noPower",
     "Forestry:noRedstone",
     "Forestry:disabledRedstone"
-  ) map ErrorStateRegistry.getErrorState
+  ) map errorStateRegistry.getErrorState
 
   val validTriggerStates = apiaryTriggerStates.toSet
   val validTriggers = validTriggerStates.map(x => x -> ForestryErrorTrigger(x)).toMap

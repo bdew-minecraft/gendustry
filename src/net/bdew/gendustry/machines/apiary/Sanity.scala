@@ -10,7 +10,7 @@
 package net.bdew.gendustry.machines.apiary
 
 import _root_.forestry.api.apiculture.IBeeRoot
-import forestry.api.genetics.{AlleleManager, IAllele}
+import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
 import net.minecraft.util.{ChatComponentTranslation, EnumChatFormatting}
 
@@ -26,8 +26,7 @@ object Sanity {
       val defSpecies = defGenome.getPrimary
       var found = false
       for (mutation <- bees.getMutations(false)) {
-        //Have to use the deprecated version because of not-updated other mods
-        if (mutation.getChance(house, defSpecies.asInstanceOf[IAllele], defSpecies, defGenome, defGenome) > 0) {
+        if (mutation.getChance(house, defSpecies.asInstanceOf, defSpecies, defGenome, defGenome) > 0) {
           found = true
           Gendustry.logWarn("Detected probably bugged mutation! %s+%s (class: %s) doesn't check the species. Please report it to the mod author.",
             mutation.getAllele0.getName, mutation.getAllele1.getName, mutation.getClass.getCanonicalName)

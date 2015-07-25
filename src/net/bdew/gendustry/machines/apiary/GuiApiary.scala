@@ -23,7 +23,7 @@ class GuiApiary(val te: TileApiary, player: EntityPlayer, cont: ContainerApiary)
     super.initGui()
     widgets.add(new WidgetError(155, 5, te))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    widgets.add(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiBreeding, te.guiProgress))
+    widgets.add(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiProgress))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, Color.darkGray))
     widgets.add(new WidgetRSModeButton(Point(137, 5), te, cont))
 
