@@ -10,18 +10,24 @@
 package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.statements.{IStatementContainer, IStatementParameter, ITriggerExternal}
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
 
-abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, tileClass: Class[T]) extends ITriggerExternal {
+abstract class BaseTrigger[T](val id: String, ordering: String, tileClass: Class[T]) extends ITriggerExternal {
   var icon: IIcon = null
   override def getUniqueTag = "gendustry." + ordering + "." + id
+
+  @SideOnly(Side.CLIENT)
   override def getIcon = icon
+
+  @SideOnly(Side.CLIENT)
   override def registerIcons(ir: IIconRegister) =
     icon = ir.registerIcon("gendustry:trigger/" + id)
+
   override def getDescription = Misc.toLocal("gendustry.trigger." + id)
   override def rotateLeft() = this
 

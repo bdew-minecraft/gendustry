@@ -39,7 +39,6 @@ object GendustryErrorStates {
 
 object ForestryErrorStates {
   val errorStates = ForestryAPI.errorStateRegistry
-  val ok = errorStates.getErrorState("Forestry:ok")
   val noPower = errorStates.getErrorState("Forestry:noPower")
   val noRedstone = errorStates.getErrorState("Forestry:noRedstone")
   val disabledRedstone = errorStates.getErrorState("Forestry:disabledRedstone")
