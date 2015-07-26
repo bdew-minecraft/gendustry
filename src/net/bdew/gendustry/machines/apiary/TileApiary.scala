@@ -135,7 +135,14 @@ with IBeeHousingInventory {
     if (movePrincess && getStackInSlot(slots.queen) == null)
       doMovePrincess()
 
-    guiProgress := logic.getBeeProgressPercent
+    if (getQueen == null) {
+      guiProgress := 0
+    } else {
+      if (beeRoot.getType(getQueen) == EnumBeeType.PRINCESS)
+        guiProgress := logic.getBeeProgressPercent / 100F
+      else
+        guiProgress := 1 - (logic.getBeeProgressPercent / 100F)
+    }
   })
 
   def getUpgrade(stack: ItemStack) = stack.getItem.asInstanceOf[IApiaryUpgrade]
@@ -252,8 +259,8 @@ with IBeeHousingInventory {
   override def getBeeModifiers = Collections.singletonList(this)
   override def getBeekeepingLogic: IBeekeepingLogic = beeRoot.createBeekeepingLogic(this)
 
-  override def getBlockLightValue: Int = worldObj.getBlockLightValue(xCoord, yCoord, zCoord)
-  override def canBlockSeeTheSky: Boolean = worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
+  override def getBlockLightValue: Int = worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord)
+  override def canBlockSeeTheSky: Boolean = worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)
   override def getOwner: GameProfile = owner
 
   override def getTemperature =
