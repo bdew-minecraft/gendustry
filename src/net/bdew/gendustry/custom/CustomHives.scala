@@ -9,8 +9,10 @@
 
 package net.bdew.gendustry.custom
 
+import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.apiculture.hives.HiveManager
 import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.blocks.BeeHive
 import net.bdew.gendustry.config.Blocks
@@ -119,6 +121,22 @@ object CustomHives {
           }
         }
 
+        val drops = (for (drop <- Misc.filterType(definition.definition, classOf[HDDrops]).flatMap(_.drops)) yield {
+          val stacks = drop.additional map (ref => TuningLoader.loader.getConcreteStackNoWildcard(ref))
+          val species = AlleleManager.alleleRegistry.getAllele(drop.uid)
+
+          if (species.isInstanceOf[IAlleleBeeSpecies]) {
+            Some(HiveDrop(drop.chance, species.asInstanceOf[IAlleleBeeSpecies], drop.ignobleShare, stacks))
+          } else {
+            Gendustry.logWarn("%s is not a valid bee species in hive definition %s", drop.uid, definition.id)
+            None
+          }
+        }).flatten
+
+        if (drops.isEmpty) {
+          Gendustry.logWarn("Hive definition %s contains no valid drops", definition.id)
+        }
+
         val spawnDebug = Misc.filterType(definition.definition, classOf[HDSpawnDebug]).exists(_.debug)
 
         val hive = HiveDescription(
@@ -130,6 +148,7 @@ object CustomHives {
           validTemperature = temperatures,
           validHumidity = humidities,
           conditions = conditions.flatten.toList,
+          drops = drops.toList,
           spawnDebug = spawnDebug
         )
 
