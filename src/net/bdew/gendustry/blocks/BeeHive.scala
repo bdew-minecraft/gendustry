@@ -40,6 +40,9 @@ case class BeeHive(hiveId: String, sideIconName: String, topIconName: String, bo
   override def getDrops(world: World, x: Int, y: Int, z: Int, metadata: Int, fortune: Int): util.ArrayList[ItemStack] = {
     val ret = new util.ArrayList[ItemStack]()
     val rng = new Random(world.rand)
+
+    if (hive.isEmpty || hive.get.drops.isEmpty) return ret
+
     val dropList = rng.shuffle(hive.get.drops)
 
     // Select random princess drop
