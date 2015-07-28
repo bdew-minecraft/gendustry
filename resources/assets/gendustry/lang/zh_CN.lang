@@ -31,6 +31,7 @@ item.gendustry.grafter.name=工业剪枝器
 item.gendustry.scoop.name=MX200涡轮捕蜂网
 item.gendustry.ImportCover.name=物品输入盖板
 item.gendustry.EjectCover.name=物品输出盖板
+item.gendustry.PollenKit.name=花粉收集装备
 
 # ==== FLUIDS ====
 
@@ -72,6 +73,7 @@ gendustry.upgrades.cooler.name=冷却器升级
 gendustry.upgrades.desert.name=沙漠环境升级
 gendustry.upgrades.plains.name=平原环境升级
 gendustry.upgrades.jungle.name=丛林环境升级
+gendustry.upgrades.ocean.name=海洋环境升级
 gendustry.upgrades.stabilizer.name=基因稳定升级
 
 # ==== GUI AND TOOLTIPS ====
@@ -116,9 +118,6 @@ gendustry.label.mod.sieve=* 花粉收集
 gendustry.label.mod.temperature=* 温度
 gendustry.label.mod.humidity=* 湿度
 
-gendustry.error.power=能量不足
-gendustry.error.disabled=被配置文件禁用
-
 gendustry.label.sample.rootBees=采集自蜜蜂
 gendustry.label.sample.rootTrees=采集自树苗
 gendustry.label.sample.rootButterflies=采集自蝴蝶
@@ -136,6 +135,10 @@ gendustry.rsmode.always=总是启用
 gendustry.rsmode.never=禁用
 gendustry.rsmode.rs_on=收到红石信号时启用
 gendustry.rsmode.rs_off=收到红石信号时禁用
+
+gendustry.label.items=%s 物品
+
+gendustry.label.shift=<按下SHIFT获取更多信息>
 
 # ==== CHROMOSOMES (should match forestry) ====
 
@@ -167,7 +170,6 @@ gendustry.chromosome.SAPPINESS=树汁
 
 // Botany
 
-    SPECIES,
 gendustry.chromosome.PRIMARY=原生种
 gendustry.chromosome.SECONDARY=次生种
 gendustry.chromosome.PH_TOLERANCE=pH耐受性
@@ -202,6 +204,8 @@ gendustry.req.humidity=湿度需求: %s
 gendustry.req.biome=生态群系需求: %s
 gendustry.req.block=方块需要: %s
 
+gendustry.req.message=特殊需求
+
 # ==== BEE SPECIES ====
 gendustry.bees.species.black=黑色
 gendustry.bees.species.red=红色
@@ -219,6 +223,10 @@ gendustry.bees.species.lightblue=浅蓝色
 gendustry.bees.species.magenta=品红色
 gendustry.bees.species.orange=橙色
 gendustry.bees.species.white=白色
+
+gendustry.bees.species.derpious=逗逼
+gendustry.bees.species.derpious.description=一个有趣的种类,看起来喜欢传播鲜花和范二.
+
 
 # ==== COMBS ====
 
@@ -259,6 +267,11 @@ gendustry.honeydrop.white.name=白色蜂蜜滴
 itemGroup.bdew.gendustry=基因工业
 itemGroup.bdew.templates=基因工业|模板
 itemGroup.bdew.samples=基因工业|样本
+itemGroup.bdew.hives=基因工业|自定义蜂房
+
+for.gendustry.errorstate.disabled.description=能量不足
+for.gendustry.errorstate.disabled.help=被配置文件禁用
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=空
+
