@@ -36,7 +36,7 @@ case class HiveDrop(chance: Int, species: IAlleleBeeSpecies, ignobleShare: Float
 
   override def getAdditional(world: World, x: Int, y: Int, z: Int, fortune: Int): util.Collection[ItemStack] = {
     import scala.collection.JavaConversions._
-    additional
+    additional.map(_.copy())
   }
 
   override def getChance(world: World, x: Int, y: Int, z: Int): Int = chance

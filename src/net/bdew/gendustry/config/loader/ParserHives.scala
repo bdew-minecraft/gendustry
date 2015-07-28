@@ -24,7 +24,7 @@ trait ParserHives extends RecipeParser with GenericConfigParser {
   private def intRange = int ~ ("-" ~> int) ^^ { case a ~ b => (a, b) }
 
   private def hiveDropEntry =
-    (int <~ "%") ~ str ~ (int <~ "%" <~ "ignoble").? ~ ("+" ~> spec).* ^^ { case chance ~ uid ~ ignoble ~ drops => HiveDropEntry(chance, uid, ignoble.getOrElse(0) / 100F, drops) }
+    (int <~ "%") ~ str ~ ("(" ~> int <~ "%" <~ "ignoble" <~ ")").? ~ ("+" ~> spec).* ^^ { case chance ~ uid ~ ignoble ~ drops => HiveDropEntry(chance, uid, ignoble.getOrElse(0) / 100F, drops) }
 
   private def hiveDefStatement = (
     "YLevel" ~> int ~ "-" ~ int ^^ { case min ~ a ~ max => HDYRange(min, max) }

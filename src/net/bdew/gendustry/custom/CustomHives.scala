@@ -26,6 +26,7 @@ import net.minecraftforge.oredict.OreDictionary
 
 object CustomHives {
   var definitions = List.empty[CSHiveDefinition]
+  var blocks = Map.empty[CSHiveDefinition, BeeHive]
 
   def registerHiveDefinition(definition: CSHiveDefinition): Unit = {
     definitions :+= definition
@@ -42,6 +43,7 @@ object CustomHives {
       color = color,
       lightLevel = lightLevel
     ))
+    blocks += definition -> block
     Gendustry.logDebug("Registered hive block: %s", block)
   }
 
@@ -155,9 +157,13 @@ object CustomHives {
         Gendustry.logDebug("Registering hive definition: %s", hive)
 
         HiveManager.hiveRegistry.registerHive("Gendustry:" + definition.id, hive)
+
+        blocks(definition).hive = Some(hive)
       }
     }
 
-    definitions = List.empty // clear definitions
+    // clear data that's no longer needed
+    definitions = List.empty
+    blocks = Map.empty
   }
 }
