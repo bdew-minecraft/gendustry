@@ -29,9 +29,8 @@ object MaterialBeehive extends Material(MapColor.stoneColor) {
 
 }
 
-case class BeeHive(hiveId: String, sideIconName: String, topIconName: String, bottomIconName: String, color: Int, lightLevel: Int)
+case class BeeHive(hiveId: String, sideIconName: String, topIconName: String, bottomIconName: String, color: Int, lightLevel: Int, hive: HiveDescription)
   extends SimpleBlock("BeeHive" + hiveId, MaterialBeehive) {
-  var hive: Option[HiveDescription] = None
 
   setHardness(1.0f)
   setHarvestLevel("scoop", 0)
@@ -41,9 +40,9 @@ case class BeeHive(hiveId: String, sideIconName: String, topIconName: String, bo
     val ret = new util.ArrayList[ItemStack]()
     val rng = new Random(world.rand)
 
-    if (hive.isEmpty || hive.get.drops.isEmpty) return ret
+    if (hive.drops.isEmpty) return ret
 
-    val dropList = rng.shuffle(hive.get.drops)
+    val dropList = rng.shuffle(hive.drops)
 
     // Select random princess drop
     dropList.find(drop => rng.nextInt(100) <= drop.getChance(world, x, y, z)) orElse {

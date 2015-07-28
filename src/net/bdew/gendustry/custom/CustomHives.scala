@@ -26,25 +26,9 @@ import net.minecraftforge.oredict.OreDictionary
 
 object CustomHives {
   var definitions = List.empty[CSHiveDefinition]
-  var blocks = Map.empty[CSHiveDefinition, BeeHive]
 
   def registerHiveDefinition(definition: CSHiveDefinition): Unit = {
     definitions :+= definition
-    val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
-    val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
-    val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
-    val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
-    val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
-    val block = Blocks.regBlock(BeeHive(
-      hiveId = definition.id,
-      sideIconName = sideTexture,
-      topIconName = topTexture,
-      bottomIconName = bottomTexture,
-      color = color,
-      lightLevel = lightLevel
-    ))
-    blocks += definition -> block
-    Gendustry.logDebug("Registered hive block: %s", block)
   }
 
   def getSingleStatement[T <: HiveDefStatement](definition: CSHiveDefinition, cls: Class[T]) = {
@@ -158,12 +142,29 @@ object CustomHives {
 
         HiveManager.hiveRegistry.registerHive("Gendustry:" + definition.id, hive)
 
-        blocks(definition).hive = Some(hive)
+        val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
+        val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
+        val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
+        val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
+        val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
+
+        val block = BeeHive(
+          hiveId = definition.id,
+          sideIconName = sideTexture,
+          topIconName = topTexture,
+          bottomIconName = bottomTexture,
+          color = color,
+          lightLevel = lightLevel,
+          hive = hive
+        )
+
+        Gendustry.logDebug("Registered hive block: %s", block)
+
+        Blocks.regBlock(block)
       }
     }
 
     // clear data that's no longer needed
     definitions = List.empty
-    blocks = Map.empty
   }
 }
