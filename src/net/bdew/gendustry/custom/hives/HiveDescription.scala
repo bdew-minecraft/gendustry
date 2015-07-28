@@ -10,6 +10,7 @@
 package net.bdew.gendustry.custom.hives
 
 import cpw.mods.fml.common.registry.GameRegistry
+import forestry.api.apiculture.IHiveDrop
 import forestry.api.apiculture.hives.{IHiveDescription, IHiveGen}
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import net.bdew.gendustry.Gendustry
@@ -21,6 +22,7 @@ case class HiveDescription(id: String, chance: Float, yMin: Int, yMax: Int,
                            validTemperature: Set[EnumTemperature],
                            validHumidity: Set[EnumHumidity],
                            conditions: List[HiveSpawnCondition],
+                           drops: List[IHiveDrop],
                            spawnDebug: Boolean
                             ) extends IHiveDescription {
   override lazy val getBlock = GameRegistry.findBlock(Gendustry.modId, "BeeHive" + id)

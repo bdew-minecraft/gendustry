@@ -264,6 +264,7 @@ gendustry.honeydrop.white.name=White Colored Honey Drop
 itemGroup.bdew.gendustry=Gendustry
 itemGroup.bdew.templates=Genetic Templates
 itemGroup.bdew.samples=Genetic Samples
+itemGroup.bdew.hives=Custom Beehives
 
 gendustry.errorstate.ok=No error
 

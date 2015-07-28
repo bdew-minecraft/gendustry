@@ -9,8 +9,10 @@
 
 package net.bdew.gendustry.custom
 
+import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.apiculture.hives.HiveManager
 import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.blocks.BeeHive
 import net.bdew.gendustry.config.Blocks
@@ -27,20 +29,6 @@ object CustomHives {
 
   def registerHiveDefinition(definition: CSHiveDefinition): Unit = {
     definitions :+= definition
-    val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
-    val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
-    val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
-    val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
-    val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
-    val block = Blocks.regBlock(BeeHive(
-      hiveId = definition.id,
-      sideIconName = sideTexture,
-      topIconName = topTexture,
-      bottomIconName = bottomTexture,
-      color = color,
-      lightLevel = lightLevel
-    ))
-    Gendustry.logDebug("Registered hive block: %s", block)
   }
 
   def getSingleStatement[T <: HiveDefStatement](definition: CSHiveDefinition, cls: Class[T]) = {
@@ -119,6 +107,22 @@ object CustomHives {
           }
         }
 
+        val drops = (for (drop <- Misc.filterType(definition.definition, classOf[HDDrops]).flatMap(_.drops)) yield {
+          val stacks = drop.additional map (ref => TuningLoader.loader.getConcreteStackNoWildcard(ref))
+          val species = AlleleManager.alleleRegistry.getAllele(drop.uid)
+
+          if (species.isInstanceOf[IAlleleBeeSpecies]) {
+            Some(HiveDrop(drop.chance, species.asInstanceOf[IAlleleBeeSpecies], drop.ignobleShare, stacks))
+          } else {
+            Gendustry.logWarn("%s is not a valid bee species in hive definition %s", drop.uid, definition.id)
+            None
+          }
+        }).flatten
+
+        if (drops.isEmpty) {
+          Gendustry.logWarn("Hive definition %s contains no valid drops", definition.id)
+        }
+
         val spawnDebug = Misc.filterType(definition.definition, classOf[HDSpawnDebug]).exists(_.debug)
 
         val hive = HiveDescription(
@@ -130,15 +134,37 @@ object CustomHives {
           validTemperature = temperatures,
           validHumidity = humidities,
           conditions = conditions.flatten.toList,
+          drops = drops.toList,
           spawnDebug = spawnDebug
         )
 
         Gendustry.logDebug("Registering hive definition: %s", hive)
 
         HiveManager.hiveRegistry.registerHive("Gendustry:" + definition.id, hive)
+
+        val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
+        val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
+        val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
+        val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
+        val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
+
+        val block = BeeHive(
+          hiveId = definition.id,
+          sideIconName = sideTexture,
+          topIconName = topTexture,
+          bottomIconName = bottomTexture,
+          color = color,
+          lightLevel = lightLevel,
+          hive = hive
+        )
+
+        Gendustry.logDebug("Registered hive block: %s", block)
+
+        Blocks.regBlock(block)
       }
     }
 
-    definitions = List.empty // clear definitions
+    // clear data that's no longer needed
+    definitions = List.empty
   }
 }

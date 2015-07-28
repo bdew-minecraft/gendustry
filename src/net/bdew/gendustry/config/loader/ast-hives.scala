@@ -39,6 +39,8 @@ case class HDLight(level: Int) extends HiveDefStatement
 
 case class HDSpawnDebug(debug: Boolean) extends HiveDefStatement
 
+case class HDDrops(drops: List[HiveDropEntry]) extends HiveDefStatement
+
 trait HiveDefCondition extends HiveDefStatement
 
 case class HDLocationUnder(blocks: BlockFilterDef) extends HiveDefCondition
@@ -58,3 +60,5 @@ object BlockFilterDefLeaves extends BlockFilterDef
 object BlockFilterDefReplaceable extends BlockFilterDef
 
 case class BlockFilterRef(blocks: List[StackRef]) extends BlockFilterDef
+
+case class HiveDropEntry(chance: Int, uid: String, ignobleShare: Float, additional: List[StackRef])
