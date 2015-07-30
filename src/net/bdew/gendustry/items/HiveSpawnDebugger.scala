@@ -12,8 +12,9 @@ package net.bdew.gendustry.items
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import net.bdew.gendustry.custom.CustomHives
-import net.bdew.gendustry.custom.hives.HiveDescription
+import net.bdew.gendustry.custom.hives.{BlockFilterAir, ConditionReplace, HiveDescription}
 import net.bdew.lib.Misc
+import net.bdew.lib.block.BlockRef
 import net.bdew.lib.items.SimpleItem
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
@@ -50,18 +51,19 @@ object HiveSpawnDebugger extends SimpleItem("HiveSpawnDebugger") {
       import net.bdew.lib.helpers.ChatHelper._
       player.addChatMessage(" ==== Checking Spawn At (%d,%d,%d) ===".format(x, y, z))
       for ((id, hive) <- CustomHives.hives) {
+        val pos = if (hive.conditions.contains(ConditionReplace(BlockFilterAir))) {
+          // Hive spawns in air, check block next to one clicked
+          BlockRef(x, y, z).neighbour(Misc.forgeDirection(side))
+        } else {
+          // Hive spawns replaces block, check clicked block
+          BlockRef(x, y, z)
+        }
         val msg =
-          checkSpawnLocation(hive, world, x, y, z) match {
-            case CheckResultFailed(msg1) =>
-              val dir = Misc.forgeDirection(side)
-              checkSpawnLocation(hive, world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ) match {
-                case CheckResultFailed(msg2) =>
-                  msg1.setColor(Color.RED)
-                case CheckResultSuccess() =>
-                  "OK (Replacing Air)".setColor(Color.GREEN)
-              }
+          checkSpawnLocation(hive, world, pos.x, pos.y, pos.z) match {
+            case CheckResultFailed(error) =>
+              error.setColor(Color.RED)
             case CheckResultSuccess() =>
-              "OK (Replacing Block)".setColor(Color.GREEN)
+              ("OK at " + pos).setColor(Color.GREEN)
           }
 
         player.addChatMessage(L(" * %s - %s", C(id).setColor(Color.YELLOW), msg))

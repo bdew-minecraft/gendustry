@@ -96,7 +96,7 @@ object CustomHives {
             EnumHumidity.values().filter(x => humidityNames.contains(x.getName.toLowerCase)).toSet
 
 
-        val conditions = for (condition <- Misc.filterType(definition.definition, classOf[HiveDefCondition])) yield {
+        var conditions = (for (condition <- Misc.filterType(definition.definition, classOf[HiveDefCondition])) yield {
           condition match {
             case HDLocationUnder(f) => Some(ConditionUnder(resolveFilter(f)))
             case HDLocationAbove(f) => Some(ConditionAbove(resolveFilter(f)))
@@ -106,6 +106,10 @@ object CustomHives {
               Gendustry.logWarn("Unknown condition %s", condition)
               None
           }
+        }).flatten.toList
+
+        if (!conditions.exists(_.isInstanceOf[ConditionReplace])) {
+          conditions :+= ConditionReplace(BlockFilterAir)
         }
 
         val drops = (for (drop <- Misc.filterType(definition.definition, classOf[HDDrops]).flatMap(_.drops)) yield {
@@ -134,7 +138,7 @@ object CustomHives {
           validBiome = biomes,
           validTemperature = temperatures,
           validHumidity = humidities,
-          conditions = conditions.flatten.toList,
+          conditions = conditions,
           drops = drops.toList,
           spawnDebug = spawnDebug
         )
