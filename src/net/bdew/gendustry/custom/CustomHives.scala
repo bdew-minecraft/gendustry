@@ -101,6 +101,7 @@ object CustomHives {
             case HDLocationUnder(f) => Some(ConditionUnder(resolveFilter(f)))
             case HDLocationAbove(f) => Some(ConditionAbove(resolveFilter(f)))
             case HDLocationNextTo(f) => Some(ConditionNextTo(resolveFilter(f)))
+            case HDLocationNear(f) => Some(ConditionNear(resolveFilter(f)))
             case HDReplace(f) => Some(ConditionReplace(resolveFilter(f)))
             case _ =>
               Gendustry.logWarn("Unknown condition %s", condition)

@@ -49,6 +49,8 @@ case class HDLocationAbove(blocks: BlockFilterDef) extends HiveDefCondition
 
 case class HDLocationNextTo(blocks: BlockFilterDef) extends HiveDefCondition
 
+case class HDLocationNear(blocks: BlockFilterDef) extends HiveDefCondition
+
 case class HDReplace(blocks: BlockFilterDef) extends HiveDefCondition
 
 trait BlockFilterDef
