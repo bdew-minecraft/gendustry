@@ -45,6 +45,10 @@ object Items extends ItemManager(GendustryCreativeTabs.main) {
     regItem(PollenKit)
   }
 
+  if (ForestryHelper.haveRoot("Bees")) {
+    regItem(HiveSpawnDebugger)
+  }
+
   val coverEject = regItem(EjectCover)
   val coverImport = regItem(ImportCover)
 

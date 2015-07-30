@@ -36,6 +36,7 @@ trait ParserHives extends RecipeParser with GenericConfigParser {
       | "Under" ~> blockFilter ^^ HDLocationUnder
       | "Above" ~> blockFilter ^^ HDLocationAbove
       | "NextTo" ~> blockFilter ^^ HDLocationNextTo
+      | "Near" ~> blockFilter ^^ HDLocationNear
       | "Replace" ~> blockFilter ^^ HDReplace
       | "TopTexture" ~> unescapeStr ^^ HDTopTexture
       | "BottomTexture" ~> unescapeStr ^^ HDBottomTexture

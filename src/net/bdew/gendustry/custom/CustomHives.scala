@@ -26,6 +26,7 @@ import net.minecraftforge.oredict.OreDictionary
 
 object CustomHives {
   var definitions = List.empty[CSHiveDefinition]
+  var hives = Map.empty[String, HiveDescription]
 
   def registerHiveDefinition(definition: CSHiveDefinition): Unit = {
     definitions :+= definition
@@ -95,16 +96,21 @@ object CustomHives {
             EnumHumidity.values().filter(x => humidityNames.contains(x.getName.toLowerCase)).toSet
 
 
-        val conditions = for (condition <- Misc.filterType(definition.definition, classOf[HiveDefCondition])) yield {
+        var conditions = (for (condition <- Misc.filterType(definition.definition, classOf[HiveDefCondition])) yield {
           condition match {
             case HDLocationUnder(f) => Some(ConditionUnder(resolveFilter(f)))
             case HDLocationAbove(f) => Some(ConditionAbove(resolveFilter(f)))
             case HDLocationNextTo(f) => Some(ConditionNextTo(resolveFilter(f)))
+            case HDLocationNear(f) => Some(ConditionNear(resolveFilter(f)))
             case HDReplace(f) => Some(ConditionReplace(resolveFilter(f)))
             case _ =>
               Gendustry.logWarn("Unknown condition %s", condition)
               None
           }
+        }).flatten.toList
+
+        if (!conditions.exists(_.isInstanceOf[ConditionReplace])) {
+          conditions :+= ConditionReplace(BlockFilterAir)
         }
 
         val drops = (for (drop <- Misc.filterType(definition.definition, classOf[HDDrops]).flatMap(_.drops)) yield {
@@ -133,7 +139,7 @@ object CustomHives {
           validBiome = biomes,
           validTemperature = temperatures,
           validHumidity = humidities,
-          conditions = conditions.flatten.toList,
+          conditions = conditions,
           drops = drops.toList,
           spawnDebug = spawnDebug
         )
@@ -141,6 +147,8 @@ object CustomHives {
         Gendustry.logDebug("Registering hive definition: %s", hive)
 
         HiveManager.hiveRegistry.registerHive("Gendustry:" + definition.id, hive)
+
+        hives += definition.id -> hive
 
         val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
         val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
