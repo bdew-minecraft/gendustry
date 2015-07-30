@@ -26,6 +26,7 @@ import net.minecraftforge.oredict.OreDictionary
 
 object CustomHives {
   var definitions = List.empty[CSHiveDefinition]
+  var hives = Map.empty[String, HiveDescription]
 
   def registerHiveDefinition(definition: CSHiveDefinition): Unit = {
     definitions :+= definition
@@ -141,6 +142,8 @@ object CustomHives {
         Gendustry.logDebug("Registering hive definition: %s", hive)
 
         HiveManager.hiveRegistry.registerHive("Gendustry:" + definition.id, hive)
+
+        hives += definition.id -> hive
 
         val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
         val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
