@@ -97,6 +97,6 @@ object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.Ha
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Gendustry.modId + ":grafter")
+    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "grafter"))
   }
 }

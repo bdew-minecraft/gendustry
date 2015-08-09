@@ -11,6 +11,7 @@ package net.bdew.gendustry.fluids
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
+import net.bdew.lib.Misc
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
@@ -37,8 +38,8 @@ class BlockFluid(val fluid: Fluid, val ownIcons: Boolean) extends BlockFluidClas
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(register: IIconRegister) {
     if (ownIcons) {
-      fluid.setStillIcon(register.registerIcon(Gendustry.modId + ":fluids/" + fluid.getName + "/still"))
-      fluid.setFlowingIcon(register.registerIcon(Gendustry.modId + ":fluids/" + fluid.getName + "/flowing"))
+      fluid.setStillIcon(register.registerIcon(Misc.iconName(Gendustry.modId, "fluids", fluid.getName, "still")))
+      fluid.setFlowingIcon(register.registerIcon(Misc.iconName(Gendustry.modId, "fluids", fluid.getName, "flowing")))
     }
   }
 }

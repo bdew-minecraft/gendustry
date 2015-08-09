@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.custom
 
+import java.util.Locale
+
 import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.apiculture.hives.HiveManager
 import forestry.api.core.{EnumHumidity, EnumTemperature}
@@ -60,7 +62,7 @@ object CustomHives {
 
   def registerHives(): Unit = {
 
-    val validBiomes = BiomeGenBase.getBiomeGenArray.filterNot(null == _).map(x => x.biomeName.toLowerCase -> x).toMap
+    val validBiomes = BiomeGenBase.getBiomeGenArray.filterNot(null == _).map(x => x.biomeName.toLowerCase(Locale.US) -> x).toMap
 
     for (definition <- definitions) {
       Gendustry.logDebug("Processing Beehive definition: %s", definition)
@@ -74,26 +76,26 @@ object CustomHives {
 
         val range = getSingleStatement(definition, classOf[HDYRange]) getOrElse HDYRange(0, 255)
 
-        val biomeNames = (Misc.filterType(definition.definition, classOf[HDBiomes]) flatMap (_.biomes) map (_.toLowerCase)).toSet
+        val biomeNames = (Misc.filterType(definition.definition, classOf[HDBiomes]) flatMap (_.biomes) map (_.toLowerCase(Locale.US))).toSet
         val biomes =
           if (biomeNames.isEmpty || biomeNames.contains("all"))
             validBiomes.values.toSet
           else
             validBiomes.filterKeys(biomeNames.contains).values.toSet
 
-        val temperatureNames = (Misc.filterType(definition.definition, classOf[HDTemperature]) flatMap (_.temperatures) map (_.toLowerCase)).toSet
+        val temperatureNames = (Misc.filterType(definition.definition, classOf[HDTemperature]) flatMap (_.temperatures) map (_.toLowerCase(Locale.US))).toSet
         val temperatures =
           if (temperatureNames.isEmpty || temperatureNames.contains("all"))
             EnumTemperature.values().toSet
           else
-            EnumTemperature.values().filter(x => temperatureNames.contains(x.getName.toLowerCase)).toSet
+            EnumTemperature.values().filter(x => temperatureNames.contains(x.getName.toLowerCase(Locale.US))).toSet
 
-        val humidityNames = (Misc.filterType(definition.definition, classOf[HDHumidity]) flatMap (_.humidityLevels) map (_.toLowerCase)).toSet
+        val humidityNames = (Misc.filterType(definition.definition, classOf[HDHumidity]) flatMap (_.humidityLevels) map (_.toLowerCase(Locale.US))).toSet
         val humidities =
           if (humidityNames.isEmpty || humidityNames.contains("all"))
             EnumHumidity.values().toSet
           else
-            EnumHumidity.values().filter(x => humidityNames.contains(x.getName.toLowerCase)).toSet
+            EnumHumidity.values().filter(x => humidityNames.contains(x.getName.toLowerCase(Locale.US))).toSet
 
 
         var conditions = (for (condition <- Misc.filterType(definition.definition, classOf[HiveDefCondition])) yield {
@@ -150,9 +152,14 @@ object CustomHives {
 
         hives += definition.id -> hive
 
-        val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse "%s:beehives/%s/side".format(Gendustry.modId, definition.id).toLowerCase
-        val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse "%s:beehives/%s/top".format(Gendustry.modId, definition.id).toLowerCase
+        val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse
+          Misc.iconName(Gendustry.modId, "beehives", definition.id, "side")
+
+        val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse
+          Misc.iconName(Gendustry.modId, "beehives", definition.id, "top")
+
         val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
+
         val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
         val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
 

@@ -1,8 +1,8 @@
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen.producer.name=Mutagen-Erzeuger
+tile.gendustry.mutagen_producer.name=Mutagen-Erzeuger
 tile.gendustry.mutatron.name=Mutatron
-tile.gendustry.mutatron.adv.name=Erweitertes Mutatron
+tile.gendustry.mutatron_adv.name=Erweitertes Mutatron
 tile.gendustry.apiary.name=Industrieller Bienenstock
 tile.gendustry.imprinter.name=Gen-Drucker
 tile.gendustry.sampler.name=Gen-Abtaster

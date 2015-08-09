@@ -10,6 +10,7 @@
 package net.bdew.gendustry.misc
 
 import java.util
+import java.util.Locale
 
 import _root_.forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
 import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
@@ -27,7 +28,7 @@ class CommandGiveSample extends CommandBase {
   lazy val validAlleles = AlleleManager.alleleRegistry.getRegisteredAlleles.map(_._1).toList
 
   def validChromosomes(root: ISpeciesRoot) =
-    (GeneticsHelper.getCleanKaryotype(root) map { case (n, c) => c.toString.toLowerCase -> c.ordinal() }).toSeq
+    (GeneticsHelper.getCleanKaryotype(root) map { case (n, c) => c.toString.toLowerCase(Locale.US) -> c.ordinal() }).toSeq
 
   def isValidAllele(root: ISpeciesRoot, chromosome: Int, allele: IAllele) =
     GeneticsHelper.getCleanKaryotype(root) get chromosome exists { chr =>

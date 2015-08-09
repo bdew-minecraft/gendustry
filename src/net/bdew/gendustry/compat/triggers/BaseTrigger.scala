@@ -10,6 +10,7 @@
 package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.statements.{IStatementContainer, IStatementParameter, ITriggerExternal}
+import net.bdew.gendustry.Gendustry
 import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.tileentity.TileEntity
@@ -21,7 +22,7 @@ abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, ti
   override def getUniqueTag = "gendustry." + ordering + "." + id
   override def getIcon = icon
   override def registerIcons(ir: IIconRegister) =
-    icon = ir.registerIcon("gendustry:trigger/" + id)
+    icon = ir.registerIcon(Misc.iconName(Gendustry.modId, "trigger", id))
   override def getDescription = Misc.toLocal("gendustry.trigger." + id)
   override def rotateLeft() = this
 

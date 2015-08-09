@@ -12,32 +12,33 @@ package net.bdew.gendustry.machines.apiary
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.gendustry.machines.MachineMaterial
 import net.bdew.gendustry.misc.BlockTooltipHelper
+import net.bdew.lib.Misc
 import net.bdew.lib.block.{BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.block.Block
-import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.{IBlockAccess, World}
 
-object BlockApiary extends Block(Material.rock) with HasTE[TileApiary] with BlockCoverable[TileApiary] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockApiary extends Block(MachineMaterial) with HasTE[TileApiary] with BlockCoverable[TileApiary] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   private var icons: Array[IIcon] = null
   val TEClass = classOf[TileApiary]
   lazy val guiId: Int = MachineApiary.guiId
 
   setBlockName(Gendustry.modId + ".apiary")
-  setHardness(5)
+  setHardness(2)
 
   override def getIcon(side: Int, meta: Int): IIcon = if (side < 2) icons(0) else icons(1)
 
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(reg: IIconRegister) {
     icons = new Array[IIcon](2)
-    icons(0) = reg.registerIcon(Gendustry.modId + ":apiary/top")
-    icons(1) = reg.registerIcon(Gendustry.modId + ":apiary/side")
+    icons(0) = reg.registerIcon(Misc.iconName(Gendustry.modId, "apiary", "top"))
+    icons(1) = reg.registerIcon(Misc.iconName(Gendustry.modId, "apiary", "side"))
   }
 
   override def getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int): Int = {

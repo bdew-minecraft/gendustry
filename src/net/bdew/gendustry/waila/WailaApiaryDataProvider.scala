@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.waila
 
+import java.util.Locale
+
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
 import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.lib.Misc
@@ -20,7 +22,7 @@ object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
     var strings = target.errorConditions.toList.sortBy(_.getID) map { err =>
       EnumChatFormatting.RED + Misc.toLocal("for." + err.getDescription)
     }
-    strings :+= Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase))
+    strings :+= Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase(Locale.US)))
 
     if (target.queen :!= null)
       strings :+= target.queen.getDisplayName

@@ -2,9 +2,9 @@
 
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen.producer.name=诱变剂制造机
+tile.gendustry.mutagen_producer.name=诱变剂制造机
 tile.gendustry.mutatron.name=诱变机
-tile.gendustry.mutatron.adv.name=高级诱变机
+tile.gendustry.mutatron_adv.name=高级诱变机
 tile.gendustry.apiary.name=工业蜂箱
 tile.gendustry.imprinter.name=基因压印机
 tile.gendustry.sampler.name=基因采样机

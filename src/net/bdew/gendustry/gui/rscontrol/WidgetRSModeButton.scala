@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.gui.rscontrol
 
+import java.util.Locale
+
 import net.bdew.gendustry.gui.Textures
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect, Texture}
@@ -35,7 +37,7 @@ class WidgetRSModeButton(p: Point, te: TileRSControllable, container: ContainerR
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
-    tip += Misc.toLocal("gendustry.rsmode." + te.rsmode.value.toString.toLowerCase)
+    tip += Misc.toLocal("gendustry.rsmode." + te.rsmode.value.toString.toLowerCase(Locale.US))
   }
 
   override def mouseClicked(p: Point, button: Int) {

@@ -1,9 +1,9 @@
 # author Team MMKP(puyo061 , whffktkw ,clayweb)
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen.producer.name=뮤타젠 생성기
+tile.gendustry.mutagen_producer.name=뮤타젠 생성기
 tile.gendustry.mutatron.name=뮤타트론
-tile.gendustry.mutatron.adv.name=고급 뮤타트론
+tile.gendustry.mutatron_adv.name=고급 뮤타트론
 tile.gendustry.apiary.name=산업 양봉기
 tile.gendustry.imprinter.name=유전자 각인기
 tile.gendustry.sampler.name=유전자 샘플 추출기

@@ -9,37 +9,17 @@
 
 package net.bdew.gendustry.machines.imprinter
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.gui.BlockGuiWrenchable
+import net.bdew.gendustry.machines.BaseMachineBlock
 import net.bdew.gendustry.misc.BlockTooltipHelper
 import net.bdew.lib.block.{BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
-import net.minecraft.block.Block
-import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
 
-object BlockImprinter extends Block(Material.rock) with HasTE[TileImprinter] with BlockCoverable[TileImprinter] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockImprinter extends BaseMachineBlock("imprinter") with HasTE[TileImprinter] with BlockCoverable[TileImprinter] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileImprinter]
-  private var icons: Array[IIcon] = null
   lazy val guiId: Int = MachineImprinter.guiId
-
-  setBlockName(Gendustry.modId + ".imprinter")
-  setHardness(5)
-
-  override def getIcon(side: Int, meta: Int): IIcon = {
-    side match {
-      case 0 =>
-        return icons(0)
-      case 1 =>
-        return icons(1)
-      case _ =>
-        return icons(2)
-    }
-  }
 
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
     if (stack.hasTagCompound && stack.getTagCompound.hasKey("data")) {
@@ -50,11 +30,4 @@ object BlockImprinter extends Block(Material.rock) with HasTE[TileImprinter] wit
     } else List.empty
   }
 
-  @SideOnly(Side.CLIENT)
-  override def registerBlockIcons(reg: IIconRegister) {
-    icons = new Array[IIcon](3)
-    icons(0) = reg.registerIcon(Gendustry.modId + ":imprinter/bottom")
-    icons(1) = reg.registerIcon(Gendustry.modId + ":imprinter/top")
-    icons(2) = reg.registerIcon(Gendustry.modId + ":imprinter/side")
-  }
 }
