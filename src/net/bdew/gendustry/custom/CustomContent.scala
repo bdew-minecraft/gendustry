@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.custom
 
+import java.util.Locale
+
 import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import forestry.api.genetics.AlleleManager
@@ -72,9 +74,9 @@ object CustomContent {
 
         st.requirements foreach {
           case MReqHumidity(hum: String) =>
-            mutation.reqHumidity = Some(EnumHumidity.valueOf(hum.toUpperCase))
+            mutation.reqHumidity = Some(EnumHumidity.valueOf(hum.toUpperCase(Locale.US)))
           case MReqTemperature(temp: String) =>
-            mutation.reqTemperature = Some(EnumTemperature.valueOf(temp.toUpperCase))
+            mutation.reqTemperature = Some(EnumTemperature.valueOf(temp.toUpperCase(Locale.US)))
           case MReqBlock(ref: StackBlock) =>
             val stack = TuningLoader.loader.getConcreteStack(ref)
             val block = Block.getBlockFromItem(stack.getItem)

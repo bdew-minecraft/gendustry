@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.machines.mutatron
 
+import java.util.Locale
+
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.EnumMutationSetting
@@ -34,7 +36,7 @@ object MachineMutatron extends Machine("Mutatron", BlockMutatron) with GuiProvid
     (
       MutatronOverridesImpl.overrides ++
         (for ((key, value) <- Tuning.getSection("Genetics").getSection("MutatronOverrides").filterType(classOf[EntryStr]))
-          yield value.v.toUpperCase match {
+          yield value.v.toUpperCase(Locale.US) match {
             case "ENABLED" => Some(key -> EnumMutationSetting.ENABLED)
             case "DISABLED" => Some(key -> EnumMutationSetting.DISABLED)
             case "REQUIREMENTS" => Some(key -> EnumMutationSetting.REQUIREMENTS)

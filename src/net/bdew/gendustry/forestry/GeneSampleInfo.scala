@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.forestry
 
+import java.util.Locale
+
 import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.arboriculture._
 import forestry.api.genetics._
@@ -69,5 +71,5 @@ object GeneSampleInfo {
   }
 
   def getChromosomeName(root: ISpeciesRoot, chromosome: Int) =
-    GeneticsHelper.getCleanKaryotype(root).get(chromosome).map(_.toString.toUpperCase).getOrElse("Invalid")
+    GeneticsHelper.getCleanKaryotype(root).get(chromosome).map(_.toString.toUpperCase(Locale.US)).getOrElse("Invalid")
 }
