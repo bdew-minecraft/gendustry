@@ -15,6 +15,7 @@ import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event._
 import cpw.mods.fml.common.network.NetworkRegistry
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl, RegistriesApiImpl}
@@ -88,7 +89,15 @@ object Gendustry {
     if (event.getSide.isClient)
       Config.load(new File(configDir, "client.config"))
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
+
+    GameRegistry.addRecipe(new GeneRecipe)
     RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
+
+    if (Tuning.getSection("Power").getSection("RedstoneCharging").getBoolean("Enabled")) {
+      GameRegistry.addRecipe(new ChargeRecipe)
+      RecipeSorter.register("gendustry:ChargeRecipe", classOf[ChargeRecipe], RecipeSorter.Category.SHAPELESS, "")
+    }
+
     Upgrades.init()
     TuningLoader.loadDelayed()
     if (ForestryHelper.haveRoot("Bees")) {
