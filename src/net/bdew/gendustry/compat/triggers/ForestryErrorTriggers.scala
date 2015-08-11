@@ -15,16 +15,13 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.blocks.IForestryMultiErrorSource
 import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-trait TileEntityErrorSource extends TileEntity with IForestryMultiErrorSource
-
-case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestry.error." + state.getID, "y%03d".format(state.getID), classOf[TileEntityErrorSource]) {
+case class ForestryErrorTrigger(state: IErrorState) extends BaseTrigger("forestry.error." + state.getID, "y%03d".format(state.getID), classOf[IForestryMultiErrorSource]) {
   override def getIcon = state.getIcon
   override def getDescription = Misc.toLocal("for." + state.getDescription)
   override def registerIcons(ir: IIconRegister) {}
-  override def getState(side: ForgeDirection, tile: TileEntityErrorSource) =
+  override def getState(side: ForgeDirection, tile: IForestryMultiErrorSource) =
     if (state.getUniqueName == "Forestry:ok")
       tile.getErrorStates.isEmpty
     else

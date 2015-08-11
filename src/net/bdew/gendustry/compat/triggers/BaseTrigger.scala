@@ -17,7 +17,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
 
-abstract class BaseTrigger[T <: TileEntity](val id: String, ordering: String, tileClass: Class[T]) extends ITriggerExternal {
+abstract class BaseTrigger[T](val id: String, ordering: String, tileClass: Class[T]) extends ITriggerExternal {
   var icon: IIcon = null
   override def getUniqueTag = "gendustry." + ordering + "." + id
   override def getIcon = icon
