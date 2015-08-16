@@ -42,6 +42,6 @@ object ImportCover extends SimpleItem("ImportCover") with ItemCover {
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Gendustry.modId + ":covers/import")
+    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "covers", "import"))
   }
 }

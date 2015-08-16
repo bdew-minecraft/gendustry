@@ -121,7 +121,7 @@ object ItemApiaryUpgrade extends Item with IApiaryUpgrade with NamedItem {
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {
     icons = Upgrades.map.map({
-      case (id, upgrade) => id -> reg.registerIcon("%s:upgrades/%s".format(Gendustry.modId, upgrade.name))
+      case (id, upgrade) => id -> reg.registerIcon(Misc.iconName(Gendustry.modId, "upgrades", upgrade.name))
     }).toMap
   }
 }

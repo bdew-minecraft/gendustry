@@ -11,10 +11,9 @@ package net.bdew.gendustry.items
 
 import java.util
 
-import cpw.mods.fml.common.registry.GameRegistry
 import forestry.api.genetics.{AlleleManager, IAlleleSpecies, ISpeciesRoot}
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.forestry.{GeneRecipe, GeneSampleInfo, GeneticsHelper}
+import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
 import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.items.SimpleItem
 import net.bdew.lib.{Client, Misc}
@@ -26,8 +25,6 @@ import net.minecraft.util.EnumChatFormatting
 
 object GeneTemplate extends SimpleItem("GeneTemplate") {
   setMaxStackSize(1)
-
-  GameRegistry.addRecipe(new GeneRecipe)
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.templates)
 

@@ -12,6 +12,7 @@ package net.bdew.gendustry.items
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.itempush.ItemPush
+import net.bdew.lib.Misc
 import net.bdew.lib.covers.{ItemCover, TileCoverable}
 import net.bdew.lib.items.SimpleItem
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -44,6 +45,6 @@ object EjectCover extends SimpleItem("EjectCover") with ItemCover {
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Gendustry.modId + ":covers/eject")
+    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "covers", "eject"))
   }
 }

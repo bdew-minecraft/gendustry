@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.machines.apiary.upgrades
 
+import java.util.Locale
+
 import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.config.Tuning
@@ -49,7 +51,7 @@ object Upgrades {
     }
   }
 
-  def str2bool(s: String) = Tuning.trueVals.contains(s.toLowerCase)
+  def str2bool(s: String) = Tuning.trueVals.contains(s.toLowerCase(Locale.US))
 
   def makeStrMod(upg: String, n: String, v: String): ModFunc = n match {
     case "sealed" => (a, n) => a.isSealed = str2bool(v)

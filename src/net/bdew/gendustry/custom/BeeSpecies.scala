@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.custom
 
+import java.util.Locale
+
 import com.mojang.authlib.GameProfile
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.apiculture._
@@ -50,8 +52,8 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override val isSecret = cfg.getBoolean("Secret")
   override val isCounted = !isSecret
   override val hasEffect = cfg.getBoolean("Glowing")
-  override val getHumidity = EnumHumidity.valueOf(cfg.getString("Humidity").toUpperCase)
-  override val getTemperature = EnumTemperature.valueOf(cfg.getString("Temperature").toUpperCase)
+  override val getHumidity = EnumHumidity.valueOf(cfg.getString("Humidity").toUpperCase(Locale.US))
+  override val getTemperature = EnumTemperature.valueOf(cfg.getString("Temperature").toUpperCase(Locale.US))
   override val getBranch = AlleleManager.alleleRegistry.getClassification("genus." + cfg.getString("Branch"))
   override val getAuthority = cfg.getString("Authority")
   override val getBinomial = cfg.getString("Binominal")
@@ -163,7 +165,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     tpl(0) = this
 
     for ((chrName, entry) <- traits.filterType(classOf[EntryStr]) if chrName != "Base") {
-      val chromosome = EnumBeeChromosome.valueOf(chrName.toUpperCase)
+      val chromosome = EnumBeeChromosome.valueOf(chrName.toUpperCase(Locale.US))
       val allele = Option(AlleleManager.alleleRegistry.getAllele(entry.v))
         .getOrElse(sys.error("Allele %s not found".format(entry.v)))
       if (!chromosome.getAlleleClass.isInstance(allele))

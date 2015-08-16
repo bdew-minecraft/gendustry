@@ -12,6 +12,7 @@ package net.bdew.gendustry.custom
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.apiculture.EnumBeeType
 import forestry.api.core.IIconProvider
+import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 
@@ -27,12 +28,14 @@ object BeeIconProvider extends IIconProvider {
     icons = Array.fill(EnumBeeType.values().length, 3)(null)
 
     EnumBeeType.values().filter(_ != EnumBeeType.NONE).foreach(beeType => {
-      icons(beeType.ordinal())(0) = register.registerIcon("forestry:bees/%s/%s.outline".format(iconType, beeType).toLowerCase)
+      icons(beeType.ordinal())(0) = register.registerIcon(Misc.iconName("forestry", "bees", iconType, beeType + ".outline"))
+
       if (beeType == EnumBeeType.LARVAE)
-        icons(beeType.ordinal())(1) = register.registerIcon("forestry:bees/%s/%s.body".format(iconType, beeType).toLowerCase)
+        icons(beeType.ordinal())(1) = register.registerIcon(Misc.iconName("forestry", "bees", iconType, beeType + ".body"))
       else
-        icons(beeType.ordinal())(1) = register.registerIcon("forestry:bees/%s/body1".format(iconType).toLowerCase)
-      icons(beeType.ordinal())(2) = register.registerIcon("forestry:bees/%s/%s.body2".format(iconType, beeType).toLowerCase)
+        icons(beeType.ordinal())(1) = register.registerIcon(Misc.iconName("forestry", "bees", iconType, "body1"))
+
+      icons(beeType.ordinal())(2) = register.registerIcon(Misc.iconName("forestry", "bees", iconType, beeType + ".body2"))
     })
   }
 

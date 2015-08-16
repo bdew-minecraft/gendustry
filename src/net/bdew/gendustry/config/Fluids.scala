@@ -9,6 +9,8 @@
 
 package net.bdew.gendustry.config
 
+import java.util.Locale
+
 import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.fluids.{BlockFluid, ItemFluidBucket, ItemFluidCan}
@@ -30,13 +32,13 @@ object Fluids extends FluidManager {
                     viscosity: Int = 1000,
                     isGaseous: Boolean = false): Fluid = {
 
-    val ownFluid = if (FluidRegistry.isFluidRegistered(id)) {
+    val ownFluid = if (FluidRegistry.isFluidRegistered(id.toLowerCase(Locale.US))) {
       Gendustry.logDebug("Fluid %s already registered, using existing (%s)", id, FluidRegistry.getFluid(id))
       false
     } else {
       Gendustry.logDebug("Registering fluid %s", id)
       val newFluid = new Fluid(id)
-      newFluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase)
+      newFluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase(Locale.US))
       newFluid.setLuminosity(luminosity)
       newFluid.setDensity(density)
       newFluid.setTemperature(temperature)
@@ -45,7 +47,7 @@ object Fluids extends FluidManager {
       FluidRegistry.registerFluid(newFluid)
       true
     }
-    val fluid = FluidRegistry.getFluid(id.toLowerCase)
+    val fluid = FluidRegistry.getFluid(id.toLowerCase(Locale.US))
     if (fluid.getBlock == null) {
       val block = new BlockFluid(fluid, ownFluid)
       GameRegistry.registerBlock(block, "fluid." + id)

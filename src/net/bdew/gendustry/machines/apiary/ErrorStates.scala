@@ -11,6 +11,8 @@ package net.bdew.gendustry.machines.apiary
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.{ForestryAPI, IErrorState}
+import net.bdew.gendustry.Gendustry
+import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 
@@ -26,7 +28,7 @@ case class GendustryErrorState(name: String, id: Short) extends IErrorState {
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(register: IIconRegister) {
-    icon = register.registerIcon("gendustry:error/" + name)
+    icon = register.registerIcon(Misc.iconName(Gendustry.modId, "error", name))
   }
 }
 

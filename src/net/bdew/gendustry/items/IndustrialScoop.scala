@@ -89,6 +89,6 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Gendustry.modId + ":scoop")
+    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "scoop"))
   }
 }
