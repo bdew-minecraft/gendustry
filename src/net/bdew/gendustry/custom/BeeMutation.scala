@@ -12,6 +12,7 @@ package net.bdew.gendustry.custom
 import forestry.api.apiculture._
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import forestry.api.genetics.{AlleleManager, IAllele}
+import net.bdew.gendustry.forestry.BeeModifiers
 import net.bdew.lib.Misc
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
@@ -55,9 +56,7 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
     else {
       val bkm = getRoot.getBeekeepingMode(housing.getWorld)
       var processedChance = chance
-      import scala.collection.JavaConversions._
-      for (mod <- housing.getBeeModifiers)
-        processedChance *= mod.getMutationModifier(genome0, genome1, processedChance)
+      processedChance *= BeeModifiers.from(housing).getMutationModifier(genome0, genome1, processedChance)
       processedChance *= bkm.getBeeModifier.getMutationModifier(genome0, genome1, processedChance)
       processedChance
     }
