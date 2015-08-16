@@ -42,19 +42,25 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
   def testReq[T](req: Option[T], v: T) = req.isEmpty || req.get == v
 
   override def getChance(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome) =
-    getChanceImpl(housing, allele0, allele1, genome0, genome1)
+    getChanceImpl(housing, allele0.asInstanceOf[IAlleleBeeSpecies], allele1.asInstanceOf[IAlleleBeeSpecies], genome0.asInstanceOf[IBeeGenome], genome1.asInstanceOf[IBeeGenome])
 
   override def getChance(housing: IBeeHousing, allele0: IAlleleBeeSpecies, allele1: IAlleleBeeSpecies, genome0: IBeeGenome, genome1: IBeeGenome) =
     getChanceImpl(housing, allele0, allele1, genome0, genome1)
 
-  def getChanceImpl(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome): Float =
+  def getChanceImpl(housing: IBeeHousing, allele0: IAlleleBeeSpecies, allele1: IAlleleBeeSpecies, genome0: IBeeGenome, genome1: IBeeGenome): Float =
     if (!((allele0 == parent1 && allele1 == parent2) || (allele0 == parent2 && allele1 == parent1))) 0
     else if (!testReq(reqTemperature, housing.getTemperature)) 0
     else if (!testReq(reqHumidity, housing.getHumidity)) 0
     else if (!testReq(reqBiomeId, housing.getBiome.biomeID)) 0
     else if (!testReq(reqBlock, getBlockUnderHousing(housing))) 0
     else if (!testReq(reqBlockMeta, getBlockMetaUnderHousing(housing))) 0
-    else chance
+    else {
+      val bkm = getRoot.getBeekeepingMode(housing.getWorld)
+      var processedChance = chance
+      processedChance *= housing.getMutationModifier(genome0, genome1, processedChance)
+      processedChance *= bkm.getMutationModifier(genome0, genome1, processedChance)
+      processedChance
+    }
 
   override val getRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
 
