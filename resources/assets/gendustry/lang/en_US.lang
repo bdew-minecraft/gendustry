@@ -74,6 +74,7 @@ gendustry.upgrades.plains.name=Plains Emulation Upgrade
 gendustry.upgrades.jungle.name=Jungle Emulation Upgrade
 gendustry.upgrades.ocean.name=Ocean Emulation Upgrade
 gendustry.upgrades.stabilizer.name=Genetic Stabilizer Upgrade
+gendustry.upgrades.scrubber.name=Pollen Scrubber Upgrade
 
 # ==== GUI AND TOOLTIPS ====
 
