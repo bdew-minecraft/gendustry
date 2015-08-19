@@ -59,6 +59,7 @@ object Gendustry {
     GendustryAPI.Items = ItemApiImpl
     GendustryAPI.Blocks = BlockApiImpl
     GendustryAPI.Registries = RegistriesApiImpl
+    GendustryAPI.ConfigLoader = TuningLoader
 
     PowerProxy.logModVersions()
     ItemPush.init()
