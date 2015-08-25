@@ -10,6 +10,7 @@
 package net.bdew.gendustry.misc
 
 import forestry.api.core.{ErrorStateRegistry, IErrorState}
+import net.bdew.lib.Event
 import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
@@ -22,20 +23,17 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
 
   def set(v: IErrorState): Unit = {
     value += v
-    if (!suspendUpdates.value)
-      parent.dataSlotChanged(this)
+    changed()
   }
 
   def clear(v: IErrorState): Unit = {
     value -= v
-    if (!suspendUpdates.value)
-      parent.dataSlotChanged(this)
+    changed()
   }
 
   def clearAll(): Unit = {
     value = Set.empty
-    if (!suspendUpdates.value)
-      parent.dataSlotChanged(this)
+    changed()
   }
 
   def toggle(v: IErrorState, on: Boolean): Unit = {
@@ -50,8 +48,16 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
     suspendUpdates.withValue(true) {
       f
     }
-    if (value != oldValue)
+    if (value != oldValue) changed()
+  }
+
+  val onChange = Event()
+
+  def changed(): Unit ={
+    if (!suspendUpdates.value) {
       parent.dataSlotChanged(this)
+      onChange.trigger()
+    }
   }
 
   def isOk = value.isEmpty

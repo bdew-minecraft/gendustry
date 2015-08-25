@@ -142,6 +142,10 @@ with IIndustrialApiary {
     guiBreeding := logic.getBreedingTime.toFloat / logic.getTotalBreedingTime
   })
 
+  errorConditions.onChange.listen(() => {
+    worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, BlockApiary)
+  })
+
   def getUpgrade(stack: ItemStack) = stack.getItem.asInstanceOf[IApiaryUpgrade]
   def isUpgrade(stack: ItemStack) = stack != null && stack.getItem != null && stack.getItem.isInstanceOf[IApiaryUpgrade]
 
