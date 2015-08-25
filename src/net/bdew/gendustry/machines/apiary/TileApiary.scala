@@ -10,6 +10,7 @@
 package net.bdew.gendustry.machines.apiary
 
 import java.util
+import java.util.Locale
 
 import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
@@ -33,6 +34,7 @@ import net.bdew.lib.power.DataSlotPower
 import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -299,4 +301,12 @@ with IIndustrialApiary {
   }
 
   override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+
+  override def afterTileBreakSave(t: NBTTagCompound): NBTTagCompound = {
+    // Storing covers is buggy, remove them (they will be dropped automatically)
+    for (x <- ForgeDirection.VALID_DIRECTIONS) {
+      t.removeTag("cover_" + x.toString.toLowerCase(Locale.US))
+    }
+    t
+  }
 }
