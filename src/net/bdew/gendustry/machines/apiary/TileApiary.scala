@@ -10,8 +10,7 @@
 package net.bdew.gendustry.machines.apiary
 
 import java.util
-import java.util.Collections
-import java.util.Locale
+import java.util.{Collections, Locale}
 
 import com.mojang.authlib.GameProfile
 import forestry.api.apiculture._
@@ -36,8 +35,8 @@ import net.bdew.lib.power.DataSlotPower
 import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ChunkCoordinates
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -203,7 +202,6 @@ with IBeeHousingInventory {
   def getBiome = worldObj.getBiomeGenForCoordsBody(xCoord, zCoord)
   override def getSizeInventory = 15
   def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
-
 
   // SidedInventory
 
