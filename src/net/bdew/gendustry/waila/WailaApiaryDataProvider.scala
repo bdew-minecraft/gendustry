@@ -12,6 +12,7 @@ package net.bdew.gendustry.waila
 import java.util.Locale
 
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
+import net.bdew.gendustry.items.covers.ErrorSensorCover
 import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
@@ -26,6 +27,21 @@ object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
 
     if (target.queen :!= null)
       strings :+= target.queen.getDisplayName
+
+    Option(target.covers(acc.getSide).value) foreach { cover =>
+      if (cover.getItem == ErrorSensorCover) {
+        ErrorSensorCover.getErrorSensor(cover) foreach { sensor =>
+          strings :+= "%s (%s%s%s)".format(
+            Misc.toLocalF("gendustry.cover.label", cover.getDisplayName),
+            EnumChatFormatting.YELLOW,
+            Misc.toLocal(sensor.getUnLocalizedName),
+            EnumChatFormatting.RESET
+          )
+        }
+      } else {
+        strings :+= Misc.toLocalF("gendustry.cover.label", cover.getDisplayName)
+      }
+    }
 
     if (acc.getPlayer.isSneaking)
       strings ++= target.getStats

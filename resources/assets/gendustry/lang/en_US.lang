@@ -29,6 +29,7 @@ item.gendustry.grafter.name=Industrial Grafter
 item.gendustry.scoop.name=Scooporator MX200 Turbo
 item.gendustry.ImportCover.name=Item Import Cover
 item.gendustry.EjectCover.name=Item Eject Cover
+item.gendustry.ErrorSensorCover.name=Error Sensor Cover
 item.gendustry.PollenKit.name=Pollen Collection Kit
 item.gendustry.HiveSpawnDebugger.name=Hive Spawning Debugger
 
@@ -74,6 +75,7 @@ gendustry.upgrades.plains.name=Plains Emulation Upgrade
 gendustry.upgrades.jungle.name=Jungle Emulation Upgrade
 gendustry.upgrades.ocean.name=Ocean Emulation Upgrade
 gendustry.upgrades.stabilizer.name=Genetic Stabilizer Upgrade
+gendustry.upgrades.scrubber.name=Pollen Scrubber Upgrade
 
 # ==== GUI AND TOOLTIPS ====
 
@@ -138,6 +140,13 @@ gendustry.rsmode.rs_off=Disable on redstone
 gendustry.label.items=%s Items
 
 gendustry.label.shift=<Press SHIFT for more info>
+
+gendustry.cover.label=Cover: %s
+
+gendustry.cover.error.message=Will emit redstone signal if %s is detected
+gendustry.cover.error.hint=(Click cover with empty hand to change)
+gendustry.cover.error.any=Any Error
+gendustry.cover.error.none=No Error
 
 # ==== CHROMOSOMES (should match forestry) ====
 

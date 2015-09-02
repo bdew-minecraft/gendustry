@@ -12,9 +12,11 @@ package net.bdew.gendustry.config.loader
 import java.io._
 
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.api.IConfigLoader
+import net.bdew.lib.Misc
 import net.bdew.lib.recipes.RecipesHelper
 
-object TuningLoader {
+object TuningLoader extends IConfigLoader {
   val loader = new Loader
 
   def loadDelayed() = loader.processRecipeStatements()
@@ -35,5 +37,50 @@ object TuningLoader {
       configDir = Gendustry.configDir,
       resBaseName = "/assets/gendustry/config/",
       loader = loader)
+  }
+
+  override def loadConfig(reader: Reader): Boolean = {
+    Gendustry.logInfo("Loading config submitted by mod %s", Misc.getActiveModId)
+    try {
+      loader.load(reader)
+      true
+    } catch {
+      case e: Throwable =>
+        Gendustry.logErrorException("Error loading config submitted by mod %s", e, Misc.getActiveModId)
+        false
+    }
+  }
+
+  override def loadConfig(file: File): Boolean = {
+    Gendustry.logInfo("Loading config %s submitted by mod %s", file.getAbsolutePath, Misc.getActiveModId)
+    try {
+      Misc.withAutoClose(new FileReader(file)) { reader =>
+        loader.load(reader)
+        true
+      }
+    } catch {
+      case e: Throwable =>
+        Gendustry.logErrorException("Error loading config %s submitted by mod %s", e, file.getAbsolutePath, Misc.getActiveModId)
+        false
+    }
+  }
+
+  override def loadConfig(resourceName: String): Boolean = {
+    val res = getClass.getResource(resourceName)
+    if (res == null) {
+      Gendustry.logError("Unable to load resource %s submitted by mod %s - resource not found", resourceName, Misc.getActiveModId)
+      return false
+    }
+    Gendustry.logInfo("Loading config %s submitted by mod %s", res.toString, Misc.getActiveModId)
+    try {
+      Misc.withAutoClose(getClass.getResourceAsStream(resourceName)) { stream =>
+        loader.load(new InputStreamReader(stream))
+        true
+      }
+    } catch {
+      case e: Throwable =>
+        Gendustry.logErrorException("Error loading config %s submitted by mod %s", e, getClass.getResource(resourceName).toString, Misc.getActiveModId)
+        false
+    }
   }
 }

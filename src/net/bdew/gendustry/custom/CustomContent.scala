@@ -43,10 +43,16 @@ object CustomContent {
     Gendustry.logDebug("Registering bees")
     val added = (Tuning.getOrAddSection("Bees").filterType(classOf[ConfigSection]) collect {
       case (uid, cfg) =>
-        val species = new BeeSpecies(cfg, uid)
-        Gendustry.logDebug("Registering %s", species.getUID)
-        mySpecies +:= species
-        reg.registerAllele(species)
+        if (cfg.hasValue("RequireMod") && !Misc.haveModVersion(cfg.getString("RequireMod"))) {
+          Gendustry.logInfo("Not registering species '%s' - required mod '%s' is not loaded", uid, cfg.getString("RequireMod"))
+        } else if (cfg.hasValue("RequireOreDict") && OreDictionary.getOres(cfg.getString("RequireOreDict")).size() == 0) {
+          Gendustry.logInfo("Not registering species '%s' - required ore dictionary entry '%s' not found", uid, cfg.getString("RequireOreDict"))
+        } else {
+          val species = new BeeSpecies(cfg, uid)
+          Gendustry.logDebug("Registering %s", species.getUID)
+          mySpecies +:= species
+          reg.registerAllele(species)
+        }
     }).size
     Gendustry.logInfo("Registered %d bees", added)
   }

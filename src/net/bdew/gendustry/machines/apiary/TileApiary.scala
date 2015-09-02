@@ -11,6 +11,7 @@ package net.bdew.gendustry.machines.apiary
 
 import java.util
 import java.util.Collections
+import java.util.Locale
 
 import com.mojang.authlib.GameProfile
 import forestry.api.apiculture._
@@ -36,6 +37,7 @@ import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ChunkCoordinates
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -143,6 +145,10 @@ with IBeeHousingInventory {
       else
         guiProgress := 1 - (logic.getBeeProgressPercent / 100F)
     }
+  })
+
+  errorConditions.onChange.listen(() => {
+    worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, BlockApiary)
   })
 
   def getUpgrade(stack: ItemStack) = stack.getItem.asInstanceOf[IApiaryUpgrade]
@@ -294,4 +300,12 @@ with IBeeHousingInventory {
   }
 
   override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+
+  override def afterTileBreakSave(t: NBTTagCompound): NBTTagCompound = {
+    // Storing covers is buggy, remove them (they will be dropped automatically)
+    for (x <- ForgeDirection.VALID_DIRECTIONS) {
+      t.removeTag("cover_" + x.toString.toLowerCase(Locale.US))
+    }
+    t
+  }
 }

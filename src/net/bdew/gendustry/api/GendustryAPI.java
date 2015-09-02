@@ -20,4 +20,5 @@ public class GendustryAPI {
     public static IItemAPI Items;
     public static IBlockAPI Blocks;
     public static IRegistriesApi Registries;
+    public static IConfigLoader ConfigLoader;
 }

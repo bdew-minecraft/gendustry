@@ -1,5 +1,7 @@
-### 2.2.0
+### Future version (currently only in -fu)
  * Deprecated IForestryMultiErrorSource - Use IErrorLogicSource from forestry API instead
+### 2.2.0
+ * Added IConfigLoader - allows other mods to submit configs to be loaded Gendustry
 
 ### 2.1.0
  * Added blocks.IForestryMultiErrorSource - access to multiple forestry error states (used in industrial apiary)
