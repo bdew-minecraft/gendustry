@@ -10,12 +10,14 @@
 package net.bdew.gendustry.misc
 
 import java.io.{File, FileInputStream}
+import java.util
+import java.util.Properties
 
 import cpw.mods.fml.client.FMLClientHandler
+import cpw.mods.fml.common.registry.LanguageRegistry
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.Client
+import net.bdew.lib.{Client, Misc}
 import net.minecraft.client.resources.{IReloadableResourceManager, IResourceManager, IResourceManagerReloadListener}
-import net.minecraft.util.StringTranslate
 
 object ResourceListener extends IResourceManagerReloadListener {
   def init() {
@@ -23,14 +25,15 @@ object ResourceListener extends IResourceManagerReloadListener {
     Client.minecraft.getResourceManager.asInstanceOf[IReloadableResourceManager].registerReloadListener(this)
   }
 
-  def loadLangFile(fileName: String) {
+  def loadLangFile(lang: String, fileName: String) {
     val langFile = new File(Gendustry.configDir, fileName)
     Gendustry.logInfo("Loading language file %s", langFile.getCanonicalPath)
-    val stream = new FileInputStream(langFile)
-    try {
-      StringTranslate.inject(stream)
-    } finally {
-      stream.close()
+    Misc.withAutoClose(new FileInputStream(langFile)) { in =>
+      val langPack = new Properties()
+      langPack.load(in)
+      val map = new util.HashMap[String, String]()
+      map.putAll(langPack.asInstanceOf[util.Map[String, String]])
+      LanguageRegistry.instance().injectLanguage(lang.intern(), map)
     }
   }
 
@@ -38,8 +41,9 @@ object ResourceListener extends IResourceManagerReloadListener {
     val newLang = FMLClientHandler.instance().getCurrentLanguage
     Gendustry.logInfo("Resource manager reload, new language: %s", newLang)
     val configFiles = Gendustry.configDir.list().sorted
-    configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile)
+    configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile(newLang, _))
     if (newLang != "en_US")
-      configFiles.filter(_.endsWith("." + newLang + ".lang")).foreach(loadLangFile)
+      configFiles.filter(_.endsWith("." + newLang + ".lang")).foreach(loadLangFile(newLang, _))
+    Client.minecraft.getLanguageManager.onResourceManagerReload(rm)
   }
 }
