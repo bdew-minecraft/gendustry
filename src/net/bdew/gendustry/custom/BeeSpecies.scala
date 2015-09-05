@@ -75,7 +75,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
   def prepareLootList(name: String): Map[ItemStack, Float] =
     TuningLoader.loader.resolveLootList(cfg.getRaw(name, classOf[EntryLootList]))
-      .toMap.map(x => x._2 -> x._1.toFloat / 100F)
+      .map(x => x._2 -> x._1.toFloat / 100F).toMap
 
   Gendustry.logDebug("Resolving products list for bee '%s'...", ident)
   val products = prepareLootList("Products")
