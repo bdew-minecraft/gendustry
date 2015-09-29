@@ -25,7 +25,7 @@ class GuiMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extends Base
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(32, 19, 16, 58), Textures.tankOverlay, te.tank))
     widgets.add(new WidgetSelector(new Point(7, 84), te.selectedMutation, -1))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutatron.adv.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.mutatron_adv.name"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("gendustry.label.select"), 8, 89, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inIndividual1).setBackgroundIcon(HintIcons.queenOrSapling)
