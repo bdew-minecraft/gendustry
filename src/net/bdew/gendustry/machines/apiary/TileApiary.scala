@@ -116,6 +116,8 @@ with IBeeHousingInventory {
     }
   )
 
+  sendClientUpdate.listen(tag => logic.syncToClient())
+
   serverTick.listen(() => {
 
     movePrincess = false
@@ -261,7 +263,7 @@ with IBeeHousingInventory {
   override def getBeeInventory: IBeeHousingInventory = this
   override def getBeeListeners = Collections.singletonList(this)
   override def getBeeModifiers = Collections.singletonList(this)
-  override def getBeekeepingLogic: IBeekeepingLogic = beeRoot.createBeekeepingLogic(this)
+  override def getBeekeepingLogic: IBeekeepingLogic = logic
 
   override def getBlockLightValue: Int = worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord)
   override def canBlockSeeTheSky: Boolean = worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)
