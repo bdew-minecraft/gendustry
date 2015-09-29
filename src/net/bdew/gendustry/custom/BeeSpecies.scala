@@ -15,7 +15,7 @@ import com.mojang.authlib.GameProfile
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.apiculture._
 import forestry.api.core.{EnumHumidity, EnumTemperature}
-import forestry.api.genetics.{AlleleManager, IAllele, IIndividual}
+import forestry.api.genetics.{AlleleManager, IAlleleSpecies, IIndividual}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.forestry.ForestryItems
@@ -94,19 +94,19 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
   // ==== RESEARCH SYSTEM
 
-  override lazy val getComplexity: Int = 1 + getMutationPathLength(this, mutable.Set.empty[IAllele])
+  override lazy val getComplexity: Int = 1 + getMutationPathLength(this, mutable.Set.empty)
 
-  private def getMutationPathLength(species: IAllele, excludeSpecies: mutable.Set[IAllele]): Int = {
+  private def getMutationPathLength(species: IAlleleSpecies, excludeSpecies: mutable.Set[IAlleleSpecies]): Int = {
     var highest = 0
     excludeSpecies += species
     import scala.collection.JavaConversions._
     getRoot.getPaths(species, getRoot.getKaryotypeKey) foreach { mutation =>
-      if (!excludeSpecies.contains(mutation.getAllele0)) {
-        val otherAdvance = getMutationPathLength(mutation.getAllele0, excludeSpecies)
+      if (!excludeSpecies.contains(mutation.getSpecies0)) {
+        val otherAdvance = getMutationPathLength(mutation.getSpecies0, excludeSpecies)
         if (otherAdvance > highest) highest = otherAdvance
       }
-      if (!excludeSpecies.contains(mutation.getAllele1)) {
-        val otherAdvance = getMutationPathLength(mutation.getAllele1, excludeSpecies)
+      if (!excludeSpecies.contains(mutation.getSpecies1)) {
+        val otherAdvance = getMutationPathLength(mutation.getSpecies1, excludeSpecies)
         if (otherAdvance > highest) {
           highest = otherAdvance
         }

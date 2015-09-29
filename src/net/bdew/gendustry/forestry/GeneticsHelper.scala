@@ -47,8 +47,8 @@ object GeneticsHelper {
   }
 
   def checkMutation(m: IMutation, s1: IAlleleSpecies, s2: IAlleleSpecies): Boolean = {
-    if (m.getAllele0 == s1 && m.getAllele1 == s2) return true
-    if (m.getAllele0 == s2 && m.getAllele1 == s1) return true
+    if (m.getSpecies0 == s1 && m.getSpecies1 == s2) return true
+    if (m.getSpecies0 == s2 && m.getSpecies1 == s1) return true
     return false
   }
 
@@ -246,7 +246,7 @@ object GeneticsHelper {
       Option(m.getSpecialConditions) map (_.toList) getOrElse List.empty
     } catch {
       case t: Throwable =>
-        Gendustry.logWarnException("Error getting conditions of mutation %s + %s => %s", t, m.getAllele0.getUID, m.getAllele1.getUID, getMutationSpecies(m).getUID)
+        Gendustry.logWarnException("Error getting conditions of mutation %s + %s => %s", t, m.getSpecies0.getUID, m.getSpecies1.getUID, getMutationSpecies(m).getUID)
         List.empty
     }
 }

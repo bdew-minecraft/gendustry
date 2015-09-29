@@ -11,7 +11,7 @@ package net.bdew.gendustry.custom
 
 import forestry.api.apiculture._
 import forestry.api.core.{EnumHumidity, EnumTemperature}
-import forestry.api.genetics.{AlleleManager, IAllele}
+import forestry.api.genetics.{AlleleManager, IAllele, IAlleleSpecies}
 import net.bdew.gendustry.forestry.BeeModifiers
 import net.bdew.lib.Misc
 import net.minecraft.block.Block
@@ -84,6 +84,9 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
   }
 
   override def getBaseChance = chance
+
+  override def getSpecies0: IAlleleSpecies = parent1
+  override def getSpecies1: IAlleleSpecies = parent2
 
   override val getTemplate = getRoot.getTemplate(result.getUID)
   override def getAllele1 = parent1
