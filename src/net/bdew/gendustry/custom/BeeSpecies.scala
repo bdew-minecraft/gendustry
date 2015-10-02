@@ -101,12 +101,12 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     excludeSpecies += species
     import scala.collection.JavaConversions._
     getRoot.getPaths(species, getRoot.getKaryotypeKey) foreach { mutation =>
-      if (!excludeSpecies.contains(mutation.getSpecies0)) {
-        val otherAdvance = getMutationPathLength(mutation.getSpecies0, excludeSpecies)
+      if (!excludeSpecies.contains(mutation.getAllele0)) {
+        val otherAdvance = getMutationPathLength(mutation.getAllele0, excludeSpecies)
         if (otherAdvance > highest) highest = otherAdvance
       }
-      if (!excludeSpecies.contains(mutation.getSpecies1)) {
-        val otherAdvance = getMutationPathLength(mutation.getSpecies1, excludeSpecies)
+      if (!excludeSpecies.contains(mutation.getAllele1)) {
+        val otherAdvance = getMutationPathLength(mutation.getAllele1, excludeSpecies)
         if (otherAdvance > highest) {
           highest = otherAdvance
         }

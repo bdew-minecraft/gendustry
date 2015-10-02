@@ -22,10 +22,10 @@ object GeneticsCache {
         x.getRoot.getUID.compareTo(y.getRoot.getUID)
       else if (x.getTemplate.apply(0).getUID != y.getTemplate.apply(0).getUID)
         x.getTemplate.apply(0).getUID.compareTo(y.getTemplate.apply(0).getUID)
-      else if (x.getSpecies0 != y.getSpecies0)
-        x.getSpecies0.getUID.compareTo(y.getSpecies0.getUID)
+      else if (x.getAllele0 != y.getAllele0)
+        x.getAllele0.getUID.compareTo(y.getAllele0.getUID)
       else
-        x.getSpecies1.getUID.compareTo(y.getSpecies1.getUID)
+        x.getAllele1.getUID.compareTo(y.getAllele1.getUID)
   }
 
   implicit object SpeciesOrdering extends Ordering[IAlleleSpecies] {
@@ -58,8 +58,8 @@ object GeneticsCache {
 
     for ((_, root) <- AlleleManager.alleleRegistry.getSpeciesRoot; mutation <- root.getMutations(false)) {
       speciesResultMutations(mutation.getTemplate.apply(0).asInstanceOf[IAlleleSpecies]) += mutation
-      speciesUsedMutations(mutation.getSpecies0) += mutation
-      speciesUsedMutations(mutation.getSpecies1) += mutation
+      speciesUsedMutations(mutation.getAllele0) += mutation
+      speciesUsedMutations(mutation.getAllele1) += mutation
     }
 
     Gendustry.logDebug("Mutations with multiple results from a single combination:")

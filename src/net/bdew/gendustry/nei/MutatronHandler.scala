@@ -50,8 +50,8 @@ class MutatronHandler extends BaseRecipeHandler(5, 13) {
   def getRecipeStack(slot: Int, mutation: IMutation): ItemStack = {
     val root = mutation.getRoot
     val individual = slot match {
-      case 0 => root.templateAsIndividual(root.getTemplate(mutation.getSpecies0.getUID))
-      case 1 => root.templateAsIndividual(root.getTemplate(mutation.getSpecies1.getUID))
+      case 0 => root.templateAsIndividual(root.getTemplate(mutation.getAllele0.getUID))
+      case 1 => root.templateAsIndividual(root.getTemplate(mutation.getAllele1.getUID))
       case 2 => root.templateAsIndividual(mutation.getTemplate)
     }
     individual.analyze()
