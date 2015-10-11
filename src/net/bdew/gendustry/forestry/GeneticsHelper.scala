@@ -80,7 +80,8 @@ object GeneticsHelper {
         case (EnumMutationSetting.DISABLED, _) => false
         case (EnumMutationSetting.REQUIREMENTS, beeMutation: IBeeMutation) =>
           //Have to use the deprecated version because of not-updated other mods
-          beeMutation.getChance(beeHousing, fromSpecies, toSpecies, fromIndividual.getGenome, toIndividual.getGenome) > 0
+          beeMutation.getChance(beeHousing, fromSpecies.asInstanceOf[IAlleleBeeSpecies], toSpecies.asInstanceOf[IAlleleBeeSpecies],
+            fromIndividual.getGenome.asInstanceOf[IBeeGenome], toIndividual.getGenome.asInstanceOf[IBeeGenome]) > 0
         case _ => true
       }
     }

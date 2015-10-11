@@ -58,8 +58,8 @@ object GeneticsCache {
 
     for ((_, root) <- AlleleManager.alleleRegistry.getSpeciesRoot; mutation <- root.getMutations(false)) {
       speciesResultMutations(mutation.getTemplate.apply(0).asInstanceOf[IAlleleSpecies]) += mutation
-      speciesUsedMutations(mutation.getAllele0.asInstanceOf[IAlleleSpecies]) += mutation
-      speciesUsedMutations(mutation.getAllele1.asInstanceOf[IAlleleSpecies]) += mutation
+      speciesUsedMutations(mutation.getAllele0) += mutation
+      speciesUsedMutations(mutation.getAllele1) += mutation
     }
 
     Gendustry.logDebug("Mutations with multiple results from a single combination:")

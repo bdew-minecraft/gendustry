@@ -12,7 +12,7 @@ package net.bdew.gendustry.compat.triggers
 import java.util
 
 import buildcraft.api.statements._
-import net.bdew.gendustry.machines.apiary.TileApiary
+import forestry.api.core.IErrorLogicSource
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.TileBaseProcessor
 import net.minecraft.tileentity.TileEntity
@@ -25,8 +25,8 @@ object TriggerProvider extends ITriggerProvider {
     import scala.collection.JavaConversions._
     val triggers = new util.LinkedList[ITriggerExternal]()
 
-    if (tile.isInstanceOf[TileApiary])
-      triggers.addAll(ForestryErrorTriggers.apiaryTriggers)
+    if (tile.isInstanceOf[IErrorLogicSource])
+      triggers.addAll(ForestryErrorTriggers.triggers)
 
     if (tile.isInstanceOf[TilePowered])
       triggers.addAll(PowerTriggers.triggers)

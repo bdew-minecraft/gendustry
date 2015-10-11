@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.machines.apiary
 
+import net.bdew.gendustry.gui.Textures
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect, Texture}
 import net.bdew.lib.{Client, Misc}
@@ -22,16 +23,15 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
   def getDisplayedError = {
     import scala.collection.JavaConversions._
     val errors = apiary.getErrorStates
-    if (errors.isEmpty) {
-      ForestryErrorStates.ok
-    } else {
-      val pos = ((Client.world.getTotalWorldTime / 40) % errors.size()).toInt
-      errors.toList.sortBy(_.getID).apply(pos)
-    }
+    val pos = ((Client.world.getTotalWorldTime / 40) % errors.size()).toInt
+    errors.toList.sortBy(_.getID).apply(pos)
   }
 
   override def draw(mouse: Point) {
-    parent.drawTexture(rect, Texture(Texture.ITEMS, getDisplayedError.getIcon))
+    if (apiary.errorConditions.isOk)
+      parent.drawTexture(rect, Textures.errors.ok)
+    else
+      parent.drawTexture(rect, Texture(Texture.ITEMS, getDisplayedError.getIcon))
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {

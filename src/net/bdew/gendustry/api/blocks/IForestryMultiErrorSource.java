@@ -13,6 +13,10 @@ import forestry.api.core.IErrorState;
 
 import java.util.Set;
 
+/**
+ * @deprecated use IErrorLogicSource from forestry API instead
+ */
+@Deprecated
 public interface IForestryMultiErrorSource {
     Set<IErrorState> getErrorStates();
 }

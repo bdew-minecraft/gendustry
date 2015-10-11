@@ -1,3 +1,6 @@
+### 2.3.0
+ * Deprecated IForestryMultiErrorSource - Use IErrorLogicSource from forestry API instead
+
 ### 2.2.0
  * Added IConfigLoader - allows other mods to submit configs to be loaded Gendustry
 
@@ -11,4 +14,3 @@
  * Added **registries.IMutatronOverrides** and **EnumMutationSetting** - allows overriding what mutations are available
  
 Older changes were not recorded, you can see the commits [here](https://github.com/bdew/gendustry/commits/mc1710/src/net/bdew/gendustry/api).
-

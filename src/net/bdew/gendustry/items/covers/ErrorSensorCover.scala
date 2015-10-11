@@ -10,9 +10,8 @@
 package net.bdew.gendustry.items.covers
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import forestry.api.core.{ErrorStateRegistry, IErrorState}
+import forestry.api.core.{ForestryAPI, IErrorLogicSource, IErrorState}
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.api.blocks.IForestryMultiErrorSource
 import net.bdew.lib.Misc
 import net.bdew.lib.covers.{ItemCover, TileCoverable}
 import net.bdew.lib.helpers.ChatHelper._
@@ -27,28 +26,30 @@ import net.minecraftforge.common.util.ForgeDirection
 trait ErrorSensor {
   def id: String
   def getUnLocalizedName: String
-  def isActive(te: IForestryMultiErrorSource): Boolean
+  def isActive(te: IErrorLogicSource): Boolean
 }
 
 object ErrorSensorNoError extends ErrorSensor {
   override def id: String = "noError"
-  override def isActive(te: IForestryMultiErrorSource): Boolean = te.getErrorStates.isEmpty
+  override def isActive(te: IErrorLogicSource): Boolean = !te.getErrorLogic.hasErrors
   override def getUnLocalizedName: String = "gendustry.cover.error.none"
 }
 
 object ErrorSensorAnyError extends ErrorSensor {
   override def id: String = "anyError"
-  override def isActive(te: IForestryMultiErrorSource): Boolean = !te.getErrorStates.isEmpty
+  override def isActive(te: IErrorLogicSource): Boolean = te.getErrorLogic.hasErrors
   override def getUnLocalizedName: String = "gendustry.cover.error.any"
 }
 
 case class ErrorSensorForestry(state: IErrorState) extends ErrorSensor {
   override def id: String = state.getUniqueName
-  override def isActive(te: IForestryMultiErrorSource): Boolean = te.getErrorStates.contains(state)
+  override def isActive(te: IErrorLogicSource): Boolean = te.getErrorLogic.contains(state)
   override def getUnLocalizedName: String = "for." + state.getDescription
 }
 
 object ErrorSensors {
+  val errorStateRegistry = ForestryAPI.errorStateRegistry
+
   val sensors = List(ErrorSensorAnyError, ErrorSensorNoError) ++ (List(
     "Forestry:invalidBiome",
     "Forestry:isRaining",
@@ -62,7 +63,7 @@ object ErrorSensors {
     "Forestry:noSky",
     "Forestry:noSpace",
     "Forestry:noPower"
-  ) map (name => ErrorSensorForestry(ErrorStateRegistry.getErrorState(name))))
+  ) map (name => ErrorSensorForestry(errorStateRegistry.getErrorState(name))))
 
   val idMap = sensors.map(x => x.id -> x).toMap
 }
@@ -75,7 +76,7 @@ object ErrorSensorCover extends SimpleItem("ErrorSensorCover") with ItemCover {
 
   override def getSpriteNumber = 0
 
-  override def isValidTile(te: TileCoverable, stack: ItemStack) = te.isInstanceOf[IForestryMultiErrorSource]
+  override def isValidTile(te: TileCoverable, stack: ItemStack) = te.isInstanceOf[IErrorLogicSource]
 
   def getErrorSensor(stack: ItemStack): Option[ErrorSensor] = {
     if (stack.hasTagCompound) {
@@ -98,7 +99,7 @@ object ErrorSensorCover extends SimpleItem("ErrorSensorCover") with ItemCover {
 
   override def isEmittingSignal(te: TileCoverable, side: ForgeDirection, cover: ItemStack): Boolean = {
     for {
-      tile <- Misc.asInstanceOpt(te, classOf[IForestryMultiErrorSource])
+      tile <- Misc.asInstanceOpt(te, classOf[IErrorLogicSource])
       sensor <- getErrorSensor(cover)
     } {
       if (sensor.isActive(tile)) return true

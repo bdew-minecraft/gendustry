@@ -15,7 +15,7 @@ import com.mojang.authlib.GameProfile
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.apiculture._
 import forestry.api.core.{EnumHumidity, EnumTemperature}
-import forestry.api.genetics.{AlleleManager, IAllele, IIndividual}
+import forestry.api.genetics.{AlleleManager, IAlleleSpecies, IIndividual}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.forestry.ForestryItems
@@ -85,11 +85,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   val specialty = prepareLootList("Specialty")
   specialty.foreach(x => Gendustry.logDebug("  [%.1f%%] %s", x._2, x._1))
 
-  // Old product/specialty maps - will be removed at some point. Manual boxing because java maps can't hold primitive values.
-  override val getProducts = products.map(x => x._1 -> Int.box((x._2 * 100).round)).asJava
-  override val getSpecialty = specialty.map(x => x._1 -> Int.box((x._2 * 100).round)).asJava
-
-  // New maps with floats. Ditto about boxing.
+  // Manual boxing because java maps can't hold primitive values.
   override def getProductChances = products.map(x => x._1 -> Float.box(x._2)).asJava
   override def getSpecialtyChances = specialty.map(x => x._1 -> Float.box(x._2)).asJava
 
@@ -98,9 +94,9 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
   // ==== RESEARCH SYSTEM
 
-  override lazy val getComplexity: Int = 1 + getMutationPathLength(this, mutable.Set.empty[IAllele])
+  override lazy val getComplexity: Int = 1 + getMutationPathLength(this, mutable.Set.empty)
 
-  private def getMutationPathLength(species: IAllele, excludeSpecies: mutable.Set[IAllele]): Int = {
+  private def getMutationPathLength(species: IAlleleSpecies, excludeSpecies: mutable.Set[IAlleleSpecies]): Int = {
     var highest = 0
     excludeSpecies += species
     import scala.collection.JavaConversions._

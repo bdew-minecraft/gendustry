@@ -11,7 +11,8 @@ package net.bdew.gendustry.custom
 
 import forestry.api.apiculture._
 import forestry.api.core.{EnumHumidity, EnumTemperature}
-import forestry.api.genetics.{AlleleManager, IAllele, IGenome}
+import forestry.api.genetics.{AlleleManager, IAllele}
+import net.bdew.gendustry.forestry.BeeModifiers
 import net.bdew.lib.Misc
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
@@ -29,25 +30,23 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
 
   // === IBeeMutation ===
 
-  def getBlockUnderHousing(h: IBeeHousing) =
-    if (h.getYCoord > 0)
-      h.getWorld.getBlock(h.getXCoord, h.getYCoord - 1, h.getZCoord)
+  def getBlockUnderHousing(h: IBeeHousing) = {
+    val c = h.getCoordinates
+    if (c.posY > 0)
+      h.getWorld.getBlock(c.posX, c.posY - 1, c.posZ)
     else null
+  }
 
-  def getBlockMetaUnderHousing(h: IBeeHousing) =
-    if (h.getYCoord > 0)
-      h.getWorld.getBlockMetadata(h.getXCoord, h.getYCoord - 1, h.getZCoord)
+  def getBlockMetaUnderHousing(h: IBeeHousing) = {
+    val c = h.getCoordinates
+    if (c.posY > 0)
+      h.getWorld.getBlockMetadata(c.posX, c.posY - 1, c.posZ)
     else -1
+  }
 
   def testReq[T](req: Option[T], v: T) = req.isEmpty || req.get == v
 
-  override def getChance(housing: IBeeHousing, allele0: IAllele, allele1: IAllele, genome0: IGenome, genome1: IGenome) =
-    getChanceImpl(housing, allele0.asInstanceOf[IAlleleBeeSpecies], allele1.asInstanceOf[IAlleleBeeSpecies], genome0.asInstanceOf[IBeeGenome], genome1.asInstanceOf[IBeeGenome])
-
   override def getChance(housing: IBeeHousing, allele0: IAlleleBeeSpecies, allele1: IAlleleBeeSpecies, genome0: IBeeGenome, genome1: IBeeGenome) =
-    getChanceImpl(housing, allele0, allele1, genome0, genome1)
-
-  def getChanceImpl(housing: IBeeHousing, allele0: IAlleleBeeSpecies, allele1: IAlleleBeeSpecies, genome0: IBeeGenome, genome1: IBeeGenome): Float =
     if (!((allele0 == parent1 && allele1 == parent2) || (allele0 == parent2 && allele1 == parent1))) 0
     else if (!testReq(reqTemperature, housing.getTemperature)) 0
     else if (!testReq(reqHumidity, housing.getHumidity)) 0
@@ -57,8 +56,8 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
     else {
       val bkm = getRoot.getBeekeepingMode(housing.getWorld)
       var processedChance = chance
-      processedChance *= housing.getMutationModifier(genome0, genome1, processedChance)
-      processedChance *= bkm.getMutationModifier(genome0, genome1, processedChance)
+      processedChance *= BeeModifiers.from(housing).getMutationModifier(genome0, genome1, processedChance)
+      processedChance *= bkm.getBeeModifier.getMutationModifier(genome0, genome1, processedChance)
       processedChance
     }
 

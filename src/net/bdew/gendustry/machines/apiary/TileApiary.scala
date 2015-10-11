@@ -10,8 +10,9 @@
 package net.bdew.gendustry.machines.apiary
 
 import java.util
-import java.util.Locale
+import java.util.{Collections, Locale}
 
+import com.mojang.authlib.GameProfile
 import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
 import forestry.api.core._
@@ -35,6 +36,7 @@ import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -46,7 +48,10 @@ with TileKeepData
 with TilePowered
 with TileRSControllable
 with TileCoverable
-with IIndustrialApiary {
+with IIndustrialApiary
+with IBeeModifier
+with IBeeListener
+with IBeeHousingInventory {
 
   object slots {
     val queen = 0
@@ -66,7 +71,6 @@ with IIndustrialApiary {
   val errorConditions = DataSlotErrorStates("errors", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE, UpdateKind.WORLD)
   val owner = DataSlotGameProfile("owner", this).setUpdate(UpdateKind.SAVE)
   val guiProgress = DataSlotFloat("progress", this)
-  val guiBreeding = DataSlotFloat("breeding", this)
 
   val logic = beeRoot.createBeekeepingLogic(this)
 
@@ -107,10 +111,12 @@ with IIndustrialApiary {
   }
 
   clientTick.listen(() =>
-    if (beeRoot.isMated(queen) && errorConditions.isOk && Config.renderBeeEffects) {
-      beeRoot.getMember(queen).doFX(logic.getEffectData, this)
+    if (beeRoot.isMated(queen) && errorConditions.isOk && Config.renderBeeEffects && logic.canDoBeeFX) {
+      logic.doBeeFX()
     }
   )
+
+  sendClientUpdate.listen(tag => logic.syncToClient())
 
   serverTick.listen(() => {
 
@@ -119,27 +125,27 @@ with IIndustrialApiary {
     errorConditions.withSuspendedUpdates {
       val canWork = logic.canWork
       val powered = getWorldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)
-      setErrorCondition((rsmode :== RSMode.RS_OFF) && powered, ForestryErrorStates.disabledRedstone)
-      setErrorCondition((rsmode :== RSMode.RS_ON) && !powered, ForestryErrorStates.noRedstone)
-      setErrorCondition(rsmode :== RSMode.NEVER, GendustryErrorStates.Disabled)
-      setErrorCondition(power.stored < cfg.baseMjPerTick * mods.energy, ForestryErrorStates.noPower)
+      errorConditions.setCondition((rsmode :== RSMode.RS_OFF) && powered, ForestryErrorStates.disabledRedstone)
+      errorConditions.setCondition((rsmode :== RSMode.RS_ON) && !powered, ForestryErrorStates.noRedstone)
+      errorConditions.setCondition(rsmode :== RSMode.NEVER, GendustryErrorStates.Disabled)
+      errorConditions.setCondition(power.stored < cfg.baseMjPerTick * mods.energy, ForestryErrorStates.noPower)
       if (errorConditions.isOk && canWork) {
         logic.doWork()
-        if (errorConditions.isOk && (logic.getQueen != null || logic.getBreedingTime > 0)) {
-          power.extract(cfg.baseMjPerTick * mods.energy, false)
-        }
+        power.extract(cfg.baseMjPerTick * mods.energy, false)
       }
     }
 
     if (movePrincess && getStackInSlot(slots.queen) == null)
       doMovePrincess()
 
-    if (logic.getQueen != null)
-      guiProgress := 1 - (logic.getQueen.getHealth.toFloat / logic.getQueen.getMaxHealth)
-    else
-      guiProgress := -1
-
-    guiBreeding := logic.getBreedingTime.toFloat / logic.getTotalBreedingTime
+    if (getQueen == null) {
+      guiProgress := 0
+    } else {
+      if (beeRoot.getType(getQueen) == EnumBeeType.PRINCESS)
+        guiProgress := logic.getBeeProgressPercent / 100F
+      else
+        guiProgress := 1 - (logic.getBeeProgressPercent / 100F)
+    }
   })
 
   errorConditions.onChange.listen(() => {
@@ -197,11 +203,15 @@ with IIndustrialApiary {
   // Misc
   def getBiome = worldObj.getBiomeGenForCoordsBody(xCoord, zCoord)
   override def getSizeInventory = 15
+  def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
+
+  // SidedInventory
 
   override def canInsertItem(slot: Int, stack: ItemStack, side: Int) = slots.bees.contains(slot) && isItemValidForSlot(slot, stack)
   override def canExtractItem(slot: Int, stack: ItemStack, side: Int) = slots.output.contains(slot)
 
-  //IIndustrialApiary
+  // IIndustrialApiary
+
   override def getUpgrades = {
     import scala.collection.JavaConversions._
     slots.upgrades map inv filterNot (_ == null)
@@ -209,17 +219,23 @@ with IIndustrialApiary {
 
   override def getModifiers = mods
 
+  // IErrorLogicSource
+  override def getErrorLogic: IErrorLogic = errorConditions
+
+  // IForestryMultiErrorSource
+  override def getErrorStates: util.Set[IErrorState] = {
+    import scala.collection.JavaConversions._
+    errorConditions.value
+  }
+
   // IBeeListener
-  override def onPostQueenDeath(queen: IBee) {
+  override def onQueenDeath() {
     if (mods.isAutomated) movePrincess = true
   }
 
-  override def onQueenDeath(queen: IBee) {}
   override def wearOutEquipment(amount: Int) {}
-  override def onQueenChange(stack: ItemStack) {}
-  override def onEggLaid(queen: IBee) = false
-  override def onPollenRetrieved(queen: IBee, pollen: IIndividual, isHandled: Boolean): Boolean = {
-    if (isHandled) return true
+
+  override def onPollenRetrieved(pollen: IIndividual): Boolean = {
     if (!mods.isCollectingPollen) return false
     val spRoot = pollen.getGenome.getSpeciesRoot
     val stack = spRoot.getMemberStack(pollen, EnumGermlingType.POLLEN.ordinal())
@@ -239,49 +255,34 @@ with IIndustrialApiary {
   override def isSunlightSimulated = mods.isSunlightSimulated
   override def isHellish = getModifiedBiome == BiomeGenBase.hell
 
-  // IBeeHousing
-  override def setQueen(stack: ItemStack) = setInventorySlotContents(0, stack)
-  override def setDrone(stack: ItemStack) = setInventorySlotContents(1, stack)
-  override def getQueen = getStackInSlot(slots.queen)
-  override def getDrone = getStackInSlot(slots.drone)
-  override def canBreed = true
-
-  def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
-
   // IHousing
-
   override def getWorld = worldObj
+  override def getCoordinates = new ChunkCoordinates(xCoord, yCoord, zCoord)
 
-  @deprecated("use getErrorStates instead", "forestry 3.6.x")
-  override def getErrorState = errorConditions.headOption.getOrElse(ForestryErrorStates.ok)
+  // IBeeHousing
+  override def getBeeInventory: IBeeHousingInventory = this
+  override def getBeeListeners = Collections.singletonList(this)
+  override def getBeeModifiers = Collections.singletonList(this)
+  override def getBeekeepingLogic: IBeekeepingLogic = logic
 
-  @deprecated("use setErrorCondition instead", "forestry 3.6.x")
-  override def setErrorState(state: IErrorState) =
-    if (state == ForestryErrorStates.ok)
-      errorConditions.clearAll()
-    else
-      errorConditions.set(state)
+  override def getBlockLightValue: Int = worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord)
+  override def canBlockSeeTheSky: Boolean = worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)
+  override def getOwner: GameProfile = owner
 
-  override def getErrorStates: util.Set[IErrorState] = {
-    import scala.collection.JavaConversions._
-    errorConditions.value
-  }
-
-  override def setErrorCondition(condition: Boolean, errorState: IErrorState): Boolean = {
-    errorConditions.toggle(errorState, condition)
-    condition
-  }
-
-  override def getOwnerName = owner
-  override def getXCoord = xCoord
-  override def getYCoord = yCoord
-  override def getZCoord = zCoord
   override def getTemperature =
     if (BiomeHelper.isBiomeHellish(getModifiedBiome))
       EnumTemperature.HELLISH
     else
       EnumTemperature.getFromValue(getModifiedBiome.temperature + mods.temperature)
+
   override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.rainfall + mods.humidity)
+
+  // IBeeHousingInventory
+  override def setQueen(stack: ItemStack) = setInventorySlotContents(0, stack)
+  override def setDrone(stack: ItemStack) = setInventorySlotContents(1, stack)
+  override def getQueen = getStackInSlot(slots.queen)
+  override def getDrone = getStackInSlot(slots.drone)
+
   override def addProduct(product: ItemStack, all: Boolean): Boolean = {
     if (product == null || product.getItem == null) {
       Gendustry.logError("Industrial Apiary at %d,%d,%d received an invalid bee product, one of your bee-adding mods is borked.", xCoord, yCoord, zCoord)
@@ -296,12 +297,6 @@ with IIndustrialApiary {
       p = ItemUtils.addStackToSlots(p, this, slots.bees, false)
     p = ItemUtils.addStackToSlots(p, this, slots.output, false)
     return p == null
-  }
-
-  override def validate() {
-    super.validate()
-    if (worldObj != null && !worldObj.isRemote)
-      Sanity.check(this)
   }
 
   override def isValidCover(side: ForgeDirection, cover: ItemStack) = true

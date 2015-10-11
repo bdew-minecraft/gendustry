@@ -24,6 +24,7 @@ object Textures {
   object errors {
     val noPower = Texture(texture, 32, 0, 16, 16)
     val disabled = Texture(texture, 48, 0, 16, 16)
+    val ok = Texture(texture, 65, 35, 14, 14)
   }
 
   object button16 {
