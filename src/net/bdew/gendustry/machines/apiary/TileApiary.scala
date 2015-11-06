@@ -40,6 +40,8 @@ import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
 
+import scala.util.Random
+
 class TileApiary extends TileExtended
 with TileDataSlots
 with PersistentInventoryTile
@@ -110,11 +112,14 @@ with IBeeHousingInventory {
     }
   }
 
-  clientTick.listen(() =>
-    if (beeRoot.isMated(queen) && errorConditions.isOk && Config.renderBeeEffects && logic.canDoBeeFX) {
+  var tickCount = Random.nextInt(256)
+
+  clientTick.listen(() => {
+    tickCount += 1
+    if (beeRoot.isMated(queen) && errorConditions.isOk && Config.renderBeeEffects && logic.canDoBeeFX && tickCount % Config.beeEffectFrequency == 0) {
       logic.doBeeFX()
     }
-  )
+  })
 
   sendClientUpdate.listen(tag => logic.syncToClient())
 

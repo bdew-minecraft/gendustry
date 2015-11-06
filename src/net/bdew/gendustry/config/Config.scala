@@ -32,6 +32,7 @@ object Config {
   var powerShowMultiplier = 1F
 
   var renderBeeEffects = false
+  var beeEffectFrequency = 2
 
   def load(cfg: File) {
     val c = new Configuration(cfg)
@@ -50,6 +51,9 @@ object Config {
       neiAddTransposerRecipes = c.get("NEI", "Add Transposer Recipes", true).getBoolean(false)
 
       renderBeeEffects = c.get("Rendering", "Render Bee Effects", true).getBoolean(false)
+      beeEffectFrequency = c.get("Rendering", "Bee Effects Frequency", 2, "Higher = less particles").getInt(2)
+
+      if (beeEffectFrequency <= 0) renderBeeEffects = false
 
       powerShowUnits = c.get("Display", "PowerShowUnits", "RF", "Units to use when displaying power. Valid values: MJ, EU, RF").getString
       if (powerShowUnits != "MJ") powerShowMultiplier = Tuning.getSection("Power").getFloat(powerShowUnits + "_MJ_Ratio")
