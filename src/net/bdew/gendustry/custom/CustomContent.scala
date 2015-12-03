@@ -50,8 +50,8 @@ object CustomContent {
         } else {
           val species = new BeeSpecies(cfg, uid)
           Gendustry.logDebug("Registering %s", species.getUID)
+          species.getBranch.addMemberSpecies(species)
           mySpecies +:= species
-          reg.registerAllele(species)
         }
     }).size
     Gendustry.logInfo("Registered %d bees", added)

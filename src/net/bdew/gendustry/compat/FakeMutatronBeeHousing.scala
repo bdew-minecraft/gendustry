@@ -21,7 +21,7 @@ import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.bdew.gendustry.api.blocks.IMutatron
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.ChunkCoordinates
+import net.minecraft.util.{ChunkCoordinates, Vec3}
 import net.minecraft.world.World
 
 class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousing with IBeeModifier with IBeeListener with IBeeHousingInventory with IErrorLogic {
@@ -73,4 +73,6 @@ class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousin
   override def getBiome = tile.getWorldObj.getBiomeGenForCoordsBody(tile.xCoord, tile.zCoord)
   override def getHumidity: EnumHumidity = EnumHumidity.getFromValue(getBiome.rainfall)
   override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.temperature)
+
+  override def getBeeFXCoordinates: Vec3 = Vec3.createVectorHelper(tile.xCoord + 0.5, tile.yCoord + 0.5, tile.zCoord + 0.5)
 }

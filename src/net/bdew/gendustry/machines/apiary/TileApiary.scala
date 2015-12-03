@@ -36,7 +36,7 @@ import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.ChunkCoordinates
+import net.minecraft.util.{ChunkCoordinates, Vec3}
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -269,6 +269,7 @@ with IBeeHousingInventory {
   override def getBeeListeners = Collections.singletonList(this)
   override def getBeeModifiers = Collections.singletonList(this)
   override def getBeekeepingLogic: IBeekeepingLogic = logic
+  override def getBeeFXCoordinates: Vec3 = Vec3.createVectorHelper(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5)
 
   override def getBlockLightValue: Int = worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord)
   override def canBlockSeeTheSky: Boolean = worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)
