@@ -94,6 +94,8 @@ dependencies {
     }
 
     compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
+
+    compile "net.bdew.thirdparty:mekanism:${config.mekanism.version}-mc${config.minecraft.version}:api"
 }
 
 
