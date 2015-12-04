@@ -11,7 +11,7 @@ package net.bdew.gendustry.custom
 
 import java.util.Locale
 
-import forestry.api.apiculture.IAlleleBeeSpecies
+import forestry.api.apiculture.{EnumBeeChromosome, IAlleleBeeSpecies}
 import forestry.api.core.{EnumHumidity, EnumTemperature}
 import forestry.api.genetics.AlleleManager
 import forestry.api.genetics.IClassification.EnumClassLevel
@@ -50,7 +50,7 @@ object CustomContent {
         } else {
           val species = new BeeSpecies(cfg, uid)
           Gendustry.logDebug("Registering %s", species.getUID)
-          species.getBranch.addMemberSpecies(species)
+          reg.registerAllele(species, EnumBeeChromosome.SPECIES)
           mySpecies +:= species
         }
     }).size
