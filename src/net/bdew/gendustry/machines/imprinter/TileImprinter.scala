@@ -17,9 +17,9 @@ import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
+import net.bdew.lib.nbt.NBT
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.common.util.ForgeDirection
 
 import scala.util.Random
@@ -79,9 +79,10 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
       val newStack = getStackInSlot(slots.inIndividual).copy()
       newStack.stackSize = 1
 
-      val newTag = new NBTTagCompound()
-      root.templateAsGenome(primary, secondary).writeToNBT(newTag)
-      newStack.getTagCompound.setTag("Genome", newTag)
+      newStack.getTagCompound.setTag("Genome", NBT.from(root.templateAsGenome(primary, secondary).writeToNBT))
+
+      if (individual.isAnalyzed || GeneTemplate.isComplete(getStackInSlot(slots.inTemplate)))
+        newStack.getTagCompound.setBoolean("IsAnalyzed", true)
 
       doStart(newStack)
 
