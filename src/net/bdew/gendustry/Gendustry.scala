@@ -100,7 +100,6 @@ object Gendustry {
     }
 
     Upgrades.init()
-    TuningLoader.loadDelayed()
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerBranches()
       CustomContent.registerSpecies()
@@ -112,6 +111,7 @@ object Gendustry {
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
+    TuningLoader.loadDelayed()
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerTemplates()
       CustomContent.registerMutations()
