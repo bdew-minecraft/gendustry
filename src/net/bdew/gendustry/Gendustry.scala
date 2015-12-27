@@ -24,7 +24,7 @@ import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
 import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
-import net.bdew.gendustry.custom.{CustomContent, CustomHives}
+import net.bdew.gendustry.custom.{CustomContent, CustomFlowerAlleles, CustomHives}
 import net.bdew.gendustry.forestry.GeneRecipe
 import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.machines.apiary.GendustryErrorStates
@@ -113,6 +113,7 @@ object Gendustry {
   def postInit(event: FMLPostInitializationEvent) {
     TuningLoader.loadDelayed()
     if (ForestryHelper.haveRoot("Bees")) {
+      CustomFlowerAlleles.registerAlleles()
       CustomContent.registerTemplates()
       CustomContent.registerMutations()
       CustomHives.registerHives()
