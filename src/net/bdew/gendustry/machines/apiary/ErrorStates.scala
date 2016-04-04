@@ -9,26 +9,26 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.{ForestryAPI, IErrorState}
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.Misc
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
+import net.bdew.lib.{Client, Misc}
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 case class GendustryErrorState(name: String, id: Short) extends IErrorState {
-  var icon: IIcon = null
+  var icon: TextureAtlasSprite = null
+
   override def getID = id
   override def getUniqueName = "gendustry:" + name
   override def getDescription = "gendustry.errorstate." + name + ".description"
   override def getHelp = "gendustry.errorstate." + name + ".help"
 
   @SideOnly(Side.CLIENT)
-  override def getIcon = icon
+  override def getSprite: TextureAtlasSprite = icon
 
   @SideOnly(Side.CLIENT)
-  override def registerIcons(register: IIconRegister) {
-    icon = register.registerIcon(Misc.iconName(Gendustry.modId, "error", name))
+  override def registerSprite(): Unit = {
+    icon = Client.textureMapBlocks.registerSprite(Misc.iconName(Gendustry.modId, "error", name))
   }
 }
 

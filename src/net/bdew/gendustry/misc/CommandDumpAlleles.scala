@@ -11,10 +11,10 @@ package net.bdew.gendustry.misc
 
 import java.io.{BufferedWriter, File, FileWriter}
 
-import _root_.forestry.api.genetics.AlleleManager
-import cpw.mods.fml.relauncher.FMLInjectionData
+import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
 import net.minecraft.command.{CommandBase, ICommandSender}
+import net.minecraftforge.fml.relauncher.FMLInjectionData
 
 class CommandDumpAlleles extends CommandBase {
   def getCommandName = "dumpalleles"
@@ -32,10 +32,10 @@ class CommandDumpAlleles extends CommandBase {
         "%s (%s)".format(id, allele.getName)
       }).toList.sorted.mkString("\n"))
       dumpWriter.write("\n\n")
-      CommandBase.func_152373_a(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
+      CommandBase.notifyOperators(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
     } catch {
       case e: Throwable =>
-        CommandBase.func_152373_a(sender, this, "Failed to save registry dump: " + e)
+        CommandBase.notifyOperators(sender, this, "Failed to save registry dump: " + e)
         Gendustry.logErrorException("Failed to save registry dump", e)
     } finally {
       dumpWriter.close()

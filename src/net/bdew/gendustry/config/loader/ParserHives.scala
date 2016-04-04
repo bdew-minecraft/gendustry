@@ -11,6 +11,7 @@ package net.bdew.gendustry.config.loader
 
 import net.bdew.lib.recipes.RecipeParser
 import net.bdew.lib.recipes.gencfg.GenericConfigParser
+import net.minecraft.util.ResourceLocation
 
 trait ParserHives extends RecipeParser with GenericConfigParser {
   private def blocks = spec ~ ("," ~> spec).* ^^ { case sp1 ~ spl => List(sp1) ++ spl }
@@ -38,9 +39,7 @@ trait ParserHives extends RecipeParser with GenericConfigParser {
       | "NextTo" ~> blockFilter ^^ HDLocationNextTo
       | "Near" ~> blockFilter ^^ HDLocationNear
       | "Replace" ~> blockFilter ^^ HDReplace
-      | "TopTexture" ~> unescapeStr ^^ HDTopTexture
-      | "BottomTexture" ~> unescapeStr ^^ HDBottomTexture
-      | "SideTexture" ~> unescapeStr ^^ HDSideTexture
+      | "Model" ~> unescapeStr ^^ { x => HDModelLocation(new ResourceLocation(x)) }
       | "Color" ~> signedNumber ^^ { x => HDColor(x.toInt) }
       | "LightLevel" ~> int ^^ HDLight
       | "Drops" ~> "{" ~> hiveDropEntry.+ <~ "}" ^^ HDDrops

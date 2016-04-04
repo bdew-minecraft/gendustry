@@ -50,13 +50,13 @@ object CustomHives {
         ref <- list
         stack <- TuningLoader.loader.getAllConcreteStacks(ref)
       } yield {
-          if (stack == null || stack.getItem == null || !stack.getItem.isInstanceOf[ItemBlock]) {
-            Gendustry.logWarn("Error resolving filter %s - stackref %s does not resolve to a block", f, ref)
-            None
-          } else {
-            Some(Block.getBlockFromItem(stack.getItem) -> (if (stack.getItemDamage == OreDictionary.WILDCARD_VALUE) -1 else stack.getItemDamage))
-          }
+        if (stack == null || stack.getItem == null || !stack.getItem.isInstanceOf[ItemBlock]) {
+          Gendustry.logWarn("Error resolving filter %s - stackref %s does not resolve to a block", f, ref)
+          None
+        } else {
+          Some(Block.getBlockFromItem(stack.getItem) -> (if (stack.getItemDamage == OreDictionary.WILDCARD_VALUE) -1 else stack.getItemDamage))
         }
+      }
       BlockFilterList(blocks.flatten.toSet)
   }
 
@@ -120,7 +120,7 @@ object CustomHives {
           val species = AlleleManager.alleleRegistry.getAllele(drop.uid)
 
           if (species.isInstanceOf[IAlleleBeeSpecies]) {
-            Some(HiveDrop(drop.chance, species.asInstanceOf[IAlleleBeeSpecies], drop.ignobleShare, stacks))
+            Some(HiveDrop(drop.chance / 100.0, species.asInstanceOf[IAlleleBeeSpecies], drop.ignobleShare, stacks))
           } else {
             Gendustry.logWarn("%s is not a valid bee species in hive definition %s", drop.uid, definition.id)
             None
@@ -152,22 +152,15 @@ object CustomHives {
 
         hives += definition.id -> hive
 
-        val sideTexture = getSingleStatement(definition, classOf[HDSideTexture]) map (_.loc) getOrElse
-          Misc.iconName(Gendustry.modId, "beehives", definition.id, "side")
-
-        val topTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse
-          Misc.iconName(Gendustry.modId, "beehives", definition.id, "top")
-
-        val bottomTexture = getSingleStatement(definition, classOf[HDTopTexture]) map (_.loc) getOrElse topTexture
+        val modelLocation = getSingleStatement(definition, classOf[HDModelLocation]) map (_.loc) getOrElse
+          Misc.iconName(Gendustry.modId, "beehives", definition.id)
 
         val lightLevel = getSingleStatement(definition, classOf[HDLight]) map (_.level) getOrElse 0
         val color = getSingleStatement(definition, classOf[HDColor]) map (_.color) getOrElse 0xFFFFFF
 
         val block = BeeHive(
           hiveId = definition.id,
-          sideIconName = sideTexture,
-          topIconName = topTexture,
-          bottomIconName = bottomTexture,
+          modelLocation = modelLocation,
           color = color,
           lightLevel = lightLevel,
           hive = hive

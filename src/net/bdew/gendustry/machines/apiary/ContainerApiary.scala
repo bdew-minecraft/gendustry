@@ -26,7 +26,7 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
   addSlotToContainer(new SlotValidating(te, 1, 39, 52))
 
   if (!te.getWorld.isRemote && (te.owner :== null)) {
-    Gendustry.logInfo("Owner information missing on apiary at (%d,%d,%d), assigning: %s".format(te.xCoord, te.yCoord, te.zCoord, player.getGameProfile))
+    Gendustry.logInfo("Owner information missing on apiary at (%s), assigning: %s".format(te.getPos, player.getGameProfile))
     te.owner := player.getGameProfile
   }
 

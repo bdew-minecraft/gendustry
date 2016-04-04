@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockLiquifier extends BaseMachineBlock("liquifier") with HasTE[TileLiquifier] with BlockCoverable[TileLiquifier] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockLiquifier extends BaseMachineBlock("liquifier") with HasTE[TileLiquifier] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileLiquifier]
   lazy val guiId = MachineLiquifier.guiId
 

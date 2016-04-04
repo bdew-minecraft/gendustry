@@ -9,15 +9,14 @@
 
 package net.bdew.gendustry.compat.itempush
 
-import buildcraft.api.core.EnumColor
 import buildcraft.api.transport.IPipeTile
 import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 object BCPipePushProxy extends ItemPushProxy {
-  override def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack) =
+  override def pushStack(from: TileEntity, dir: EnumFacing, stack: ItemStack) =
     (for (pipe <- Misc.getNeighbourTile(from, dir, classOf[IPipeTile])) yield {
       if (pipe.getPipeType == IPipeTile.PipeType.ITEM) {
         val used = pipe.injectItem(stack, true, dir.getOpposite, null)

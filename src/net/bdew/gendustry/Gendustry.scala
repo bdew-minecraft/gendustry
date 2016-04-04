@@ -11,12 +11,6 @@ package net.bdew.gendustry
 
 import java.io.File
 
-import cpw.mods.fml.common.Mod
-import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event._
-import cpw.mods.fml.common.network.NetworkRegistry
-import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.Side
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl, RegistriesApiImpl}
 import net.bdew.gendustry.compat.itempush.ItemPush
@@ -26,12 +20,17 @@ import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.custom.{CustomContent, CustomFlowerAlleles, CustomHives}
 import net.bdew.gendustry.forestry.GeneRecipe
-import net.bdew.gendustry.gui.HintIcons
 import net.bdew.gendustry.machines.apiary.GendustryErrorStates
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
 import net.bdew.lib.Misc
 import net.minecraft.command.CommandHandler
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.common.Mod.EventHandler
+import net.minecraftforge.fml.common.event._
+import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.registry.GameRegistry
+import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.oredict.RecipeSorter
 import org.apache.logging.log4j.Logger
 
@@ -81,7 +80,6 @@ object Gendustry {
 
     if (event.getSide == Side.CLIENT) {
       ResourceListener.init()
-      HintIcons.init()
     }
   }
 

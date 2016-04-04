@@ -28,6 +28,11 @@ class ItemPoweredEUManager(item: ItemPoweredEU) extends IElectricItemManager {
   override def discharge(itemStack: ItemStack, amount: Double, tier: Int, ignoreTransferLimit: Boolean, externally: Boolean, simulate: Boolean) = 0
   override def getCharge(itemStack: ItemStack) = (item.getCharge(itemStack) * ratio).round
 
+  override def getTier(itemStack: ItemStack): Int = 0
+
+  override def getMaxCharge(itemStack: ItemStack): Double =
+    item.maxCharge.toDouble / ratio
+
   override def use(itemStack: ItemStack, amount: Double, entity: EntityLivingBase) =
     ElectricItem.rawManager.use(itemStack, amount, entity)
 

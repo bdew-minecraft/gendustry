@@ -11,24 +11,24 @@ package net.bdew.gendustry.items
 
 import java.util
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.core.IToolScoop
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.power.ItemPowered
 import net.bdew.lib.Misc
-import net.bdew.lib.items.{ItemUtils, NamedItem}
+import net.bdew.lib.items.{BaseItemMixin, ItemUtils}
 import net.minecraft.block.Block
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack, ItemTool}
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 
-object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with NamedItem with ItemPowered with IToolScoop {
-  def name = "IndustrialScoop"
+object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with BaseItemMixin with ItemPowered with IToolScoop {
+  val name = "IndustrialScoop"
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialScoop")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
@@ -42,25 +42,26 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
 
   setHarvestLevel("scoop", 3)
 
-  override def getDigSpeed(stack: ItemStack, block: Block, meta: Int) =
+  override def getDigSpeed(stack: ItemStack, state: IBlockState): Float =
     if (!hasCharges(stack))
       0.1F
-    else super.getDigSpeed(stack, block, meta)
+    else
+      super.getDigSpeed(stack, state)
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, xOff: Float, yOff: Float, zOff: Float): Boolean = {
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     if (!player.isSneaking) return false
     if (world.isRemote) return true
-    val block = world.getBlock(x, y, z)
-    if (block.getHarvestTool(world.getBlockMetadata(x, y, z)) == "scoop" && getCharge(stack) >= silktouchCharges && getCharge(stack) >= silktouchCharges) {
+    val state = world.getBlockState(pos)
+    if (state.getBlock.getHarvestTool(state) == "scoop" && getCharge(stack) >= silktouchCharges && getCharge(stack) >= silktouchCharges) {
       useCharge(stack, silktouchCharges, player)
-      ItemUtils.dropItemToPlayer(world, player, new ItemStack(block, 1, block.getDamageValue(world, x, y, z)))
-      world.setBlockToAir(x, y, z)
+      ItemUtils.dropItemToPlayer(world, player, new ItemStack(state.getBlock, 1, state.getBlock.getDamageValue(world, pos)))
+      world.setBlockToAir(pos)
       true
     } else false
   }
 
-  override def onBlockDestroyed(stack: ItemStack, world: World, block: Block, x: Int, y: Int, z: Int, player: EntityLivingBase): Boolean = {
-    if (ForgeHooks.isToolEffective(stack, block, world.getBlockMetadata(x, y, z))) {
+  override def onBlockDestroyed(stack: ItemStack, world: World, block: Block, pos: BlockPos, player: EntityLivingBase): Boolean = {
+    if (ForgeHooks.isToolEffective(world, pos, stack)) {
       useCharge(stack, 1, player)
       return true
     }
@@ -69,14 +70,11 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
 
   override def hitEntity(stack: ItemStack, target: EntityLivingBase, player: EntityLivingBase): Boolean = false
 
-  override def addInformation(stack: ItemStack, player: EntityPlayer, l: util.List[_], par4: Boolean) = {
-    import scala.collection.JavaConverters._
-    val tip = l.asInstanceOf[util.List[String]].asScala
-
-    tip += Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge)
+  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+    tooltip.add(Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge))
   }
 
-  override def getSubItems(item: Item, tabs: CreativeTabs, l: util.List[_]) {
+  override def getSubItems(item: Item, tabs: CreativeTabs, l: util.List[ItemStack]) {
     import scala.collection.JavaConverters._
     val items = l.asInstanceOf[util.List[ItemStack]].asScala
     items += new ItemStack(this)
@@ -86,9 +84,4 @@ object IndustrialScoop extends ItemTool(0, Item.ToolMaterial.IRON, new util.Hash
   override def getItemEnchantability: Int = 0
   override def getIsRepairable(stack1: ItemStack, stack2: ItemStack): Boolean = false
   override def isBookEnchantable(stack1: ItemStack, stack2: ItemStack): Boolean = false
-
-  @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "scoop"))
-  }
 }

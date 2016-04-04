@@ -10,4 +10,4 @@
 @API(apiVersion = "GENDUSTRY_APIVER", owner = "gendustry", provides = "gendustryAPI") //
         package net.bdew.gendustry.api;
 
-import cpw.mods.fml.common.API;
+import net.minecraftforge.fml.common.API;

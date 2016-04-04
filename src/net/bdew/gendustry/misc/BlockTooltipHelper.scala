@@ -10,7 +10,7 @@
 package net.bdew.gendustry.misc
 
 import net.bdew.gendustry.config.Config
-import net.bdew.lib.nbt._
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound

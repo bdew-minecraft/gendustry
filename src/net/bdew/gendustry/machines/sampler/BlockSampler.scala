@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockSampler extends BaseMachineBlock("sampler") with HasTE[TileSampler] with BlockCoverable[TileSampler] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockSampler extends BaseMachineBlock("sampler") with HasTE[TileSampler] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileSampler]
   lazy val guiId: Int = MachineSampler.guiId
 

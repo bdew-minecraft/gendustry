@@ -12,6 +12,7 @@ package net.bdew.gendustry.machines.extractor
 import net.bdew.gendustry.apiimpl.TileWorker
 import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.fluids.LiquidDNASources
+import net.bdew.gendustry.machines.FluidPusher
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
@@ -20,11 +21,10 @@ import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
 import net.bdew.lib.tile.ExposeTank
 import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
 
-class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with TileKeepData {
+class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with TileKeepData with FluidPusher {
   lazy val cfg = MachineExtractor
 
   object slots {
@@ -37,7 +37,7 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
 
   def getSizeInventory = 2
 
-  def getTankFromDirection(dir: ForgeDirection): IFluidTank = tank
+  def getTankFromDirection(dir: EnumFacing): IFluidTank = tank
 
   def isWorking = output > 0
 
@@ -59,34 +59,16 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
     } else return false
   }
 
-  def sendFluid() {
-    for (dir <- ForgeDirection.VALID_DIRECTIONS) {
-      val te: TileEntity = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)
-      if (te != null && te.isInstanceOf[IFluidHandler]) {
-        val pumped = te.asInstanceOf[IFluidHandler].fill(dir.getOpposite, tank.getFluid.copy(), true)
-        if (pumped > 0) {
-          tank.drain(pumped, true)
-          if (tank.getFluidAmount <= 0) return
-        }
-      }
-    }
-  }
-
-  override def tickServer() {
-    super.tickServer()
-    if (tank.getFluidAmount > 0) sendFluid()
-  }
-
   allowSided = true
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = slot match {
     case slots.inIndividual => LiquidDNASources.getValue(stack) > 0
     case slots.inLabware => stack.getItem == Items.labware
     case _ => false
   }
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int): Boolean = false
+  override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing): Boolean = false
 
-  override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
-  override def canFill(from: ForgeDirection, fluid: Fluid) = false
+  override def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean) = 0
+  override def canFill(from: EnumFacing, fluid: Fluid) = false
 
-  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+  override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

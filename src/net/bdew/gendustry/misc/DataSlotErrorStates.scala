@@ -15,13 +15,14 @@ import com.google.common.collect.ImmutableSet
 import forestry.api.core.{IErrorLogic, IErrorState}
 import net.bdew.gendustry.machines.apiary.ForestryErrorStates
 import net.bdew.lib.Event
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
 import scala.util.DynamicVariable
 
 case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends DataSlotVal[Set[IErrorState]] with IErrorLogic {
-  override var value: Set[IErrorState] = Set.empty
+  override def default: Set[IErrorState] = Set.empty
 
   val suspendUpdates = new DynamicVariable(false)
 
@@ -50,25 +51,16 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
     val errNum = data.readInt()
     val errors = for (i <- 0 until errNum)
       yield Option(ForestryErrorStates.errorStates.getErrorState(data.readUTF()))
-    value = errors.flatten.toSet
+    update(errors.flatten.toSet)
   }
 
   // ================
 
-  def set(v: IErrorState): Unit = {
-    value += v
-    changed()
-  }
+  def set(v: IErrorState): Unit = update(value + v)
 
-  def clear(v: IErrorState): Unit = {
-    value -= v
-    changed()
-  }
+  def clear(v: IErrorState): Unit = update(value - v)
 
-  def clearAll(): Unit = {
-    value = Set.empty
-    changed()
-  }
+  def clearAll(): Unit = update(Set.empty)
 
   def toggle(v: IErrorState, on: Boolean): Unit = {
     if (on)
@@ -87,7 +79,7 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
 
   val onChange = Event()
 
-  def changed(): Unit ={
+  def changed(): Unit = {
     if (!suspendUpdates.value) {
       parent.dataSlotChanged(this)
       onChange.trigger()
@@ -96,11 +88,8 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
 
   def isOk = value.isEmpty
 
-  import net.bdew.lib.nbt._
-
-  override def load(t: NBTTagCompound, kind: UpdateKind.Value): Unit = {
-    value = (t.getList[String](name) flatMap { x => Option(ForestryErrorStates.errorStates.getErrorState(x)) }).toSet
-  }
+  override def loadValue(t: NBTTagCompound, kind: UpdateKind.Value): Set[IErrorState] =
+    (t.getList[String](name) flatMap { x => Option(ForestryErrorStates.errorStates.getErrorState(x)) }).toSet
 
   override def save(t: NBTTagCompound, kind: UpdateKind.Value): Unit = {
     t.setList(name, value map (_.getUniqueName))

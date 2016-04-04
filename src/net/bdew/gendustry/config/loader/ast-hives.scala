@@ -10,6 +10,7 @@
 package net.bdew.gendustry.config.loader
 
 import net.bdew.lib.recipes.{Condition, ConfigStatement, StackRef}
+import net.minecraft.util.ResourceLocation
 
 case class CSHiveDefinition(id: String, definition: List[HiveDefStatement]) extends ConfigStatement
 
@@ -27,11 +28,7 @@ case class HDTemperature(temperatures: List[String]) extends HiveDefStatement
 
 case class HDHumidity(humidityLevels: List[String]) extends HiveDefStatement
 
-case class HDSideTexture(loc: String) extends HiveDefStatement
-
-case class HDTopTexture(loc: String) extends HiveDefStatement
-
-case class HDBottomTexture(loc: String) extends HiveDefStatement
+case class HDModelLocation(loc: ResourceLocation) extends HiveDefStatement
 
 case class HDColor(color: Int) extends HiveDefStatement
 

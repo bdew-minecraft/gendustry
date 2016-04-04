@@ -22,7 +22,7 @@ import net.bdew.lib.data.{DataSlotGameProfile, DataSlotTankRestricted}
 import net.bdew.lib.power.TileItemProcessor
 import net.bdew.lib.tile.ExposeTank
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
 
 class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with IMutatron with TileKeepData {
@@ -41,7 +41,7 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
 
   def getSizeInventory = 4
 
-  def getTankFromDirection(dir: ForgeDirection): IFluidTank = tank
+  def getTankFromDirection(dir: EnumFacing): IFluidTank = tank
 
   override def getParent1 = getStackInSlot(slots.inIndividual1)
   override def getParent2 = getStackInSlot(slots.inIndividual2)
@@ -57,10 +57,11 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
 
   def tryStart(): Boolean = {
     if (canStart) {
-      output := GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2), fakeBeeHousing)
+      val out = GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2), fakeBeeHousing)
+      output := Some(out)
       tank.drain(cfg.mutagenPerItem, true)
       if (lastPlayer.value != null)
-        GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), output, lastPlayer, worldObj)
+        GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), out, lastPlayer, worldObj)
       decrStackSize(slots.inIndividual1, 1)
       decrStackSize(slots.inIndividual2, 1)
       if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
@@ -83,11 +84,11 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
   }
 
   allowSided = true
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outIndividual
+  override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) = slot == slots.outIndividual
 
-  override def canDrain(from: ForgeDirection, fluid: Fluid): Boolean = false
-  override def drain(from: ForgeDirection, resource: FluidStack, doDrain: Boolean): FluidStack = null
-  override def drain(from: ForgeDirection, maxDrain: Int, doDrain: Boolean): FluidStack = null
+  override def canDrain(from: EnumFacing, fluid: Fluid): Boolean = false
+  override def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean): FluidStack = null
+  override def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean): FluidStack = null
 
-  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+  override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

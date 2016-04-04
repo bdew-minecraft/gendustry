@@ -13,7 +13,7 @@ import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
 case class DataSlotRSMode(name: String, parent: DataSlotContainer) extends DataSlotVal[RSMode.Value] {
-  var value: RSMode.Value = RSMode.ALWAYS
-  def save(t: NBTTagCompound, kind: UpdateKind.Value) = t.setByte(name, value.id.toByte)
-  def load(t: NBTTagCompound, kind: UpdateKind.Value) = value = RSMode(t.getByte(name))
+  override def default = RSMode.ALWAYS
+  override def save(t: NBTTagCompound, kind: UpdateKind.Value) = t.setByte(name, value.id.toByte)
+  override def loadValue(t: NBTTagCompound, kind: UpdateKind.Value) = RSMode(t.getByte(name))
 }

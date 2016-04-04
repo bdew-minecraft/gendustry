@@ -41,7 +41,7 @@ class WidgetRSModeButton(p: Point, te: TileRSControllable, container: ContainerR
   }
 
   override def mouseClicked(p: Point, button: Int) {
-    Client.minecraft.getSoundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F))
+    Client.minecraft.getSoundHandler.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F))
     Client.minecraft.playerController.windowClick(container.windowId, container.RSMODE_SLOT_NUM, RSMode.next(te.rsmode).id, 0, Client.player)
   }
 }

@@ -31,7 +31,7 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
     if (apiary.errorConditions.isOk)
       parent.drawTexture(rect, Textures.errors.ok)
     else
-      parent.drawTexture(rect, Texture(Texture.ITEMS, getDisplayedError.getIcon))
+      parent.drawTexture(rect, Texture(Texture.BLOCKS, getDisplayedError.getSprite))
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {

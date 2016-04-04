@@ -12,25 +12,25 @@ package net.bdew.gendustry.items
 import forestry.api.arboriculture.{EnumGermlingType, ITreeRoot}
 import forestry.api.genetics.IPollinatable
 import net.bdew.gendustry.forestry.GeneticsHelper
-import net.bdew.lib.block.BlockRef
-import net.bdew.lib.items.{ItemUtils, SimpleItem}
+import net.bdew.lib.PimpVanilla._
+import net.bdew.lib.items.{BaseItem, ItemUtils}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
 
-object PollenKit extends SimpleItem("PollenKit") {
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, xOff: Float, yOff: Float, zOff: Float): Boolean = {
+object PollenKit extends BaseItem("PollenKit") {
+
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     if (player.isSneaking) return false
     if (!world.isRemote) {
       if (player.inventory.getCurrentItem.getItem != this) return false
-      val blockRef = BlockRef(x, y, z)
-      (blockRef.getTile[IPollinatable](world) map { te => te.getPollen }
+      (world.getTileSafe[IPollinatable](pos) map { te => te.getPollen }
         // If block is not IPollinatable, check for vanilla leafs conversion
-        orElse (blockRef.block(world) flatMap { bl => GeneticsHelper.getErsatzPollen(bl, blockRef.meta(world)) })
+        orElse GeneticsHelper.getErsatzPollen(world.getBlockState(pos))
         ) map { individual =>
         (individual.getGenome.getSpeciesRoot match {
-          case trees: ITreeRoot => Option(trees.getMemberStack(individual, EnumGermlingType.POLLEN.ordinal()))
-          case root if root.getUID == "rootFlowers" => Option(root.getMemberStack(individual, 2))
+          case trees: ITreeRoot => Option(trees.getMemberStack(individual, EnumGermlingType.POLLEN))
           case _ => None
         }) map { newStack =>
           // Generate pollen item and consume kit

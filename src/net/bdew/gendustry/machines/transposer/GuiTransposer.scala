@@ -25,8 +25,8 @@ class GuiTransposer(val te: TileTransposer, player: EntityPlayer) extends BaseSc
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.transposer.name"), 8, 6, Color.darkGray))
 
-    inventorySlots.getSlotFromInventory(te, te.slots.inBlank).setBackgroundIcon(HintIcons.sampleOrTemplateBlank)
-    inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
-    inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundIcon(HintIcons.sampleOrTemplate)
+    inventorySlots.getSlotFromInventory(te, te.slots.inBlank).setBackgroundLocation(HintIcons.sampleOrTemplateBlank)
+    inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundLocation(HintIcons.labware)
+    inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundLocation(HintIcons.sampleOrTemplate)
   }
 }

@@ -15,7 +15,7 @@ trait TileRSControllable extends TileDataSlots {
   val rsmode = DataSlotRSMode("rsmode", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI, UpdateKind.WORLD)
 
   def canWork = {
-    val powered = getWorldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)
+    val powered = getWorld.isBlockIndirectlyGettingPowered(getPos) > 0
     (rsmode :== RSMode.ALWAYS) ||
       ((rsmode :== RSMode.RS_ON) && powered) ||
       ((rsmode :== RSMode.RS_OFF) && !powered)

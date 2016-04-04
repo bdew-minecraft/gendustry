@@ -25,9 +25,9 @@ class GuiSampler(val te: TileSampler, player: EntityPlayer) extends BaseScreen(n
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, Color.darkGray))
 
-    inventorySlots.getSlotFromInventory(te, te.slots.inSampleBlank).setBackgroundIcon(HintIcons.blankSample)
-    inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundIcon(HintIcons.labware)
-    inventorySlots.getSlotFromInventory(te, te.slots.inIndividual).setBackgroundIcon(HintIcons.droneOrSapling)
-    inventorySlots.getSlotFromInventory(te, te.slots.outSample).setBackgroundIcon(HintIcons.sample)
+    inventorySlots.getSlotFromInventory(te, te.slots.inSampleBlank).setBackgroundLocation(HintIcons.blankSample)
+    inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundLocation(HintIcons.labware)
+    inventorySlots.getSlotFromInventory(te, te.slots.inIndividual).setBackgroundLocation(HintIcons.droneOrSapling)
+    inventorySlots.getSlotFromInventory(te, te.slots.outSample).setBackgroundLocation(HintIcons.sample)
   }
 }

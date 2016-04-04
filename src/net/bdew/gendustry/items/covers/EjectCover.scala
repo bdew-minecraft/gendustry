@@ -9,35 +9,26 @@
 
 package net.bdew.gendustry.items.covers
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.itempush.ItemPush
-import net.bdew.lib.Misc
 import net.bdew.lib.covers.{ItemCover, TileCoverable}
-import net.bdew.lib.items.SimpleItem
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.bdew.lib.items.BaseItem
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
-object EjectCover extends SimpleItem("EjectCover") with ItemCover {
+object EjectCover extends BaseItem("EjectCover") with ItemCover {
   override def isCoverTicking: Boolean = true
-
-  override def getCoverIcon(te: TileCoverable, side: ForgeDirection, cover: ItemStack): IIcon = itemIcon
-
-  override def getSpriteNumber = 0
 
   override def isValidTile(te: TileCoverable, stack: ItemStack) = te.isInstanceOf[ISidedInventory with IInventory]
 
-  override def tickCover(te: TileCoverable, side: ForgeDirection, coverStack: ItemStack): Unit = {
-    if (te.getWorldObj.getTotalWorldTime % 20 != 0) return
+  override def tickCover(te: TileCoverable, side: EnumFacing, coverStack: ItemStack): Unit = {
+    if (te.getWorld.getTotalWorldTime % 20 != 0) return
     val inv = te.asInstanceOf[ISidedInventory with IInventory]
 
     for {
-      slot <- inv.getAccessibleSlotsFromSide(side.ordinal())
+      slot <- inv.getSlotsForFace(side)
       stack <- Option(inv.getStackInSlot(slot))
-      if inv.canExtractItem(slot, stack, side.ordinal())
+      if inv.canExtractItem(slot, stack, side)
     } {
       val stackLeft = ItemPush.pushStack(te, side, stack.copy())
       if (stackLeft == null || stackLeft.stackSize < stack.stackSize) {
@@ -45,10 +36,5 @@ object EjectCover extends SimpleItem("EjectCover") with ItemCover {
         inv.markDirty()
       }
     }
-  }
-
-  @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "covers", "eject"))
   }
 }

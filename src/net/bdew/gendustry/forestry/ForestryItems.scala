@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.forestry
 
-import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraftforge.fml.common.registry.GameRegistry
 
 object ForestryItems {
   lazy val honeydew = GameRegistry.findItem("Forestry", "honeydew")

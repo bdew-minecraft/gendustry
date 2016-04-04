@@ -13,11 +13,11 @@ import java.io.{File, FileInputStream}
 import java.util
 import java.util.Properties
 
-import cpw.mods.fml.client.FMLClientHandler
-import cpw.mods.fml.common.registry.LanguageRegistry
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.{Client, Misc}
 import net.minecraft.client.resources.{IReloadableResourceManager, IResourceManager, IResourceManagerReloadListener}
+import net.minecraftforge.fml.client.FMLClientHandler
+import net.minecraftforge.fml.common.registry.LanguageRegistry
 
 object ResourceListener extends IResourceManagerReloadListener {
   def init() {

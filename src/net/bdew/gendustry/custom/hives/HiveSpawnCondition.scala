@@ -9,45 +9,30 @@
 
 package net.bdew.gendustry.custom.hives
 
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
 
 trait HiveSpawnCondition {
-  def isValidLocation(world: World, x: Int, y: Int, z: Int): Boolean
+  def isValidLocation(world: World, pos: BlockPos): Boolean
   def getDescription: String
 }
 
-case class ConditionUnder(blocks: BlockFilter) extends HiveSpawnCondition {
-  override def isValidLocation(world: World, x: Int, y: Int, z: Int): Boolean =
-    y < world.getHeight && blocks.matches(world, x, y + 1, z)
-  override def getDescription: String = "Under " + blocks.getDesctiption
+class ConditionNeighbour(blocks: BlockFilter, name: String, offsets: List[EnumFacing]) extends HiveSpawnCondition {
+  override def isValidLocation(world: World, pos: BlockPos): Boolean =
+    offsets.exists(f => blocks.matches(world, pos.offset(f)))
+  override def getDescription: String = name + " " + blocks.getDesctiption
 }
 
-case class ConditionAbove(blocks: BlockFilter) extends HiveSpawnCondition {
-  override def isValidLocation(world: World, x: Int, y: Int, z: Int): Boolean =
-    y >= 1 && blocks.matches(world, x, y - 1, z)
-  override def getDescription: String = "Above " + blocks.getDesctiption
-}
+case class ConditionUnder(blocks: BlockFilter) extends ConditionNeighbour(blocks, "Below", List(EnumFacing.UP))
 
-case class ConditionNextTo(blocks: BlockFilter) extends HiveSpawnCondition {
-  override def isValidLocation(world: World, x: Int, y: Int, z: Int): Boolean =
-    blocks.matches(world, x + 1, y, z) || blocks.matches(world, x - 1, y, z) || blocks.matches(world, x, y, z + 1) || blocks.matches(world, x, y, z - 1)
-  override def getDescription: String = "Next To " + blocks.getDesctiption
-}
+case class ConditionAbove(blocks: BlockFilter) extends ConditionNeighbour(blocks, "Above", List(EnumFacing.DOWN))
 
-case class ConditionNear(blocks: BlockFilter) extends HiveSpawnCondition {
-  override def isValidLocation(world: World, x: Int, y: Int, z: Int): Boolean = (
-    blocks.matches(world, x + 1, y, z)
-      || blocks.matches(world, x - 1, y, z)
-      || blocks.matches(world, x, y + 1, z)
-      || blocks.matches(world, x, y - 1, z)
-      || blocks.matches(world, x, y, z + 1)
-      || blocks.matches(world, x, y, z - 1)
-    )
-  override def getDescription: String = "Near " + blocks.getDesctiption
-}
+case class ConditionNextTo(blocks: BlockFilter) extends ConditionNeighbour(blocks, "Next To", EnumFacing.HORIZONTALS.toList)
+
+case class ConditionNear(blocks: BlockFilter) extends ConditionNeighbour(blocks, "Near", EnumFacing.values().toList)
 
 case class ConditionReplace(blocks: BlockFilter) extends HiveSpawnCondition {
-  override def isValidLocation(world: World, x: Int, y: Int, z: Int): Boolean =
-    blocks.matches(world, x, y, z)
+  override def isValidLocation(world: World, pos: BlockPos): Boolean =
+    blocks.matches(world, pos)
   override def getDescription: String = "Replacing " + blocks.getDesctiption
 }

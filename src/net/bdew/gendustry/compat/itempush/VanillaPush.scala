@@ -14,10 +14,10 @@ import net.bdew.lib.items.ItemUtils
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 object VanillaPush extends ItemPushProxy {
-  override def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack) =
+  override def pushStack(from: TileEntity, dir: EnumFacing, stack: ItemStack) =
     (for (target <- Misc.getNeighbourTile(from, dir, classOf[IInventory]) if stack != null) yield {
       val slots = ItemUtils.getAccessibleSlotsFromSide(target, dir.getOpposite)
       ItemUtils.addStackToSlots(stack, target, slots, true)

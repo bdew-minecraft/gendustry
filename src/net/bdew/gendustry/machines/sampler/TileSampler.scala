@@ -19,7 +19,7 @@ import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 import scala.util.Random
 
@@ -58,7 +58,7 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
 
   def tryStart(): Boolean = {
     if (canStart) {
-      output := selectRandomAllele(getStackInSlot(slots.inIndividual))
+      output := Some(selectRandomAllele(getStackInSlot(slots.inIndividual)))
       decrStackSize(slots.inSampleBlank, 1)
       decrStackSize(slots.inIndividual, 1)
       if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
@@ -83,7 +83,7 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
   }
 
   allowSided = true
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = slot == slots.outSample
+  override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) = slot == slots.outSample
 
-  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+  override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

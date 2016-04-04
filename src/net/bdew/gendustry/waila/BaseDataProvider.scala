@@ -17,19 +17,19 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.{BlockPos, EnumChatFormatting}
 import net.minecraft.world.World
 
 class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
   def getTailStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = None
   def getHeadStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = None
   def getBodyStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = None
-  def getNBTTag(player: EntityPlayerMP, te: T, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int): NBTTagCompound = tag
+  def getNBTTag(player: EntityPlayerMP, te: T, tag: NBTTagCompound, world: World, pos: BlockPos): NBTTagCompound = tag
 
-  final override def getNBTData(player: EntityPlayerMP, te: TileEntity, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int): NBTTagCompound =
+  final override def getNBTData(player: EntityPlayerMP, te: TileEntity, tag: NBTTagCompound, world: World, pos: BlockPos): NBTTagCompound =
     try {
       if (cls.isInstance(te))
-        getNBTTag(player, te.asInstanceOf[T], tag, world, x, y, z)
+        getNBTTag(player, te.asInstanceOf[T], tag, world, pos)
       else
         tag
     } catch {

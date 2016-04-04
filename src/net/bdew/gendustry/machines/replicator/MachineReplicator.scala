@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.machines.replicator
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object MachineReplicator extends Machine("Replicator", BlockReplicator) with GuiProvider with ProcessorMachine {
   def guiId = 10

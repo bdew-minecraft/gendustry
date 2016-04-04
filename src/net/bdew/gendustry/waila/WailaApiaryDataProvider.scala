@@ -25,10 +25,9 @@ object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
     }
     strings :+= Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase(Locale.US)))
 
-    if (target.queen :!= null)
-      strings :+= target.queen.getDisplayName
+    strings ++= target.queen.map(_.getDisplayName)
 
-    Option(target.covers(acc.getSide).value) foreach { cover =>
+    target.covers(acc.getSide).value foreach { cover =>
       if (cover.getItem == ErrorSensorCover) {
         ErrorSensorCover.getErrorSensor(cover) foreach { sensor =>
           strings :+= "%s (%s%s%s)".format(

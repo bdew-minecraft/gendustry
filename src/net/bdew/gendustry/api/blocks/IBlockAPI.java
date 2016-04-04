@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.api.blocks;
 
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -19,40 +20,40 @@ public interface IBlockAPI {
     /**
      * @return True if a valid Industrial Apiary
      */
-    boolean isIndustrialApiary(World w, int x, int y, int z);
+    boolean isIndustrialApiary(World w, BlockPos pos);
 
     /**
      * @return Industrial Apiary Interface
      */
-    IIndustrialApiary getIndustrialApiary(World w, int x, int y, int z);
+    IIndustrialApiary getIndustrialApiary(World w, BlockPos pos);
 
     /**
      * @return True if a valid mutatron
      */
-    boolean isMutatron(World w, int x, int y, int z);
+    boolean isMutatron(World w, BlockPos pos);
 
     /**
      * @return Mutatron interface
      */
-    IMutatron getMutatron(World w, int x, int y, int z);
+    IMutatron getMutatron(World w, BlockPos pos);
 
     /**
      * @return True if a valid Advanced mutatron
      */
-    boolean isAdvancedMutatron(World w, int x, int y, int z);
+    boolean isAdvancedMutatron(World w, BlockPos pos);
 
     /**
      * @return Advanced mutatron Interface
      */
-    IAdvancedMutatron getAdvancedMutatron(World w, int x, int y, int z);
+    IAdvancedMutatron getAdvancedMutatron(World w, BlockPos pos);
 
     /**
      * @return True if a valid machine that does work (most machines in this mod)
      */
-    boolean isWorkerMachine(World w, int x, int y, int z);
+    boolean isWorkerMachine(World w, BlockPos pos);
 
     /**
      * @return worker interface
      */
-    IWorkerMachine getWorkerMachine(World w, int x, int y, int z);
+    IWorkerMachine getWorkerMachine(World w, BlockPos pos);
 }

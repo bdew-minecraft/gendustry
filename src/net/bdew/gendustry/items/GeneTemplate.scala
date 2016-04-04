@@ -15,7 +15,8 @@ import forestry.api.genetics.{AlleleManager, IAlleleSpecies, ISpeciesRoot}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
 import net.bdew.gendustry.misc.GendustryCreativeTabs
-import net.bdew.lib.items.SimpleItem
+import net.bdew.lib.PimpVanilla._
+import net.bdew.lib.items.BaseItem
 import net.bdew.lib.{Client, Misc}
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -23,18 +24,17 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.util.EnumChatFormatting
 
-object GeneTemplate extends SimpleItem("GeneTemplate") {
+object GeneTemplate extends BaseItem("GeneTemplate") {
   setMaxStackSize(1)
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.templates)
 
-  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[_]) {
+  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[ItemStack]) {
     import scala.collection.JavaConversions._
-    val l = list.asInstanceOf[util.List[ItemStack]]
     tab match {
-      case GendustryCreativeTabs.main => l.add(new ItemStack(this))
+      case GendustryCreativeTabs.main => list.add(new ItemStack(this))
       case GendustryCreativeTabs.templates =>
-        l.addAll(
+        list.addAll(
           Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])
             .filter(sp => sp.getRoot.getTemplate(sp.getUID) != null)
             .toList.sortBy(_.getUID)
@@ -58,7 +58,6 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
 
   def getSamples(stack: ItemStack): Iterable[GeneSampleInfo] = {
     val tag = stack.getTagCompound
-    import net.bdew.lib.nbt._
     if (tag != null)
       return tag.getList[NBTTagCompound]("samples") map GeneSampleInfo.fromNBT
     else
@@ -89,27 +88,26 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
     return true
   }
 
-  override def addInformation(stack: ItemStack, player: EntityPlayer, l: util.List[_], par4: Boolean) = {
-    import scala.collection.JavaConverters._
-    val tip = l.asInstanceOf[util.List[String]].asScala
+  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+    import scala.collection.JavaConversions._
     val tag = stack.getTagCompound
     if (tag != null && tag.hasKey("species")) {
       try {
-        tip += Misc.toLocal("gendustry.label.template." + tag.getString("species"))
+        tooltip += Misc.toLocal("gendustry.label.template." + tag.getString("species"))
         val root = getSpecies(stack)
         val samples = getSamples(stack).map(x => x.chromosome -> x.getLocalizedName).toMap
         val required = getRequiredChromosomes(root)
 
-        tip +=
+        tooltip +=
           (if (isComplete(stack)) EnumChatFormatting.GREEN else EnumChatFormatting.RED) +
             Misc.toLocalF("gendustry.label.template.chromosomes", samples.size, required.size) +
             EnumChatFormatting.RESET
 
         for (chr <- required)
           if (samples.contains(chr))
-            tip += samples(chr)
+            tooltip += samples(chr)
           else if (Client.shiftDown)
-            tip += "%s%s: %s%s".format(
+            tooltip += "%s%s: %s%s".format(
               EnumChatFormatting.RED,
               Misc.toLocal("gendustry.chromosome." + GeneSampleInfo.getChromosomeName(root, chr)),
               Misc.toLocal("gendustry.label.template.missing"),
@@ -119,10 +117,10 @@ object GeneTemplate extends SimpleItem("GeneTemplate") {
       } catch {
         case e: Throwable =>
           Gendustry.logWarnException("Exception while generating template tooltip", e)
-          tip += "Error"
+          tooltip += "Error"
       }
     } else {
-      tip += Misc.toLocal("gendustry.label.template.blank")
+      tooltip += Misc.toLocal("gendustry.label.template.blank")
     }
   }
 }

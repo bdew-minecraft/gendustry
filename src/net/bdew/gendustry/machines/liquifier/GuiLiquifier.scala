@@ -26,6 +26,6 @@ class GuiLiquifier(val te: TileLiquifier, player: EntityPlayer) extends BaseScre
     widgets.add(new WidgetFluidGauge(new Rect(152, 19, 16, 58), Textures.tankOverlay, te.tank))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.liquifier.name"), 8, 6, Color.darkGray))
 
-    inventorySlots.getSlotFromInventory(te, te.slots.inMeat).setBackgroundIcon(HintIcons.meat)
+    inventorySlots.getSlotFromInventory(te, te.slots.inMeat).setBackgroundLocation(HintIcons.meat)
   }
 }

@@ -27,6 +27,6 @@ class GuiReplicator(val te: TileReplicator, player: EntityPlayer) extends BaseSc
     widgets.add(new WidgetFluidGauge(new Rect(56, 19, 16, 58), Textures.tankOverlay, te.proteinTank))
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.replicator.name"), 8, 6, Color.darkGray))
 
-    inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundIcon(HintIcons.template)
+    inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundLocation(HintIcons.template)
   }
 }

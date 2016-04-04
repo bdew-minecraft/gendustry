@@ -16,6 +16,7 @@ import net.bdew.gendustry.forestry.BeeModifiers
 import net.bdew.lib.Misc
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
+import net.minecraft.util.EnumFacing
 import net.minecraft.world.biome.BiomeGenBase
 
 class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result: IAlleleBeeSpecies, chance: Float) extends IBeeMutation {
@@ -32,15 +33,17 @@ class BeeMutation(parent1: IAlleleBeeSpecies, parent2: IAlleleBeeSpecies, result
 
   def getBlockUnderHousing(h: IBeeHousing) = {
     val c = h.getCoordinates
-    if (c.posY > 0)
-      h.getWorld.getBlock(c.posX, c.posY - 1, c.posZ)
+    if (c.getY > 0)
+      h.getWorld.getBlockState(c.offset(EnumFacing.DOWN)).getBlock
     else null
   }
 
   def getBlockMetaUnderHousing(h: IBeeHousing) = {
     val c = h.getCoordinates
-    if (c.posY > 0)
-      h.getWorld.getBlockMetadata(c.posX, c.posY - 1, c.posZ)
+    if (c.getY > 0) {
+      val state = h.getWorld.getBlockState(c.offset(EnumFacing.DOWN))
+      state.getBlock.getMetaFromState(state)
+    }
     else -1
   }
 

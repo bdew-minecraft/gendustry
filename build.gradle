@@ -13,14 +13,20 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven {
+            name = "gradle plugins"
+            url = "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.7"
     }
 }
 
 apply plugin: 'scala'
-apply plugin: 'forge'
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.matthewprenger.cursegradle'
 
 file "build.properties" withReader {
     def prop = new Properties()
@@ -46,6 +52,8 @@ archivesBaseName = "gendustry"
 
 minecraft {
     version = "${config.minecraft.version}-${config.forge.version}"
+    mappings = "${config.minecraft.mappings}"
+    makeObfSourceJar = false
     replace("BDLIB_VER", config.bdlib.version)
     replace("GENDUSTRY_VER", simpleVersion.toString())
     replace("GENDUSTRY_APIVER", myApiVersion)
@@ -59,8 +67,8 @@ repositories {
         url = "http://jenkins.bdew.net/maven"
     }
     maven {
-        name = "chickenbones"
-        url = "http://chickenbones.net/maven"
+        name "JEI"
+        url "http://dvs1.progwml6.com/files/maven"
     }
     maven {
         name = "ic2"
@@ -71,10 +79,6 @@ repositories {
         url "http://mobiusstrip.eu/maven"
     }
     ivy {
-        name "CoFHLib"
-        artifactPattern "http://addons-origin.cursecdn.com/files/${config.cofhlib.cf}/[module]-[revision](-[classifier])(.[ext])"
-    }
-    ivy {
         name "BuildCraft"
         artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
     }
@@ -82,20 +86,14 @@ repositories {
 
 dependencies {
     compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
-    compile "codechicken:NotEnoughItems:${config.minecraft.version}-${config.nei.version}:dev"
-    compile "codechicken:CodeChickenLib:${config.minecraft.version}-${config.ccl.version}:dev"
-    compile "codechicken:CodeChickenCore:${config.minecraft.version}-${config.ccc.version}:dev"
     compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
-    compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
+//    compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
 
-    compile module("mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}") {
-        transitive = false // WAILA is depending on an invalid combination of CCC/NEI that doesn't run...
-    }
+    deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
+    deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
-    compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
-
-    compile "net.bdew.thirdparty:mekanism:${config.mekanism.version}-mc${config.minecraft.version}:api"
+    compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
 }
 
 
@@ -109,7 +107,6 @@ sourceSets {
         resources {
             srcDir 'resources'
         }
-        output.resourcesDir = output.classesDir // Hack for IDEA
     }
 }
 
@@ -138,7 +135,7 @@ task apiJar(type: Jar, dependsOn: 'classes') {
     classifier = 'api'
 }
 
-task sourceJar(type: Jar) {
+task sourceJarReal(type: Jar) {
     classifier "sources"
 }
 
@@ -156,7 +153,7 @@ jar {
 
 afterEvaluate { project ->
     // Fudge the inputs of api/source jars so we get the version after replacements
-    tasks.getByPath(":sourceJar").from(tasks.getByPath(":sourceMainScala").outputs.files)
+    tasks.getByPath(":sourceJarReal").from(tasks.getByPath(":sourceMainScala").outputs.files)
     tasks.getByPath(":apiJar").from(tasks.getByPath(":sourceMainScala").outputs.files, {
         include 'net/bdew/gendustry/api/**'
     })
@@ -174,7 +171,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifact deobfJar
-            artifact sourceJar
+            artifact sourceJarReal
             artifact apiJar
         }
     }
@@ -185,24 +182,39 @@ publishing {
     }
 }
 
-apply plugin: 'curseforge'
-
-curse {
-    projectId = config.curseforge.id
+curseforge {
     apiKey = project.hasProperty("curseForgeApiKey") ? project.curseForgeApiKey : ""
-    releaseType = 'alpha'
+    project {
+        id = config.curseforge.id
 
-    artifact = jar
-    changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+        releaseType = "alpha"
+        changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
 
-    additionalArtifact deobfJar
-    additionalArtifact sourceJar
-    additionalArtifact apiJar
+        addGameVersion config.minecraft.version
 
-    relatedProject 'bdlib': 'requiredLibrary'
-    relatedProject 'forestry': 'requiredLibrary'
-    relatedProject 'cofhcore': 'optionalLibrary'
-    relatedProject 'buildcraft': 'optionalLibrary'
-    relatedProject 'notenoughitems': 'optionalLibrary'
-    relatedProject 'waila': 'optionalLibrary'
+        mainArtifact(jar) {
+            displayName = "Gendustry ${simpleVersion} (MC ${config.minecraft.version})"
+        }
+
+        addArtifact(deobfJar) {
+            displayName = "Gendustry ${simpleVersion} Deobfuscated (MC ${config.minecraft.version})"
+        }
+
+        addArtifact(sourceJarReal) {
+            displayName = "Gendustry ${simpleVersion} Source (MC ${config.minecraft.version})"
+        }
+
+        addArtifact(apiJar) {
+            displayName = "Gendustry ${simpleVersion} API (MC ${config.minecraft.version})"
+        }
+
+        relations {
+            requiredLibrary 'bdlib'
+            requiredLibrary 'forestry'
+            optionalLibrary 'waila'
+            optionalLibrary 'buildcraft'
+            optionalLibrary 'cofhcore'
+            optionalLibrary 'just-enough-items-jei'
+        }
+    }
 }

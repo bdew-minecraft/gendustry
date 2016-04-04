@@ -11,13 +11,11 @@ package net.bdew.gendustry.machines.apiary.upgrades
 
 import java.util.Locale
 
-import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.config.loader._
 import net.bdew.lib.Misc
 import net.bdew.lib.recipes.gencfg.{ConfigSection, EntryStr}
-import net.minecraft.item.ItemStack
 
 object Upgrades {
   val map = collection.mutable.Map.empty[Int, Upgrade]
@@ -74,7 +72,6 @@ object Upgrades {
         case (pName, v) => sys.error("Unknown upgrade modifier '%s' - %s in upgrade '%s'".format(pName, v, name))
       })
       map += id -> Upgrade(id, name, max, mods.toSeq)
-      GameRegistry.registerCustomItemStack("upgrade." + name, new ItemStack(ItemApiaryUpgrade, 1, id))
     }
   }
 }

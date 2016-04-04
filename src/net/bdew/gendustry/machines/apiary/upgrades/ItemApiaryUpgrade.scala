@@ -11,25 +11,18 @@ package net.bdew.gendustry.machines.apiary.upgrades
 
 import java.util
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.lib.Misc
-import net.bdew.lib.items.NamedItem
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.bdew.lib.items.BaseItem
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraft.util.IIcon
 
-object ItemApiaryUpgrade extends Item with IApiaryUpgrade with NamedItem {
-  var icons = Map.empty[Int, IIcon]
-  def name = "ApiaryUpgrade"
-
+object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade {
   setHasSubtypes(true)
   setMaxDamage(-1)
-  setUnlocalizedName(Gendustry.modId + ".apiary.upgrade")
 
   def formatModifier(f: Float, base: Float) = (if (f > base) "+" else "") + "%.0f".format((f - base) * 100) + "%"
 
@@ -83,8 +76,9 @@ object ItemApiaryUpgrade extends Item with IApiaryUpgrade with NamedItem {
   }
 
   def getStackingId(stack: ItemStack) = Item.getIdFromItem(this) * Int.MaxValue + stack.getItemDamage
-  override def addInformation(stack: ItemStack, player: EntityPlayer, list: util.List[_], par4: Boolean) {
-    list.asInstanceOf[util.List[String]].addAll(getDisplayDetails(stack))
+
+  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+    tooltip.addAll(getDisplayDetails(stack))
   }
 
   def getMaxNumber(stack: ItemStack): Int = {
@@ -100,28 +94,14 @@ object ItemApiaryUpgrade extends Item with IApiaryUpgrade with NamedItem {
     }
   }
 
-  override def getIconFromDamage(meta: Int): IIcon = {
-    if (icons.contains(meta))
-      return icons(meta)
-    return null
-  }
-
   override def getUnlocalizedName(stack: ItemStack): String = {
     if (Upgrades.map.contains(stack.getItemDamage))
       return "%s.upgrades.%s".format(Gendustry.modId, Upgrades.map(stack.getItemDamage).name)
     return "invalid"
   }
 
-  override def getSubItems(par1: Item, par2CreativeTabs: CreativeTabs, list: util.List[_]) {
-    val l = list.asInstanceOf[util.List[ItemStack]]
+  override def getSubItems(par1: Item, par2CreativeTabs: CreativeTabs, list: util.List[ItemStack]) {
     for ((id, name) <- Upgrades.map)
-      l.add(new ItemStack(this, 1, id))
-  }
-
-  @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IIconRegister) {
-    icons = Upgrades.map.map({
-      case (id, upgrade) => id -> reg.registerIcon(Misc.iconName(Gendustry.modId, "upgrades", upgrade.name))
-    }).toMap
+      list.add(new ItemStack(this, 1, id))
   }
 }

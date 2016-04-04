@@ -27,8 +27,8 @@ class GuiApiary(val te: TileApiary, player: EntityPlayer, cont: ContainerApiary)
     widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.apiary.name"), 8, 6, Color.darkGray))
     widgets.add(new WidgetRSModeButton(Point(137, 5), te, cont))
 
-    te.slots.upgrades.foreach(inventorySlots.getSlot(_).setBackgroundIcon(HintIcons.upgrade))
-    inventorySlots.getSlotFromInventory(te, te.slots.drone).setBackgroundIcon(HintIcons.drone)
-    inventorySlots.getSlotFromInventory(te, te.slots.queen).setBackgroundIcon(HintIcons.queen)
+    te.slots.upgrades.foreach(inventorySlots.getSlot(_).setBackgroundLocation(HintIcons.upgrade))
+    inventorySlots.getSlotFromInventory(te, te.slots.drone).setBackgroundLocation(HintIcons.drone)
+    inventorySlots.getSlotFromInventory(te, te.slots.queen).setBackgroundLocation(HintIcons.queen)
   }
 }

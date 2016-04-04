@@ -18,11 +18,12 @@ import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fluids.FluidStack
 
 object WailaDataSlotsDataProvider extends BaseDataProvider(classOf[TileDataSlots]) {
-  override def getNBTTag(player: EntityPlayerMP, te: TileDataSlots, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int) = {
+  override def getNBTTag(player: EntityPlayerMP, te: TileDataSlots, tag: NBTTagCompound, world: World, pos: BlockPos) = {
     tag.setTag("gendustry_dataslots", Misc.applyMutator(new NBTTagCompound) {
       te.doSave(UpdateKind.GUI, _)
     })

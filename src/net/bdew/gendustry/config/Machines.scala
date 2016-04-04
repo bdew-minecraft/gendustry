@@ -21,10 +21,9 @@ import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.bdew.gendustry.machines.replicator.MachineReplicator
 import net.bdew.gendustry.machines.sampler.MachineSampler
 import net.bdew.gendustry.machines.transposer.MachineTransposer
-import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.config.MachineManager
 
-object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, GendustryCreativeTabs.main) {
+object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, Blocks) {
   registerMachine(MachineMutagenProducer)
   registerMachine(MachineMutatron)
   if (ForestryHelper.haveRoot("Bees"))

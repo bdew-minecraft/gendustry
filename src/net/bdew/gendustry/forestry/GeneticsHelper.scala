@@ -12,7 +12,6 @@ package net.bdew.gendustry.forestry
 import java.util.Random
 
 import com.mojang.authlib.GameProfile
-import cpw.mods.fml.common.registry.GameRegistry
 import forestry.api.apiculture._
 import forestry.api.arboriculture.{EnumGermlingType, ITree, ITreeRoot}
 import forestry.api.genetics._
@@ -22,9 +21,10 @@ import net.bdew.gendustry.api.EnumMutationSetting
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
-import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.registry.GameRegistry
 
 object GeneticsHelper {
   val random = new Random
@@ -133,11 +133,12 @@ object GeneticsHelper {
         val orig = root.getMember(fromStack).asInstanceOf[IBee]
         newBee.mate(newBee)
         newBee.setIsNatural(orig.isNatural)
-        root.getMemberStack(newBee, EnumBeeType.QUEEN.ordinal)
+        root.getMemberStack(newBee, EnumBeeType.QUEEN)
       case newTree: ITree =>
-        root.getMemberStack(newTree, EnumGermlingType.SAPLING.ordinal)
+        root.getMemberStack(newTree, EnumGermlingType.SAPLING)
       case _ =>
-        root.getMemberStack(individual, 0)
+        Gendustry.logWarn("Don't know how to create mutation result for " + individual.getClass.getName)
+        new ItemStack(Items.waste)
     }
 
     if (applyDecay)
@@ -196,13 +197,14 @@ object GeneticsHelper {
         val bee = individual.asInstanceOf[IBee]
         bee.setIsNatural(pristine)
         bee.mate(bee)
-        bees.getMemberStack(bee, EnumBeeType.QUEEN.ordinal())
+        bees.getMemberStack(bee, EnumBeeType.QUEEN)
       case trees: ITreeRoot =>
-        trees.getMemberStack(individual, EnumGermlingType.SAPLING.ordinal())
+        trees.getMemberStack(individual, EnumGermlingType.SAPLING)
       case butterflies: IButterflyRoot =>
-        butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY.ordinal())
+        butterflies.getMemberStack(individual, EnumFlutterType.BUTTERFLY)
       case other: ISpeciesRoot =>
-        other.getMemberStack(individual, 0)
+        Gendustry.logWarn("Don't know how to create item from template " + individual.getClass.getName)
+        new ItemStack(Items.waste)
     }
   }
 
@@ -218,8 +220,8 @@ object GeneticsHelper {
   }
 
   /**
-   * Returns the list of chromosomes as a map, filtering out unused ones
-   */
+    * Returns the list of chromosomes as a map, filtering out unused ones
+    */
   def getCleanKaryotype(root: ISpeciesRoot) = (
     root.getKaryotype
       filter { x => root.getDefaultTemplate()(x.ordinal()) != null }
@@ -231,9 +233,9 @@ object GeneticsHelper {
 
   lazy val leafBlocks = Set(GameRegistry.findBlock("minecraft", "leaves"), GameRegistry.findBlock("minecraft", "leaves2"))
 
-  def getErsatzPollen(bl: Block, meta: Int): Option[IIndividual] = {
-    if (leafBlocks.contains(bl)) {
-      val fixedMeta = bl.damageDropped(meta)
+  def getErsatzPollen(state: IBlockState): Option[IIndividual] = {
+    if (leafBlocks.contains(state.getBlock)) {
+      val fixedMeta = state.getBlock.damageDropped(state)
       import scala.collection.JavaConversions._
       AlleleManager.ersatzSaplings.find({ case (stack, _) => stack.getItemDamage == fixedMeta }) map (_._2)
     } else None

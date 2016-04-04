@@ -11,10 +11,11 @@ package net.bdew.gendustry.misc
 
 import java.util
 
-import _root_.forestry.api.genetics.{AlleleManager, IAlleleSpecies}
+import forestry.api.genetics.{AlleleManager, IAlleleSpecies}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.lib.Misc
 import net.minecraft.command.{CommandBase, ICommandSender, WrongUsageException}
+import net.minecraft.util.BlockPos
 
 class CommandGiveTemplate extends CommandBase {
   def getCommandName = "givetemplate"
@@ -41,12 +42,12 @@ class CommandGiveTemplate extends CommandBase {
       throw new WrongUsageException("gendustry.givetemplate.usage")
 
     val entity = player.entityDropItem(GeneticsHelper.templateFromSpeciesUID(uid), 0)
-    entity.delayBeforeCanPickup = 0
+    entity.setPickupDelay(0)
 
-    CommandBase.func_152373_a(sender, this, "gendustry.givetemplate.success", uid, player.getDisplayName)
+    CommandBase.notifyOperators(sender, this, "gendustry.givetemplate.success", uid, player.getDisplayName)
   }
 
-  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): util.List[_] = {
+  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
     if (params.length == 1)
       return CommandBase.getListOfStringsMatchingLastWord(params, validSpecies: _*)
     return null

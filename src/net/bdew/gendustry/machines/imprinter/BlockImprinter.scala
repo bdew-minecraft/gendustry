@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockImprinter extends BaseMachineBlock("imprinter") with HasTE[TileImprinter] with BlockCoverable[TileImprinter] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockImprinter extends BaseMachineBlock("imprinter") with HasTE[TileImprinter] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileImprinter]
   lazy val guiId: Int = MachineImprinter.guiId
 

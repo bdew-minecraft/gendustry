@@ -43,6 +43,9 @@ class ChargeRecipe extends IRecipe {
     } else null
   }
 
+  override def getRemainingItems(inv: InventoryCrafting): Array[ItemStack] =
+    new Array[ItemStack](inv.getSizeInventory)
+
   def getRecipeSize: Int = 9
   def getRecipeOutput: ItemStack = new ItemStack(Blocks.fire)
 }

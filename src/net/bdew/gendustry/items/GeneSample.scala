@@ -15,20 +15,20 @@ import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.misc.{GendustryCreativeTabs, GeneticsCache}
 import net.bdew.lib.Misc
-import net.bdew.lib.items.SimpleItem
+import net.bdew.lib.items.BaseItem
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 
-object GeneSample extends SimpleItem("GeneSample") {
+object GeneSample extends BaseItem("GeneSample") {
 
   setMaxStackSize(1)
   setContainerItem(Items.geneSampleBlank)
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.samples)
 
-  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[_]) {
+  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[ItemStack]) {
     import scala.collection.JavaConversions._
     val l = list.asInstanceOf[util.List[ItemStack]]
     tab match {
@@ -49,13 +49,11 @@ object GeneSample extends SimpleItem("GeneSample") {
 
   def getInfo(stack: ItemStack): GeneSampleInfo = GeneSampleInfo.fromNBT(stack.getTagCompound)
 
-  override def addInformation(stack: ItemStack, player: EntityPlayer, l: util.List[_], par4: Boolean) = {
-    import scala.collection.JavaConverters._
+  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
     if (stack.hasTagCompound) {
-      val tip = l.asInstanceOf[util.List[String]].asScala
       val info = getInfo(stack)
-      tip += Misc.toLocal("gendustry.label.sample." + info.root.getUID)
-      tip += info.getLocalizedName
+      tooltip.add(Misc.toLocal("gendustry.label.sample." + info.root.getUID))
+      tooltip.add(info.getLocalizedName)
     }
   }
 }

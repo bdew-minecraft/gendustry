@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockReplicator extends BaseMachineBlock("replicator") with HasTE[TileReplicator] with BlockCoverable[TileReplicator] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockReplicator extends BaseMachineBlock("replicator") with HasTE[TileReplicator] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileReplicator]
   lazy val guiId: Int = MachineReplicator.guiId
 

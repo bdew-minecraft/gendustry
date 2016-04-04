@@ -11,19 +11,26 @@ package net.bdew.gendustry.config
 
 import java.util.Locale
 
-import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.fluids.{BlockFluid, ItemFluidBucket, ItemFluidCan}
 import net.bdew.gendustry.forestry.ForestryItems
 import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.Misc
 import net.bdew.lib.config.FluidManager
-import net.minecraft.item.ItemStack
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.{Fluid, FluidContainerRegistry, FluidRegistry, FluidStack}
+import net.minecraftforge.fml.common.registry.GameRegistry
 
 object Fluids extends FluidManager {
   val emptyBucket = new ItemStack(GameRegistry.findItem("minecraft", "bucket"))
   val emptyCan = new ItemStack(ForestryItems.canEmpty)
+
+  def registerItem[T <: Item](item: T, name: String): T = {
+    GameRegistry.registerItem(item, name)
+    item.setCreativeTab(GendustryCreativeTabs.main)
+    item
+  }
 
   def registerFluid(id: String,
                     luminosity: Int = 0,
@@ -37,7 +44,7 @@ object Fluids extends FluidManager {
       false
     } else {
       Gendustry.logDebug("Registering fluid %s", id)
-      val newFluid = new Fluid(id)
+      val newFluid = new Fluid(id, new ResourceLocation(Gendustry.modId, "fluids/" + id + "/still"), new ResourceLocation(Gendustry.modId, "blocks/" + id + "/flowing"))
       newFluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase(Locale.US))
       newFluid.setLuminosity(luminosity)
       newFluid.setDensity(density)
@@ -55,11 +62,11 @@ object Fluids extends FluidManager {
       fluid.setBlock(block)
     }
     if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyBucket) == null) {
-      val bucket = Items.regItem(new ItemFluidBucket(fluid), id + "Bucket")
+      val bucket = registerItem(new ItemFluidBucket(fluid), id + "Bucket")
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
     }
     if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyCan) == null) {
-      val can = Items.regItem(new ItemFluidCan(fluid), id + "Can")
+      val can = registerItem(new ItemFluidCan(fluid), id + "Can")
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), emptyCan)
     }
     return fluid

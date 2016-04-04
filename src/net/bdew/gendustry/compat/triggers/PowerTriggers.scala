@@ -11,26 +11,26 @@ package net.bdew.gendustry.compat.triggers
 
 import buildcraft.api.statements.StatementManager
 import net.bdew.gendustry.power.TilePowered
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 object TriggerPower0 extends BaseTrigger("power0", "z1", classOf[TilePowered]) {
-  def getState(side: ForgeDirection, tile: TilePowered) = tile.power.stored == 0
+  def getState(side: EnumFacing, tile: TilePowered) = tile.power.stored == 0
 }
 
 object TriggerPower25 extends BaseTrigger("power25", "z2", classOf[TilePowered]) {
-  def getState(side: ForgeDirection, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 0.25
+  def getState(side: EnumFacing, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 0.25
 }
 
 object TriggerPower50 extends BaseTrigger("power50", "z3", classOf[TilePowered]) {
-  def getState(side: ForgeDirection, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 0.5
+  def getState(side: EnumFacing, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 0.5
 }
 
 object TriggerPower75 extends BaseTrigger("power75", "z4", classOf[TilePowered]) {
-  def getState(side: ForgeDirection, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 0.75
+  def getState(side: EnumFacing, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 0.75
 }
 
 object TriggerPower100 extends BaseTrigger("power100", "z5", classOf[TilePowered]) {
-  def getState(side: ForgeDirection, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 1
+  def getState(side: EnumFacing, tile: TilePowered) = tile.power.stored / tile.power.capacity >= 1
 }
 
 object PowerTriggers {

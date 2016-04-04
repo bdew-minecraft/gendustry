@@ -11,7 +11,6 @@ package net.bdew.gendustry.machines.mutatron
 
 import java.util.Locale
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.EnumMutationSetting
 import net.bdew.gendustry.apiimpl.MutatronOverridesImpl
@@ -20,6 +19,7 @@ import net.bdew.lib.gui.GuiProvider
 import net.bdew.lib.machine.{Machine, ProcessorMachine}
 import net.bdew.lib.recipes.gencfg.EntryStr
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object MachineMutatron extends Machine("Mutatron", BlockMutatron) with GuiProvider with ProcessorMachine {
   def guiId = 2

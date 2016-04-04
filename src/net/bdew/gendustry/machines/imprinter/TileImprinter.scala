@@ -20,7 +20,7 @@ import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.nbt.NBT
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 import scala.util.Random
 
@@ -92,7 +92,7 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   }
 
   def doStart(s: ItemStack) {
-    output := s
+    output := Some(s)
     decrStackSize(slots.inIndividual, 1)
     if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
       decrStackSize(slots.inLabware, 1)
@@ -117,9 +117,9 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   allowSided = true
 
   // can extract the template if input is empty and there's no operation in progress
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) =
+  override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) =
     slot == slots.outIndividual ||
       (slot == slots.inTemplate && inv(slots.inIndividual) == null && (output :== null))
 
-  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+  override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

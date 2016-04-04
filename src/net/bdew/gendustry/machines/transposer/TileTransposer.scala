@@ -18,7 +18,7 @@ import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.items.IStack
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 class TileTransposer extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData {
   lazy val cfg = MachineTransposer
@@ -43,10 +43,11 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
     if (canStart) {
       val tpl = getStackInSlot(slots.inTemplate)
       if (tpl.getItem == GeneSample) {
-        output := tpl.copy()
+        output := Some(tpl.copy())
       } else if (tpl.getItem == GeneTemplate && GeneTemplate.getSamples(tpl) != null) {
-        output := getStackInSlot(slots.inBlank).copy()
-        GeneTemplate.getSamples(tpl).foreach(GeneTemplate.addSample(output, _))
+        val tplItem = getStackInSlot(slots.inBlank).copy()
+        GeneTemplate.getSamples(tpl).foreach(GeneTemplate.addSample(tplItem, _))
+        output := Some(tplItem)
       } else return false
 
       decrStackSize(slots.inBlank, 1)
@@ -81,8 +82,8 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
   }
 
   allowSided = true
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) =
+  override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) =
     slot == slots.outCopy || (slot == slots.inTemplate && inv(slots.inBlank) == null && (output :== null))
 
-  override def isValidCover(side: ForgeDirection, cover: ItemStack) = true
+  override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

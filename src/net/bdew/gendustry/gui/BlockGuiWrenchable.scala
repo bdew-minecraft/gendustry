@@ -9,56 +9,50 @@
 
 package net.bdew.gendustry.gui
 
-import java.util
-
 import buildcraft.api.tools.IToolWrench
-import cofh.api.block.IDismantleable
-import cpw.mods.fml.common.Optional
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.block.BlockKeepData
 import net.bdew.lib.items.ItemUtils
-import net.bdew.lib.tile.inventory.BreakableInventoryTile
 import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
-import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
-@Optional.Interface(modid = "CoFHAPI|block", iface = "cofh.api.block.IDismantleable")
-trait BlockGuiWrenchable extends Block with IDismantleable {
+//@Optional.Interface(modid = "CoFHAPI|block", iface = "cofh.api.block.IDismantleable")
+trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
   val guiId: Int
+  // todo: Restore when cofh stuff is updated
+  //  override def dismantleBlock(player: EntityPlayer, world: World,pos: BlockPos, returnDrops: Boolean): util.ArrayList[ItemStack] = {
+  //    val item =
+  //
+  //      if (this.isInstanceOf[BlockKeepData]) {
+  //        this.asInstanceOf[BlockKeepData].getSavedBlock(world, pos, world.getBlockMetadata(pos))
+  //      } else {
+  //        val te = world.getTileEntity(pos)
+  //
+  //        if (te != null && te.isInstanceOf[BreakableInventoryTile])
+  //          te.asInstanceOf[BreakableInventoryTile].dropItems()
+  //
+  //        new ItemStack(this)
+  //      }
+  //
+  //    world.setBlockToAir(pos)
+  //
+  //    val ret = new util.ArrayList[ItemStack]()
+  //
+  //    if (returnDrops)
+  //      ret.add(item)
+  //    else
+  //      ItemUtils.throwItemAt(world, pos, item)
+  //
+  //    ret
+  //  }
+  //
+  //  override def canDismantle(player: EntityPlayer, world: World,pos: BlockPos): Boolean = true
 
-  override def dismantleBlock(player: EntityPlayer, world: World, x: Int, y: Int, z: Int, returnDrops: Boolean): util.ArrayList[ItemStack] = {
-    val item =
-
-      if (this.isInstanceOf[BlockKeepData]) {
-        this.asInstanceOf[BlockKeepData].getSavedBlock(world, x, y, z, world.getBlockMetadata(x, y, z))
-      } else {
-        val te = world.getTileEntity(x, y, z)
-
-        if (te != null && te.isInstanceOf[BreakableInventoryTile])
-          te.asInstanceOf[BreakableInventoryTile].dropItems()
-
-        new ItemStack(this)
-      }
-
-    world.setBlockToAir(x, y, z)
-
-    val ret = new util.ArrayList[ItemStack]()
-
-    if (returnDrops)
-      ret.add(item)
-    else
-      ItemUtils.throwItemAt(world, x, y, z, item)
-
-    ret
-  }
-
-  override def canDismantle(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean = true
-
-  def tryFluidInteract(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: ForgeDirection): Boolean = {
-    val tileEntity = world.getTileEntity(x, y, z)
+  def tryFluidInteract(world: World, pos: BlockPos, player: EntityPlayer, side: EnumFacing): Boolean = {
+    val tileEntity = world.getTileEntity(pos)
     val activeItem = player.getCurrentEquippedItem
     if (activeItem != null && tileEntity != null && tileEntity.isInstanceOf[IFluidHandler]) {
       val fluidHandler = tileEntity.asInstanceOf[IFluidHandler]
@@ -87,20 +81,20 @@ trait BlockGuiWrenchable extends Block with IDismantleable {
     return false
   }
 
-  override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, xOffs: Float, yOffs: Float, zOffs: Float): Boolean = {
+  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     // If the click can be handled by something else - ignore it
-    if (super.onBlockActivated(world, x, y, z, player, side, xOffs, yOffs, zOffs)) return true
+    if (super.onBlockActivated(world, pos, state, player, side, hitX, hitY, hitZ)) return true
     if (player.isSneaking) {
       val equipped = if (player.getCurrentEquippedItem != null) player.getCurrentEquippedItem.getItem else null
-      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, x, y, z)) {
-        if (!world.isRemote) world.func_147480_a(x, y, z, true) //destroyBlock
+      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, pos)) {
+        if (!world.isRemote) world.destroyBlock(pos, true)
         return true
       }
       return false
-    } else if (tryFluidInteract(world, x, y, z, player, ForgeDirection.values()(side))) {
+    } else if (tryFluidInteract(world, pos, player, side)) {
       return true
     } else {
-      if (!world.isRemote) player.openGui(Gendustry.instance, guiId, world, x, y, z)
+      if (!world.isRemote) player.openGui(Gendustry.instance, guiId, world, pos.getX, pos.getY, pos.getZ)
       return true
     }
   }

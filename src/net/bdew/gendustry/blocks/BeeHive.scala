@@ -11,15 +11,14 @@ package net.bdew.gendustry.blocks
 
 import java.util
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
+import forestry.api.apiculture.{BeeManager, EnumBeeType, IHiveDrop}
 import net.bdew.gendustry.custom.hives.HiveDescription
-import net.bdew.lib.block.SimpleBlock
+import net.bdew.lib.block.BaseBlock
 import net.minecraft.block.material.{MapColor, Material}
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.block.state.IBlockState
 import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
-import net.minecraft.world.{IBlockAccess, World}
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.{BlockPos, ResourceLocation}
+import net.minecraft.world.IBlockAccess
 
 import scala.util.Random
 
@@ -29,64 +28,46 @@ object MaterialBeehive extends Material(MapColor.stoneColor) {
 
 }
 
-case class BeeHive(hiveId: String, sideIconName: String, topIconName: String, bottomIconName: String, color: Int, lightLevel: Int, hive: HiveDescription)
-  extends SimpleBlock("BeeHive" + hiveId, MaterialBeehive) {
+case class BeeHive(hiveId: String, modelLocation: ResourceLocation, color: Int, lightLevel: Int, hive: HiveDescription)
+  extends BaseBlock("BeeHive" + hiveId, MaterialBeehive) {
 
   setHardness(1.0f)
   setHarvestLevel("scoop", 0)
   lightValue = lightLevel
 
-  override def getDrops(world: World, x: Int, y: Int, z: Int, metadata: Int, fortune: Int): util.ArrayList[ItemStack] = {
+  private def makeBee(drop: IHiveDrop, kind: EnumBeeType, ignoble: Boolean, world: IBlockAccess, pos: BlockPos) = {
+    val bee = drop.getBeeType(world, pos)
+    if (ignoble) bee.setIsNatural(false)
+    BeeManager.beeRoot.getMemberStack(bee, kind)
+  }
+
+  override def getDrops(world: IBlockAccess, pos: BlockPos, state: IBlockState, fortune: Int): util.ArrayList[ItemStack] = {
     val ret = new util.ArrayList[ItemStack]()
-    val rng = new Random(world.rand)
 
     if (hive.drops.isEmpty) return ret
 
-    val dropList = rng.shuffle(hive.drops)
+    val dropList = Random.shuffle(hive.drops)
 
     // Select random princess drop
-    dropList.find(drop => rng.nextInt(100) <= drop.getChance(world, x, y, z)) orElse {
-      // if none are selected by RNG - ensure a princess is always dropped by selecting the one with highest chance
-      dropList.sortBy(-_.getChance(world, x, y, z)).headOption
+    dropList.find(drop => Random.nextDouble <= drop.getChance(world, pos, fortune)) orElse {
+      // if none are selected by the rng - ensure a princess is always dropped by selecting the one with highest chance
+      dropList.sortBy(-_.getChance(world, pos, fortune)).headOption
     } map { drop =>
-      ret.add(drop.getPrincess(world, x, y, z, fortune))
+      ret.add(makeBee(drop, EnumBeeType.PRINCESS, Random.nextDouble < drop.getIgnobleChance(world, pos, fortune), world, pos))
     }
 
     // Add random drone
-    dropList.find(drop => rng.nextInt(100) <= drop.getChance(world, x, y, z)) map { drop =>
-      ret.addAll(drop.getDrones(world, x, y, z, fortune))
+    dropList.filter(drop => Random.nextDouble < drop.getChance(world, pos, fortune)) map { drop =>
+      ret.add(makeBee(drop, EnumBeeType.DRONE, false, world, pos))
     }
 
     // And additional drops
-    dropList.find(drop => rng.nextInt(100) <= drop.getChance(world, x, y, z)) map { drop =>
-      ret.addAll(drop.getAdditional(world, x, y, z, fortune))
+    dropList.filter(drop => Random.nextDouble <= drop.getChance(world, pos, fortune)) map { drop =>
+      ret.addAll(drop.getExtraItems(world, pos, fortune))
     }
 
     ret
   }
 
-  var topIcon: IIcon = null
-  var bottomIcon: IIcon = null
-
-  override def getIcon(side: Int, meta: Int): IIcon =
-    if (side == ForgeDirection.UP.ordinal())
-      topIcon
-    else if (side == ForgeDirection.DOWN.ordinal())
-      bottomIcon
-    else
-      blockIcon
-
-  @SideOnly(Side.CLIENT)
-  override def colorMultiplier(w: IBlockAccess, x: Int, y: Int, z: Int): Int = color
-
-  @SideOnly(Side.CLIENT)
-  override def getRenderColor(meta: Int): Int = color
-
-  @SideOnly(Side.CLIENT)
-  override def registerBlockIcons(reg: IIconRegister): Unit = {
-    topIcon = reg.registerIcon(topIconName)
-    bottomIcon = reg.registerIcon(bottomIconName)
-    blockIcon = reg.registerIcon(sideIconName)
-  }
 
 }

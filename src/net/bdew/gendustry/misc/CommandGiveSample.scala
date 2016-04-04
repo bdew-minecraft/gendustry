@@ -12,10 +12,11 @@ package net.bdew.gendustry.misc
 import java.util
 import java.util.Locale
 
-import _root_.forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
+import forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
 import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
 import net.bdew.gendustry.items.GeneSample
 import net.minecraft.command.{CommandBase, CommandException, ICommandSender, WrongUsageException}
+import net.minecraft.util.BlockPos
 
 class CommandGiveSample extends CommandBase {
   def getCommandName = "givesample"
@@ -55,12 +56,12 @@ class CommandGiveSample extends CommandBase {
 
     val sample = GeneSample.newStack(GeneSampleInfo(root, chromosome, allele))
     val entity = player.entityDropItem(sample, 0)
-    entity.delayBeforeCanPickup = 0
+    entity.setPickupDelay(0)
 
-    CommandBase.func_152373_a(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
+    CommandBase.notifyOperators(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
   }
 
-  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String]): util.List[_] = {
+  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
     params.toSeq match {
       case Seq(rootUid) => CommandBase.getListOfStringsMatchingLastWord(params, validRoots: _*)
       case Seq(rootUid, chromosomeName) =>

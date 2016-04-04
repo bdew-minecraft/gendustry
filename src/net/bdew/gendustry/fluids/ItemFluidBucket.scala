@@ -11,36 +11,29 @@ package net.bdew.gendustry.fluids
 
 import java.util.Locale
 
-import cpw.mods.fml.common.eventhandler.Event.Result
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.Misc
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.init.Items
 import net.minecraft.item.{ItemBucket, ItemStack}
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.player.FillBucketEvent
-import net.minecraftforge.fluids.Fluid
+import net.minecraftforge.fluids.{BlockFluidBase, Fluid}
+import net.minecraftforge.fml.common.eventhandler.Event.Result
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class ItemFluidBucket(fluid: Fluid) extends ItemBucket(fluid.getBlock) {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase(Locale.US) + ".bucket")
 
-  setContainerItem(GameRegistry.findItem("minecraft", "bucket"))
+  setContainerItem(Items.bucket)
 
   MinecraftForge.EVENT_BUS.register(this)
 
   @SubscribeEvent
   def onBucketFill(event: FillBucketEvent) {
-    if (event.world.getBlockMetadata(event.target.blockX, event.target.blockY, event.target.blockZ) != 0) return
-    if (event.world.getBlock(event.target.blockX, event.target.blockY, event.target.blockZ) != fluid.getBlock) return
-    event.world.setBlockToAir(event.target.blockX, event.target.blockY, event.target.blockZ)
-    event.result = new ItemStack(this)
-    event.setResult(Result.ALLOW)
-  }
-
-  @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IIconRegister) {
-    itemIcon = reg.registerIcon(Misc.iconName(Gendustry.modId, "bucket", fluid.getName))
+    val state = event.world.getBlockState(event.target.getBlockPos)
+    if (state.getBlock == fluid.getBlock && state.getValue(BlockFluidBase.LEVEL) == 0) {
+      event.world.setBlockToAir(event.target.getBlockPos)
+      event.result = new ItemStack(this)
+      event.setResult(Result.ALLOW)
+    }
   }
 }

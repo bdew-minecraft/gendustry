@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockMutatronAdv extends BaseMachineBlock("mutatron_adv") with HasTE[TileMutatronAdv] with BlockCoverable[TileMutatronAdv] with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockMutatronAdv extends BaseMachineBlock("mutatron_adv") with HasTE[TileMutatronAdv] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileMutatronAdv]
   lazy val guiId = MachineMutatronAdv.guiId
 

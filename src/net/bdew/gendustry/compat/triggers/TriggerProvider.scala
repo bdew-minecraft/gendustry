@@ -16,12 +16,12 @@ import forestry.api.core.IErrorLogicSource
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.power.TileBaseProcessor
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 object TriggerProvider extends ITriggerProvider {
   override def getInternalTriggers(container: IStatementContainer) = null
 
-  override def getExternalTriggers(side: ForgeDirection, tile: TileEntity) = {
+  override def getExternalTriggers(side: EnumFacing, tile: TileEntity) = {
     import scala.collection.JavaConversions._
     val triggers = new util.LinkedList[ITriggerExternal]()
 

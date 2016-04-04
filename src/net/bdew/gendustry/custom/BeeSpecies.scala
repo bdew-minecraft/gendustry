@@ -12,9 +12,8 @@ package net.bdew.gendustry.custom
 import java.util.Locale
 
 import com.mojang.authlib.GameProfile
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import forestry.api.apiculture._
-import forestry.api.core.{EnumHumidity, EnumTemperature}
+import forestry.api.core.{EnumHumidity, EnumTemperature, IModelManager}
 import forestry.api.genetics.{AlleleManager, IAlleleSpecies, IIndividual}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.loader.TuningLoader
@@ -23,8 +22,10 @@ import net.bdew.lib.Misc
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.recipes.gencfg.{ConfigSection, EntryStr}
 import net.bdew.lib.recipes.lootlist.EntryLootList
-import net.minecraft.item.ItemStack
+import net.minecraft.client.resources.model.ModelResourceLocation
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.world.World
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import net.minecraftforge.oredict.OreDictionary
 
 import scala.collection.mutable
@@ -34,18 +35,6 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override val getName = Misc.toLocal("gendustry.bees.species." + ident)
   override val isDominant = cfg.getBoolean("Dominant")
   override val getUID = "gendustry.bee." + ident
-
-  // IAlleleSpecies
-  override val getIconProvider = BeeIconProvider
-
-  val primaryColour = cfg.getColor("PrimaryColor").asRGB
-  val secondaryColour = cfg.getColor("SecondaryColor").asRGB
-
-  override def getIconColour(renderPass: Int) = renderPass match {
-    case 0 => primaryColour
-    case 1 => secondaryColour
-    case _ => 0xFFFFFF
-  }
 
   override def getUnlocalizedName = "gendustry.bees.species." + ident
 
@@ -61,12 +50,6 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     if (Misc.hasLocal("gendustry.bees.species." + ident + ".description"))
       Misc.toLocal("gendustry.bees.species." + ident + ".description")
     else ""
-
-  // IAlleleBeeSpecies
-  override val getEntityTexture = "textures/entity/bees/honeyBee.png"
-  @SideOnly(Side.CLIENT)
-  override def getIcon(kind: EnumBeeType, renderPass: Int) =
-    BeeIconProvider.icons(kind.ordinal())(renderPass)
 
   // no jubilance for now
   override def isJubilant(genome: IBeeGenome, housing: IBeeHousing) = true
@@ -175,6 +158,25 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
     tpl
   }
+
+  // Client stuff
+
+  @SideOnly(Side.CLIENT)
+  override def getModel(kind: EnumBeeType): ModelResourceLocation = BeeModelProvider.getModel(kind)
+
+  @SideOnly(Side.CLIENT)
+  override def registerModels(item: Item, manager: IModelManager): Unit = BeeModelProvider.registerModels(item, manager)
+
+  val primaryColour = cfg.getColor("PrimaryColor").asRGB
+  val secondaryColour = cfg.getColor("SecondaryColor").asRGB
+
+  override def getSpriteColour(renderPass: Int): Int = renderPass match {
+    case 0 => primaryColour
+    case 1 => secondaryColour
+    case _ => 0xFFFFFF
+  }
+
+  override def getEntityTexture: String = null
 }
 
 

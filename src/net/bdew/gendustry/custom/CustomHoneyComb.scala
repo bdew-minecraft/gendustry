@@ -11,27 +11,19 @@ package net.bdew.gendustry.custom
 
 import java.util
 
-import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
-import net.bdew.lib.items.SimpleItem
+import net.bdew.lib.items.BaseItem
 import net.bdew.lib.recipes.gencfg.ConfigSection
-import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraft.util.IIcon
 
-object CustomHoneyComb extends SimpleItem("HoneyComb") {
+object CustomHoneyComb extends BaseItem("HoneyComb") {
 
   case class CombInfo(name: String, color1: Int, color2: Int)
 
-  var icons: Array[IIcon] = null
-
   setHasSubtypes(true)
   setMaxDamage(-1)
-
-  override def requiresMultipleRenderPasses() = true
 
   val data = (Tuning.getOrAddSection("HoneyCombs").filterType(classOf[ConfigSection]) map {
     case (ident, cfg) => cfg.getInt("ID") -> CombInfo(
@@ -41,15 +33,7 @@ object CustomHoneyComb extends SimpleItem("HoneyComb") {
     )
   }).toMap
 
-  for ((id, comb) <- data)
-    GameRegistry.registerCustomItemStack("HoneyComb." + comb.name, new ItemStack(this, 1, id))
-
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
-
-  override def getIconFromDamageForRenderPass(damage: Int, pass: Int) = pass match {
-    case 0 => icons(1)
-    case _ => icons(0)
-  }
 
   override def getColorFromItemStack(stack: ItemStack, pass: Int): Int = {
     val data = getData(stack).getOrElse(return 0)
@@ -59,20 +43,11 @@ object CustomHoneyComb extends SimpleItem("HoneyComb") {
     }
   }
 
-  override def getSubItems(item: Item, par2CreativeTabs: CreativeTabs, list: util.List[_]) {
-    val l = list.asInstanceOf[util.List[ItemStack]]
+  override def getSubItems(item: Item, tab: CreativeTabs, subItems: util.List[ItemStack]): Unit = {
     for ((id, name) <- data)
-      l.add(new ItemStack(this, 1, id))
+      subItems.add(new ItemStack(this, 1, id))
   }
 
   override def getUnlocalizedName(stack: ItemStack) =
     getData(stack).map(x => "%s.honeycomb.%s".format(Gendustry.modId, x.name)).getOrElse("invalid")
-
-  @SideOnly(Side.CLIENT)
-  override def registerIcons(reg: IIconRegister) {
-    icons = Array(
-      reg.registerIcon("forestry:beeCombs.0"),
-      reg.registerIcon("forestry:beeCombs.1")
-    )
-  }
 }

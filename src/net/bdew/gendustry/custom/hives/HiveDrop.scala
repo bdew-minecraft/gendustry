@@ -10,34 +10,23 @@
 package net.bdew.gendustry.custom.hives
 
 import java.util
-import java.util.Collections
 
 import forestry.api.apiculture._
-import net.bdew.gendustry.compat.ForestryHelper
 import net.minecraft.item.ItemStack
-import net.minecraft.world.World
+import net.minecraft.util.BlockPos
+import net.minecraft.world.IBlockAccess
 
-case class HiveDrop(chance: Int, species: IAlleleBeeSpecies, ignobleShare: Float, additional: List[ItemStack]) extends IHiveDrop {
-  def getMember(kind: EnumBeeType, natural: Boolean) = {
-    val beeRoot = ForestryHelper.getRoot("Bees").asInstanceOf[IBeeRoot]
-    val tpl = beeRoot.getTemplate(species.getUID)
-    val individual = beeRoot.templateAsIndividual(tpl)
-    individual.setIsNatural(natural)
-    beeRoot.getMemberStack(individual, kind.ordinal())
-  }
+case class HiveDrop(chance: Double, species: IAlleleBeeSpecies, ignobleShare: Double, additional: List[ItemStack]) extends IHiveDrop {
+  val beeRoot = BeeManager.beeRoot
+  val tpl = beeRoot.getTemplate(species.getUID)
+  val individual = beeRoot.templateAsIndividual(tpl)
 
-  override def getPrincess(world: World, x: Int, y: Int, z: Int, fortune: Int): ItemStack = {
-    getMember(EnumBeeType.PRINCESS, world.rand.nextFloat() >= ignobleShare)
-  }
+  override def getBeeType(world: IBlockAccess, pos: BlockPos): IBee = individual
+  override def getIgnobleChance(world: IBlockAccess, pos: BlockPos, fortune: Int): Double = ignobleShare
+  override def getChance(world: IBlockAccess, pos: BlockPos, fortune: Int): Double = chance
 
-  override def getDrones(world: World, x: Int, y: Int, z: Int, fortune: Int): util.Collection[ItemStack] = {
-    return Collections.singletonList(getMember(EnumBeeType.DRONE, true))
-  }
-
-  override def getAdditional(world: World, x: Int, y: Int, z: Int, fortune: Int): util.Collection[ItemStack] = {
+  override def getExtraItems(world: IBlockAccess, pos: BlockPos, fortune: Int): util.Collection[ItemStack] = {
     import scala.collection.JavaConversions._
     additional.map(_.copy())
   }
-
-  override def getChance(world: World, x: Int, y: Int, z: Int): Int = chance
 }
