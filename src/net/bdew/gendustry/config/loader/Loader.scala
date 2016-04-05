@@ -14,8 +14,9 @@ import forestry.api.recipes.RecipeManagers
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.config.Tuning
-import net.bdew.gendustry.custom.{CustomFlowerAlleles, CustomHives}
+import net.bdew.gendustry.custom.{CustomFlowerAlleles, CustomHives, CustomHoneyComb, CustomHoneyDrop}
 import net.bdew.gendustry.fluids.{LiquidDNASources, MutagenSources, ProteinSources}
+import net.bdew.gendustry.machines.apiary.upgrades.{ItemApiaryUpgrade, Upgrades}
 import net.bdew.lib.recipes._
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.lootlist.LootListLoader
@@ -38,6 +39,25 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
       Gendustry.logDebug("meta/damage is unset in %s, defaulting to 0", ref)
     }
     resolved
+  }
+
+  override def getConcreteStack(s: StackRef, cnt: Int): ItemStack = s match {
+    case StackApiaryUpgrade(name: String) =>
+      Upgrades.map.find(_._2.name == name) map { case (id, upgrade) =>
+        new ItemStack(ItemApiaryUpgrade, cnt, id)
+      } getOrElse error("Apiary upgrade not found: ", name)
+
+    case StackHoneyComb(name: String) =>
+      CustomHoneyComb.data.find(_._2.name == name) map { case (id, info) =>
+        new ItemStack(CustomHoneyComb, cnt, id)
+      } getOrElse error("Honey comb not found: ", name)
+
+    case StackHoneyDrop(name: String) =>
+      CustomHoneyDrop.data.find(_._2.name == name) map { case (id, info) =>
+        new ItemStack(CustomHoneyDrop, cnt, id)
+      } getOrElse error("Honey drop not found: ", name)
+
+    case _ => super.getConcreteStack(s, cnt)
   }
 
   override def resolveCondition(cond: Condition) = cond match {

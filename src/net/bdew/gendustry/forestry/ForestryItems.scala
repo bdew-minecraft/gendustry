@@ -13,6 +13,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 
 object ForestryItems {
   lazy val honeydew = GameRegistry.findItem("Forestry", "honeydew")
-  lazy val canEmpty = GameRegistry.findItem("Forestry", "canEmpty")
+  lazy val canEmpty = GameRegistry.findItem("Forestry", "can.empty")
 }
 

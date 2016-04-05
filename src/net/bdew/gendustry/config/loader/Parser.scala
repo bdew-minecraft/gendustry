@@ -83,4 +83,12 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser w
 
   def cndHaveRoot = "HaveForestryModule" ~> str ^^ CndHaveRoot
   override def condition = cndHaveRoot | super.condition
+
+  // === StackRef ===
+
+  def specApiaryUpgrade = "ApiaryUpgrade" ~> ":" ~> str ^^ StackApiaryUpgrade
+  def specHoneyComb = "HoneyComb" ~> ":" ~> str ^^ StackHoneyComb
+  def specHoneyDrop = "HoneyDrop" ~> ":" ~> str ^^ StackHoneyDrop
+
+  override def spec = specApiaryUpgrade | specHoneyComb | specHoneyDrop | super.spec
 }

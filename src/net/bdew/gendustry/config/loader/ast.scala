@@ -61,3 +61,10 @@ case class MReqBiome(biome: String) extends MutationRequirement
 
 case class CndHaveRoot(name: String) extends Condition
 
+// === StackRefs ===
+
+case class StackApiaryUpgrade(name: String) extends StackRef
+
+case class StackHoneyComb(name: String) extends StackRef
+
+case class StackHoneyDrop(name: String) extends StackRef
