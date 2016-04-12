@@ -27,8 +27,8 @@ item.gendustry.GeneSampleBlank.name=Échantillon de gène vide
 item.gendustry.Waste.name=Déchets génétiques
 item.gendustry.grafter.name=Escroc industriel
 item.gendustry.scoop.name=Scooporator MX200 Turbo
-item.gendustry.ImportCover.name=Couverture d'inport d'élément
-item.gendustry.EjectCover.name=Couverture d'éjection d'élément
+item.gendustry.ImportCover.name=Couverture d'import d'élément
+item.gendustry.EjectCover.name=Couverture d'export d'élément
 item.gendustry.PollenKit.name=Kit de ramassage du pollen
 
 # ==== FLUIDS ====
@@ -45,7 +45,7 @@ tile.gendustry.protein.name=Protéine
 
 item.gendustry.mutagen.bucket.name=Seau de mutagène
 item.gendustry.mutagen.can.name=Cannette de mutagène
-item.gendustry.liquiddna.bucket.name=seau d'ADN liquide
+item.gendustry.liquiddna.bucket.name=Seau d'ADN liquide
 item.gendustry.liquiddna.can.name=Cannette d'ADN liquide
 item.gendustry.protein.bucket.name=Seau de protéine
 item.gendustry.protein.can.name=Cannette de protéine
@@ -57,7 +57,7 @@ gendustry.upgrades.prod.name=Amélioration de production
 gendustry.upgrades.life.name=Amélioration de longévité
 gendustry.upgrades.flowering.name=Amélioration de floraison
 gendustry.upgrades.territory.name=Amélioration de territoire 
-gendustry.upgrades.sealing.name=Amélioration d'étancheité
+gendustry.upgrades.sealing.name=Amélioration d'étanchéité
 gendustry.upgrades.light.name=Amélioration de lumière
 gendustry.upgrades.sky.name=Amélioration de ciel ouvert
 gendustry.upgrades.hell.name=Amélioration d'émulation infernale
@@ -75,12 +75,12 @@ gendustry.upgrades.stabilizer.name=Amélioration de stabilisation génétique
 
 # ==== GUI AND TOOLTIPS ====
 
-gendustry.label.template.crafting=Les échantillons génétiques peuvent être ajouté à un modèle. Combinez-les dan n'importe quel établi. De multiples échantillons peuvent être ajouté d'un coup.
+gendustry.label.template.crafting=Les échantillons génétiques peuvent être ajouté à un modèle. Combinez-les dans n'importe quel établi. De multiples échantillons peuvent être ajouté d'un coup.
 
 gendustry.label.charges=Charges: %s
 gendustry.label.select=Sélection:
 gendustry.label.status=Statut: %s
-gendustry.label.control=Controle: %s
+gendustry.label.control=Contrôle: %s
 
 gendustry.label.breeding=Reproduction
 gendustry.label.working=Travail
@@ -97,21 +97,21 @@ gendustry.label.erase=Placez au four pour effacer le contenu génétique
 gendustry.label.recipes=Cliquez pour voir les recettes
 gendustry.label.consume=Chance de consommer: %s%%
 gendustry.label.mutatron.death=Chance de mourir (ignoble): %s%%
-gendustry.label.mutatron.degrade=Cahnce de dégrader (d'origine): %s%%
+gendustry.label.mutatron.degrade=Chance de dégrader (d'origine): %s%%
 
 gendustry.label.mod.automated=* Automatisation
 gendustry.label.mod.biome=* Ignore le biome: %s
-gendustry.label.mod.sealed=* Protection pluie
+gendustry.label.mod.sealed=* Protection contre la pluie
 gendustry.label.mod.selflighted=* Éclairage interne
 gendustry.label.mod.sky=* Simulation de ciel ouvert
 gendustry.label.mod.energy=* Consomation d'énergie
 gendustry.label.mod.lifespan=* Longévité
 gendustry.label.mod.flowering=* Floraison et pollinisation
-gendustry.label.mod.geneticDecay=* Genetic Decay
+gendustry.label.mod.geneticDecay=* Dégradation génétique
 gendustry.label.mod.mutation=* Chance de mutation
 gendustry.label.mod.production=* Production
 gendustry.label.mod.territory=* Territoir
-gendustry.label.mod.sieve=* Récolte de polen
+gendustry.label.mod.sieve=* Récolte de pollen
 gendustry.label.mod.temperature=* Température
 gendustry.label.mod.humidity=* Humidité
 
@@ -124,16 +124,16 @@ gendustry.label.template.rootBees=Peut être appliqué à une abeille
 gendustry.label.template.rootTrees=Peut être appliqué à une pousse
 gendustry.label.template.rootButterflies=Peut être appliqué à un papillon
 gendustry.label.template.rootFlowers=Peut être appliqué à une fleur
-gendustry.label.template.blank=L'échantillon de gène paut être ajouté
+gendustry.label.template.blank=L'échantillon de gène peut être ajouté
 gendustry.label.template.missing=Manquant
 gendustry.label.template.chromosomes=%s/%s Chromosomes
 
 gendustry.rsmode.always=Toujours actif
 gendustry.rsmode.never=Désactivé
 gendustry.rsmode.rs_on=Actif sur redstone
-gendustry.rsmode.rs_off=Désactif sur redstone
+gendustry.rsmode.rs_off=Inactif sur redstone
 
-gendustry.label.shift=<Appuyez MAJ pour plus d'info>
+gendustry.label.shift=<Appuyez sur MAJ pour plus d'info>
 
 # ==== CHROMOSOMES (should match forestry) ====
 
@@ -144,7 +144,7 @@ gendustry.chromosome.YIELD=Rendement
 gendustry.chromosome.HEIGHT=Hauteur
 gendustry.chromosome.GROWTH=Growth
 gendustry.chromosome.FLOWERING=Floraison
-gendustry.chromosome.METABOLISM=Metabolisme
+gendustry.chromosome.METABOLISM=Métabolisme
 gendustry.chromosome.LIFESPAN=Longévité
 gendustry.chromosome.TERRITORY=Territoir
 gendustry.chromosome.FERTILITY=Fertilité
@@ -180,7 +180,7 @@ gendustry.trigger.power25=Puissance >= 25%
 gendustry.trigger.power50=Puissance >= 50%
 gendustry.trigger.power75=Puissance >= 75%
 gendustry.trigger.power100=Puissance pleine
-gendustry.trigger.working=Machine travaillant
+gendustry.trigger.working=Machine en marche
 
 # ==== COMMANDS ====
 gendustry.givetemplate.usage=/givetemplate <uid>
