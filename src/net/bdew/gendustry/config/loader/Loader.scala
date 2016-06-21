@@ -9,7 +9,6 @@
 
 package net.bdew.gendustry.config.loader
 
-import buildcraft.core.recipes.AssemblyRecipeManager
 import forestry.api.recipes.RecipeManagers
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.compat.ForestryHelper
@@ -87,18 +86,19 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
         Gendustry.logDebug("Added Protein source %s -> %d mb", x, mb)
       }
 
-    case RsAssembly(rec, id, power, out, cnt) =>
-      Gendustry.logDebug("Adding assembly recipe: %s + %d mj => %s * %d", rec, power, out, cnt)
-      val outStack = getConcreteStack(out, cnt)
-      val stacks = rec.map {
-        case (c, n) =>
-          val s = getConcreteStackNoWildcard(currCharMap(c), n)
-          Gendustry.logDebug("%s -> %s", c, s)
-          s
-      }
-      Gendustry.logDebug("Output: %s", outStack)
-      AssemblyRecipeManager.INSTANCE.addRecipe(id, power, outStack, stacks: _*)
-      Gendustry.logDebug("Done")
+    // TODO: Reenable when BC is available
+    //    case RsAssembly(rec, id, power, out, cnt) =>
+    //      Gendustry.logDebug("Adding assembly recipe: %s + %d mj => %s * %d", rec, power, out, cnt)
+    //      val outStack = getConcreteStack(out, cnt)
+    //      val stacks = rec.map {
+    //        case (c, n) =>
+    //          val s = getConcreteStackNoWildcard(currCharMap(c), n)
+    //          Gendustry.logDebug("%s -> %s", c, s)
+    //          s
+    //      }
+    //      Gendustry.logDebug("Output: %s", outStack)
+    //      AssemblyRecipeManager.INSTANCE.addRecipe(id, power, outStack, stacks: _*)
+    //      Gendustry.logDebug("Done")
 
     case RsCentrifuge(stack, out, time) =>
       Gendustry.logDebug("Adding centrifuge recipe: %s => %s", stack, out)

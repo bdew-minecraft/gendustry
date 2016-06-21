@@ -81,15 +81,16 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     return false
   }
 
-  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
+  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, heldItem: ItemStack, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     // If the click can be handled by something else - ignore it
-    if (super.onBlockActivated(world, pos, state, player, side, hitX, hitY, hitZ)) return true
+    if (super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ)) return true
     if (player.isSneaking) {
-      val equipped = if (player.getCurrentEquippedItem != null) player.getCurrentEquippedItem.getItem else null
-      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, pos)) {
-        if (!world.isRemote) world.destroyBlock(pos, true)
-        return true
-      }
+      val equipped = if (player.getActiveItemStack != null) player.getActiveItemStack.getItem else null
+      // Todo: Re-enable when BC is available
+//      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, pos)) {
+//        if (!world.isRemote) world.destroyBlock(pos, true)
+//        return true
+//      }
       return false
     } else if (tryFluidInteract(world, pos, player, side)) {
       return true
