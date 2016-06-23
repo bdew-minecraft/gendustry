@@ -19,7 +19,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.7"
     }
 }
@@ -86,9 +86,9 @@ repositories {
 
 dependencies {
     compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
-    compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
+//    compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
-//    compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
+    compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
 
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
     deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
