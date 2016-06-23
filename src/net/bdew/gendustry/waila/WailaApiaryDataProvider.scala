@@ -16,12 +16,12 @@ import net.bdew.gendustry.items.covers.ErrorSensorCover
 import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
   override def getBodyStrings(target: TileApiary, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
     var strings = target.errorConditions.toList.sortBy(_.getID) map { err =>
-      EnumChatFormatting.RED + Misc.toLocal("for." + err.getDescription)
+      TextFormatting.RED + Misc.toLocal("for." + err.getUnlocalizedDescription)
     }
     strings :+= Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase(Locale.US)))
 
@@ -32,9 +32,9 @@ object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
         ErrorSensorCover.getErrorSensor(cover) foreach { sensor =>
           strings :+= "%s (%s%s%s)".format(
             Misc.toLocalF("gendustry.cover.label", cover.getDisplayName),
-            EnumChatFormatting.YELLOW,
+            TextFormatting.YELLOW,
             Misc.toLocal(sensor.getUnLocalizedName),
-            EnumChatFormatting.RESET
+            TextFormatting.RESET
           )
         }
       } else {

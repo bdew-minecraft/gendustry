@@ -1,7 +1,7 @@
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen_producer.name=Mutagen Producer
-tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.MutagenProducer.name=Mutagen Producer
+tile.gendustry.Mutatron.name=Mutatron
 tile.gendustry.mutatron_adv.name=Advanced Mutatron
 tile.gendustry.apiary.name=Industrial Apiary
 tile.gendustry.imprinter.name=Genetic Imprinter
@@ -278,8 +278,8 @@ itemGroup.bdew.hives=Custom Beehives
 
 gendustry.errorstate.ok=No error
 
-for.gendustry.errorstate.disabled.description=Disabled
-for.gendustry.errorstate.disabled.help=The machine is disabled by it's configuration
+gendustry.errorstate.disabled.description=Disabled
+gendustry.errorstate.disabled.help=The machine is disabled by it's configuration
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Empty

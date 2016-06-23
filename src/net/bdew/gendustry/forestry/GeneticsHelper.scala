@@ -22,9 +22,8 @@ import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.minecraft.block.state.IBlockState
-import net.minecraft.item.ItemStack
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameRegistry
 
 object GeneticsHelper {
   val random = new Random
@@ -231,17 +230,12 @@ object GeneticsHelper {
   def getMutationSpecies(m: IMutation) =
     m.getTemplate()(m.getRoot.getKaryotypeKey.ordinal()).asInstanceOf[IAlleleSpecies]
 
-  lazy val leafBlocks = Set(GameRegistry.findBlock("minecraft", "leaves"), GameRegistry.findBlock("minecraft", "leaves2"))
-
   def getErsatzPollen(state: IBlockState): Option[IIndividual] = {
-    if (leafBlocks.contains(state.getBlock)) {
-      val fixedMeta = state.getBlock.damageDropped(state)
-      import scala.collection.JavaConversions._
-      AlleleManager.ersatzSaplings.find({ case (stack, _) => stack.getItemDamage == fixedMeta }) map (_._2)
-    } else None
+    val item = Item.getItemFromBlock(state.getBlock)
+    val stack = new ItemStack(item, 1, state.getBlock.damageDropped(state))
+    Option(AlleleManager.saplingTranslation.get(item)) map (_.getTreeFromSapling(stack))
   }
 
-  // Because *insert sarcastic remark*
   def safeMutationConditions(m: IMutation) =
     try {
       import scala.collection.JavaConversions._

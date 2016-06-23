@@ -40,25 +40,28 @@ object ErrorSensorAnyError extends ErrorSensor {
 case class ErrorSensorForestry(state: IErrorState) extends ErrorSensor {
   override def id: String = state.getUniqueName
   override def isActive(te: IErrorLogicSource): Boolean = te.getErrorLogic.contains(state)
-  override def getUnLocalizedName: String = "for." + state.getDescription
+  override def getUnLocalizedName: String = "for." + state.getUnlocalizedDescription
 }
 
 object ErrorSensors {
   val errorStateRegistry = ForestryAPI.errorStateRegistry
 
   val sensors = List(ErrorSensorAnyError, ErrorSensorNoError) ++ (List(
-    "Forestry:invalidBiome",
-    "Forestry:isRaining",
-    "Forestry:notGloomy",
-    "Forestry:notLucid",
-    "Forestry:notDay",
-    "Forestry:notNight",
-    "Forestry:noFlower",
-    "Forestry:noQueen",
-    "Forestry:noDrone",
-    "Forestry:noSky",
-    "Forestry:noSpace",
-    "Forestry:noPower"
+    "forestry:tooHot",
+    "forestry:tooCold",
+    "forestry:tooArid",
+    "forestry:tooHumid",
+    "forestry:isRaining",
+    "forestry:notGloomy",
+    "forestry:notLucid",
+    "forestry:notDay",
+    "forestry:notNight",
+    "forestry:noFlower",
+    "forestry:noQueen",
+    "forestry:noDrone",
+    "forestry:noSky",
+    "forestry:noSpace",
+    "forestry:noPower"
   ) map (name => ErrorSensorForestry(errorStateRegistry.getErrorState(name))))
 
   val idMap = sensors.map(x => x.id -> x).toMap

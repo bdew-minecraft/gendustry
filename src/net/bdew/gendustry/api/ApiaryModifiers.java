@@ -9,7 +9,7 @@
 
 package net.bdew.gendustry.api;
 
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 
 /**
  * Stores current modifiers from all upgrades in an apiary
@@ -75,7 +75,7 @@ public class ApiaryModifiers {
     /**
      * If set - overrides biome as seen by jubilance checks, etc.
      */
-    public BiomeGenBase biomeOverride = null;
+    public Biome biomeOverride = null;
 
     /**
      * Energy use modifier, multiplicative
@@ -83,12 +83,12 @@ public class ApiaryModifiers {
     public float energy = 1;
 
     /**
-     * Temperature modifier, additive, same units as {@link BiomeGenBase#temperature}
+     * Temperature modifier, additive, same units as {@link Biome#getTemperature()}
      */
     public float temperature = 0;
 
     /**
-     * Humidity modifier, additive, same units as {@link BiomeGenBase#rainfall}
+     * Humidity modifier, additive, same units as {@link Biome#getRainfall()}
      */
     public float humidity = 0;
 }

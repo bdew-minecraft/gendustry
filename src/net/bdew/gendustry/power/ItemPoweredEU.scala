@@ -28,11 +28,6 @@ trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
     super.useCharge(stack, uses, player)
   }
 
-  def canProvideEnergy(itemStack: ItemStack) = false
-  override def getMaxCharge(itemStack: ItemStack) = (maxCharge * ratio).round
-  override def getTier(itemStack: ItemStack) = 2
-  override def getTransferLimit(itemStack: ItemStack) = 2048
-
   @Optional.Method(modid = PowerProxy.IC2_MOD_ID)
   override def getManager(itemStack: ItemStack): IElectricItemManager = manager
 }

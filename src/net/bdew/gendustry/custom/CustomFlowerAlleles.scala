@@ -57,7 +57,7 @@ object CustomFlowerAlleles {
         if (item.getItemDamage == OreDictionary.WILDCARD_VALUE) {
           flowerRegistry.registerAcceptableFlower(block, flowerType)
         } else {
-          flowerRegistry.registerAcceptableFlower(block, item.getItemDamage, flowerType)
+          flowerRegistry.registerAcceptableFlower(block.getStateFromMeta(item.getItemDamage), flowerType)
         }
       }
 
@@ -70,9 +70,9 @@ object CustomFlowerAlleles {
         if (block == null)
           Gendustry.logWarn("Definition %s in flower allele %s doesn't refer to a block, it will be ignored", stackRef, id)
         else if (item.getItemDamage == OreDictionary.WILDCARD_VALUE)
-          flowerRegistry.registerPlantableFlower(block, 0, weight, flowerType)
+          flowerRegistry.registerPlantableFlower(block.getDefaultState, weight, flowerType)
         else
-          flowerRegistry.registerPlantableFlower(block, item.getItemDamage, weight, flowerType)
+          flowerRegistry.registerPlantableFlower(block.getStateFromMeta(item.getItemDamage), weight, flowerType)
       }
     }
     definitions = List.empty

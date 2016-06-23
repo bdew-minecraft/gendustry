@@ -23,7 +23,7 @@ import net.bdew.gendustry.custom.hives._
 import net.bdew.lib.Misc
 import net.minecraft.block.Block
 import net.minecraft.item.ItemBlock
-import net.minecraft.world.biome.BiomeGenBase
+import net.minecraft.world.biome.Biome
 import net.minecraftforge.oredict.OreDictionary
 
 object CustomHives {
@@ -61,8 +61,10 @@ object CustomHives {
   }
 
   def registerHives(): Unit = {
+    import scala.collection.JavaConversions._
 
-    val validBiomes = BiomeGenBase.getBiomeGenArray.filterNot(null == _).map(x => x.biomeName.toLowerCase(Locale.US) -> x).toMap
+    val validBiomes = Biome.REGISTRY.map(x => x.getRegistryName.toString.toLowerCase(Locale.US) -> x).toMap
+
 
     for (definition <- definitions) {
       Gendustry.logDebug("Processing Beehive definition: %s", definition)

@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "gendustry:blocks/sampler/top",
+      "bottom": "gendustry:blocks/sampler/bottom",
+      "side": "gendustry:blocks/sampler/side"
+    },
+    "model": "gendustry:sided_covers.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

@@ -11,20 +11,26 @@ package net.bdew.gendustry.fluids
 
 import net.bdew.gendustry.Gendustry
 import net.minecraft.block.material.Material
-import net.minecraft.util.BlockPos
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
-class BlockFluid(val fluid: Fluid, val ownIcons: Boolean) extends BlockFluidClassic(fluid, Material.water) {
+class BlockFluid(val fluid: Fluid, val ownIcons: Boolean) extends BlockFluidClassic(fluid, Material.WATER) {
   setRegistryName(Gendustry.modId, fluid.getName)
 
   override def canDisplace(world: IBlockAccess, pos: BlockPos): Boolean = {
-    if (world.getBlockState(pos).getBlock.getMaterial.isLiquid) return false
-    return super.canDisplace(world, pos)
+    val state = world.getBlockState(pos)
+    if (state.getBlock.getMaterial(state).isLiquid)
+      false
+    else
+      super.canDisplace(world, pos)
   }
 
   override def displaceIfPossible(world: World, pos: BlockPos): Boolean = {
-    if (world.getBlockState(pos).getBlock.getMaterial.isLiquid) return false
-    return super.displaceIfPossible(world, pos)
+    val state = world.getBlockState(pos)
+    if (state.getBlock.getMaterial(state).isLiquid)
+      false
+    else
+      super.displaceIfPossible(world, pos)
   }
 }

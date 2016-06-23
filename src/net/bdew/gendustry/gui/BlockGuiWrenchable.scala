@@ -9,13 +9,14 @@
 
 package net.bdew.gendustry.gui
 
-import buildcraft.api.tools.IToolWrench
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.items.ItemUtils
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.item.ItemStack
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumFacing, EnumHand}
 import net.minecraft.world.World
 import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
@@ -53,7 +54,7 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
 
   def tryFluidInteract(world: World, pos: BlockPos, player: EntityPlayer, side: EnumFacing): Boolean = {
     val tileEntity = world.getTileEntity(pos)
-    val activeItem = player.getCurrentEquippedItem
+    val activeItem = player.getActiveItemStack
     if (activeItem != null && tileEntity != null && tileEntity.isInstanceOf[IFluidHandler]) {
       val fluidHandler = tileEntity.asInstanceOf[IFluidHandler]
       if (FluidContainerRegistry.isEmptyContainer(activeItem)) {
@@ -87,10 +88,10 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     if (player.isSneaking) {
       val equipped = if (player.getActiveItemStack != null) player.getActiveItemStack.getItem else null
       // Todo: Re-enable when BC is available
-//      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, pos)) {
-//        if (!world.isRemote) world.destroyBlock(pos, true)
-//        return true
-//      }
+      //      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, pos)) {
+      //        if (!world.isRemote) world.destroyBlock(pos, true)
+      //        return true
+      //      }
       return false
     } else if (tryFluidInteract(world, pos, player, side)) {
       return true

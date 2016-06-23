@@ -41,7 +41,7 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
     if (mods.isAutomated)
       list.add(Misc.toLocal(Gendustry.modId + ".label.mod.automated"))
     if (mods.biomeOverride != null)
-      list.add(Misc.toLocalF(Gendustry.modId + ".label.mod.biome", mods.biomeOverride.biomeName))
+      list.add(Misc.toLocalF(Gendustry.modId + ".label.mod.biome", mods.biomeOverride.getBiomeName))
     if (mods.isSealed)
       list.add(Misc.toLocal(Gendustry.modId + ".label.mod.sealed"))
     if (mods.isSelfLighted)

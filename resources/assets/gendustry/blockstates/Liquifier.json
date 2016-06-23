@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "gendustry:blocks/liquifier/top",
+      "bottom": "gendustry:blocks/liquifier/bottom",
+      "side": "gendustry:blocks/liquifier/side"
+    },
+    "model": "gendustry:sided_covers.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

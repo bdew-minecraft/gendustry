@@ -9,10 +9,11 @@
 
 package net.bdew.gendustry.forestry
 
-import net.minecraftforge.fml.common.registry.GameRegistry
+import net.minecraft.item.Item
+import net.minecraft.util.ResourceLocation
 
 object ForestryItems {
-  lazy val honeydew = GameRegistry.findItem("Forestry", "honeydew")
-  lazy val canEmpty = GameRegistry.findItem("Forestry", "can.empty")
+  lazy val honeydew = Item.REGISTRY.getObject(new ResourceLocation("forestry", "honeydew"))
+  lazy val canEmpty = Item.REGISTRY.getObject(new ResourceLocation("forestry", "can"))
 }
 

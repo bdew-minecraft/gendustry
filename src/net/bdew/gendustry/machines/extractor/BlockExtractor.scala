@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockExtractor extends BaseMachineBlock("extractor") with HasTE[TileExtractor] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockExtractor extends BaseMachineBlock("Extractor") with HasTE[TileExtractor] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileExtractor]
   lazy val guiId = MachineExtractor.guiId
 

@@ -17,7 +17,8 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{BlockPos, EnumChatFormatting}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
 
 class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
@@ -50,7 +51,7 @@ class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
       case e: Throwable =>
         Gendustry.logWarn("Error in waila handler: %s", e.toString)
         e.printStackTrace()
-        tip.add("[%s%s%s]".format(EnumChatFormatting.RED, e.toString, EnumChatFormatting.RESET))
+        tip.add("[%s%s%s]".format(TextFormatting.RED, e.toString, TextFormatting.RESET))
     }
     tip
   }
@@ -65,7 +66,7 @@ class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
       case e: Throwable =>
         Gendustry.logWarn("Error in waila handler: %s", e.toString)
         e.printStackTrace()
-        tip.add("[%s%s%s]".format(EnumChatFormatting.RED, e.toString, EnumChatFormatting.RESET))
+        tip.add("[%s%s%s]".format(TextFormatting.RED, e.toString, TextFormatting.RESET))
     }
     tip
   }
@@ -80,7 +81,7 @@ class BaseDataProvider[T](cls: Class[T]) extends IWailaDataProvider {
       case e: Throwable =>
         Gendustry.logWarn("Error in waila handler: %s", e.toString)
         e.printStackTrace()
-        tip.add("[%s%s%s]".format(EnumChatFormatting.RED, e.toString, EnumChatFormatting.RESET))
+        tip.add("[%s%s%s]".format(TextFormatting.RED, e.toString, TextFormatting.RESET))
     }
     tip
   }

@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "gendustry:blocks/mutatron/top",
+      "bottom": "gendustry:blocks/mutatron/bottom",
+      "side": "gendustry:blocks/mutatron/side"
+    },
+    "model": "gendustry:sided_covers.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

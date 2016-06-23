@@ -1,8 +1,8 @@
 # author Team MMKP(puyo061 , whffktkw ,clayweb)
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen_producer.name=뮤타젠 생성기
-tile.gendustry.mutatron.name=뮤타트론
+tile.gendustry.MutagenProducer.name=뮤타젠 생성기
+tile.gendustry.Mutatron.name=뮤타트론
 tile.gendustry.mutatron_adv.name=고급 뮤타트론
 tile.gendustry.apiary.name=산업 양봉기
 tile.gendustry.imprinter.name=유전자 각인기
@@ -259,8 +259,8 @@ itemGroup.bdew.gendustry=젠더스트리
 itemGroup.bdew.templates=유전자 탬플릿
 itemGroup.bdew.samples=유전자 샘플
 
-for.gendustry.errorstate.disabled.description=비활성화
-for.gendustry.errorstate.disabled.help=이 기계는 컨피그 상 비활성화 되어있습니다.
+gendustry.errorstate.disabled.description=비활성화
+gendustry.errorstate.disabled.help=이 기계는 컨피그 상 비활성화 되어있습니다.
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=비어있음

@@ -13,7 +13,7 @@ import net.bdew.gendustry.gui.Textures
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect, Texture}
 import net.bdew.lib.{Client, Misc}
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 import scala.collection.mutable
 
@@ -36,7 +36,7 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
     tip ++= apiary.errorConditions.toList.sortBy(_.getID) map { err =>
-      EnumChatFormatting.RED + Misc.toLocal("for." + err.getDescription)
+      TextFormatting.RED + Misc.toLocal(err.getUnlocalizedDescription)
     }
     tip ++= apiary.getStats
   }

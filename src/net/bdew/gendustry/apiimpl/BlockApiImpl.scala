@@ -13,7 +13,7 @@ import net.bdew.gendustry.api.blocks.IBlockAPI
 import net.bdew.gendustry.machines.advmutatron.TileMutatronAdv
 import net.bdew.gendustry.machines.apiary.TileApiary
 import net.bdew.gendustry.machines.mutatron.TileMutatron
-import net.minecraft.util.BlockPos
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 object BlockApiImpl extends IBlockAPI {

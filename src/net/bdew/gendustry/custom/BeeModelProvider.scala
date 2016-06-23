@@ -4,26 +4,28 @@ import java.util.Locale
 
 import forestry.api.apiculture.{EnumBeeType, IBeeModelProvider}
 import forestry.api.core.IModelManager
-import forestry.apiculture.items.ItemBeeGE
-import net.minecraft.client.resources.model.ModelResourceLocation
-import net.minecraft.item.Item
-import net.minecraft.util.ResourceLocation
+import forestry.api.genetics.AlleleManager
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object BeeModelProvider extends IBeeModelProvider {
+  lazy val beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees")
+
   @SideOnly(Side.CLIENT)
   private var models: Array[ModelResourceLocation] = null
 
   @SideOnly(Side.CLIENT)
   override def registerModels(item: Item, manager: IModelManager) {
     val beeIconDir: String = "bees/default/"
-    val beeType: EnumBeeType = item.asInstanceOf[ItemBeeGE].getType
+    AlleleManager.alleleRegistry.getSpeciesRoot()
+    val beeType = beeRoot.getType(new ItemStack(item)).asInstanceOf[EnumBeeType]
     val beeTypeNameBase: String = beeIconDir + beeType.toString.toLowerCase(Locale.ENGLISH)
     if (models == null) {
       models = new Array[ModelResourceLocation](EnumBeeType.values.length)
     }
     models(beeType.ordinal) = manager.getModelLocation(beeTypeNameBase)
-    manager.registerVariant(item, new ResourceLocation("gendustry:" + beeTypeNameBase))
+    manager.registerItemModel(item, 0, "gendustry:" + beeTypeNameBase)
   }
 
   @SideOnly(Side.CLIENT)

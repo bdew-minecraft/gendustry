@@ -1,8 +1,8 @@
 #zh_TW
 
 tile.gendustry.mutagen.name=誘變劑
-tile.gendustry.mutagen_producer.name=誘變劑制造機
-tile.gendustry.mutatron.name=突變方塊
+tile.gendustry.MutagenProducer.name=誘變劑制造機
+tile.gendustry.Mutatron.name=突變方塊
 tile.gendustry.mutatron_adv.name=高級突變方塊
 tile.gendustry.apiary.name=工業蜂箱
 tile.gendustry.imprinter.name=基因復制機

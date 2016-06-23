@@ -22,7 +22,7 @@ import net.bdew.lib.Misc
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.recipes.gencfg.{ConfigSection, EntryStr}
 import net.bdew.lib.recipes.lootlist.EntryLootList
-import net.minecraft.client.resources.model.ModelResourceLocation
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
@@ -175,8 +175,6 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     case 1 => secondaryColour
     case _ => 0xFFFFFF
   }
-
-  override def getEntityTexture: String = null
 }
 
 

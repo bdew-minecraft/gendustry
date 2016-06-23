@@ -56,13 +56,20 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
 
   // ================
 
-  def set(v: IErrorState): Unit = update(value + v)
+  def set(v: IErrorState): Unit = {
+    require(v != null)
+    update(value + v, !suspendUpdates.value)
+  }
 
-  def clear(v: IErrorState): Unit = update(value - v)
+  def clear(v: IErrorState): Unit = {
+    require(v != null)
+    update(value - v, !suspendUpdates.value)
+  }
 
-  def clearAll(): Unit = update(Set.empty)
+  def clearAll(): Unit = update(Set.empty, !suspendUpdates.value)
 
   def toggle(v: IErrorState, on: Boolean): Unit = {
+    require(v != null)
     if (on)
       set(v)
     else
@@ -74,16 +81,15 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
     suspendUpdates.withValue(true) {
       f
     }
-    if (value != oldValue) changed()
+    if (value != oldValue)
+      changed()
   }
 
   val onChange = Event()
 
-  def changed(): Unit = {
-    if (!suspendUpdates.value) {
-      parent.dataSlotChanged(this)
-      onChange.trigger()
-    }
+  override def changed(): Unit = {
+    super.changed()
+    onChange.trigger()
   }
 
   def isOk = value.isEmpty

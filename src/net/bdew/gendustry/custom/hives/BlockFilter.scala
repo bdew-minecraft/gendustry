@@ -10,13 +10,13 @@
 package net.bdew.gendustry.custom.hives
 
 import net.minecraft.block.Block
-import net.minecraft.util.BlockPos
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.registry.GameData
 
 trait BlockFilter {
   def matches(world: World, pos: BlockPos): Boolean
-  def getDesctiption: String
+  def getDescription: String
 }
 
 case class BlockFilterList(valid: Set[(Block, Int)]) extends BlockFilter {
@@ -25,7 +25,7 @@ case class BlockFilterList(valid: Set[(Block, Int)]) extends BlockFilter {
       val state = world.getBlockState(pos)
       block == state.getBlock && (meta == -1 || meta == state.getBlock.getMetaFromState(state))
     }
-  override def getDesctiption: String = {
+  override def getDescription: String = {
     val names = for ((block, meta) <- valid.toList) yield {
       GameData.getBlockRegistry.getNameForObject(block) + (if (meta > 0) "@%d".format(meta) else "@*")
     }
@@ -35,15 +35,21 @@ case class BlockFilterList(valid: Set[(Block, Int)]) extends BlockFilter {
 
 object BlockFilterAir extends BlockFilter {
   override def matches(world: World, pos: BlockPos): Boolean = world.isAirBlock(pos)
-  override def getDesctiption: String = "[AIR]"
+  override def getDescription: String = "[AIR]"
 }
 
 object BlockFilterReplaceable extends BlockFilter {
-  override def matches(world: World, pos: BlockPos): Boolean = world.getBlockState(pos).getBlock.getMaterial.isReplaceable
-  override def getDesctiption: String = "[REPLACEABLE]"
+  override def matches(world: World, pos: BlockPos): Boolean = {
+    val state = world.getBlockState(pos)
+    state.getBlock.getMaterial(state).isReplaceable
+  }
+  override def getDescription: String = "[REPLACEABLE]"
 }
 
 object BlockFilterLeaves extends BlockFilter {
-  override def matches(world: World, pos: BlockPos): Boolean = world.getBlockState(pos).getBlock.isLeaves(world, pos)
-  override def getDesctiption: String = "[LEAVES]"
+  override def matches(world: World, pos: BlockPos): Boolean = {
+    val state = world.getBlockState(pos)
+    state.getBlock.isLeaves(state, world, pos)
+  }
+  override def getDescription: String = "[LEAVES]"
 }

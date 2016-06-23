@@ -13,7 +13,7 @@ import java.util
 
 import forestry.api.apiculture._
 import net.minecraft.item.ItemStack
-import net.minecraft.util.BlockPos
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
 case class HiveDrop(chance: Double, species: IAlleleBeeSpecies, ignobleShare: Double, additional: List[ItemStack]) extends IHiveDrop {

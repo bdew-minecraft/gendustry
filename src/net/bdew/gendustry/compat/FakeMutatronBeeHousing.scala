@@ -22,16 +22,17 @@ import net.bdew.gendustry.api.blocks.IMutatron
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util._
+import net.minecraft.util.math.{BlockPos, Vec3d}
 import net.minecraft.world.World
 
 class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousing with IBeeModifier with IBeeListener with IBeeHousingInventory with IErrorLogic {
   val beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees").asInstanceOf[IBeeRoot]
 
-  override def getWorld: World = tile.getWorld
+  override def getWorldObj: World = tile.getWorld
   override def getCoordinates: BlockPos = tile.getPos
 
-  override def getBlockLightValue: Int = getWorld.getLightFromNeighbors(getCoordinates.offset(EnumFacing.UP))
-  override def canBlockSeeTheSky: Boolean = getWorld.canBlockSeeSky(getCoordinates.offset(EnumFacing.UP, 2))
+  override def getBlockLightValue: Int = getWorldObj.getLightFromNeighbors(getCoordinates.offset(EnumFacing.UP))
+  override def canBlockSeeTheSky: Boolean = getWorldObj.canBlockSeeSky(getCoordinates.offset(EnumFacing.UP, 2))
 
   override def getBeeListeners: Iterable[IBeeListener] = Collections.singletonList(this)
   override def getBeeInventory: IBeeHousingInventory = this
@@ -70,12 +71,12 @@ class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousin
   override def clearErrors(): Unit = {}
   override def getErrorStates: ImmutableSet[IErrorState] = ImmutableSet.of()
 
-  override def getBiome = getWorld.getBiomeGenForCoords(getCoordinates)
-  override def getHumidity: EnumHumidity = EnumHumidity.getFromValue(getBiome.rainfall)
-  override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.temperature)
+  override def getBiome = getWorldObj.getBiomeGenForCoords(getCoordinates)
+  override def getHumidity: EnumHumidity = EnumHumidity.getFromValue(getBiome.getRainfall)
+  override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.getTemperature)
 
-  override def getBeeFXCoordinates: Vec3 = {
+  override def getBeeFXCoordinates: Vec3d = {
     val coord = getCoordinates
-    new Vec3(coord.getX + 0.5, coord.getY + 1.5, coord.getZ + 0.5)
+    new Vec3d(coord.getX + 0.5, coord.getY + 1.5, coord.getZ + 0.5)
   }
 }

@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "gendustry:blocks/replicator/top",
+      "bottom": "gendustry:blocks/replicator/bottom",
+      "side": "gendustry:blocks/replicator/side"
+    },
+    "model": "gendustry:sided_covers.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

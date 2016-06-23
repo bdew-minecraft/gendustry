@@ -14,8 +14,9 @@ import java.util.Locale
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.config.loader._
-import net.bdew.lib.Misc
 import net.bdew.lib.recipes.gencfg.{ConfigSection, EntryStr}
+import net.minecraft.util.ResourceLocation
+import net.minecraft.world.biome.Biome
 
 object Upgrades {
   val map = collection.mutable.Map.empty[Int, Upgrade]
@@ -57,7 +58,7 @@ object Upgrades {
     case "sunlightSimulated" => (a, n) => a.isSunlightSimulated = str2bool(v)
     case "automated" => (a, n) => a.isAutomated = str2bool(v)
     case "collectingPollen" => (a, n) => a.isCollectingPollen = str2bool(v)
-    case "biomeOverride" => (a, n) => a.biomeOverride = Misc.getBiomeByName(v)
+    case "biomeOverride" => (a, n) => a.biomeOverride = Biome.REGISTRY.getObject(new ResourceLocation(v))
     case x => sys.error("Unknown string upgrade modifier '%s' in upgrade '%s'".format(x, upg))
   }
 

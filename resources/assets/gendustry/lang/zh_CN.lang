@@ -2,8 +2,8 @@
 
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen_producer.name=诱变剂制造机
-tile.gendustry.mutatron.name=诱变机
+tile.gendustry.MutagenProducer.name=诱变剂制造机
+tile.gendustry.Mutatron.name=诱变机
 tile.gendustry.mutatron_adv.name=高级诱变机
 tile.gendustry.apiary.name=工业蜂箱
 tile.gendustry.imprinter.name=基因压印机
@@ -269,8 +269,8 @@ itemGroup.bdew.templates=基因工业|模板
 itemGroup.bdew.samples=基因工业|样本
 itemGroup.bdew.hives=基因工业|自定义蜂房
 
-for.gendustry.errorstate.disabled.description=能量不足
-for.gendustry.errorstate.disabled.help=被配置文件禁用
+gendustry.errorstate.disabled.description=能量不足
+gendustry.errorstate.disabled.help=被配置文件禁用
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=空

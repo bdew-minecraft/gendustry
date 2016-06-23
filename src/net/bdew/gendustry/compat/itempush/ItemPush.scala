@@ -9,7 +9,6 @@
 
 package net.bdew.gendustry.compat.itempush
 
-import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
@@ -19,7 +18,7 @@ object ItemPush {
 
   def init() {
     register(VanillaPush)
-    if (Misc.haveModVersion("BuildCraftAPI|transport@[3.0,)")) register(BCPipePushProxy)
+    //    if (Misc.haveModVersion("BuildCraftAPI|transport@[3.0,)")) register(BCPipePushProxy)
     //    if (Misc.haveModVersion("CoFHAPI|transport")) register(CofhConduitPushProxy)
     //    if (Misc.haveModVersion("Mekanism")) register(MekanismPushProxy)
   }

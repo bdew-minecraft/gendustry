@@ -11,12 +11,12 @@ package net.bdew.gendustry.machines.advmutatron
 
 import net.bdew.lib.gui.SlotClickable
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.Slot
+import net.minecraft.inventory.{ClickType, Slot}
 import net.minecraft.item.ItemStack
 
 class SlotSelector(inv: TileMutatronAdv, slot: Int, x: Int, y: Int) extends Slot(inv, slot, x, y) with SlotClickable {
-  def onClick(button: Int, mods: Int, player: EntityPlayer): ItemStack = {
-    if (button == 0 && mods == 0 && !inv.getWorld.isRemote && !inv.isWorking && getHasStack) {
+  override def onClick(clickType: ClickType, button: Int, player: EntityPlayer): ItemStack = {
+    if (button == 0 && clickType == ClickType.PICKUP && !inv.getWorld.isRemote && !inv.isWorking && getHasStack) {
       inv.setMutation(getSlotIndex)
     }
     return null

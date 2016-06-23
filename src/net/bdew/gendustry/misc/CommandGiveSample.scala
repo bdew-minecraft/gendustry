@@ -16,12 +16,13 @@ import forestry.api.genetics.{AlleleManager, IAllele, ISpeciesRoot}
 import net.bdew.gendustry.forestry.{GeneSampleInfo, GeneticsHelper}
 import net.bdew.gendustry.items.GeneSample
 import net.minecraft.command.{CommandBase, CommandException, ICommandSender, WrongUsageException}
-import net.minecraft.util.BlockPos
+import net.minecraft.server.MinecraftServer
+import net.minecraft.util.math.BlockPos
 
 class CommandGiveSample extends CommandBase {
-  def getCommandName = "givesample"
+  override def getCommandName = "givesample"
   override def getRequiredPermissionLevel = 2
-  def getCommandUsage(c: ICommandSender) = "gendustry.givesample.usage"
+  override def getCommandUsage(c: ICommandSender) = "gendustry.givesample.usage"
 
   import scala.collection.JavaConversions._
 
@@ -36,7 +37,7 @@ class CommandGiveSample extends CommandBase {
       chr.getAlleleClass.isInstance(allele)
     }
 
-  def processCommand(sender: ICommandSender, params: Array[String]) {
+  override def execute(server: MinecraftServer, sender: ICommandSender, params: Array[String]): Unit = {
     if (params.length != 3)
       throw new WrongUsageException("gendustry.givesample.usage")
 
@@ -58,10 +59,10 @@ class CommandGiveSample extends CommandBase {
     val entity = player.entityDropItem(sample, 0)
     entity.setPickupDelay(0)
 
-    CommandBase.notifyOperators(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
+    CommandBase.notifyCommandListener(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
   }
 
-  override def addTabCompletionOptions(sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
+  override def getTabCompletionOptions(server: MinecraftServer, sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
     params.toSeq match {
       case Seq(rootUid) => CommandBase.getListOfStringsMatchingLastWord(params, validRoots: _*)
       case Seq(rootUid, chromosomeName) =>

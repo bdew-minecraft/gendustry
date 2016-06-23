@@ -27,9 +27,9 @@ class ChargeRecipe extends IRecipe {
     for (i <- 0 until 3; j <- 0 until 3; stack <- Option(inv.getStackInRowAndColumn(i, j))) {
       if (stack.getItem.isInstanceOf[ItemPowered])
         tool = stack
-      else if (stack.getItem == Items.redstone)
+      else if (stack.getItem == Items.REDSTONE)
         redstone += 1
-      else if (stack.getItem == Item.getItemFromBlock(Blocks.redstone_block))
+      else if (stack.getItem == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK))
         redstone += 9
     }
 
@@ -47,5 +47,5 @@ class ChargeRecipe extends IRecipe {
     new Array[ItemStack](inv.getSizeInventory)
 
   def getRecipeSize: Int = 9
-  def getRecipeOutput: ItemStack = new ItemStack(Blocks.fire)
+  def getRecipeOutput: ItemStack = new ItemStack(Blocks.FIRE)
 }

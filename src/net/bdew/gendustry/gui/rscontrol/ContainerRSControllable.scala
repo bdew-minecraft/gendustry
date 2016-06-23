@@ -11,6 +11,8 @@ package net.bdew.gendustry.gui.rscontrol
 
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.ClickType
+import net.minecraft.item.ItemStack
 
 trait ContainerRSControllable extends ContainerDataSlots {
   val dataSource: TileRSControllable
@@ -21,11 +23,11 @@ trait ContainerRSControllable extends ContainerDataSlots {
    */
   final val RSMODE_SLOT_NUM = 1000
 
-  override def slotClick(slotNum: Int, button: Int, modifiers: Int, player: EntityPlayer) =
+  override def slotClick(slotNum: Int, button: Int, clickType: ClickType, player: EntityPlayer): ItemStack =
     if (slotNum == RSMODE_SLOT_NUM) {
       dataSource.rsmode := RSMode(button)
       null
     } else {
-      super.slotClick(slotNum, button, modifiers, player)
+      super.slotClick(slotNum, button, clickType, player)
     }
 }

@@ -14,16 +14,14 @@ import java.io.File
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl, RegistriesApiImpl}
 import net.bdew.gendustry.compat.itempush.ItemPush
-import net.bdew.gendustry.compat.triggers.TriggerProvider
 import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
 import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
-import net.bdew.gendustry.custom.{CustomContent, CustomFlowerAlleles, CustomHives}
+import net.bdew.gendustry.custom._
 import net.bdew.gendustry.forestry.GeneRecipe
 import net.bdew.gendustry.machines.apiary.GendustryErrorStates
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
-import net.bdew.lib.Misc
 import net.minecraft.command.CommandHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -34,7 +32,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.oredict.RecipeSorter
 import org.apache.logging.log4j.Logger
 
-@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:Forestry@[4.0.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;after:MagicBees;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
+@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:forestry@[5.0.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;after:MagicBees;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 object Gendustry {
   var log: Logger = null
   var instance = this
@@ -70,8 +68,8 @@ object Gendustry {
 
     GendustryErrorStates.init()
 
-    if (Misc.haveModVersion("BuildCraftAPI|statements"))
-      TriggerProvider.registerTriggers()
+    //    if (Misc.haveModVersion("BuildCraftAPI|statements"))
+    //      TriggerProvider.registerTriggers()
 
     Fluids.load()
     Blocks.load()
@@ -79,7 +77,7 @@ object Gendustry {
     Machines.load()
 
     if (event.getSide == Side.CLIENT) {
-      ResourceListener.init()
+      GendustryClient.preInit()
     }
   }
 
@@ -87,6 +85,7 @@ object Gendustry {
   def init(event: FMLInitializationEvent) {
     if (event.getSide.isClient)
       Config.load(new File(configDir, "client.config"))
+
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
 
     GameRegistry.addRecipe(new GeneRecipe)
@@ -104,21 +103,25 @@ object Gendustry {
     } else {
       logInfo("Apiculture module seems to be disabled in Forestry, not registering custom bees")
     }
+
+    if (event.getSide == Side.CLIENT) {
+      GendustryClient.init()
+    }
+
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallback")
   }
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TuningLoader.loadDelayed()
-    if (ForestryHelper.haveRoot("Bees")) {
-      CustomFlowerAlleles.registerAlleles()
-      CustomContent.registerTemplates()
-      CustomContent.registerMutations()
-      CustomHives.registerHives()
-    }
+    //    if (ForestryHelper.haveRoot("Bees")) {
+    //      CustomFlowerAlleles.registerAlleles()
+    //      CustomContent.registerTemplates()
+    //      CustomContent.registerMutations()
+    //      CustomHives.registerHives()
+    //    }
     if (event.getSide == Side.CLIENT) {
-      GeneticsCache.load()
-      GendustryCreativeTabs.init()
+      GendustryClient.postInit()
     }
     RegistriesApiImpl.mergeToMainRegistry()
   }

@@ -1,7 +1,7 @@
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen_producer.name=Мутагенный производитель
-tile.gendustry.mutatron.name=Мутатрон
+tile.gendustry.MutagenProducer.name=Мутагенный производитель
+tile.gendustry.Mutatron.name=Мутатрон
 tile.gendustry.mutatron_adv.name=Продвинутый мутатрон
 tile.gendustry.apiary.name=Промышленная пасека
 tile.gendustry.imprinter.name=Генетический импринтер
@@ -257,8 +257,8 @@ itemGroup.bdew.gendustry=Gendustry
 itemGroup.bdew.templates=Генетические шаблоны
 itemGroup.bdew.samples=Генетические образцы
 
-for.gendustry.errorstate.disabled.description=Отключено
-for.gendustry.errorstate.disabled.help=Этот механизм отключен в настройках конфигурации
+gendustry.errorstate.disabled.description=Отключено
+gendustry.errorstate.disabled.help=Этот механизм отключен в настройках конфигурации
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Пусто

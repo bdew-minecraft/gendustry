@@ -17,4 +17,5 @@ import net.minecraftforge.fluids.Fluid
 
 class ItemFluidCan(fluid: Fluid) extends Item {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase(Locale.US) + ".can")
+  setRegistryName(Gendustry.modId, fluid.getName + "Can")
 }

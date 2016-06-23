@@ -37,8 +37,9 @@ import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.tile.inventory.{PersistentInventoryTile, SidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.{EnumFacing, Vec3}
-import net.minecraft.world.biome.BiomeGenBase
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.World
 
 import scala.util.Random
 
@@ -197,8 +198,9 @@ class TileApiary extends TileExtended
         strings :+= Misc.toLocalF("gendustry.label.production", "%.0f%%".format(100F * mods.production * genome.getSpeed))
         strings :+= Misc.toLocalF("gendustry.label.flowering", "%.0f%%".format(mods.flowering * genome.getFlowering))
         strings :+= Misc.toLocalF("gendustry.label.lifespan", "%.0f%%".format(mods.lifespan * genome.getLifespan))
-        val t = genome.getTerritory.toSeq.map(mods.territory * _)
-        strings :+= Misc.toLocalF("gendustry.label.territory", "%.0f x %.0f x %.0f".format(t(0), t(1), t(2)))
+        val t = genome.getTerritory
+        strings :+= Misc.toLocalF("gendustry.label.territory", "%.0f x %.0f x %.0f".format(
+          t.getX * mods.territory, t.getY * mods.territory, t.getZ * mods.territory))
       }
     }
 
@@ -206,7 +208,7 @@ class TileApiary extends TileExtended
   }
 
   // Misc
-  def getBiome = worldObj.getBiomeGenForCoordsBody(pos)
+  def getBiome = worldObj.getBiomeGenForCoords(pos)
   override def getSizeInventory = 15
   def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
 
@@ -258,18 +260,19 @@ class TileApiary extends TileExtended
   override def isSealed = mods.isSealed
   override def isSelfLighted = mods.isSelfLighted
   override def isSunlightSimulated = mods.isSunlightSimulated
-  override def isHellish = getModifiedBiome == BiomeGenBase.hell
+  override def isHellish = getModifiedBiome.getRegistryName.getResourcePath == "hell"
 
   // IHousing
   override def getWorld = worldObj
   override def getCoordinates = pos
 
   // IBeeHousing
+  override def getWorldObj: World = worldObj
   override def getBeeInventory: IBeeHousingInventory = this
   override def getBeeListeners = Collections.singletonList(this)
   override def getBeeModifiers = Collections.singletonList(this)
   override def getBeekeepingLogic: IBeekeepingLogic = logic
-  override def getBeeFXCoordinates: Vec3 = new Vec3(pos.getX + 0.5, pos.getY + 0.5, pos.getZ + 0.5)
+  override def getBeeFXCoordinates: Vec3d = new Vec3d(pos.getX + 0.5, pos.getY + 0.5, pos.getZ + 0.5)
 
   override def getBlockLightValue: Int = getWorld.getLightFromNeighbors(getCoordinates.offset(EnumFacing.UP))
   override def canBlockSeeTheSky: Boolean = getWorld.canBlockSeeSky(getCoordinates.offset(EnumFacing.UP, 2))
@@ -280,9 +283,9 @@ class TileApiary extends TileExtended
     if (BiomeHelper.isBiomeHellish(getModifiedBiome))
       EnumTemperature.HELLISH
     else
-      EnumTemperature.getFromValue(getModifiedBiome.temperature + mods.temperature)
+      EnumTemperature.getFromValue(getModifiedBiome.getTemperature + mods.temperature)
 
-  override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.rainfall + mods.humidity)
+  override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.getRainfall + mods.humidity)
 
   // IBeeHousingInventory
   override def setQueen(stack: ItemStack) = setInventorySlotContents(0, stack)

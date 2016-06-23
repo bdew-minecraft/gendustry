@@ -1,7 +1,7 @@
 # ==== BLOCKS ====
 
-tile.gendustry.mutagen_producer.name=Producteur mutagène
-tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.MutagenProducer.name=Producteur mutagène
+tile.gendustry.Mutatron.name=Mutatron
 tile.gendustry.mutatron_adv.name=Mutatron avancé
 tile.gendustry.apiary.name=Rucher industriel
 tile.gendustry.imprinter.name=Imprimeur génétique
@@ -257,8 +257,8 @@ itemGroup.bdew.gendustry=Gendustry
 itemGroup.bdew.templates=Modèles génétiques
 itemGroup.bdew.samples=Échantillons génétiques
 
-for.gendustry.errorstate.disabled.description=Désactivée
-for.gendustry.errorstate.disabled.help=La machine est désactivée par sa configuration
+gendustry.errorstate.disabled.description=Désactivée
+gendustry.errorstate.disabled.help=La machine est désactivée par sa configuration
 
 #this will be moved to bdlib at some point
 bdlib.label.empty=Vide

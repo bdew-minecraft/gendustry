@@ -22,17 +22,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class ItemFluidBucket(fluid: Fluid) extends ItemBucket(fluid.getBlock) {
   setUnlocalizedName(Gendustry.modId + "." + fluid.getName.toLowerCase(Locale.US) + ".bucket")
+  setRegistryName(Gendustry.modId, fluid.getName + "Bucket")
 
-  setContainerItem(Items.bucket)
+  setContainerItem(Items.BUCKET)
 
   MinecraftForge.EVENT_BUS.register(this)
 
   @SubscribeEvent
   def onBucketFill(event: FillBucketEvent) {
-    val state = event.world.getBlockState(event.target.getBlockPos)
+    val state = event.getWorld.getBlockState(event.getTarget.getBlockPos)
     if (state.getBlock == fluid.getBlock && state.getValue(BlockFluidBase.LEVEL) == 0) {
-      event.world.setBlockToAir(event.target.getBlockPos)
-      event.result = new ItemStack(this)
+      event.getWorld.setBlockToAir(event.getTarget.getBlockPos)
+      event.setFilledBucket(new ItemStack(this))
       event.setResult(Result.ALLOW)
     }
   }

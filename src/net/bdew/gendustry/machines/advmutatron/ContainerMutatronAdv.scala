@@ -12,6 +12,7 @@ package net.bdew.gendustry.machines.advmutatron
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.gui.{BaseContainer, SlotValidating}
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.ClickType
 import net.minecraft.item.ItemStack
 
 class ContainerMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots {
@@ -29,14 +30,14 @@ class ContainerMutatronAdv(val te: TileMutatronAdv, player: EntityPlayer) extend
 
   te.lastPlayer := player.getGameProfile
 
-  override def slotClick(slotNum: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
+  override def slotClick(slotNum: Int, button: Int, clickType: ClickType, player: EntityPlayer): ItemStack = {
     te.lastPlayer := player.getGameProfile
     // This is a hacky workaround!
     // When a player changes the contents of a slot, playerInventoryBeingManipulated is set to true,
     // preventing updates to OTHER slots from being detected and sent back
     // Here i ensure changes are sent back before returning so NetServerHandler.handleWindowClick doesn't
     // get the opportunity to mess things up
-    val r = super.slotClick(slotNum, button, modifiers, player)
+    val r = super.slotClick(slotNum, button, clickType, player)
     detectAndSendChanges()
     return r
   }

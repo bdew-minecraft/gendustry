@@ -9,41 +9,39 @@
 
 package net.bdew.gendustry.misc
 
-import java.io.{File, FileInputStream}
-import java.util
-import java.util.Properties
+import java.io.{File, FileInputStream, InputStream}
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.{Client, Misc}
-import net.minecraft.client.resources.{IReloadableResourceManager, IResourceManager, IResourceManagerReloadListener}
-import net.minecraftforge.fml.client.FMLClientHandler
-import net.minecraftforge.fml.common.registry.LanguageRegistry
+import net.minecraft.client.resources._
 
 object ResourceListener extends IResourceManagerReloadListener {
+  lazy val mLoadLocaleData = classOf[Locale].getDeclaredMethod("loadLocaleData", classOf[InputStream])
+  lazy val fCurrentLocale = classOf[LanguageManager].getDeclaredField("CURRENT_LOCALE")
+
   def init() {
-    Gendustry.logInfo("Registered reload listener")
+    mLoadLocaleData.setAccessible(true)
+    fCurrentLocale.setAccessible(true)
     Client.minecraft.getResourceManager.asInstanceOf[IReloadableResourceManager].registerReloadListener(this)
+    Gendustry.logInfo("Registered reload listener")
   }
 
-  def loadLangFile(lang: String, fileName: String) {
+  def loadLangFile(lang: Locale, fileName: String) {
     val langFile = new File(Gendustry.configDir, fileName)
     Gendustry.logInfo("Loading language file %s", langFile.getCanonicalPath)
     Misc.withAutoClose(new FileInputStream(langFile)) { in =>
-      val langPack = new Properties()
-      langPack.load(in)
-      val map = new util.HashMap[String, String]()
-      map.putAll(langPack.asInstanceOf[util.Map[String, String]])
-      LanguageRegistry.instance().injectLanguage(lang.intern(), map)
+      mLoadLocaleData.invoke(lang, in)
     }
   }
 
   override def onResourceManagerReload(rm: IResourceManager) {
-    val newLang = FMLClientHandler.instance().getCurrentLanguage
-    Gendustry.logInfo("Resource manager reload, new language: %s", newLang)
+    val newLang = Client.minecraft.getLanguageManager.getCurrentLanguage
+    val locale = fCurrentLocale.get(null).asInstanceOf[Locale]
+    Gendustry.logInfo("Resource manager reload, new language: %s", newLang.getLanguageCode)
     val configFiles = Gendustry.configDir.list().sorted
-    configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile(newLang, _))
-    if (newLang != "en_US")
-      configFiles.filter(_.endsWith("." + newLang + ".lang")).foreach(loadLangFile(newLang, _))
+    configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile(locale, _))
+    if (newLang.getLanguageCode != "en_US")
+      configFiles.filter(_.endsWith("." + newLang + ".lang")).foreach(loadLangFile(locale, _))
     Client.minecraft.getLanguageManager.onResourceManagerReload(rm)
   }
 }

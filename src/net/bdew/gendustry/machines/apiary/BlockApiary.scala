@@ -14,21 +14,22 @@ import net.bdew.gendustry.machines.MachineMaterial
 import net.bdew.gendustry.misc.BlockTooltipHelper
 import net.bdew.lib.block.{BaseBlock, BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
+import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.item.ItemStack
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 
-object BlockApiary extends BaseBlock("apiary", MachineMaterial) with HasTE[TileApiary] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockApiary extends BaseBlock("IndustrialApiary", MachineMaterial) with HasTE[TileApiary] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileApiary]
   lazy val guiId: Int = MachineApiary.guiId
 
   setHardness(2)
 
-  override def getLightValue(world: IBlockAccess, pos: BlockPos): Int = {
-    val block = world.getBlockState(pos).getBlock
-    if (block != null && block != this)
-      return block.getLightValue(world, pos)
+  override def getLightValue(state: IBlockState, world: IBlockAccess, pos: BlockPos): Int = {
+    if (state.getBlock != this)
+      return state.getBlock.getLightValue(state)
     else if (world.getTileEntity(pos) != null && getTE(world, pos).exists(_.hasLight))
       return 15
     else
@@ -55,5 +56,5 @@ object BlockApiary extends BaseBlock("apiary", MachineMaterial) with HasTE[TileA
       getTE(world, pos).owner := player.asInstanceOf[EntityPlayerMP].getGameProfile
   }
 
-  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing) = true
+  override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 }

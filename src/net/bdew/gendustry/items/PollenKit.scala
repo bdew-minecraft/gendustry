@@ -16,15 +16,16 @@ import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.items.{BaseItem, ItemUtils}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.world.World
 
 object PollenKit extends BaseItem("PollenKit") {
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
-    if (player.isSneaking) return false
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
+    if (player.isSneaking) return EnumActionResult.PASS
     if (!world.isRemote) {
-      if (player.inventory.getCurrentItem.getItem != this) return false
+      if (player.inventory.getCurrentItem.getItem != this) return EnumActionResult.FAIL
       (world.getTileSafe[IPollinatable](pos) map { te => te.getPollen }
         // If block is not IPollinatable, check for vanilla leafs conversion
         orElse GeneticsHelper.getErsatzPollen(world.getBlockState(pos))
@@ -39,7 +40,7 @@ object PollenKit extends BaseItem("PollenKit") {
         }
       }
     }
-    true
+    EnumActionResult.SUCCESS
   }
 
 }

@@ -12,7 +12,7 @@ package net.bdew.gendustry.machines
 import net.bdew.lib.block.BaseBlock
 import net.minecraft.block.material.{MapColor, Material}
 
-object MachineMaterial extends Material(MapColor.ironColor)
+object MachineMaterial extends Material(MapColor.IRON)
 
 class BaseMachineBlock(name: String) extends BaseBlock(name, MachineMaterial) {
   setHardness(2)

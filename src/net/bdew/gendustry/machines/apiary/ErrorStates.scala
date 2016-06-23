@@ -20,8 +20,8 @@ case class GendustryErrorState(name: String, id: Short) extends IErrorState {
 
   override def getID = id
   override def getUniqueName = "gendustry:" + name
-  override def getDescription = "gendustry.errorstate." + name + ".description"
-  override def getHelp = "gendustry.errorstate." + name + ".help"
+  override def getUnlocalizedDescription: String = "gendustry.errorstate." + name + ".description"
+  override def getUnlocalizedHelp: String = "gendustry.errorstate." + name + ".help"
 
   @SideOnly(Side.CLIENT)
   override def getSprite: TextureAtlasSprite = icon
@@ -41,7 +41,7 @@ object GendustryErrorStates {
 
 object ForestryErrorStates {
   val errorStates = ForestryAPI.errorStateRegistry
-  val noPower = errorStates.getErrorState("Forestry:noPower")
-  val noRedstone = errorStates.getErrorState("Forestry:noRedstone")
-  val disabledRedstone = errorStates.getErrorState("Forestry:disabledRedstone")
+  val noPower = errorStates.getErrorState("forestry:noPower")
+  val noRedstone = errorStates.getErrorState("forestry:noRedstone")
+  val disabledRedstone = errorStates.getErrorState("forestry:disabledRedstone")
 }

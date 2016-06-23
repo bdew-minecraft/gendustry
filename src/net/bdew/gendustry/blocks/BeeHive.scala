@@ -17,12 +17,13 @@ import net.bdew.lib.block.BaseBlock
 import net.minecraft.block.material.{MapColor, Material}
 import net.minecraft.block.state.IBlockState
 import net.minecraft.item.ItemStack
-import net.minecraft.util.{BlockPos, ResourceLocation}
+import net.minecraft.util.ResourceLocation
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
 import scala.util.Random
 
-object MaterialBeehive extends Material(MapColor.stoneColor) {
+object MaterialBeehive extends Material(MapColor.STONE) {
   setRequiresTool()
   setImmovableMobility()
 

@@ -17,19 +17,17 @@ import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.power.ItemPowered
 import net.bdew.lib.Misc
 import net.bdew.lib.PimpVanilla._
-import net.bdew.lib.items.BaseItemMixin
-import net.minecraft.block.Block
+import net.bdew.lib.items.BaseTool
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.{Item, ItemStack, ItemTool}
-import net.minecraft.util.BlockPos
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.HashSet[Block]) with BaseItemMixin with ItemPowered with IToolGrafter {
-  val name = "IndustrialGrafter"
+object IndustrialGrafter extends BaseTool("IndustrialGrafter", Item.ToolMaterial.IRON) with ItemPowered with IToolGrafter {
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge
@@ -42,16 +40,16 @@ object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.Ha
 
   efficiencyOnProperMaterial = 32
 
-  override def getDigSpeed(stack: ItemStack, state: IBlockState): Float =
+  override def getStrVsBlock(stack: ItemStack, state: IBlockState): Float =
     if (!hasCharges(stack))
       0.1F
-    else if (state.getBlock.getMaterial == Material.leaves)
+    else if (state.getBlock.getMaterial(state) == Material.LEAVES)
       efficiencyOnProperMaterial
     else
       0.1F
 
-  override def onBlockDestroyed(stack: ItemStack, world: World, block: Block, pos: BlockPos, player: EntityLivingBase): Boolean = {
-    if (block.getMaterial == Material.leaves) {
+  override def onBlockDestroyed(stack: ItemStack, world: World, state: IBlockState, pos: BlockPos, player: EntityLivingBase): Boolean = {
+    if (state.getBlock.getMaterial(state) == Material.LEAVES) {
       if (!world.isRemote && player.isInstanceOf[EntityPlayer] && !player.isSneaking) {
         for (dx <- -1 * aoe to aoe;
              dy <- -1 * aoe to aoe;
@@ -60,11 +58,11 @@ object IndustrialGrafter extends ItemTool(0, Item.ToolMaterial.IRON, new util.Ha
           val target = pos.add(dx, dy, dz)
           val targetState = world.getBlockState(target)
           val targetBlock = targetState.getBlock
-          if (targetBlock != null && targetBlock.getMaterial == Material.leaves && hasCharges(stack)) {
+          if (targetBlock != null && targetBlock.getMaterial(targetState) == Material.LEAVES && hasCharges(stack)) {
             targetBlock.onBlockHarvested(world, target, targetState, player.asInstanceOf[EntityPlayer])
-            if (targetBlock.removedByPlayer(world, target, player.asInstanceOf[EntityPlayer], false)) {
+            if (targetBlock.removedByPlayer(targetState, world, target, player.asInstanceOf[EntityPlayer], false)) {
               useCharge(stack, 1, player)
-              targetBlock.harvestBlock(world, player.asInstanceOf[EntityPlayer], target, targetState, world.getTileEntity(target))
+              targetBlock.harvestBlock(world, player.asInstanceOf[EntityPlayer], target, targetState, world.getTileEntity(target), stack)
             }
           }
         }

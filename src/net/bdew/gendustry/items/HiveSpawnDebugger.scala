@@ -15,7 +15,8 @@ import net.bdew.gendustry.custom.hives.{BlockFilterAir, ConditionReplace, HiveDe
 import net.bdew.lib.items.BaseItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.world.World
 
 object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
@@ -29,8 +30,8 @@ object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
   def checkSpawnLocation(hive: HiveDescription, world: World, pos: BlockPos): CheckResult = {
     val biome = world.getBiomeGenForCoords(pos)
     if (!hive.isGoodBiome(biome)) CheckResultFailed("Wrong Biome")
-    else if (!hive.isGoodHumidity(EnumHumidity.getFromValue(biome.rainfall))) CheckResultFailed("Wrong Humidity")
-    else if (!hive.isGoodTemperature(EnumTemperature.getFromValue(biome.temperature))) CheckResultFailed("Wrong Temperature")
+    else if (!hive.isGoodHumidity(EnumHumidity.getFromValue(biome.getRainfall))) CheckResultFailed("Wrong Humidity")
+    else if (!hive.isGoodTemperature(EnumTemperature.getFromValue(biome.getTemperature))) CheckResultFailed("Wrong Temperature")
     else if (pos.getY > hive.yMax || pos.getY < hive.yMin) CheckResultFailed("Incorrect Y level")
     else {
       val failed = hive.conditions.find(!_.isValidLocation(world, pos))
@@ -42,14 +43,14 @@ object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
 
   }
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
     if (!world.isRemote) {
       import net.bdew.lib.helpers.ChatHelper._
       player.addChatMessage(" ==== Checking Spawn At (%s) ===".format(pos))
       for ((id, hive) <- CustomHives.hives) {
         val actualPos = if (hive.conditions.contains(ConditionReplace(BlockFilterAir))) {
           // Hive spawns in air, check block next to one clicked
-          pos.offset(side)
+          pos.offset(facing)
         } else {
           // Hive spawns replaces block, check clicked block
           pos
@@ -65,6 +66,6 @@ object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
         player.addChatMessage(L(" * %s - %s", C(id).setColor(Color.YELLOW), msg))
       }
     }
-    true
+    EnumActionResult.SUCCESS
   }
 }

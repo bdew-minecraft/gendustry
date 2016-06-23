@@ -22,6 +22,8 @@ import net.bdew.lib.Misc
 import net.bdew.lib.recipes.StackBlock
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.minecraft.block.Block
+import net.minecraft.util.ResourceLocation
+import net.minecraft.world.biome.Biome
 import net.minecraftforge.oredict.OreDictionary
 
 object CustomContent {
@@ -91,7 +93,7 @@ object CustomContent {
             if (stack.getItemDamage != OreDictionary.WILDCARD_VALUE)
               mutation.reqBlockMeta = Some(stack.getItemDamage)
           case MReqBiome(name: String) =>
-            mutation.reqBiome = Option(Misc.getBiomeByName(name))
+            mutation.reqBiome = Option(Biome.REGISTRY.getObject(new ResourceLocation(name)))
         }
 
         mutation.getRoot.registerMutation(mutation)

@@ -22,7 +22,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 object GeneTemplate extends BaseItem("GeneTemplate") {
   setMaxStackSize(1)
@@ -99,19 +99,19 @@ object GeneTemplate extends BaseItem("GeneTemplate") {
         val required = getRequiredChromosomes(root)
 
         tooltip +=
-          (if (isComplete(stack)) EnumChatFormatting.GREEN else EnumChatFormatting.RED) +
+          (if (isComplete(stack)) TextFormatting.GREEN else TextFormatting.RED) +
             Misc.toLocalF("gendustry.label.template.chromosomes", samples.size, required.size) +
-            EnumChatFormatting.RESET
+            TextFormatting.RESET
 
         for (chr <- required)
           if (samples.contains(chr))
             tooltip += samples(chr)
           else if (Client.shiftDown)
             tooltip += "%s%s: %s%s".format(
-              EnumChatFormatting.RED,
+              TextFormatting.RED,
               Misc.toLocal("gendustry.chromosome." + GeneSampleInfo.getChromosomeName(root, chr)),
               Misc.toLocal("gendustry.label.template.missing"),
-              EnumChatFormatting.RESET
+              TextFormatting.RESET
             )
 
       } catch {

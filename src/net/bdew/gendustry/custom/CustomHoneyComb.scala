@@ -15,10 +15,11 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
 
-object CustomHoneyComb extends BaseItem("HoneyComb") {
+object CustomHoneyComb extends BaseItem("HoneyComb") with IItemColor {
 
   case class CombInfo(name: String, color1: Int, color2: Int)
 
@@ -35,14 +36,6 @@ object CustomHoneyComb extends BaseItem("HoneyComb") {
 
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
-  override def getColorFromItemStack(stack: ItemStack, pass: Int): Int = {
-    val data = getData(stack).getOrElse(return 0)
-    pass match {
-      case 0 => data.color1
-      case _ => data.color2
-    }
-  }
-
   override def getSubItems(item: Item, tab: CreativeTabs, subItems: util.List[ItemStack]): Unit = {
     for ((id, name) <- data)
       subItems.add(new ItemStack(this, 1, id))
@@ -50,4 +43,12 @@ object CustomHoneyComb extends BaseItem("HoneyComb") {
 
   override def getUnlocalizedName(stack: ItemStack) =
     getData(stack).map(x => "%s.honeycomb.%s".format(Gendustry.modId, x.name)).getOrElse("invalid")
+
+  override def getColorFromItemstack(stack: ItemStack, tintIndex: Int): Int = {
+    val data = getData(stack).getOrElse(return 0)
+    tintIndex match {
+      case 0 => data.color1
+      case _ => data.color2
+    }
+  }
 }

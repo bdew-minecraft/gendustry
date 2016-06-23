@@ -9,7 +9,8 @@
 
 package net.bdew.gendustry.custom.hives
 
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 trait HiveSpawnCondition {
@@ -20,7 +21,7 @@ trait HiveSpawnCondition {
 class ConditionNeighbour(blocks: BlockFilter, name: String, offsets: List[EnumFacing]) extends HiveSpawnCondition {
   override def isValidLocation(world: World, pos: BlockPos): Boolean =
     offsets.exists(f => blocks.matches(world, pos.offset(f)))
-  override def getDescription: String = name + " " + blocks.getDesctiption
+  override def getDescription: String = name + " " + blocks.getDescription
 }
 
 case class ConditionUnder(blocks: BlockFilter) extends ConditionNeighbour(blocks, "Below", List(EnumFacing.UP))
@@ -34,5 +35,5 @@ case class ConditionNear(blocks: BlockFilter) extends ConditionNeighbour(blocks,
 case class ConditionReplace(blocks: BlockFilter) extends HiveSpawnCondition {
   override def isValidLocation(world: World, pos: BlockPos): Boolean =
     blocks.matches(world, pos)
-  override def getDescription: String = "Replacing " + blocks.getDesctiption
+  override def getDescription: String = "Replacing " + blocks.getDescription
 }

@@ -16,7 +16,7 @@ import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.gui.{BaseContainer, SlotValidating}
 import net.bdew.lib.items.ItemUtils
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.{IInventory, Slot}
+import net.minecraft.inventory.{ClickType, IInventory}
 import net.minecraft.item.ItemStack
 
 class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseContainer(te) with ContainerDataSlots with ContainerRSControllable {
@@ -58,11 +58,11 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
     return super.transferStackInSlot(player, slot)
   }
 
-  override def slotClick(slot: Int, button: Int, modifiers: Int, player: EntityPlayer): ItemStack = {
+  override def slotClick(slot: Int, button: Int, clickType: ClickType, player: EntityPlayer): ItemStack = {
     var oldStack = player.inventory.getItemStack
     if (te.slots.upgrades.contains(slot) && te.isUpgrade(oldStack)) {
-      val idx = inventorySlots.get(slot).asInstanceOf[Slot].getSlotIndex
-      if (te.slots.upgrades.contains(idx) && modifiers == 0 && button <= 1) {
+      val idx = inventorySlots.get(slot).getSlotIndex
+      if (te.slots.upgrades.contains(idx) && clickType == ClickType.PICKUP && button <= 1) {
         if (te.getStackInSlot(idx) == null || ItemUtils.isSameItem(oldStack, te.getStackInSlot(idx))) {
           var canAdd = te.getMaxAdditionalUpgrades(oldStack)
           if (canAdd > 0) {
@@ -75,13 +75,13 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
               oldStack.splitStack(canAdd)
             }
             player.inventory.setItemStack(newStack)
-            val res = super.slotClick(slot, button, modifiers, player)
+            val res = super.slotClick(slot, button, clickType, player)
             player.inventory.setItemStack(oldStack)
             return res
           }
         }
       }
     }
-    return super.slotClick(slot, button, modifiers, player)
+    return super.slotClick(slot, button, clickType, player)
   }
 }

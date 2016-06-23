@@ -14,14 +14,15 @@ import java.io.{BufferedWriter, File, FileWriter}
 import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.Gendustry
 import net.minecraft.command.{CommandBase, ICommandSender}
+import net.minecraft.server.MinecraftServer
 import net.minecraftforge.fml.relauncher.FMLInjectionData
 
 class CommandDumpAlleles extends CommandBase {
-  def getCommandName = "dumpalleles"
+  override def getCommandName = "dumpalleles"
   override def getRequiredPermissionLevel = 2
-  def getCommandUsage(c: ICommandSender) = "dumpalleles"
+  override def getCommandUsage(c: ICommandSender) = "dumpalleles"
 
-  def processCommand(sender: ICommandSender, params: Array[String]) {
+  override def execute(server: MinecraftServer, sender: ICommandSender, params: Array[String]): Unit = {
     val mcHome = FMLInjectionData.data()(6).asInstanceOf[File] //is there a better way to get this?
     val dumpFile = new File(mcHome, "alleles.dump")
     val dumpWriter = new BufferedWriter(new FileWriter(dumpFile))
@@ -32,10 +33,10 @@ class CommandDumpAlleles extends CommandBase {
         "%s (%s)".format(id, allele.getName)
       }).toList.sorted.mkString("\n"))
       dumpWriter.write("\n\n")
-      CommandBase.notifyOperators(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
+      CommandBase.notifyCommandListener(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
     } catch {
       case e: Throwable =>
-        CommandBase.notifyOperators(sender, this, "Failed to save registry dump: " + e)
+        CommandBase.notifyCommandListener(sender, this, "Failed to save registry dump: " + e)
         Gendustry.logErrorException("Failed to save registry dump", e)
     } finally {
       dumpWriter.close()
