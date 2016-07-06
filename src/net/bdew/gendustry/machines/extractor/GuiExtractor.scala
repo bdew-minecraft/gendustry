@@ -24,7 +24,7 @@ class GuiExtractor(val te: TileExtractor, player: EntityPlayer) extends BaseScre
     widgets.add(new WidgetProgressBarNEI(new Rect(79, 41, 53, 15), Textures.greenProgress(53), te.progress, "Extractor"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(152, 19, 16, 58), Textures.tankOverlay, te.tank))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.extractor.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.Extractor.name"), 8, 6, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inIndividual).setBackgroundLocation(HintIcons.droneOrSapling)
     inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundLocation(HintIcons.labware)

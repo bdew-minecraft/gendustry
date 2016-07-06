@@ -23,7 +23,7 @@ class GuiTransposer(val te: TileTransposer, player: EntityPlayer) extends BaseSc
     super.initGui()
     widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Transposer"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.transposer.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.Transposer.name"), 8, 6, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inBlank).setBackgroundLocation(HintIcons.sampleOrTemplateBlank)
     inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundLocation(HintIcons.labware)

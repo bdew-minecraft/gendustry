@@ -2,14 +2,14 @@
 
 tile.gendustry.MutagenProducer.name=Mutagen Producer
 tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.mutatron_adv.name=Advanced Mutatron
-tile.gendustry.apiary.name=Industrial Apiary
-tile.gendustry.imprinter.name=Genetic Imprinter
-tile.gendustry.sampler.name=Genetic Sampler
-tile.gendustry.extractor.name=DNA Extractor
-tile.gendustry.liquifier.name=Protein Liquifier
-tile.gendustry.replicator.name=Genetic Replicator
-tile.gendustry.transposer.name=Genetic Transposer
+tile.gendustry.MutatronAdv.name=Advanced Mutatron
+tile.gendustry.IndustrialApiary.name=Industrial Apiary
+tile.gendustry.Imprinter.name=Genetic Imprinter
+tile.gendustry.Sampler.name=Genetic Sampler
+tile.gendustry.Extractor.name=DNA Extractor
+tile.gendustry.Liquifier.name=Protein Liquifier
+tile.gendustry.Replicator.name=Genetic Replicator
+tile.gendustry.Transposer.name=Genetic Transposer
 
 # ==== GENERAL ITEMS ====
 
@@ -171,10 +171,16 @@ gendustry.chromosome.PLANT=Plant
 gendustry.chromosome.EFFECT=Effect
 gendustry.chromosome.CAVE_DWELLING=Cave dwelling
 gendustry.chromosome.MATURATION=Maturation
-gendustry.chromosome.NOCTURNAL=Ignores Day/Night
+gendustry.chromosome.NOCTURNAL=Nocturnal
 gendustry.chromosome.TOLERANT_FLYER=Tolerant flyer
 gendustry.chromosome.FRUITS=Fruits
 gendustry.chromosome.SAPPINESS=Sappiness
+gendustry.chromosome.COCOON=Cocoon
+gendustry.chromosome.FIREPROOF=Fireproof
+gendustry.chromosome.CARBONIZATION=Carbonization
+gendustry.chromosome.COMBUSTIBILITY=Combustibility
+gendustry.chromosome.TOLERATES_RAIN=Cocoon
+gendustry.chromosome.NEVER_SLEEPS=Never Sleeps
 
 // Botany
 

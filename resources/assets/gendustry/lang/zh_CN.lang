@@ -4,14 +4,14 @@
 
 tile.gendustry.MutagenProducer.name=诱变剂制造机
 tile.gendustry.Mutatron.name=诱变机
-tile.gendustry.mutatron_adv.name=高级诱变机
-tile.gendustry.apiary.name=工业蜂箱
-tile.gendustry.imprinter.name=基因压印机
-tile.gendustry.sampler.name=基因采样机
-tile.gendustry.extractor.name=基因提取机
-tile.gendustry.liquifier.name=蛋白质液化机
-tile.gendustry.replicator.name=基因复制机
-tile.gendustry.transposer.name=基因转换机
+tile.gendustry.MutatronAdv.name=高级诱变机
+tile.gendustry.IndustrialApiary.name=工业蜂箱
+tile.gendustry.Imprinter.name=基因压印机
+tile.gendustry.Sampler.name=基因采样机
+tile.gendustry.Extractor.name=基因提取机
+tile.gendustry.Liquifier.name=蛋白质液化机
+tile.gendustry.Replicator.name=基因复制机
+tile.gendustry.Transposer.name=基因转换机
 
 # ==== GENERAL ITEMS ====
 
@@ -163,7 +163,6 @@ gendustry.chromosome.PLANT=植物
 gendustry.chromosome.EFFECT=特殊效果
 gendustry.chromosome.CAVE_DWELLING=穴居性
 gendustry.chromosome.MATURATION=成熟
-gendustry.chromosome.NOCTURNAL=夜行性
 gendustry.chromosome.TOLERANT_FLYER=耐雨飞行性
 gendustry.chromosome.FRUITS=果实
 gendustry.chromosome.SAPPINESS=树汁

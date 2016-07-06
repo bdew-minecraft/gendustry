@@ -14,6 +14,7 @@ import java.util.Locale
 import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.arboriculture._
 import forestry.api.genetics._
+import forestry.api.lepidopterology.IAlleleButterflyCocoon
 import net.bdew.gendustry.api.items.IGeneSample
 import net.bdew.lib.Misc
 import net.minecraft.nbt.NBTTagCompound
@@ -46,11 +47,15 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
       case i: IAlleleInteger => chr match {
         case "GIRTH" => "%d x %d".format(i.getValue, i.getValue)
         case "FERTILITY" if !root.isInstanceOf[ITreeRoot] => i.getValue.toString
+        case "CARBONIZATION" => i.getValue.toString
+        case "COMBUSTIBILITY" => i.getValue.toString
         case "METABOLISM" => i.getValue.toString
         case _ => i.getName
       }
       case p: IAllelePlantType => if (p.getPlantTypes.isEmpty) "-" else p.getPlantTypes.asScala.mkString(", ")
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
+      case a: IAlleleButterflyCocoon => a.getCocoonName
+      case a: IAlleleGrowth => a.getProvider.getDescription
       case x => x.getName
     }
     if (str == "")

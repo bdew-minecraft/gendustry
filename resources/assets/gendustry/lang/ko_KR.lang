@@ -4,9 +4,9 @@
 tile.gendustry.MutagenProducer.name=뮤타젠 생성기
 tile.gendustry.Mutatron.name=뮤타트론
 tile.gendustry.mutatron_adv.name=고급 뮤타트론
-tile.gendustry.apiary.name=산업 양봉기
-tile.gendustry.imprinter.name=유전자 각인기
-tile.gendustry.sampler.name=유전자 샘플 추출기
+tile.gendustry.IndustrialApiary.name=산업 양봉기
+tile.gendustry.Imprinter.name=유전자 각인기
+tile.gendustry.Sampler.name=유전자 샘플 추출기
 tile.gendustry.extractor.name=DNA 추출기
 tile.gendustry.liquifier.name=단백질 액화장치
 tile.gendustry.replicator.name=유전자 복제기

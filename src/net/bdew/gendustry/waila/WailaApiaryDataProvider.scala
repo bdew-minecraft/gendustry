@@ -21,7 +21,7 @@ import net.minecraft.util.text.TextFormatting
 object WailaApiaryDataProvider extends BaseDataProvider(classOf[TileApiary]) {
   override def getBodyStrings(target: TileApiary, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
     var strings = target.errorConditions.toList.sortBy(_.getID) map { err =>
-      TextFormatting.RED + Misc.toLocal("for." + err.getUnlocalizedDescription)
+      TextFormatting.RED + Misc.toLocal(err.getUnlocalizedDescription)
     }
     strings :+= Misc.toLocalF("gendustry.label.control", Misc.toLocal("gendustry.rsmode." + target.rsmode.value.toString.toLowerCase(Locale.US)))
 

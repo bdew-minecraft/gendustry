@@ -2,14 +2,14 @@
 
 tile.gendustry.MutagenProducer.name=Producteur mutagène
 tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.mutatron_adv.name=Mutatron avancé
-tile.gendustry.apiary.name=Rucher industriel
-tile.gendustry.imprinter.name=Imprimeur génétique
-tile.gendustry.sampler.name=Échantillonneur génétique
-tile.gendustry.extractor.name=Extracteur d'ADN
-tile.gendustry.liquifier.name=Liquéfieur de protéine
-tile.gendustry.replicator.name=Réplicateur génétique
-tile.gendustry.transposer.name=Transposeur génétique
+tile.gendustry.MutatronAdv.name=Mutatron avancé
+tile.gendustry.IndustrialApiary.name=Rucher industriel
+tile.gendustry.Imprinter.name=Imprimeur génétique
+tile.gendustry.Sampler.name=Échantillonneur génétique
+tile.gendustry.Extractor.name=Extracteur d'ADN
+tile.gendustry.Liquifier.name=Liquéfieur de protéine
+tile.gendustry.Replicator.name=Réplicateur génétique
+tile.gendustry.Transposer.name=Transposeur génétique
 
 # ==== GENERAL ITEMS ====
 

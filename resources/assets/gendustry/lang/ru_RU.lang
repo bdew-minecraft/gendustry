@@ -2,14 +2,14 @@
 
 tile.gendustry.MutagenProducer.name=Мутагенный производитель
 tile.gendustry.Mutatron.name=Мутатрон
-tile.gendustry.mutatron_adv.name=Продвинутый мутатрон
-tile.gendustry.apiary.name=Промышленная пасека
-tile.gendustry.imprinter.name=Генетический импринтер
-tile.gendustry.sampler.name=Генетический пробоотборник
-tile.gendustry.extractor.name=Экстрактор ДНК
-tile.gendustry.liquifier.name=Протеиновый разжижитель
-tile.gendustry.replicator.name=Генетический репликатор
-tile.gendustry.transposer.name=Генетический транспозер
+tile.gendustry.MutatronAdv.name=Продвинутый мутатрон
+tile.gendustry.IndustrialApiary.name=Промышленная пасека
+tile.gendustry.Imprinter.name=Генетический импринтер
+tile.gendustry.Sampler.name=Генетический пробоотборник
+tile.gendustry.Extractor.name=Экстрактор ДНК
+tile.gendustry.Liquifier.name=Протеиновый разжижитель
+tile.gendustry.Replicator.name=Генетический репликатор
+tile.gendustry.Transposer.name=Генетический транспозер
 
 # ==== GENERAL ITEMS ====
 

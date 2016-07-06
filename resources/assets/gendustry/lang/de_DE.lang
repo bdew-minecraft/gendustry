@@ -2,14 +2,14 @@
 
 tile.gendustry.MutagenProducer.name=Mutagen-Erzeuger
 tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.mutatron_adv.name=Erweitertes Mutatron
-tile.gendustry.apiary.name=Industrieller Bienenstock
-tile.gendustry.imprinter.name=Gen-Drucker
-tile.gendustry.sampler.name=Gen-Abtaster
-tile.gendustry.extractor.name=DNA-Extraktor
-tile.gendustry.liquifier.name=Proteinverflüssiger
-tile.gendustry.replicator.name=Genetischer Replikator
-tile.gendustry.transposer.name=Genetischer Wandler
+tile.gendustry.MutatronAdv.name=Erweitertes Mutatron
+tile.gendustry.IndustrialApiary.name=Industrieller Bienenstock
+tile.gendustry.Imprinter.name=Gen-Drucker
+tile.gendustry.Sampler.name=Gen-Abtaster
+tile.gendustry.Extractor.name=DNA-Extraktor
+tile.gendustry.Liquifier.name=Proteinverflüssiger
+tile.gendustry.Replicator.name=Genetischer Replikator
+tile.gendustry.Transposer.name=Genetischer Wandler
 
 # ==== GENERAL ITEMS ====
 
@@ -155,7 +155,6 @@ gendustry.chromosome.PLANT=Pflanze
 gendustry.chromosome.EFFECT=Effekt
 gendustry.chromosome.CAVE_DWELLING=Höhlenbewohner
 gendustry.chromosome.MATURATION=Reifung
-gendustry.chromosome.NOCTURNAL=Nachtaktiv
 gendustry.chromosome.TOLERANT_FLYER=Toleranter Flieger
 gendustry.chromosome.FRUITS=Früchte
 gendustry.chromosome.SAPPINESS=Saftigkeit

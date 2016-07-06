@@ -3,10 +3,10 @@
 tile.gendustry.mutagen.name=誘變劑
 tile.gendustry.MutagenProducer.name=誘變劑制造機
 tile.gendustry.Mutatron.name=突變方塊
-tile.gendustry.mutatron_adv.name=高級突變方塊
-tile.gendustry.apiary.name=工業蜂箱
-tile.gendustry.imprinter.name=基因復制機
-tile.gendustry.sampler.name=基因拓模機
+tile.gendustry.MutatronAdv.name=高級突變方塊
+tile.gendustry.IndustrialApiary.name=工業蜂箱
+tile.gendustry.Imprinter.name=基因復制機
+tile.gendustry.Sampler.name=基因拓模機
 
 item.gendustry.mutagen.bucket.name=誘變劑桶
 item.gendustry.mutagen.can.name=誘變劑罐
@@ -111,7 +111,6 @@ gendustry.chromosome.PLANT=植物
 gendustry.chromosome.EFFECT=特殊效果
 gendustry.chromosome.CAVE_DWELLING=穴居性
 gendustry.chromosome.MATURATION=成熟
-gendustry.chromosome.NOCTURNAL=夜行性
 gendustry.chromosome.TOLERANT_FLYER=耐雨飛行性
 gendustry.chromosome.FRUITS=果實
 gendustry.chromosome.SAPPINESS=多汁

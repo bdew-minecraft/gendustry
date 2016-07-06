@@ -2,14 +2,14 @@
 
 tile.gendustry.MutagenProducer.name=Producteur de mutagène
 tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.mutatron_adv.name=Mutatron avancé
-tile.gendustry.apiary.name=Rucher Industriel
-tile.gendustry.imprinter.name=Implanteur génétique
-tile.gendustry.sampler.name=Échantillonneur génétique
-tile.gendustry.extractor.name=Extracteur d'ADN
-tile.gendustry.liquifier.name=Liquifieur de protéine 
-tile.gendustry.replicator.name=Réplicateur génétique
-tile.gendustry.transposer.name=Transposeur génétique
+tile.gendustry.MutatronAdv.name=Mutatron avancé
+tile.gendustry.IndustrialApiary.name=Rucher Industriel
+tile.gendustry.Imprinter.name=Implanteur génétique
+tile.gendustry.Sampler.name=Échantillonneur génétique
+tile.gendustry.Extractor.name=Extracteur d'ADN
+tile.gendustry.Liquifier.name=Liquifieur de protéine
+tile.gendustry.Replicator.name=Réplicateur génétique
+tile.gendustry.Transposer.name=Transposeur génétique
 
 # ==== GENERAL ITEMS ====
 
@@ -158,7 +158,6 @@ gendustry.chromosome.PLANT=Plant
 gendustry.chromosome.EFFECT=Effet
 gendustry.chromosome.CAVE_DWELLING=Troglodyte
 gendustry.chromosome.MATURATION=Maturation
-gendustry.chromosome.NOCTURNAL=Ignore Jour/Nuit
 gendustry.chromosome.TOLERANT_FLYER=Volant tolérant
 gendustry.chromosome.FRUITS=Fruits
 gendustry.chromosome.SAPPINESS=Plein de sève
