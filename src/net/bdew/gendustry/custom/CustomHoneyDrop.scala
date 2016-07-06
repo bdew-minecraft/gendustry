@@ -15,11 +15,13 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.lib.render.ColorHandlers
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
-object CustomHoneyDrop extends BaseItem("HoneyDrop") with IItemColor {
+object CustomHoneyDrop extends BaseItem("HoneyDrop") {
 
   case class HoneyDropInfo(name: String, color1: Int, color2: Int)
 
@@ -44,12 +46,18 @@ object CustomHoneyDrop extends BaseItem("HoneyDrop") with IItemColor {
   override def getUnlocalizedName(stack: ItemStack) =
     getData(stack).map(x => "%s.honeydrop.%s".format(Gendustry.modId, x.name)).getOrElse("invalid")
 
-  override def getColorFromItemstack(stack: ItemStack, tintIndex: Int): Int = {
-    val data = getData(stack).getOrElse(return 0)
-    tintIndex match {
-      case 0 => data.color1
-      case _ => data.color2
-    }
+  @SideOnly(Side.CLIENT)
+  override def registerItemModels(): Unit = {
+    super.registerItemModels()
+    ColorHandlers.register(this, new IItemColor {
+      override def getColorFromItemstack(stack: ItemStack, tintIndex: Int): Int = {
+        val data = getData(stack).getOrElse(return 0)
+        tintIndex match {
+          case 0 => data.color1
+          case _ => data.color2
+        }
+      }
+    })
   }
 }
 
