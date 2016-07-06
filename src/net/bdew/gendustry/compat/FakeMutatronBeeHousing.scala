@@ -71,7 +71,7 @@ class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousin
   override def clearErrors(): Unit = {}
   override def getErrorStates: ImmutableSet[IErrorState] = ImmutableSet.of()
 
-  override def getBiome = getWorldObj.getBiomeGenForCoords(getCoordinates)
+  override def getBiome = getWorldObj.getBiome(getCoordinates)
   override def getHumidity: EnumHumidity = EnumHumidity.getFromValue(getBiome.getRainfall)
   override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.getTemperature)
 

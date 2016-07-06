@@ -227,8 +227,10 @@ object GeneticsHelper {
       map { x => x.ordinal() -> x }
     ).toMap
 
-  def getMutationSpecies(m: IMutation) =
-    m.getTemplate()(m.getRoot.getKaryotypeKey.ordinal()).asInstanceOf[IAlleleSpecies]
+  def getMutationSpecies(m: IMutation): IAlleleSpecies =
+    m.getTemplate.find(m.getRoot.getSpeciesChromosomeType.getAlleleClass.isInstance)
+      .orElse(sys.error("Failed to get species from mutation %s+%s (%s)".format(m.getAllele0.getUID, m.getAllele1.getUID, m.getRoot.getUID)))
+      .asInstanceOf[IAlleleSpecies]
 
   def getErsatzPollen(state: IBlockState): Option[IIndividual] = {
     val item = Item.getItemFromBlock(state.getBlock)

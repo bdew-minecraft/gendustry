@@ -28,7 +28,7 @@ object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
   case class CheckResultFailed(msg: String) extends CheckResult(false)
 
   def checkSpawnLocation(hive: HiveDescription, world: World, pos: BlockPos): CheckResult = {
-    val biome = world.getBiomeGenForCoords(pos)
+    val biome = world.getBiome(pos)
     if (!hive.isGoodBiome(biome)) CheckResultFailed("Wrong Biome")
     else if (!hive.isGoodHumidity(EnumHumidity.getFromValue(biome.getRainfall))) CheckResultFailed("Wrong Humidity")
     else if (!hive.isGoodTemperature(EnumTemperature.getFromValue(biome.getTemperature))) CheckResultFailed("Wrong Temperature")

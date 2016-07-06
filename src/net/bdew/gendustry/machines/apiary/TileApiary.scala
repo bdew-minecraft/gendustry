@@ -208,7 +208,7 @@ class TileApiary extends TileExtended
   }
 
   // Misc
-  def getBiome = worldObj.getBiomeGenForCoords(pos)
+  def getBiome = worldObj.getBiome(pos)
   override def getSizeInventory = 15
   def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
 

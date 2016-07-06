@@ -83,7 +83,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     var highest = 0
     excludeSpecies += species
     import scala.collection.JavaConversions._
-    getRoot.getPaths(species, getRoot.getKaryotypeKey) foreach { mutation =>
+    getRoot.getPaths(species, getRoot.getSpeciesChromosomeType) foreach { mutation =>
       if (!excludeSpecies.contains(mutation.getAllele0)) {
         val otherAdvance = getMutationPathLength(mutation.getAllele0, excludeSpecies)
         if (otherAdvance > highest) highest = otherAdvance
