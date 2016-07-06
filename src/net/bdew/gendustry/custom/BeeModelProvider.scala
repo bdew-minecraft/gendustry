@@ -33,7 +33,6 @@ object BeeModelProvider extends IBeeModelProvider {
       models = new Array[ModelResourceLocation](EnumBeeType.values.length)
     }
     models(beeType.ordinal) = manager.getModelLocation(beeTypeNameBase)
-    manager.registerItemModel(item, 0, "gendustry:" + beeTypeNameBase)
   }
 
   @SideOnly(Side.CLIENT)
