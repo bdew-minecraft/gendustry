@@ -10,14 +10,17 @@
 package net.bdew.gendustry.items.covers
 
 import forestry.api.core.{ForestryAPI, IErrorLogicSource, IErrorState}
+import net.bdew.gendustry.Gendustry
 import net.bdew.lib.Misc
 import net.bdew.lib.covers.{ItemCover, TileCoverable}
 import net.bdew.lib.helpers.ChatHelper._
 import net.bdew.lib.items.BaseItem
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.EnumFacing
+import net.minecraft.util.{EnumFacing, ResourceLocation}
+import net.minecraftforge.client.model.ModelLoader
 
 trait ErrorSensor {
   def id: String
@@ -40,7 +43,7 @@ object ErrorSensorAnyError extends ErrorSensor {
 case class ErrorSensorForestry(state: IErrorState) extends ErrorSensor {
   override def id: String = state.getUniqueName
   override def isActive(te: IErrorLogicSource): Boolean = te.getErrorLogic.contains(state)
-  override def getUnLocalizedName: String = "for." + state.getUnlocalizedDescription
+  override def getUnLocalizedName: String = state.getUnlocalizedDescription
 }
 
 object ErrorSensors {
@@ -122,5 +125,17 @@ object ErrorSensorCover extends BaseItem("ErrorSensorCover") with ItemCover {
       te.getWorldObject.notifyBlockOfStateChange(te.getPos.offset(side), te.getBlockType)
     }
     true
+  }
+
+  override def getDisplayItem(te: TileCoverable, side: EnumFacing, cover: ItemStack): ItemStack = {
+    if (isEmittingSignal(te, side, cover))
+      new ItemStack(this, 1, 1)
+    else
+      cover
+  }
+
+  override def registerItemModels(): Unit = {
+    super.registerItemModels()
+    ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation(new ResourceLocation(Gendustry.modId, "ErrorSensorCoverOn"), "inventory"))
   }
 }
