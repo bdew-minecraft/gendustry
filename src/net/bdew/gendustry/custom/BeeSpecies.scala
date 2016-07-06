@@ -165,7 +165,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
   override def getModel(kind: EnumBeeType): ModelResourceLocation = BeeModelProvider.getModel(kind)
 
   @SideOnly(Side.CLIENT)
-  override def registerModels(item: Item, manager: IModelManager): Unit = BeeModelProvider.registerModels(item, manager)
+  override def registerModels(item: Item, manager: IModelManager): Unit = {} // Registration is manual in GendustryClient
 
   val primaryColour = cfg.getColor("PrimaryColor").asRGB
   val secondaryColour = cfg.getColor("SecondaryColor").asRGB

@@ -115,12 +115,12 @@ object Gendustry {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TuningLoader.loadDelayed()
-    //    if (ForestryHelper.haveRoot("Bees")) {
-    //      CustomFlowerAlleles.registerAlleles()
-    //      CustomContent.registerTemplates()
-    //      CustomContent.registerMutations()
-    //      CustomHives.registerHives()
-    //    }
+    if (ForestryHelper.haveRoot("Bees")) {
+      CustomFlowerAlleles.registerAlleles()
+      CustomContent.registerTemplates()
+      CustomContent.registerMutations()
+      CustomHives.registerHives()
+    }
     if (event.getSide == Side.CLIENT) {
       GendustryClient.postInit()
     }

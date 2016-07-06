@@ -3,10 +3,11 @@ package net.bdew.gendustry.custom
 import java.util.Locale
 
 import forestry.api.apiculture.{EnumBeeType, IBeeModelProvider}
-import forestry.api.core.IModelManager
+import forestry.api.core.{ForestryAPI, IModelManager}
 import forestry.api.genetics.AlleleManager
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object BeeModelProvider extends IBeeModelProvider {
@@ -15,12 +16,19 @@ object BeeModelProvider extends IBeeModelProvider {
   @SideOnly(Side.CLIENT)
   private var models: Array[ModelResourceLocation] = null
 
+  def registerModelsManual(): Unit = {
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beeDroneGE")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beeLarvaeGE")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beePrincessGE")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beeQueenGE")), ForestryAPI.modelManager)
+  }
+
   @SideOnly(Side.CLIENT)
   override def registerModels(item: Item, manager: IModelManager) {
-    val beeIconDir: String = "bees/default/"
+    val beeIconDir = "bees/default/"
     AlleleManager.alleleRegistry.getSpeciesRoot()
     val beeType = beeRoot.getType(new ItemStack(item)).asInstanceOf[EnumBeeType]
-    val beeTypeNameBase: String = beeIconDir + beeType.toString.toLowerCase(Locale.ENGLISH)
+    val beeTypeNameBase = beeIconDir + beeType.toString.toLowerCase(Locale.ENGLISH)
     if (models == null) {
       models = new Array[ModelResourceLocation](EnumBeeType.values.length)
     }
