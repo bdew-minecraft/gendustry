@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
 class BlockFluid(val fluid: Fluid, val ownIcons: Boolean) extends BlockFluidClassic(fluid, Material.WATER) {
   setRegistryName(Gendustry.modId, fluid.getName)
+  setUnlocalizedName(Gendustry.modId + "." + fluid.getName)
 
   override def canDisplace(world: IBlockAccess, pos: BlockPos): Boolean = {
     val state = world.getBlockState(pos)

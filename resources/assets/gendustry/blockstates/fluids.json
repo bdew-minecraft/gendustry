@@ -13,7 +13,7 @@
         "fluid": "liquiddna"
       }
     },
-    "steam": {
+    "protein": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "protein"

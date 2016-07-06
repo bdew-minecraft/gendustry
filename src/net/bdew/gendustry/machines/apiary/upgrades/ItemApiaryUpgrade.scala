@@ -14,11 +14,14 @@ import java.util
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.api.items.IApiaryUpgrade
-import net.bdew.lib.Misc
 import net.bdew.lib.items.BaseItem
+import net.bdew.lib.{Client, Misc}
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraftforge.client.model.ModelLoader
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade {
   setHasSubtypes(true)
@@ -103,5 +106,14 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
   override def getSubItems(par1: Item, par2CreativeTabs: CreativeTabs, list: util.List[ItemStack]) {
     for ((id, name) <- Upgrades.map)
       list.add(new ItemStack(this, 1, id))
+  }
+
+  @SideOnly(Side.CLIENT)
+  override def registerItemModels(): Unit = {
+    for ((id, upgrade) <- Upgrades.map) {
+      val model = "%s:%s/%s".format(Gendustry.modId, "upgrades", upgrade.name)
+      ModelLoader.setCustomModelResourceLocation(this, id, new ModelResourceLocation(model, "inventory"))
+      Client.minecraft.getRenderItem.getItemModelMesher.register(this, id, new ModelResourceLocation(model, "inventory"))
+    }
   }
 }

@@ -97,6 +97,7 @@ object Gendustry {
     }
 
     Upgrades.init()
+
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerBranches()
       CustomContent.registerSpecies()

@@ -16,9 +16,12 @@ import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.bdew.lib.render.ColorHandlers
+import net.minecraft.client.renderer.ItemMeshDefinition
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object CustomHoneyDrop extends BaseItem("HoneyDrop") {
@@ -48,13 +51,16 @@ object CustomHoneyDrop extends BaseItem("HoneyDrop") {
 
   @SideOnly(Side.CLIENT)
   override def registerItemModels(): Unit = {
-    super.registerItemModels()
+    ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition {
+      override def getModelLocation(stack: ItemStack): ModelResourceLocation =
+        new ModelResourceLocation(getRegistryName, "inventory")
+    })
     ColorHandlers.register(this, new IItemColor {
       override def getColorFromItemstack(stack: ItemStack, tintIndex: Int): Int = {
         val data = getData(stack).getOrElse(return 0)
         tintIndex match {
-          case 0 => data.color1
-          case _ => data.color2
+          case 0 => data.color2
+          case _ => data.color1
         }
       }
     })

@@ -12,14 +12,16 @@ package net.bdew.gendustry.config
 import java.util.Locale
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.gendustry.fluids.{BlockFluid, ItemFluidBucket, ItemFluidCan}
+import net.bdew.gendustry.fluids.{BlockFluid, ItemFluidBucket}
 import net.bdew.gendustry.forestry.ForestryItems
 import net.bdew.lib.Misc
 import net.bdew.lib.config.FluidManager
 import net.bdew.lib.render.FluidModelUtils
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.init
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fluids.{Fluid, FluidContainerRegistry, FluidRegistry, FluidStack}
 import net.minecraftforge.fml.common.FMLCommonHandler
 
@@ -59,10 +61,8 @@ object Fluids extends FluidManager {
     if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyBucket) == null) {
       val bucket = Items.regItem(new ItemFluidBucket(fluid))
       FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
-    }
-    if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyCan) == null) {
-      val can = Items.regItem(new ItemFluidCan(fluid))
-      FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(can), emptyCan)
+      if (FMLCommonHandler.instance().getSide.isClient)
+        ModelLoader.setCustomModelResourceLocation(bucket, 0, new ModelResourceLocation(bucket.getRegistryName, "inventory"))
     }
     return fluid
   }
