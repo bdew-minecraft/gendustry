@@ -229,7 +229,7 @@ object GeneticsHelper {
 
   def getMutationSpecies(m: IMutation): IAlleleSpecies =
     m.getTemplate.find(m.getRoot.getSpeciesChromosomeType.getAlleleClass.isInstance)
-      .orElse(sys.error("Failed to get species from mutation %s+%s (%s)".format(m.getAllele0.getUID, m.getAllele1.getUID, m.getRoot.getUID)))
+      .getOrElse(sys.error("Failed to get species from mutation %s+%s (%s)".format(m.getAllele0.getUID, m.getAllele1.getUID, m.getRoot.getUID)))
       .asInstanceOf[IAlleleSpecies]
 
   def getErsatzPollen(state: IBlockState): Option[IIndividual] = {
