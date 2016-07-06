@@ -9,39 +9,33 @@
 
 package net.bdew.gendustry.misc
 
-import java.io.{File, FileInputStream, InputStream}
+import java.io.{File, FileInputStream}
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.{Client, Misc}
 import net.minecraft.client.resources._
+import net.minecraft.util.text.translation.LanguageMap
 
 object ResourceListener extends IResourceManagerReloadListener {
-  lazy val mLoadLocaleData = classOf[Locale].getDeclaredMethod("loadLocaleData", classOf[InputStream])
-  lazy val fCurrentLocale = classOf[LanguageManager].getDeclaredField("CURRENT_LOCALE")
-
-  def init() {
-    mLoadLocaleData.setAccessible(true)
-    fCurrentLocale.setAccessible(true)
+  def init(): Unit = {
     Client.minecraft.getResourceManager.asInstanceOf[IReloadableResourceManager].registerReloadListener(this)
     Gendustry.logInfo("Registered reload listener")
   }
 
-  def loadLangFile(lang: Locale, fileName: String) {
+  def loadLangFile(fileName: String): Unit = {
     val langFile = new File(Gendustry.configDir, fileName)
     Gendustry.logInfo("Loading language file %s", langFile.getCanonicalPath)
     Misc.withAutoClose(new FileInputStream(langFile)) { in =>
-      mLoadLocaleData.invoke(lang, in)
+      LanguageMap.inject(in)
     }
   }
 
-  override def onResourceManagerReload(rm: IResourceManager) {
+  override def onResourceManagerReload(rm: IResourceManager): Unit = {
     val newLang = Client.minecraft.getLanguageManager.getCurrentLanguage
-    val locale = fCurrentLocale.get(null).asInstanceOf[Locale]
     Gendustry.logInfo("Resource manager reload, new language: %s", newLang.getLanguageCode)
     val configFiles = Gendustry.configDir.list().sorted
-    configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile(locale, _))
+    configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile)
     if (newLang.getLanguageCode != "en_US")
-      configFiles.filter(_.endsWith("." + newLang + ".lang")).foreach(loadLangFile(locale, _))
-    Client.minecraft.getLanguageManager.onResourceManagerReload(rm)
+      configFiles.filter(_.endsWith("." + newLang.getLanguageCode + ".lang")).foreach(loadLangFile)
   }
 }
