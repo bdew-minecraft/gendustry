@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2014
+ * Copyright (c) bdew, 2013 - 2016
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -16,7 +16,6 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.power.ItemPowered
 import net.bdew.lib.Misc
-import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.items.BaseTool
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState

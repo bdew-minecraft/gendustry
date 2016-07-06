@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2015
+ * Copyright (c) bdew, 2013 - 2016
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -13,5 +13,5 @@ package net.bdew.gendustry.api;
  * Used in mutatron overrides, see http://bdew.net/gendustry/configuration/genetics-configuration/
  */
 public enum EnumMutationSetting {
-    ENABLED, DISABLED, REQUIREMENTS;
+    ENABLED, DISABLED, REQUIREMENTS
 }
