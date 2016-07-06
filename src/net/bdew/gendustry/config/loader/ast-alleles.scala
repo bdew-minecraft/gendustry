@@ -20,3 +20,11 @@ case class FADAccepts(accepts: List[StackRef]) extends FlowerAlleleDefStatement
 case class FADSpread(block: StackRef, weight: Double) extends FlowerAlleleDefStatement
 
 case class FADDominant(dominant: Boolean) extends FlowerAlleleDefStatement
+
+sealed trait FAPlantType extends FlowerAlleleDefStatement
+
+case object FAPlantTypeAny extends FAPlantType
+
+case object FAPlantTypeNormal extends FAPlantType
+
+case class FAPlantTypeCustom(kinds: Set[String]) extends FAPlantType

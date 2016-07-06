@@ -36,12 +36,23 @@ object CustomFlowerAlleles {
           }
           entries.head.dominant
         }
+      }
 
+      val plantFilter = {
+        val entries = Misc.filterType(definition, classOf[FAPlantType])
+        if (entries.isEmpty)
+          FAPlantTypeNormal
+        else {
+          if (entries.size > 1) {
+            Gendustry.logWarn("Flower allele %s has multiple plant types, only the first will be used", id)
+          }
+          entries.head
+        }
       }
 
       val flowerType = "gendustry." + id
 
-      val flowerProvider = CustomFlowerProvider(flowerType, id)
+      val flowerProvider = CustomFlowerProvider(flowerType, id, plantFilter)
 
       Gendustry.logDebug("Registering custom flower allele %s", id)
 
