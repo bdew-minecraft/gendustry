@@ -14,6 +14,7 @@ import java.util.Locale
 import net.bdew.gendustry.Gendustry
 import net.minecraft.init.Items
 import net.minecraft.item.{ItemBucket, ItemStack}
+import net.minecraft.util.math.RayTraceResult
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.player.FillBucketEvent
 import net.minecraftforge.fluids.{BlockFluidBase, Fluid}
@@ -30,11 +31,13 @@ class ItemFluidBucket(fluid: Fluid) extends ItemBucket(fluid.getBlock) {
 
   @SubscribeEvent
   def onBucketFill(event: FillBucketEvent) {
-    val state = event.getWorld.getBlockState(event.getTarget.getBlockPos)
-    if (state.getBlock == fluid.getBlock && state.getValue(BlockFluidBase.LEVEL) == 0) {
-      event.getWorld.setBlockToAir(event.getTarget.getBlockPos)
-      event.setFilledBucket(new ItemStack(this))
-      event.setResult(Result.ALLOW)
+    if (event.getTarget != null && event.getTarget.typeOfHit == RayTraceResult.Type.BLOCK) {
+      val state = event.getWorld.getBlockState(event.getTarget.getBlockPos)
+      if (state.getBlock == fluid.getBlock && state.getValue(BlockFluidBase.LEVEL) == 0) {
+        event.getWorld.setBlockToAir(event.getTarget.getBlockPos)
+        event.setFilledBucket(new ItemStack(this))
+        event.setResult(Result.ALLOW)
+      }
     }
   }
 }
