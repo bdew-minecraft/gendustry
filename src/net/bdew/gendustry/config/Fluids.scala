@@ -40,8 +40,9 @@ object Fluids extends FluidManager {
       Gendustry.logDebug("Fluid %s already registered, using existing (%s)", id, FluidRegistry.getFluid(id))
       false
     } else {
+      val textures = "fluids/" + id.toLowerCase(Locale.US)
       Gendustry.logDebug("Registering fluid %s", id)
-      val newFluid = new Fluid(id, new ResourceLocation(Gendustry.modId, "fluids/" + id + "/still"), new ResourceLocation(Gendustry.modId, "fluids/" + id + "/flowing"))
+      val newFluid = new Fluid(id, new ResourceLocation(Gendustry.modId, textures + "/still"), new ResourceLocation(Gendustry.modId, textures + "/flowing"))
       newFluid.setUnlocalizedName((Misc.getActiveModId + "." + id).toLowerCase(Locale.US))
       newFluid.setLuminosity(luminosity)
       newFluid.setDensity(density)
