@@ -10,7 +10,7 @@
 package net.bdew.gendustry.gui
 
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.items.ItemUtils
+import net.bdew.lib.capabilities.helpers.FluidHelper
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumFacing, EnumHand}
 import net.minecraft.world.World
-import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidHandler}
 
 //@Optional.Interface(modid = "CoFHAPI|block", iface = "cofh.api.block.IDismantleable")
 trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
@@ -53,33 +52,17 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
   //  override def canDismantle(player: EntityPlayer, world: World,pos: BlockPos): Boolean = true
 
   def tryFluidInteract(world: World, pos: BlockPos, player: EntityPlayer, side: EnumFacing): Boolean = {
-    val tileEntity = world.getTileEntity(pos)
-    val activeItem = player.getActiveItemStack
-    if (activeItem != null && tileEntity != null && tileEntity.isInstanceOf[IFluidHandler]) {
-      val fluidHandler = tileEntity.asInstanceOf[IFluidHandler]
-      if (FluidContainerRegistry.isEmptyContainer(activeItem)) {
-        val fStack = fluidHandler.drain(side, Int.MaxValue, false)
-        if (fStack != null) {
-          val filled = FluidContainerRegistry.fillFluidContainer(fStack, activeItem)
-          if (filled != null) {
-            fluidHandler.drain(side, FluidContainerRegistry.getFluidForFilledItem(filled), true)
-            player.inventory.decrStackSize(player.inventory.currentItem, 1)
-            ItemUtils.dropItemToPlayer(world, player, filled)
-            return true
-          }
-        }
-      } else if (FluidContainerRegistry.isFilledContainer(activeItem)) {
-        val fStack = FluidContainerRegistry.getFluidForFilledItem(activeItem)
-        if (fStack != null && (fluidHandler.fill(side, fStack, false) == fStack.amount)) {
-          fluidHandler.fill(side, fStack, true)
-          val cont = activeItem.getItem.getContainerItem(activeItem)
-          player.inventory.decrStackSize(player.inventory.currentItem, 1)
-          if (cont != null) ItemUtils.dropItemToPlayer(world, player, cont)
-          return true
-        }
+    for {
+      tankHandler <- FluidHelper.getFluidHandler(world, pos, side)
+      itemHandler <- FluidHelper.getFluidHandler(player.getHeldItemMainhand)
+    } {
+      if (itemHandler.getTankProperties.exists(x => x.canFill && x.getContents == null)) {
+        if (FluidHelper.pushFluid(tankHandler, itemHandler) != null) return true
+      } else if (itemHandler.getTankProperties.exists(x => x.canDrain && x.getContents != null && x.getContents.amount > 0)) {
+        if (FluidHelper.pushFluid(itemHandler, tankHandler) != null) return true
       }
     }
-    return false
+    false
   }
 
   override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, heldItem: ItemStack, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {

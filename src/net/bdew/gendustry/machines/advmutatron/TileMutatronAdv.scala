@@ -16,16 +16,16 @@ import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
+import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
+import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotGameProfile, DataSlotInt, DataSlotTankRestricted}
 import net.bdew.lib.power.TileItemProcessor
-import net.bdew.lib.tile.ExposeTank
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
-import net.minecraftforge.fluids._
 
-class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with IAdvancedMutatron with TileCoverable with TileKeepData {
+class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered with IAdvancedMutatron with TileCoverable with TileKeepData with CapabilityProvider with OldFluidHandlerEmulator {
   lazy val cfg = MachineMutatronAdv
   val outputSlots = Seq(slots.outIndividual)
 
@@ -37,13 +37,13 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
     val selectors = 4 to 9
   }
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen, canDrainExternal = false)
   val selectedMutation = DataSlotInt("selected", this, -1).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
   val lastPlayer = DataSlotGameProfile("player", this).setUpdate(UpdateKind.SAVE)
 
-  def getSizeInventory = 10
+  addCapability(Capabilities.CAP_FLUID_HANDLER, tank)
 
-  def getTankFromDirection(dir: EnumFacing): IFluidTank = tank
+  def getSizeInventory = 10
 
   override def getParent1 = getStackInSlot(slots.inIndividual1)
   override def getParent2 = getStackInSlot(slots.inIndividual2)
@@ -92,7 +92,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
     if (canStart) {
       val outStack = GeneticsHelper.applyMutationDecayChance(getStackInSlot(selectedMutation.value), getStackInSlot(0))
       output := Some(outStack)
-      tank.drain(cfg.mutagenPerItem, true)
+      tank.drainInternal(cfg.mutagenPerItem, true)
       if (lastPlayer.value != null)
         GeneticsHelper.addMutationToTracker(inv(0), inv(1), outStack, lastPlayer, worldObj)
       decrStackSize(slots.inIndividual1, 1)
@@ -125,10 +125,6 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
   allowSided = true
 
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) = slot == slots.outIndividual
-
-  override def canDrain(from: EnumFacing, fluid: Fluid): Boolean = false
-  override def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean): FluidStack = null
-  override def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean): FluidStack = null
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

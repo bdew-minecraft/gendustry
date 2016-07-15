@@ -15,14 +15,16 @@ import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
+import net.bdew.lib.capabilities.helpers.FluidMultiHandler
+import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
+import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data.DataSlotTankRestricted
 import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
-import net.minecraftforge.fluids._
 
-class TileReplicator extends TileItemProcessor with TileWorker with TilePowered with IFluidHandler with TileCoverable with TileKeepData {
+class TileReplicator extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData with CapabilityProvider with OldFluidHandlerEmulator {
   lazy val cfg = MachineReplicator
   val outputSlots = Seq(slots.outIndividual)
 
@@ -31,8 +33,10 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
     val outIndividual = 1
   }
 
-  val dnaTank = DataSlotTankRestricted("dnaTank", this, cfg.dnaTankSize, Fluids.dna)
-  val proteinTank = DataSlotTankRestricted("proteinTank", this, cfg.proteinTankSize, Fluids.protein)
+  val dnaTank = DataSlotTankRestricted("dnaTank", this, cfg.dnaTankSize, Fluids.dna, canDrainExternal = false)
+  val proteinTank = DataSlotTankRestricted("proteinTank", this, cfg.proteinTankSize, Fluids.protein, canDrainExternal = false)
+
+  addCapability(Capabilities.CAP_FLUID_HANDLER, new FluidMultiHandler(List(dnaTank, proteinTank)))
 
   def getSizeInventory = 2
 
@@ -56,19 +60,6 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) = slot == slots.outIndividual
-
-  def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean) =
-    if (resource.getFluid == Fluids.dna)
-      dnaTank.fill(resource, doFill)
-    else if (resource.getFluid == Fluids.protein)
-      proteinTank.fill(resource, doFill)
-    else 0
-
-  def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean) = null
-  def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean) = null
-  def canFill(from: EnumFacing, fluid: Fluid) = fluid == Fluids.dna || fluid == Fluids.protein
-  def canDrain(from: EnumFacing, fluid: Fluid) = false
-  def getTankInfo(from: EnumFacing) = Array(dnaTank.getInfo, proteinTank.getInfo)
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

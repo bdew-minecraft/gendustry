@@ -15,16 +15,17 @@ import net.bdew.gendustry.fluids.LiquidDNASources
 import net.bdew.gendustry.machines.FluidPusher
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
+import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
+import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.power.TileBaseProcessor
-import net.bdew.lib.tile.ExposeTank
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
 
-class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with TileKeepData with FluidPusher {
+class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData with FluidPusher with CapabilityProvider with OldFluidHandlerEmulator {
   lazy val cfg = MachineExtractor
 
   object slots {
@@ -32,8 +33,10 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
     val inLabware = 1
   }
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.dna).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.dna, canFillExternal = false).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val output = DataSlotInt("output", this).setUpdate(UpdateKind.SAVE)
+
+  addCapability(Capabilities.CAP_FLUID_HANDLER, tank)
 
   def getSizeInventory = 2
 
@@ -52,8 +55,8 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
   }
 
   def tryFinish(): Boolean = {
-    if (tank.fill(output, false) == output.value) {
-      tank.fill(output, true)
+    if (tank.fillInternal(output, false) == output.value) {
+      tank.fillInternal(output, true)
       output := -1
       return true
     } else return false
@@ -66,9 +69,6 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
     case _ => false
   }
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing): Boolean = false
-
-  override def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean) = 0
-  override def canFill(from: EnumFacing, fluid: Fluid) = false
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

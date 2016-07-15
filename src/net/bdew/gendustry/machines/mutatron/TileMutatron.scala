@@ -16,16 +16,17 @@ import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
+import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
+import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotGameProfile, DataSlotTankRestricted}
 import net.bdew.lib.power.TileItemProcessor
-import net.bdew.lib.tile.ExposeTank
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
 
-class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with ExposeTank with TileCoverable with IMutatron with TileKeepData {
+class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with IMutatron with TileKeepData with CapabilityProvider with OldFluidHandlerEmulator {
   lazy val cfg = MachineMutatron
   val outputSlots = Seq(slots.outIndividual)
 
@@ -36,8 +37,10 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
     val outIndividual = 2
   }
 
-  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen)
+  val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.mutagen, canDrainExternal = false)
   val lastPlayer = DataSlotGameProfile("player", this).setUpdate(UpdateKind.SAVE)
+
+  addCapability(Capabilities.CAP_FLUID_HANDLER, tank)
 
   def getSizeInventory = 4
 
@@ -85,10 +88,6 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) = slot == slots.outIndividual
-
-  override def canDrain(from: EnumFacing, fluid: Fluid): Boolean = false
-  override def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean): FluidStack = null
-  override def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean): FluidStack = null
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }
