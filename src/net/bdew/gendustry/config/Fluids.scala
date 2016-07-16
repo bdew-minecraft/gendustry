@@ -59,11 +59,15 @@ object Fluids extends FluidManager {
       if (FMLCommonHandler.instance().getSide.isClient)
         FluidModelUtils.registerFluidModel(block, Gendustry.modId + ":fluids")
     }
-    if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyBucket) == null) {
-      val bucket = Items.regItem(new ItemFluidBucket(fluid))
-      FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
-      if (FMLCommonHandler.instance().getSide.isClient)
-        ModelLoader.setCustomModelResourceLocation(bucket, 0, new ModelResourceLocation(bucket.getRegistryName, "inventory"))
+    if (FluidRegistry.isUniversalBucketEnabled) {
+      FluidRegistry.addBucketForFluid(fluid)
+    } else {
+      if (FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), emptyBucket) == null) {
+        val bucket = Items.regItem(new ItemFluidBucket(fluid))
+        FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket), emptyBucket)
+        if (FMLCommonHandler.instance().getSide.isClient)
+          ModelLoader.setCustomModelResourceLocation(bucket, 0, new ModelResourceLocation(bucket.getRegistryName, "inventory"))
+      }
     }
     return fluid
   }
