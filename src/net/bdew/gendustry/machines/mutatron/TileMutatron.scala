@@ -62,7 +62,7 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
     if (canStart) {
       val out = GeneticsHelper.getMutationResult(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2), fakeBeeHousing)
       output := Some(out)
-      tank.drain(cfg.mutagenPerItem, true)
+      tank.drainInternal(cfg.mutagenPerItem, true)
       if (lastPlayer.value != null)
         GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), out, lastPlayer, worldObj)
       decrStackSize(slots.inIndividual1, 1)

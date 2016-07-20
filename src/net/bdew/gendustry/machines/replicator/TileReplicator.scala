@@ -49,8 +49,8 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
   def tryStart(): Boolean = {
     if (canStart) {
       output := Some(GeneticsHelper.individualFromTemplate(getStackInSlot(slots.inTemplate), cfg.makePristineBees))
-      dnaTank.drain(cfg.dnaPerItem, true)
-      proteinTank.drain(cfg.proteinPerItem, true)
+      dnaTank.drainInternal(cfg.dnaPerItem, true)
+      proteinTank.drainInternal(cfg.proteinPerItem, true)
       return true
     } else return false
   }
