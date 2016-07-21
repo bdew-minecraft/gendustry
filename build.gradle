@@ -220,6 +220,7 @@ curseforge {
             optionalLibrary 'buildcraft'
             optionalLibrary 'cofhcore'
             optionalLibrary 'just-enough-items-jei'
+            optionalLibrary 'tesla'
         }
     }
 }
