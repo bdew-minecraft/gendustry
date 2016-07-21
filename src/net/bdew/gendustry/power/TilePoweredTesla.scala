@@ -9,6 +9,12 @@
 
 package net.bdew.gendustry.power
 
-import net.bdew.lib.power.ItemPoweredBase
+import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.lib.capabilities.CapabilityProvider
+import net.bdew.lib.power.TilePoweredBase
 
-trait ItemPowered extends ItemPoweredBase with ItemPoweredRF with ItemPoweredEU with ItemPoweredTesla
+trait TilePoweredTesla extends TilePoweredBase with CapabilityProvider {
+  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
+    Tesla.injectTesla(this)
+  }
+}

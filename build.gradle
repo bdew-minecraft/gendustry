@@ -64,7 +64,7 @@ repositories {
     mavenLocal()
     maven {
         name = "bdew"
-        url = "http://jenkins.bdew.net/maven"
+        url = "https://jenkins.bdew.net/maven"
     }
     maven {
         name "JEI"
@@ -77,6 +77,10 @@ repositories {
     maven {
         name "waila"
         url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name = "tesla"
+        url = "http://maven.epoxide.xyz"
     }
     ivy {
         name "BuildCraft"
@@ -94,6 +98,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
+    compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
 }
 
 
