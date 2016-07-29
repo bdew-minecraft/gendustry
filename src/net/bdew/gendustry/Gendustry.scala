@@ -13,7 +13,6 @@ import java.io.File
 
 import net.bdew.gendustry.api.GendustryAPI
 import net.bdew.gendustry.apiimpl.{BlockApiImpl, ItemApiImpl, RegistriesApiImpl}
-import net.bdew.gendustry.compat.itempush.ItemPush
 import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
 import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
@@ -59,7 +58,6 @@ object Gendustry {
     GendustryAPI.ConfigLoader = TuningLoader
 
     PowerProxy.logModVersions()
-    ItemPush.init()
 
     ForestryHelper.logAvailableRoots()
 

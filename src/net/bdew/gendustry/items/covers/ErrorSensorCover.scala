@@ -73,7 +73,7 @@ object ErrorSensors {
 object ErrorSensorCover extends BaseItem("ErrorSensorCover") with ItemCover {
   override def isCoverTicking: Boolean = false
 
-  override def isValidTile(te: TileCoverable, stack: ItemStack) = te.isInstanceOf[IErrorLogicSource]
+  override def isValidTile(te: TileCoverable, side: EnumFacing, stack: ItemStack) = te.isInstanceOf[IErrorLogicSource]
 
   def getErrorSensor(stack: ItemStack): Option[ErrorSensor] = {
     if (stack.hasTagCompound) {
