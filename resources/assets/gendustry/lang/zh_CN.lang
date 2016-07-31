@@ -31,7 +31,9 @@ item.gendustry.grafter.name=工业剪枝器
 item.gendustry.scoop.name=MX200涡轮捕蜂网
 item.gendustry.ImportCover.name=物品输入盖板
 item.gendustry.EjectCover.name=物品输出盖板
+item.gendustry.ErrorSensorCover.name=未知的传感器盖板
 item.gendustry.PollenKit.name=花粉收集装备
+item.gendustry.HiveSpawnDebugger.name=蜂房生产调节器
 
 # ==== FLUIDS ====
 
@@ -75,6 +77,7 @@ gendustry.upgrades.plains.name=平原环境升级
 gendustry.upgrades.jungle.name=丛林环境升级
 gendustry.upgrades.ocean.name=海洋环境升级
 gendustry.upgrades.stabilizer.name=基因稳定升级
+gendustry.upgrades.scrubber.name=花粉洗涤塔升级
 
 # ==== GUI AND TOOLTIPS ====
 
@@ -138,7 +141,14 @@ gendustry.rsmode.rs_off=收到红石信号时禁用
 
 gendustry.label.items=%s 物品
 
-gendustry.label.shift=<按下SHIFT获取更多信息>
+gendustry.label.shift=<按下Shift获取更多信息>
+
+gendustry.cover.label=盖板: %s
+
+gendustry.cover.error.message=检测到 %s 后将会发出红石信号
+gendustry.cover.error.hint=(空手点击盖板以修改)
+gendustry.cover.error.any=出现问题
+gendustry.cover.error.none=一切正常
 
 # ==== CHROMOSOMES (should match forestry) ====
 
@@ -163,15 +173,22 @@ gendustry.chromosome.PLANT=植物
 gendustry.chromosome.EFFECT=特殊效果
 gendustry.chromosome.CAVE_DWELLING=穴居性
 gendustry.chromosome.MATURATION=成熟
+gendustry.chromosome.NOCTURNAL=夜行性
 gendustry.chromosome.TOLERANT_FLYER=耐雨飞行性
 gendustry.chromosome.FRUITS=果实
 gendustry.chromosome.SAPPINESS=树汁
+gendustry.chromosome.COCOON=蛹
+gendustry.chromosome.FIREPROOF=抗火性
+gendustry.chromosome.CARBONIZATION=碳化
+gendustry.chromosome.COMBUSTIBILITY=可燃性
+gendustry.chromosome.TOLERATES_RAIN=耐雨性
+gendustry.chromosome.NEVER_SLEEPS=无眠
 
 // Botany
 
 gendustry.chromosome.PRIMARY=原生种
 gendustry.chromosome.SECONDARY=次生种
-gendustry.chromosome.PH_TOLERANCE=pH耐受性
+gendustry.chromosome.PH_TOLERANCE=酸碱度耐受性
 gendustry.chromosome.STEM=血统
 
 gendustry.allele.false=否
@@ -187,10 +204,10 @@ gendustry.trigger.power100=满能量
 gendustry.trigger.working=机器运作中
 
 # ==== COMMANDS ====
-gendustry.givetemplate.usage=/givetemplate <uid>
+gendustry.givetemplate.usage=用法: /givetemplate <uid>
 gendustry.givetemplate.success=基因模板 %s 已给玩家 %s
 
-gendustry.givesample.usage=/givesample <species> <chromosome> <allele>
+gendustry.givesample.usage=用法: /givesample <种类> <染色体> <基因>
 gendustry.givesample.error.root=未知的品种: %s
 gendustry.givesample.error.allele=未知的基因: %s
 gendustry.givesample.error.chromosome=未知的染色体: %s
@@ -267,6 +284,8 @@ itemGroup.bdew.gendustry=基因工业
 itemGroup.bdew.templates=基因工业|模板
 itemGroup.bdew.samples=基因工业|样本
 itemGroup.bdew.hives=基因工业|自定义蜂房
+
+gendustry.errorstate.ok=一切正常
 
 gendustry.errorstate.disabled.description=能量不足
 gendustry.errorstate.disabled.help=被配置文件禁用
