@@ -119,7 +119,7 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   // can extract the template if input is empty and there's no operation in progress
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) =
     slot == slots.outIndividual ||
-      (slot == slots.inTemplate && inv(slots.inIndividual) == null && (output :== null))
+      (slot == slots.inTemplate && inv(slots.inIndividual) == null && output.isEmpty)
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

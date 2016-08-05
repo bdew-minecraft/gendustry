@@ -83,7 +83,7 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) =
-    slot == slots.outCopy || (slot == slots.inTemplate && inv(slots.inBlank) == null && (output :== null))
+    slot == slots.outCopy || (slot == slots.inTemplate && inv(slots.inBlank) == null && output.isEmpty)
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }
