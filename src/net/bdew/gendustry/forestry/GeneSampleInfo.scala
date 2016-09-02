@@ -11,6 +11,7 @@ package net.bdew.gendustry.forestry
 
 import java.util.Locale
 
+import com.mojang.realmsclient.gui.ChatFormatting
 import forestry.api.apiculture.IAlleleBeeSpecies
 import forestry.api.arboriculture._
 import forestry.api.genetics._
@@ -31,6 +32,7 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
     import scala.collection.JavaConverters._
     val chr = GeneSampleInfo.getChromosomeName(root, chromosome)
     val str = allele match {
+      case null => ChatFormatting.RED + "*** ERROR ***"
       // Custom localized names, see https://github.com/bdew/gendustry/issues/41
       case a: IAlleleTreeSpecies =>
         val k = "for.trees.custom.treealyzer.sapling." + a.getUnlocalizedName.replace("trees.species.", "")
