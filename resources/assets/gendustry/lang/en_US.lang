@@ -179,7 +179,7 @@ gendustry.chromosome.COCOON=Cocoon
 gendustry.chromosome.FIREPROOF=Fireproof
 gendustry.chromosome.CARBONIZATION=Carbonization
 gendustry.chromosome.COMBUSTIBILITY=Combustibility
-gendustry.chromosome.TOLERATES_RAIN=Cocoon
+gendustry.chromosome.TOLERATES_RAIN=Tolerates Rain
 gendustry.chromosome.NEVER_SLEEPS=Never Sleeps
 
 // Botany
