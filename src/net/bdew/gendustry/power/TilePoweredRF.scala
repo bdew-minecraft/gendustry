@@ -16,7 +16,7 @@ import net.bdew.lib.power.TilePoweredBase
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fml.common.Optional
 
-@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyHandler")
+@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyReceiver")
 trait TilePoweredRF extends TilePoweredBase with IEnergyReceiver {
   private lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
