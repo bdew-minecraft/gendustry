@@ -17,7 +17,6 @@ import net.bdew.gendustry.misc.{GendustryCreativeTabs, GeneticsCache}
 import net.bdew.lib.Misc
 import net.bdew.lib.items.BaseItem
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 
@@ -49,11 +48,12 @@ object GeneSample extends BaseItem("GeneSample") {
 
   def getInfo(stack: ItemStack): GeneSampleInfo = GeneSampleInfo.fromNBT(stack.getTagCompound)
 
-  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+  override def getItemStackDisplayName(stack: ItemStack): String =
     if (stack.hasTagCompound) {
       val info = getInfo(stack)
-      tooltip.add(Misc.toLocal("gendustry.label.sample." + info.root.getUID))
-      tooltip.add(info.getLocalizedName)
+      Misc.toLocalF(getUnlocalizedName(stack) + ".name", Misc.toLocal("gendustry.label.sample." + info.root.getUID), info.getLocalizedName)
+    } else {
+      Misc.toLocalF(getUnlocalizedName(stack) + ".name", "INVALID", "ERROR")
     }
-  }
+
 }

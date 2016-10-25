@@ -21,7 +21,7 @@ item.gendustry.EnvProcessor.name=Enviromental Processor
 item.gendustry.UpgradeFrame.name=Upgrade Frame
 item.gendustry.ClimateModule.name=Climate Control Module
 item.gendustry.Labware.name=Genetics Labware
-item.gendustry.GeneSample.name=Gene Sample
+item.gendustry.GeneSample.name=%s Sample - %s
 item.gendustry.GeneTemplate.name=Genetic Template
 item.gendustry.GeneSampleBlank.name=Blank Gene Sample
 item.gendustry.Waste.name=Genetic Waste
@@ -119,10 +119,10 @@ gendustry.label.mod.sieve=* Pollen Collection
 gendustry.label.mod.temperature=* Temperature
 gendustry.label.mod.humidity=* Humidity
 
-gendustry.label.sample.rootBees=Taken from a Bee
-gendustry.label.sample.rootTrees=Taken from a Sapling
-gendustry.label.sample.rootButterflies=Taken from a Butterfly
-gendustry.label.sample.rootFlowers=Taken from a Flower
+gendustry.label.sample.rootBees=Bee
+gendustry.label.sample.rootTrees=Tree
+gendustry.label.sample.rootButterflies=Butterfly
+gendustry.label.sample.rootFlowers=Flower
 
 gendustry.label.template.rootBees=Can be applied to a Bee
 gendustry.label.template.rootTrees=Can be applied to a Sapling
