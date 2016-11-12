@@ -50,6 +50,6 @@ case class HiveDescription(id: String, chance: Float, yMin: Int, yMax: Int,
   override def isGoodTemperature(temperature: EnumTemperature): Boolean = validTemperature.contains(temperature)
 
   override def postGen(world: World, rand: Random, pos: BlockPos): Unit = {
-    if (spawnDebug) Gendustry.logInfo("Spawning hive %s at %d:%d,%d,%d", id, world.provider.getDimension, pos)
+    if (spawnDebug) Gendustry.logInfo("Spawning hive %s at %d:%s", id, world.provider.getDimension, pos)
   }
 }
