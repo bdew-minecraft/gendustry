@@ -22,7 +22,7 @@ import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.machines.mutatron.MachineMutatron
 import net.minecraft.block.state.IBlockState
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 object GeneticsHelper {
@@ -232,10 +232,8 @@ object GeneticsHelper {
       .getOrElse(sys.error("Failed to get species from mutation %s+%s (%s)".format(m.getAllele0.getUID, m.getAllele1.getUID, m.getRoot.getUID)))
       .asInstanceOf[IAlleleSpecies]
 
-  def getErsatzPollen(state: IBlockState): Option[IIndividual] = {
-    val item = Item.getItemFromBlock(state.getBlock)
-    val stack = new ItemStack(item, 1, state.getBlock.damageDropped(state))
-    Option(AlleleManager.saplingTranslation.get(item)) map (_.getTreeFromSapling(stack))
+  def getVanillaLeafPollen(state: IBlockState): Option[IIndividual] = {
+    Option(AlleleManager.leafTranslators.get(state.getBlock)) flatMap (x => Option(x.getTreeFromLeaf(state)))
   }
 
   def safeMutationConditions(m: IMutation) =

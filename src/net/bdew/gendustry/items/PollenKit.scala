@@ -28,7 +28,7 @@ object PollenKit extends BaseItem("PollenKit") {
       if (player.inventory.getCurrentItem.getItem != this) return EnumActionResult.FAIL
       (world.getTileSafe[IPollinatable](pos) map { te => te.getPollen }
         // If block is not IPollinatable, check for vanilla leafs conversion
-        orElse GeneticsHelper.getErsatzPollen(world.getBlockState(pos))
+        orElse GeneticsHelper.getVanillaLeafPollen(world.getBlockState(pos))
         ) map { individual =>
         (individual.getGenome.getSpeciesRoot match {
           case trees: ITreeRoot => Option(trees.getMemberStack(individual, EnumGermlingType.POLLEN))
