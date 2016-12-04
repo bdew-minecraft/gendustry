@@ -100,7 +100,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
     //      AssemblyRecipeManager.INSTANCE.addRecipe(id, power, outStack, stacks: _*)
     //      Gendustry.logDebug("Done")
 
-    case RsCentrifuge(stack, out, time) =>
+    case RsCentrifuge(stack, out, time, mode) =>
       Gendustry.logDebug("Adding centrifuge recipe: %s => %s", stack, out)
 
       // forestry API is stupid and requires a hashmap, build one for it
@@ -109,18 +109,61 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
 
       val inStack = getConcreteStackNoWildcard(stack)
 
-      RecipeManagers.centrifugeManager.addRecipe(time, inStack, outStacks)
+      import scala.collection.JavaConversions._
+
+      val existingRecipeOpt = RecipeManagers.centrifugeManager.recipes().find(r => ItemStack.areItemStacksEqual(r.getInput, inStack))
+
+      (mode, existingRecipeOpt) match {
+        case (RecipeModeNew, None) =>
+          RecipeManagers.centrifugeManager.addRecipe(time, inStack, outStacks)
+          Gendustry.logDebug("Registering new recipe")
+        case (RecipeModeNew, Some(_)) =>
+          Gendustry.logWarn("Tried to add new centrifuge recipe for item that already had existing recipe: %s", inStack)
+        case (RecipeModeReplace, None) =>
+          Gendustry.logWarn("Tried to replace centrifuge recipe for item that didn't have existing recipe: %s, adding regardless", inStack)
+          RecipeManagers.centrifugeManager.addRecipe(time, inStack, outStacks)
+        case (RecipeModeExtend, None) =>
+          Gendustry.logWarn("Tried to extend centrifuge recipe for item that didn't have existing recipe: %s, adding as a new recipe", inStack)
+          RecipeManagers.centrifugeManager.addRecipe(time, inStack, outStacks)
+        case (RecipeModeReplace, Some(existingRecipe)) =>
+          RecipeManagers.centrifugeManager.removeRecipe(existingRecipe)
+          RecipeManagers.centrifugeManager.addRecipe(time, inStack, outStacks)
+          Gendustry.logDebug("Replacing existing recipe")
+        case (RecipeModeExtend, Some(existingRecipe)) =>
+          RecipeManagers.centrifugeManager.removeRecipe(existingRecipe)
+          outStacks.putAll(existingRecipe.getAllProducts)
+          RecipeManagers.centrifugeManager.addRecipe(existingRecipe.getProcessingTime, inStack, outStacks)
+          Gendustry.logDebug("Extending existing recipe")
+      }
 
       Gendustry.logDebug("Done %s -> %s", inStack, outStacks)
 
-    case RsSqueezer(in, fluid, time, out, chance) =>
+    case RsSqueezer(in, fluid, time, out, chance, mode) =>
       Gendustry.logDebug("Adding squeezer recipe: %s => %s + %s", in, fluid, out)
 
       val inStack = getConcreteStackNoWildcard(in)
       val outStack = if (out != null) getConcreteStackNoWildcard(out) else null
       val outFluid = resolveFluid(fluid)
 
-      RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+      import scala.collection.JavaConversions._
+
+      val existingRecipeOpt = RecipeManagers.squeezerManager.recipes().find(r => r.getResources.length == 1 && ItemStack.areItemStacksEqual(r.getResources()(0), inStack))
+
+      (mode, existingRecipeOpt) match {
+        case (RecipeModeExtend, _) => sys.error("Extend mode shouldn't be used for squeezer")
+        case (RecipeModeNew, None) =>
+          RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+          Gendustry.logDebug("Registering new recipe")
+        case (RecipeModeNew, Some(_)) =>
+          Gendustry.logWarn("Tried to add new squeezer recipe for item that already had existing recipe: %s", inStack)
+        case (RecipeModeReplace, None) =>
+          Gendustry.logWarn("Tried to replace squeezer recipe for item that didn't have existing recipe: %s, adding regardless", inStack)
+          RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+        case (RecipeModeReplace, Some(existingRecipe)) =>
+          RecipeManagers.squeezerManager.removeRecipe(existingRecipe)
+          RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+          Gendustry.logDebug("Replacing existing recipe")
+      }
 
       Gendustry.logDebug("Done %s -> %s + %s", inStack, outStack, outFluid)
 

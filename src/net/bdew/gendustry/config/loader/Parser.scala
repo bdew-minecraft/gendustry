@@ -14,7 +14,7 @@ import net.bdew.lib.recipes.gencfg.{CfgVal, GenericConfigParser}
 import net.bdew.lib.recipes.lootlist.LootListParser
 
 class Parser extends RecipeParser with GenericConfigParser with LootListParser with ParserHives with ParserAlleles {
-  override def recipeStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | squeezer | super.recipeStatement
+  override def recipeStatement = mutagen | dna | protein | assembly | stMutation | centrifuge | centrifugeExtend | squeezer | super.recipeStatement
 
   // === Machine Recipes ===
 
@@ -39,20 +39,26 @@ class Parser extends RecipeParser with GenericConfigParser with LootListParser w
   }
 
   def oneOrManyDrops = (
-    dropsEntry ^^ { case d => List(d) }
-      | spec ^^ { case st => List((100D, st)) }
+    dropsEntry ^^ (d => List(d))
+      | spec ^^ (st => List((100D, st)))
       | ("{" ~> dropsEntry.+ <~ "}")
     )
 
   def fluidSpec = str ~ (wholeNumber <~ "mb") ^^ { case id ~ amount => FluidSpec(id, amount.toInt) }
 
-  def squeezer = "squeezer" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> fluidSpec) ~ ("+" ~> dropsEntry).? ^^ {
-    case stack ~ ticks ~ fluid ~ Some((chance, res)) => RsSqueezer(stack, fluid, ticks.toInt, res, chance.round.toInt)
-    case stack ~ ticks ~ fluid ~ None => RsSqueezer(stack, fluid, ticks.toInt, null, 0)
+  def maybeReplace = "REPLACE".? ^^ { x => if (x.isDefined) RecipeModeReplace else RecipeModeNew }
+
+  def squeezer = "squeezer" ~> ":" ~> maybeReplace ~ spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> fluidSpec) ~ ("+" ~> dropsEntry).? ^^ {
+    case mode ~ stack ~ ticks ~ fluid ~ Some((chance, res)) => RsSqueezer(stack, fluid, ticks.toInt, res, chance.round.toInt, mode)
+    case mode ~ stack ~ ticks ~ fluid ~ None => RsSqueezer(stack, fluid, ticks.toInt, null, 0, mode)
   }
 
-  def centrifuge = "centrifuge" ~> ":" ~> spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> oneOrManyDrops) ^^ {
-    case stack ~ ticks ~ drops => RsCentrifuge(stack, drops, ticks.toInt)
+  def centrifuge = "centrifuge" ~> ":" ~> maybeReplace ~ spec ~ ("," ~> wholeNumber <~ "cycles") ~ ("=>" ~> oneOrManyDrops) ^^ {
+    case mode ~ stack ~ ticks ~ drops => RsCentrifuge(stack, drops, ticks.toInt, mode)
+  }
+
+  def centrifugeExtend = "centrifuge" ~> ":" ~> "ADD" ~> spec ~ ("=>" ~> oneOrManyDrops) ^^ {
+    case stack ~ drops => RsCentrifuge(stack, drops, -1, RecipeModeExtend)
   }
 
   // === Mutations ===

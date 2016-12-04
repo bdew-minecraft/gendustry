@@ -34,14 +34,22 @@ case class RsLiquidDNA(st: StackRef, mb: Int) extends RecipeStatement
 
 case class RsProtein(st: StackRef, mb: Int) extends RecipeStatement
 
+sealed trait RecipeMode
+
+case object RecipeModeNew extends RecipeMode
+
+case object RecipeModeReplace extends RecipeMode
+
+case object RecipeModeExtend extends RecipeMode
+
 // BC Assembly Table
 case class RsAssembly(rec: List[(Char, Int)], id: String, power: Int, result: StackRef, cnt: Int) extends CraftingStatement
 
 // Forestry Centrifuge
-case class RsCentrifuge(st: StackRef, out: List[(Double, StackRef)], time: Int) extends RecipeStatement
+case class RsCentrifuge(st: StackRef, out: List[(Double, StackRef)], time: Int, mode: RecipeMode) extends RecipeStatement
 
 // Forestry Squeezer
-case class RsSqueezer(st: StackRef, fluid: FluidSpec, time: Int, remnants: StackRef, chance: Int) extends RecipeStatement
+case class RsSqueezer(st: StackRef, fluid: FluidSpec, time: Int, remnants: StackRef, chance: Int, mode: RecipeMode) extends RecipeStatement
 
 // === Mutations ===
 
