@@ -286,6 +286,7 @@ class TileApiary extends TileExtended
       EnumTemperature.getFromValue(getModifiedBiome.getTemperature + mods.temperature)
 
   override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.getRainfall + mods.humidity)
+  override def isRaining: Boolean = worldObj.isRainingAt(pos.up)
 
   // IBeeHousingInventory
   override def setQueen(stack: ItemStack) = setInventorySlotContents(0, stack)
