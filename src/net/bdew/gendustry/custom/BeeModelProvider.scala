@@ -26,10 +26,10 @@ object BeeModelProvider extends IBeeModelProvider {
   private var models: Array[ModelResourceLocation] = null
 
   def registerModelsManual(): Unit = {
-    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beeDroneGE")), ForestryAPI.modelManager)
-    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beeLarvaeGE")), ForestryAPI.modelManager)
-    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beePrincessGE")), ForestryAPI.modelManager)
-    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "beeQueenGE")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "bee_drone_ge")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "bee_larvae_ge")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "bee_princess_ge")), ForestryAPI.modelManager)
+    registerModels(Item.REGISTRY.getObject(new ResourceLocation("forestry", "bee_queen_ge")), ForestryAPI.modelManager)
   }
 
   @SideOnly(Side.CLIENT)
