@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -29,7 +29,6 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
 
   @Override
   def getLocalizedName: String = {
-    import scala.collection.JavaConverters._
     val chr = GeneSampleInfo.getChromosomeName(root, chromosome)
     val str = allele match {
       case null => ChatFormatting.RED + "*** ERROR ***"
@@ -54,10 +53,8 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
         case "METABOLISM" => i.getValue.toString
         case _ => i.getName
       }
-      case p: IAllelePlantType => if (p.getPlantTypes.isEmpty) "-" else p.getPlantTypes.asScala.mkString(", ")
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
       case a: IAlleleButterflyCocoon => a.getCocoonName
-      case a: IAlleleGrowth => a.getProvider.getDescription
       case x => x.getName
     }
     if (str == "")

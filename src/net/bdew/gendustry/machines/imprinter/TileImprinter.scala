@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -77,7 +77,7 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
       }
 
       val newStack = getStackInSlot(slots.inIndividual).copy()
-      newStack.stackSize = 1
+      newStack.setCount(1)
 
       newStack.getTagCompound.setTag("Genome", NBT.from(root.templateAsGenome(primary, secondary).writeToNBT))
 
@@ -94,7 +94,7 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   def doStart(s: ItemStack) {
     output := Some(s)
     decrStackSize(slots.inIndividual, 1)
-    if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
+    if (world.rand.nextInt(100) < cfg.labwareConsumeChance)
       decrStackSize(slots.inLabware, 1)
   }
 

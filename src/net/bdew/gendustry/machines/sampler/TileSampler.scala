@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -61,7 +61,7 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
       output := Some(selectRandomAllele(getStackInSlot(slots.inIndividual)))
       decrStackSize(slots.inSampleBlank, 1)
       decrStackSize(slots.inIndividual, 1)
-      if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
+      if (world.rand.nextInt(100) < cfg.labwareConsumeChance)
         decrStackSize(slots.inLabware, 1)
 
       return true

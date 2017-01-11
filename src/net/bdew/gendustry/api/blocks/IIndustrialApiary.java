@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -10,6 +10,8 @@
 package net.bdew.gendustry.api.blocks;
 
 import forestry.api.apiculture.IBeeHousing;
+import forestry.api.apiculture.IBeeListener;
+import forestry.api.apiculture.IBeeModifier;
 import net.bdew.gendustry.api.ApiaryModifiers;
 import net.minecraft.item.ItemStack;
 
@@ -17,9 +19,10 @@ import java.util.List;
 
 /**
  * Public interface to Industrial Apiary TileEntity
- * Extends forestry IBeeHousing, IBeeModifier, IBeeListener, IHousing so all of those are usable as well
+ * Extends forestry IBeeHousing, IBeeModifier, IBeeListener, IHousing, IErrorLogicSource, IClimateProvider
+ * so all of those are usable as well
  */
-public interface IIndustrialApiary extends IBeeHousing, IForestryMultiErrorSource {
+public interface IIndustrialApiary extends IBeeHousing, IBeeModifier, IBeeListener {
     /**
      * Do not cache, stored copies will not be updated
      *

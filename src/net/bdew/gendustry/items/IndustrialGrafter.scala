@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -23,6 +23,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.NonNullList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
@@ -78,11 +79,9 @@ object IndustrialGrafter extends BaseTool("IndustrialGrafter", Item.ToolMaterial
     tooltip.add(Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge))
   }
 
-  override def getSubItems(item: Item, tabs: CreativeTabs, l: util.List[ItemStack]) {
-    import scala.collection.JavaConverters._
-    val items = l.asInstanceOf[util.List[ItemStack]].asScala
-    items += new ItemStack(this)
-    items += stackWithCharge(maxCharge)
+  override def getSubItems(item: Item, tabs: CreativeTabs, list: NonNullList[ItemStack]) {
+    list.add(new ItemStack(this))
+    list.add(stackWithCharge(maxCharge))
   }
 
   override def getItemEnchantability: Int = 0

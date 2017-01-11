@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -13,6 +13,7 @@ import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
 class GeneRecipe extends IRecipe {
@@ -37,8 +38,8 @@ class GeneRecipe extends IRecipe {
     return out
   }
 
-  override def getRemainingItems(inv: InventoryCrafting): Array[ItemStack] =
-    new Array[ItemStack](inv.getSizeInventory)
+  override def getRemainingItems(inv: InventoryCrafting): NonNullList[ItemStack] =
+    NonNullList.withSize(inv.getSizeInventory, ItemStack.EMPTY)
 
   def getRecipeSize: Int = 9
   def getRecipeOutput: ItemStack = new ItemStack(GeneTemplate)

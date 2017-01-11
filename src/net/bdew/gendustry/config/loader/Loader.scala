@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -152,16 +152,16 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
       (mode, existingRecipeOpt) match {
         case (RecipeModeExtend, _) => sys.error("Extend mode shouldn't be used for squeezer")
         case (RecipeModeNew, None) =>
-          RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+          RecipeManagers.squeezerManager.addRecipe(time, inStack, outFluid, outStack, chance)
           Gendustry.logDebug("Registering new recipe")
         case (RecipeModeNew, Some(_)) =>
           Gendustry.logWarn("Tried to add new squeezer recipe for item that already had existing recipe: %s", inStack)
         case (RecipeModeReplace, None) =>
           Gendustry.logWarn("Tried to replace squeezer recipe for item that didn't have existing recipe: %s, adding regardless", inStack)
-          RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+          RecipeManagers.squeezerManager.addRecipe(time, inStack, outFluid, outStack, chance)
         case (RecipeModeReplace, Some(existingRecipe)) =>
           RecipeManagers.squeezerManager.removeRecipe(existingRecipe)
-          RecipeManagers.squeezerManager.addRecipe(time, Array(inStack), outFluid, outStack, chance)
+          RecipeManagers.squeezerManager.addRecipe(time, inStack, outFluid, outStack, chance)
           Gendustry.logDebug("Replacing existing recipe")
       }
 

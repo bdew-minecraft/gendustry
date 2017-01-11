@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -16,7 +16,6 @@ import net.bdew.gendustry.config.{Fluids, Items}
 import net.bdew.gendustry.forestry.GeneticsHelper
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
-import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
 import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data.base.UpdateKind
@@ -26,7 +25,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
 
-class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with IMutatron with TileKeepData with CapabilityProvider with OldFluidHandlerEmulator {
+class TileMutatron extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with IMutatron with TileKeepData with CapabilityProvider {
   lazy val cfg = MachineMutatron
   val outputSlots = Seq(slots.outIndividual)
 
@@ -64,10 +63,10 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
       output := Some(out)
       tank.drainInternal(cfg.mutagenPerItem, true)
       if (lastPlayer.value != null)
-        GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), out, lastPlayer, worldObj)
+        GeneticsHelper.addMutationToTracker(inv(slots.inIndividual1), inv(slots.inIndividual2), out, lastPlayer, world)
       decrStackSize(slots.inIndividual1, 1)
       decrStackSize(slots.inIndividual2, 1)
-      if (worldObj.rand.nextInt(100) < cfg.labwareConsumeChance)
+      if (world.rand.nextInt(100) < cfg.labwareConsumeChance)
         decrStackSize(slots.inLabware, 1)
       return true
     } else return false

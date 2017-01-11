@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -18,9 +18,9 @@ import net.minecraft.server.MinecraftServer
 import net.minecraftforge.fml.relauncher.FMLInjectionData
 
 class CommandDumpAlleles extends CommandBase {
-  override def getCommandName = "dumpalleles"
+  override def getName = "dumpalleles"
   override def getRequiredPermissionLevel = 2
-  override def getCommandUsage(c: ICommandSender) = "dumpalleles"
+  override def getUsage(c: ICommandSender) = "dumpalleles"
 
   override def execute(server: MinecraftServer, sender: ICommandSender, params: Array[String]): Unit = {
     val mcHome = FMLInjectionData.data()(6).asInstanceOf[File] //is there a better way to get this?

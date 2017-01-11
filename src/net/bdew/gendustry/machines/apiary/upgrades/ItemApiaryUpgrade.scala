@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.NonNullList
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
@@ -93,7 +94,7 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
   def applyModifiers(mods: ApiaryModifiers, stack: ItemStack) {
     if (Upgrades.map.contains(stack.getItemDamage)) {
       val upg = Upgrades.map(stack.getItemDamage)
-      upg.mod(mods, Misc.min(upg.maxNum, stack.stackSize))
+      upg.mod(mods, Misc.min(upg.maxNum, stack.getCount))
     }
   }
 
@@ -103,7 +104,7 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
     return "invalid"
   }
 
-  override def getSubItems(par1: Item, par2CreativeTabs: CreativeTabs, list: util.List[ItemStack]) {
+  override def getSubItems(itemIn: Item, tab: CreativeTabs, list: NonNullList[ItemStack]): Unit = {
     for ((id, name) <- Upgrades.map)
       list.add(new ItemStack(this, 1, id))
   }

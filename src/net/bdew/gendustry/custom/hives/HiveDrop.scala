@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -9,10 +9,10 @@
 
 package net.bdew.gendustry.custom.hives
 
-import java.util
-
 import forestry.api.apiculture._
+import net.bdew.lib.helpers.NonNullHelper
 import net.minecraft.item.ItemStack
+import net.minecraft.util.NonNullList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
@@ -25,8 +25,7 @@ case class HiveDrop(chance: Double, species: IAlleleBeeSpecies, ignobleShare: Do
   override def getIgnobleChance(world: IBlockAccess, pos: BlockPos, fortune: Int): Double = ignobleShare
   override def getChance(world: IBlockAccess, pos: BlockPos, fortune: Int): Double = chance
 
-  override def getExtraItems(world: IBlockAccess, pos: BlockPos, fortune: Int): util.Collection[ItemStack] = {
-    import scala.collection.JavaConversions._
-    additional.map(_.copy())
+  override def getExtraItems(world: IBlockAccess, pos: BlockPos, fortune: Int): NonNullList[ItemStack] = {
+    NonNullHelper.toNonNullList(additional.map(_.copy()))
   }
 }

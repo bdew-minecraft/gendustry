@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -19,11 +19,13 @@ import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.forestry.ForestryItems
 import net.bdew.lib.Misc
+import net.bdew.lib.helpers.NonNullHelper
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.recipes.gencfg.{ConfigSection, EntryStr}
 import net.bdew.lib.recipes.lootlist.EntryLootList
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import net.minecraftforge.oredict.OreDictionary
@@ -116,7 +118,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
     return 0
   }
 
-  override def getResearchBounty(world: World, researcher: GameProfile, individual: IIndividual, bountyLevel: Int): Array[ItemStack] = {
+  override def getResearchBounty(world: World, researcher: GameProfile, individual: IIndividual, bountyLevel: Int): NonNullList[ItemStack] = {
     import scala.collection.JavaConversions._
     var res = List.empty[ItemStack]
     if (world.rand.nextFloat() < 10F / bountyLevel) {
@@ -130,7 +132,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
     res ++= products.keys.map(x => ItemUtils.copyWithRandomSize(x, (bountyLevel / 2F).toInt, world.rand))
 
-    return res.toArray
+    return NonNullHelper.toNonNullList(res)
   }
 
   // Internal stuff

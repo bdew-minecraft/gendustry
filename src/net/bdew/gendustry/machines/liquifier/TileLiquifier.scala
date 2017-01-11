@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -15,7 +15,6 @@ import net.bdew.gendustry.fluids.ProteinSources
 import net.bdew.gendustry.machines.FluidPusher
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
-import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
 import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data._
@@ -25,7 +24,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
 
-class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData with FluidPusher with CapabilityProvider with OldFluidHandlerEmulator {
+class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData with FluidPusher with CapabilityProvider {
   lazy val cfg = MachineLiquifier
 
   val tank = DataSlotTankRestricted("tank", this, cfg.tankSize, Fluids.protein, canFillExternal = false).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)

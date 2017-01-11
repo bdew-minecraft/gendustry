@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -15,6 +15,7 @@ import forestry.api.genetics.{ICheckPollinatable, IFlowerProvider, IIndividual}
 import net.bdew.gendustry.config.loader._
 import net.bdew.lib.Misc
 import net.minecraft.item.ItemStack
+import net.minecraft.util.NonNullList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.EnumPlantType
@@ -35,6 +36,5 @@ case class CustomFlowerProvider(flowerType: String, name: String, plantTypeFilte
   override def getDescription: String =
     Misc.toLocal("gendustry.allele.flowers." + name)
 
-  override def affectProducts(world: World, individual: IIndividual, pos: BlockPos, products: Array[ItemStack]): Array[ItemStack] =
-    products
+  override def affectProducts(world: World, individual: IIndividual, pos: BlockPos, products: NonNullList[ItemStack]): NonNullList[ItemStack] = products
 }

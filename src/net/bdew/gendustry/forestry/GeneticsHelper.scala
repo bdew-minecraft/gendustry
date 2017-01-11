@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -232,8 +232,11 @@ object GeneticsHelper {
       .getOrElse(sys.error("Failed to get species from mutation %s+%s (%s)".format(m.getAllele0.getUID, m.getAllele1.getUID, m.getRoot.getUID)))
       .asInstanceOf[IAlleleSpecies]
 
-  def getVanillaLeafPollen(state: IBlockState): Option[IIndividual] = {
-    Option(AlleleManager.leafTranslators.get(state.getBlock)) flatMap (x => Option(x.getTreeFromLeaf(state)))
+  def getVanillaLeafPollen(state: IBlockState): Option[ITree] = {
+    for {
+      translator <- Option(AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees").asInstanceOf[ITreeRoot].getTranslator[IBlockState, ITree](state.getBlock))
+      individual <- Option(translator.getIndividualFromObject(state))
+    } yield individual
   }
 
   def safeMutationConditions(m: IMutation) =

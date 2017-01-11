@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -9,7 +9,6 @@
 
 package net.bdew.gendustry.machines.apiary
 
-import java.util
 import java.util.{Collections, Locale}
 
 import com.mojang.authlib.GameProfile
@@ -17,7 +16,6 @@ import forestry.api.apiculture._
 import forestry.api.arboriculture.EnumGermlingType
 import forestry.api.core._
 import forestry.api.genetics.{AlleleManager, IIndividual}
-import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.api.blocks.IIndustrialApiary
 import net.bdew.gendustry.api.items.IApiaryUpgrade
@@ -130,7 +128,7 @@ class TileApiary extends TileExtended
 
     errorConditions.withSuspendedUpdates {
       val canWork = logic.canWork
-      val powered = worldObj.isBlockIndirectlyGettingPowered(pos) > 0
+      val powered = world.isBlockIndirectlyGettingPowered(pos) > 0
       errorConditions.setCondition((rsmode :== RSMode.RS_OFF) && powered, ForestryErrorStates.disabledRedstone)
       errorConditions.setCondition((rsmode :== RSMode.RS_ON) && !powered, ForestryErrorStates.noRedstone)
       errorConditions.setCondition(rsmode :== RSMode.NEVER, GendustryErrorStates.Disabled)
@@ -155,11 +153,11 @@ class TileApiary extends TileExtended
   })
 
   errorConditions.onChange.listen(() => {
-    worldObj.notifyNeighborsOfStateChange(pos, BlockApiary)
+    world.notifyNeighborsOfStateChange(pos, BlockApiary, true)
   })
 
   def getUpgrade(stack: ItemStack) = stack.getItem.asInstanceOf[IApiaryUpgrade]
-  def isUpgrade(stack: ItemStack) = stack != null && stack.getItem != null && stack.getItem.isInstanceOf[IApiaryUpgrade]
+  def isUpgrade(stack: ItemStack) = !stack.isEmpty && stack.getItem.isInstanceOf[IApiaryUpgrade]
 
   def getMaxAdditionalUpgrades(stack: ItemStack): Int = {
     if (!isUpgrade(stack)) return 0
@@ -167,15 +165,15 @@ class TileApiary extends TileExtended
     val thisId = getUpgrade(stack).getStackingId(stack)
     for (upgrade <- Misc.iterSome(inv, slots.upgrades).filter(isUpgrade)) {
       if (getUpgrade(upgrade).getStackingId(upgrade) == thisId)
-        existing += upgrade.stackSize
+        existing += upgrade.getCount
     }
     return getUpgrade(stack).getMaxNumber(stack) - existing
   }
 
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
-    if (stack == null || stack.getItem == null) return false
+    if (stack.isEmpty) return false
     if (slots.upgrades.contains(slot)) {
-      return getMaxAdditionalUpgrades(stack) >= stack.stackSize
+      return getMaxAdditionalUpgrades(stack) >= stack.getCount
     } else if (slot == slots.queen) {
       return beeRoot.isMember(stack, EnumBeeType.QUEEN) || beeRoot.isMember(stack, EnumBeeType.PRINCESS)
     } else if (slot == slots.drone) {
@@ -208,7 +206,7 @@ class TileApiary extends TileExtended
   }
 
   // Misc
-  def getBiome = worldObj.getBiome(pos)
+  def getBiome = world.getBiome(pos)
   override def getSizeInventory = 15
   def getModifiedBiome = if (mods.biomeOverride == null) getBiome else mods.biomeOverride
 
@@ -228,12 +226,6 @@ class TileApiary extends TileExtended
 
   // IErrorLogicSource
   override def getErrorLogic: IErrorLogic = errorConditions
-
-  // IForestryMultiErrorSource
-  override def getErrorStates: util.Set[IErrorState] = {
-    import scala.collection.JavaConversions._
-    errorConditions.value
-  }
 
   // IBeeListener
   override def onQueenDeath() {
@@ -263,11 +255,11 @@ class TileApiary extends TileExtended
   override def isHellish = getModifiedBiome.getRegistryName.getResourcePath == "hell"
 
   // IHousing
-  override def getWorld = worldObj
+  override def getWorld = world
   override def getCoordinates = pos
 
   // IBeeHousing
-  override def getWorldObj: World = worldObj
+  override def getWorldObj: World = world
   override def getBeeInventory: IBeeHousingInventory = this
   override def getBeeListeners = Collections.singletonList(this)
   override def getBeeModifiers = Collections.singletonList(this)
@@ -286,7 +278,7 @@ class TileApiary extends TileExtended
       EnumTemperature.getFromValue(getModifiedBiome.getTemperature + mods.temperature)
 
   override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.getRainfall + mods.humidity)
-  override def isRaining: Boolean = worldObj.isRainingAt(pos.up)
+  override def isRaining: Boolean = world.isRainingAt(pos.up)
 
   // IBeeHousingInventory
   override def setQueen(stack: ItemStack) = setInventorySlotContents(0, stack)
@@ -295,19 +287,13 @@ class TileApiary extends TileExtended
   override def getDrone = getStackInSlot(slots.drone)
 
   override def addProduct(product: ItemStack, all: Boolean): Boolean = {
-    if (product == null || product.getItem == null) {
-      Gendustry.logError("Industrial Apiary at %s received an invalid bee product, one of your bee-adding mods is borked.", pos)
-      if (getQueen != null) {
-        val genome = beeRoot.getMember(getQueen).getGenome
-        Gendustry.logInfo("Bee in the apiary: %s/%s", genome.getPrimary.getName, genome.getSecondary.getName)
-      }
-      return true
-    }
-    var p = product
-    if (mods.isAutomated && beeRoot.isMember(product))
-      p = ItemUtils.addStackToSlots(p, this, slots.bees, false)
-    p = ItemUtils.addStackToSlots(p, this, slots.output, false)
-    return p == null
+    if (!product.isEmpty) {
+      var p = product
+      if (mods.isAutomated && beeRoot.isMember(product))
+        p = ItemUtils.addStackToSlots(p, this, slots.bees, false)
+      p = ItemUtils.addStackToSlots(p, this, slots.output, false)
+      return p.isEmpty
+    } else true
   }
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true

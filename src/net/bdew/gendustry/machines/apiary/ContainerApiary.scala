@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -46,14 +46,14 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
   override def transferStackInSlot(player: EntityPlayer, slot: Int): ItemStack = {
     val stack = getSlot(slot).getStack
     if (getSlot(slot).inventory == player.inventory && te.isUpgrade(stack)) {
-      val canAdd = Misc.min(te.getMaxAdditionalUpgrades(stack), stack.stackSize)
+      val canAdd = Misc.min(te.getMaxAdditionalUpgrades(stack), stack.getCount)
       if (canAdd > 0) {
         val remains = ItemUtils.addStackToSlots(stack.splitStack(canAdd), te, te.slots.upgrades, true)
-        if (remains != null)
-          stack.stackSize += remains.stackSize
+        if (!remains.isEmpty)
+          stack.grow(remains.getCount)
       }
-      getSlot(slot).putStack(if (stack.stackSize > 0) stack else null)
-      return null
+      getSlot(slot).putStack(stack)
+      return ItemStack.EMPTY
     }
     return super.transferStackInSlot(player, slot)
   }
@@ -63,13 +63,13 @@ class ContainerApiary(val te: TileApiary, player: EntityPlayer) extends BaseCont
     if (te.slots.upgrades.contains(slot) && te.isUpgrade(oldStack)) {
       val idx = inventorySlots.get(slot).getSlotIndex
       if (te.slots.upgrades.contains(idx) && clickType == ClickType.PICKUP && button <= 1) {
-        if (te.getStackInSlot(idx) == null || ItemUtils.isSameItem(oldStack, te.getStackInSlot(idx))) {
+        if (te.getStackInSlot(idx).isEmpty || ItemUtils.isSameItem(oldStack, te.getStackInSlot(idx))) {
           var canAdd = te.getMaxAdditionalUpgrades(oldStack)
           if (canAdd > 0) {
             if (button == 1) canAdd = 1
-            val newStack = if (canAdd >= oldStack.stackSize) {
+            val newStack = if (canAdd >= oldStack.getCount) {
               val t = oldStack
-              oldStack = null
+              oldStack = ItemStack.EMPTY
               t
             } else {
               oldStack.splitStack(canAdd)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -15,6 +15,7 @@ import net.minecraft.init.{Blocks, Items}
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
 class ChargeRecipe extends IRecipe {
@@ -43,8 +44,8 @@ class ChargeRecipe extends IRecipe {
     } else null
   }
 
-  override def getRemainingItems(inv: InventoryCrafting): Array[ItemStack] =
-    new Array[ItemStack](inv.getSizeInventory)
+  override def getRemainingItems(inv: InventoryCrafting): NonNullList[ItemStack] =
+    NonNullList.withSize(inv.getSizeInventory, ItemStack.EMPTY)
 
   def getRecipeSize: Int = 9
   def getRecipeOutput: ItemStack = new ItemStack(Blocks.FIRE)

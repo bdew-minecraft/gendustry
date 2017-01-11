@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -19,6 +19,7 @@ import net.bdew.lib.items.BaseItem
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.NonNullList
 
 object GeneSample extends BaseItem("GeneSample") {
 
@@ -27,7 +28,7 @@ object GeneSample extends BaseItem("GeneSample") {
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.samples)
 
-  override def getSubItems(item: Item, tab: CreativeTabs, list: util.List[ItemStack]) {
+  override def getSubItems(item: Item, tab: CreativeTabs, list: NonNullList[ItemStack]) {
     import scala.collection.JavaConversions._
     val l = list.asInstanceOf[util.List[ItemStack]]
     tab match {

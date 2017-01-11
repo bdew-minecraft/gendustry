@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -9,7 +9,6 @@
 
 package net.bdew.gendustry.compat
 
-import java.io.{DataInputStream, DataOutputStream}
 import java.lang.Iterable
 import java.util.Collections
 
@@ -20,6 +19,7 @@ import forestry.api.core._
 import forestry.api.genetics.{AlleleManager, IIndividual}
 import net.bdew.gendustry.api.blocks.IMutatron
 import net.minecraft.item.ItemStack
+import net.minecraft.network.PacketBuffer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util._
 import net.minecraft.util.math.{BlockPos, Vec3d}
@@ -65,8 +65,10 @@ class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousin
 
   override def setCondition(condition: Boolean, errorState: IErrorState): Boolean = false
   override def hasErrors: Boolean = false
-  override def writeData(data: DataOutputStream): Unit = {}
-  override def readData(data: DataInputStream): Unit = {}
+
+  override def writeData(data: PacketBuffer): Unit = {}
+  override def readData(data: PacketBuffer): Unit = {}
+
   override def contains(state: IErrorState): Boolean = false
   override def clearErrors(): Unit = {}
   override def getErrorStates: ImmutableSet[IErrorState] = ImmutableSet.of()

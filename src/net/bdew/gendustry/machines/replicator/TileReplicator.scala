@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -16,7 +16,6 @@ import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.power.TilePowered
 import net.bdew.lib.block.TileKeepData
 import net.bdew.lib.capabilities.helpers.FluidMultiHandler
-import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
 import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.covers.TileCoverable
 import net.bdew.lib.data.DataSlotTankRestricted
@@ -24,7 +23,7 @@ import net.bdew.lib.power.TileItemProcessor
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 
-class TileReplicator extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData with CapabilityProvider with OldFluidHandlerEmulator {
+class TileReplicator extends TileItemProcessor with TileWorker with TilePowered with TileCoverable with TileKeepData with CapabilityProvider {
   lazy val cfg = MachineReplicator
   val outputSlots = Seq(slots.outIndividual)
 

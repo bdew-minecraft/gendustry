@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -8,8 +8,6 @@
  */
 
 package net.bdew.gendustry.custom
-
-import java.util
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
@@ -21,6 +19,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.NonNullList
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
@@ -41,7 +40,7 @@ object CustomHoneyDrop extends BaseItem("HoneyDrop") {
 
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
-  override def getSubItems(item: Item, par2CreativeTabs: CreativeTabs, list: util.List[ItemStack]) {
+  override def getSubItems(item: Item, par2CreativeTabs: CreativeTabs, list: NonNullList[ItemStack]) {
     for ((id, name) <- data)
       list.add(new ItemStack(this, 1, id))
   }

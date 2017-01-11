@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -20,9 +20,9 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
 class CommandGiveSample extends CommandBase {
-  override def getCommandName = "givesample"
+  override def getName = "givesample"
   override def getRequiredPermissionLevel = 2
-  override def getCommandUsage(c: ICommandSender) = "gendustry.givesample.usage"
+  override def getUsage(c: ICommandSender) = "gendustry.givesample.usage"
 
   import scala.collection.JavaConversions._
 
@@ -62,7 +62,7 @@ class CommandGiveSample extends CommandBase {
     CommandBase.notifyCommandListener(sender, this, "gendustry.givesample.success", rootUid, chromosomeName, alleleUid, player.getDisplayName)
   }
 
-  override def getTabCompletionOptions(server: MinecraftServer, sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
+  override def getTabCompletions(server: MinecraftServer, sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
     params.toSeq match {
       case Seq(rootUid) => CommandBase.getListOfStringsMatchingLastWord(params, validRoots: _*)
       case Seq(rootUid, chromosomeName) =>

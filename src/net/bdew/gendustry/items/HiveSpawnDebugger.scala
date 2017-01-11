@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -14,7 +14,6 @@ import net.bdew.gendustry.custom.CustomHives
 import net.bdew.gendustry.custom.hives.{BlockFilterAir, ConditionReplace, HiveDescription}
 import net.bdew.lib.items.BaseItem
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.world.World
@@ -40,13 +39,12 @@ object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
       else
         CheckResultSuccess()
     }
-
   }
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
+  override def onItemUse(player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
     if (!world.isRemote) {
       import net.bdew.lib.helpers.ChatHelper._
-      player.addChatMessage(" ==== Checking Spawn At (%s) ===".format(pos))
+      player.sendMessage(" ==== Checking Spawn At (%s) ===".format(pos))
       for ((id, hive) <- CustomHives.hives) {
         val actualPos = if (hive.conditions.contains(ConditionReplace(BlockFilterAir))) {
           // Hive spawns in air, check block next to one clicked
@@ -63,7 +61,7 @@ object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
               ("OK at " + actualPos).setColor(Color.GREEN)
           }
 
-        player.addChatMessage(L(" * %s - %s", C(id).setColor(Color.YELLOW), msg))
+        player.sendMessage(L(" * %s - %s", C(id).setColor(Color.YELLOW), msg))
       }
     }
     EnumActionResult.SUCCESS

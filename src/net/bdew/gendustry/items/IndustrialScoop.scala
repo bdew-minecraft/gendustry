@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -23,7 +23,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
+import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand, NonNullList}
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 
@@ -47,7 +47,8 @@ object IndustrialScoop extends BaseTool("IndustrialScoop", Item.ToolMaterial.IRO
     else
       super.getStrVsBlock(stack, state)
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
+  override def onItemUse(player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
+    val stack = player.getHeldItem(hand)
     if (!player.isSneaking) return EnumActionResult.PASS
     if (world.isRemote) return EnumActionResult.SUCCESS
     val state = world.getBlockState(pos)
@@ -72,11 +73,9 @@ object IndustrialScoop extends BaseTool("IndustrialScoop", Item.ToolMaterial.IRO
     tooltip.add(Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge))
   }
 
-  override def getSubItems(item: Item, tabs: CreativeTabs, l: util.List[ItemStack]) {
-    import scala.collection.JavaConverters._
-    val items = l.asInstanceOf[util.List[ItemStack]].asScala
-    items += new ItemStack(this)
-    items += stackWithCharge(maxCharge)
+  override def getSubItems(item: Item, tabs: CreativeTabs, list: NonNullList[ItemStack]) {
+    list.add(new ItemStack(this))
+    list.add(stackWithCharge(maxCharge))
   }
 
   override def getItemEnchantability: Int = 0

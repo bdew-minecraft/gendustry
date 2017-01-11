@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -14,7 +14,6 @@ import net.bdew.lib.capabilities.helpers.FluidHelper
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumFacing, EnumHand}
 import net.minecraft.world.World
@@ -65,9 +64,9 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     false
   }
 
-  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, heldItem: ItemStack, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
+  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     // If the click can be handled by something else - ignore it
-    if (super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ)) return true
+    if (super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ)) return true
     if (player.isSneaking) {
       val equipped = if (player.getActiveItemStack != null) player.getActiveItemStack.getItem else null
       // Todo: Re-enable when BC is available
@@ -76,7 +75,7 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
       //        return true
       //      }
       return false
-    } else if (tryFluidInteract(world, pos, player, side)) {
+    } else if (tryFluidInteract(world, pos, player, facing)) {
       return true
     } else {
       if (!world.isRemote) player.openGui(Gendustry.instance, guiId, world, pos.getX, pos.getY, pos.getZ)

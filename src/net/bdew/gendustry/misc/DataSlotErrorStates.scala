@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -9,8 +9,6 @@
 
 package net.bdew.gendustry.misc
 
-import java.io.{DataInputStream, DataOutputStream}
-
 import com.google.common.collect.ImmutableSet
 import forestry.api.core.{IErrorLogic, IErrorState}
 import net.bdew.gendustry.machines.apiary.ForestryErrorStates
@@ -18,6 +16,7 @@ import net.bdew.lib.Event
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.network.PacketBuffer
 
 import scala.util.DynamicVariable
 
@@ -41,16 +40,16 @@ case class DataSlotErrorStates(name: String, parent: DataSlotContainer) extends 
   override def clearErrors(): Unit = clearAll()
   override def contains(state: IErrorState): Boolean = value.contains(state)
 
-  override def writeData(data: DataOutputStream): Unit = {
+  override def writeData(data: PacketBuffer): Unit = {
     data.writeInt(value.size)
     for (x <- value)
-      data.writeUTF(x.getUniqueName)
+      data.writeString(x.getUniqueName)
   }
 
-  override def readData(data: DataInputStream): Unit = {
+  override def readData(data: PacketBuffer): Unit = {
     val errNum = data.readInt()
     val errors = for (i <- 0 until errNum)
-      yield Option(ForestryErrorStates.errorStates.getErrorState(data.readUTF()))
+      yield Option(ForestryErrorStates.errorStates.getErrorState(data.readString(128)))
     update(errors.flatten.toSet)
   }
 

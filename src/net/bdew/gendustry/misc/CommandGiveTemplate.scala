@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -19,9 +19,9 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
 class CommandGiveTemplate extends CommandBase {
-  def getCommandName = "givetemplate"
+  override def getName = "givetemplate"
   override def getRequiredPermissionLevel = 2
-  def getCommandUsage(c: ICommandSender) = "gendustry.givetemplate.usage"
+  override def getUsage(c: ICommandSender) = "gendustry.givetemplate.usage"
 
   import scala.collection.JavaConversions._
 
@@ -48,7 +48,7 @@ class CommandGiveTemplate extends CommandBase {
     CommandBase.notifyCommandListener(sender, this, "gendustry.givetemplate.success", uid, player.getDisplayName)
   }
 
-  override def getTabCompletionOptions(server: MinecraftServer, sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
+  override def getTabCompletions(server: MinecraftServer, sender: ICommandSender, params: Array[String], pos: BlockPos): util.List[String] = {
     if (params.length == 1)
       return CommandBase.getListOfStringsMatchingLastWord(params, validSpecies: _*)
     return null

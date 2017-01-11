@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -22,7 +22,7 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
 
   def getDisplayedError = {
     import scala.collection.JavaConversions._
-    val errors = apiary.getErrorStates
+    val errors = apiary.getErrorLogic.getErrorStates
     val pos = ((Client.world.getTotalWorldTime / 40) % errors.size()).toInt
     errors.toList.sortBy(_.getID).apply(pos)
   }

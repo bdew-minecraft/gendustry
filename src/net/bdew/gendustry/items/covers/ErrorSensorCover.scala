@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2016
+ * Copyright (c) bdew, 2013 - 2017
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -106,8 +106,8 @@ object ErrorSensorCover extends BaseItem("ErrorSensorCover") with ItemCover {
 
   override def onInstall(te: TileCoverable, side: EnumFacing, cover: ItemStack, player: EntityPlayerMP): ItemStack = {
     val sensor = ErrorSensors.sensors.head
-    player.addChatComponentMessage(L("gendustry.cover.error.message", L(sensor.getUnLocalizedName).setColor(Color.YELLOW)))
-    player.addChatComponentMessage(L("gendustry.cover.error.hint"))
+    player.sendMessage(L("gendustry.cover.error.message", L(sensor.getUnLocalizedName).setColor(Color.YELLOW)))
+    player.sendMessage(L("gendustry.cover.error.hint"))
     setErrorSensor(cover, sensor)
   }
 
@@ -116,13 +116,13 @@ object ErrorSensorCover extends BaseItem("ErrorSensorCover") with ItemCover {
 
   override def clickCover(te: TileCoverable, side: EnumFacing, cover: ItemStack, player: EntityPlayer): Boolean = {
     if (player.inventory.getCurrentItem != null) return false
-    if (!player.worldObj.isRemote) {
+    if (!player.world.isRemote) {
       val current = getErrorSensor(cover) getOrElse ErrorSensors.sensors.head
       val next = Misc.nextInSeq(ErrorSensors.sensors, current)
       te.covers(side) := Some(setErrorSensor(cover, next))
       te.onCoversChanged()
-      player.addChatComponentMessage(L("gendustry.cover.error.message", L(next.getUnLocalizedName).setColor(Color.YELLOW)))
-      te.getWorldObject.notifyBlockOfStateChange(te.getPos.offset(side), te.getBlockType)
+      player.sendMessage(L("gendustry.cover.error.message", L(next.getUnLocalizedName).setColor(Color.YELLOW)))
+      te.getWorldObject.neighborChanged(te.getPos.offset(side), te.getBlockType, te.getPos)
     }
     true
   }
