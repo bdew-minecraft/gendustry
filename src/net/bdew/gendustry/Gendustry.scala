@@ -22,6 +22,7 @@ import net.bdew.gendustry.machines.apiary.GendustryErrorStates
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
 import net.minecraft.command.CommandHandler
+import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event._
@@ -47,6 +48,8 @@ object Gendustry {
   def logError(msg: String, args: Any*) = log.error(msg.format(args: _*))
   def logWarnException(msg: String, t: Throwable, args: Any*) = log.warn(msg.format(args: _*), t)
   def logErrorException(msg: String, t: Throwable, args: Any*) = log.error(msg.format(args: _*), t)
+
+  FluidRegistry.enableUniversalBucket()
 
   @EventHandler
   def preInit(event: FMLPreInitializationEvent) {
@@ -107,7 +110,7 @@ object Gendustry {
       GendustryClient.init()
     }
 
-    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallback")
+    //    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.gendustry.waila.WailaHandler.loadCallback")
   }
 
   @EventHandler
