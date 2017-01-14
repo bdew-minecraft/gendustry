@@ -21,7 +21,7 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.NonNullList
 
-object GeneSample extends BaseItem("GeneSample") {
+object GeneSample extends BaseItem("gene_sample") {
 
   setMaxStackSize(1)
   setContainerItem(Items.geneSampleBlank)

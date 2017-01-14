@@ -21,11 +21,11 @@ class GuiReplicator(val te: TileReplicator, player: EntityPlayer) extends BaseSc
 
   override def initGui() {
     super.initGui()
-    widgets.add(new WidgetProgressBarNEI(new Rect(89, 41, 40, 15), Textures.greenProgress(40), te.progress, "Replicator"))
+    widgets.add(new WidgetProgressBarNEI(new Rect(89, 41, 40, 15), Textures.greenProgress(40), te.progress, "replicator"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(32, 19, 16, 58), Textures.tankOverlay, te.dnaTank))
     widgets.add(new WidgetFluidGauge(new Rect(56, 19, 16, 58), Textures.tankOverlay, te.proteinTank))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.Replicator.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.replicator.name"), 8, 6, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inTemplate).setBackgroundLocation(HintIcons.template)
   }

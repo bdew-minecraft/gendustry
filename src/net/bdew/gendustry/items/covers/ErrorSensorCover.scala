@@ -70,7 +70,7 @@ object ErrorSensors {
   val idMap = sensors.map(x => x.id -> x).toMap
 }
 
-object ErrorSensorCover extends BaseItem("ErrorSensorCover") with ItemCover {
+object ErrorSensorCover extends BaseItem("error_sensor_cover") with ItemCover {
   override def isCoverTicking: Boolean = false
 
   override def isValidTile(te: TileCoverable, side: EnumFacing, stack: ItemStack) = te.isInstanceOf[IErrorLogicSource]

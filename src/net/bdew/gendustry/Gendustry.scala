@@ -135,4 +135,10 @@ object Gendustry {
     commandHandler.registerCommand(new CommandGiveSample)
     commandHandler.registerCommand(new CommandDumpAlleles)
   }
+
+  @EventHandler
+  def missingMappings(event: FMLMissingMappingsEvent): Unit = {
+    import scala.collection.JavaConversions._
+    event.getAll.foreach(OldNames.checkRemap)
+  }
 }

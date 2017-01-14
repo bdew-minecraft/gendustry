@@ -1,35 +1,35 @@
 # ==== BLOCKS ====
 
-tile.gendustry.MutagenProducer.name=Producteur mutagène
-tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.MutatronAdv.name=Mutatron avancé
-tile.gendustry.IndustrialApiary.name=Rucher industriel
-tile.gendustry.Imprinter.name=Imprimeur génétique
-tile.gendustry.Sampler.name=Échantillonneur génétique
-tile.gendustry.Extractor.name=Extracteur d'ADN
-tile.gendustry.Liquifier.name=Liquéfieur de protéine
-tile.gendustry.Replicator.name=Réplicateur génétique
-tile.gendustry.Transposer.name=Transposeur génétique
+tile.gendustry.mutagen_producer.name=Producteur mutagène
+tile.gendustry.mutatron.name=mutatron
+tile.gendustry.mutatron_advanced.name=mutatron avancé
+tile.gendustry.industrial_apiary.name=Rucher industriel
+tile.gendustry.imprinter.name=Imprimeur génétique
+tile.gendustry.sampler.name=Échantillonneur génétique
+tile.gendustry.extractor.name=Extracteur d'ADN
+tile.gendustry.liquifier.name=Liquéfieur de protéine
+tile.gendustry.replicator.name=Réplicateur génétique
+tile.gendustry.transposer.name=Transposeur génétique
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=Tank mutagène
-item.gendustry.BeeReceptacle.name=Réceptacle d'abeille
-item.gendustry.PowerModule.name=Module d'énergie
-item.gendustry.GeneticsProcessor.name=Processeur génétique
-item.gendustry.EnvProcessor.name=Processeur environnemental
-item.gendustry.UpgradeFrame.name=Upgrade de cadre
-item.gendustry.ClimateModule.name=Module de contrôle de climat
-item.gendustry.Labware.name=Laboratire génétique
-item.gendustry.GeneSample.name=Échantillon de gène
-item.gendustry.GeneTemplate.name=Modèle génétique
-item.gendustry.GeneSampleBlank.name=Échantillon de gène vierge
-item.gendustry.Waste.name=Déchets génétiques
+item.gendustry.mutagen_tank.name=Tank mutagène
+item.gendustry.bee_receptacle.name=Réceptacle d'abeille
+item.gendustry.power_module.name=Module d'énergie
+item.gendustry.genetics_processor.name=Processeur génétique
+item.gendustry.env_processor.name=Processeur environnemental
+item.gendustry.upgrade_frame.name=Upgrade de cadre
+item.gendustry.climate_module.name=Module de contrôle de climat
+item.gendustry.labware.name=Laboratire génétique
+item.gendustry.gene_sample.name=Échantillon de gène
+item.gendustry.gene_template.name=Modèle génétique
+item.gendustry.gene_sample_blank.name=Échantillon de gène vierge
+item.gendustry.waste.name=Déchets génétiques
 item.gendustry.grafter.name=Greffoir industriel
 item.gendustry.scoop.name=Filet industriel MX200 Turbo
-item.gendustry.ImportCover.name=Plaque d'importation d'objet
-item.gendustry.EjectCover.name=Plaque d'éjection d'objet
-item.gendustry.PollenKit.name=Kit de collection de pollen
+item.gendustry.import_cover.name=Plaque d'importation d'objet
+item.gendustry.eject_cover.name=Plaque d'éjection d'objet
+item.gendustry.pollen_kit.name=Kit de collection de pollen
 
 # ==== FLUIDS ====
 

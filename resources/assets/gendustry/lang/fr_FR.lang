@@ -1,35 +1,35 @@
 # ==== BLOCKS ====
 
-tile.gendustry.MutagenProducer.name=Producteur de mutagène
-tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.MutatronAdv.name=Mutatron avancé
-tile.gendustry.IndustrialApiary.name=Rucher Industriel
-tile.gendustry.Imprinter.name=Implanteur génétique
-tile.gendustry.Sampler.name=Échantillonneur génétique
-tile.gendustry.Extractor.name=Extracteur d'ADN
-tile.gendustry.Liquifier.name=Liquifieur de protéine
-tile.gendustry.Replicator.name=Réplicateur génétique
-tile.gendustry.Transposer.name=Transposeur génétique
+tile.gendustry.mutagen_producer.name=Producteur de mutagène
+tile.gendustry.mutatron.name=mutatron
+tile.gendustry.mutatron_advanced.name=mutatron avancé
+tile.gendustry.industrial_apiary.name=Rucher Industriel
+tile.gendustry.imprinter.name=Implanteur génétique
+tile.gendustry.sampler.name=Échantillonneur génétique
+tile.gendustry.extractor.name=Extracteur d'ADN
+tile.gendustry.liquifier.name=Liquifieur de protéine
+tile.gendustry.replicator.name=Réplicateur génétique
+tile.gendustry.transposer.name=Transposeur génétique
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=Réservoir de mutagène
-item.gendustry.BeeReceptacle.name=Réceptacle d'abeille
-item.gendustry.PowerModule.name=Module de puissance
-item.gendustry.GeneticsProcessor.name=Processeur génétique
-item.gendustry.EnvProcessor.name=Processeur enviromental
-item.gendustry.UpgradeFrame.name=Amélioration de cadre
-item.gendustry.ClimateModule.name=module de contrôle climatique
-item.gendustry.Labware.name=Installation de laboratoire génétique
-item.gendustry.GeneSample.name=Échantillon de gène
-item.gendustry.GeneTemplate.name=Modèle génétique
-item.gendustry.GeneSampleBlank.name=Échantillon de gène vide
-item.gendustry.Waste.name=Déchets génétiques
+item.gendustry.mutagen_tank.name=Réservoir de mutagène
+item.gendustry.bee_receptacle.name=Réceptacle d'abeille
+item.gendustry.power_module.name=Module de puissance
+item.gendustry.genetics_processor.name=Processeur génétique
+item.gendustry.env_processor.name=Processeur enviromental
+item.gendustry.upgrade_frame.name=Amélioration de cadre
+item.gendustry.climate_module.name=module de contrôle climatique
+item.gendustry.labware.name=Installation de laboratoire génétique
+item.gendustry.gene_sample.name=Échantillon de gène
+item.gendustry.gene_template.name=Modèle génétique
+item.gendustry.gene_sample_blank.name=Échantillon de gène vide
+item.gendustry.waste.name=Déchets génétiques
 item.gendustry.grafter.name=Escroc industriel
 item.gendustry.scoop.name=Scooporator MX200 Turbo
-item.gendustry.ImportCover.name=Couverture d'import d'élément
-item.gendustry.EjectCover.name=Couverture d'export d'élément
-item.gendustry.PollenKit.name=Kit de ramassage du pollen
+item.gendustry.import_cover.name=Couverture d'import d'élément
+item.gendustry.eject_cover.name=Couverture d'export d'élément
+item.gendustry.pollen_kit.name=Kit de ramassage du pollen
 
 # ==== FLUIDS ====
 

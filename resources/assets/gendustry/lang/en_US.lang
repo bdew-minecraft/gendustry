@@ -1,37 +1,37 @@
 # ==== BLOCKS ====
 
-tile.gendustry.MutagenProducer.name=Mutagen Producer
-tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.MutatronAdv.name=Advanced Mutatron
-tile.gendustry.IndustrialApiary.name=Industrial Apiary
-tile.gendustry.Imprinter.name=Genetic Imprinter
-tile.gendustry.Sampler.name=Genetic Sampler
-tile.gendustry.Extractor.name=DNA Extractor
-tile.gendustry.Liquifier.name=Protein Liquifier
-tile.gendustry.Replicator.name=Genetic Replicator
-tile.gendustry.Transposer.name=Genetic Transposer
+tile.gendustry.mutagen_producer.name=Mutagen Producer
+tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.mutatron_advanced.name=Advanced mutatron
+tile.gendustry.industrial_apiary.name=Industrial Apiary
+tile.gendustry.imprinter.name=Genetic Imprinter
+tile.gendustry.sampler.name=Genetic Sampler
+tile.gendustry.extractor.name=DNA Extractor
+tile.gendustry.liquifier.name=Protein Liquifier
+tile.gendustry.replicator.name=Genetic Replicator
+tile.gendustry.transposer.name=Genetic Transposer
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=Mutagen Tank
-item.gendustry.BeeReceptacle.name=Bee Receptacle
-item.gendustry.PowerModule.name=Power Module
-item.gendustry.GeneticsProcessor.name=Genetics Processor
-item.gendustry.EnvProcessor.name=Enviromental Processor
-item.gendustry.UpgradeFrame.name=Upgrade Frame
-item.gendustry.ClimateModule.name=Climate Control Module
-item.gendustry.Labware.name=Genetics Labware
-item.gendustry.GeneSample.name=%s Sample - %s
-item.gendustry.GeneTemplate.name=Genetic Template
-item.gendustry.GeneSampleBlank.name=Blank Gene Sample
-item.gendustry.Waste.name=Genetic Waste
+item.gendustry.mutagen_tank.name=Mutagen Tank
+item.gendustry.bee_receptacle.name=Bee Receptacle
+item.gendustry.power_module.name=Power Module
+item.gendustry.genetics_processor.name=Genetics Processor
+item.gendustry.env_processor.name=Environmental Processor
+item.gendustry.upgrade_frame.name=Upgrade Frame
+item.gendustry.climate_module.name=Climate Control Module
+item.gendustry.labware.name=Genetics Labware
+item.gendustry.gene_sample.name=%s Sample - %s
+item.gendustry.gene_template.name=Genetic Template
+item.gendustry.gene_sample_blank.name=Blank Gene Sample
+item.gendustry.waste.name=Genetic Waste
 item.gendustry.grafter.name=Industrial Grafter
 item.gendustry.scoop.name=Scooporator MX200 Turbo
-item.gendustry.ImportCover.name=Item Import Cover
-item.gendustry.EjectCover.name=Item Eject Cover
-item.gendustry.ErrorSensorCover.name=Error Sensor Cover
-item.gendustry.PollenKit.name=Pollen Collection Kit
-item.gendustry.HiveSpawnDebugger.name=Hive Spawning Debugger
+item.gendustry.import_cover.name=Item Import Cover
+item.gendustry.eject_cover.name=Item Eject Cover
+item.gendustry.error_sensor_cover.name=Error Sensor Cover
+item.gendustry.pollen_kit.name=Pollen Collection Kit
+item.gendustry.hive_spawn_debugger.name=Hive Spawning Debugger
 
 # ==== FLUIDS ====
 

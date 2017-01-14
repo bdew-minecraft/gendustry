@@ -9,7 +9,9 @@
     "model": "gendustry:sided_covers.extended"
   },
   "variants": {
-    "normal": [{}],
+    "normal": [
+      {}
+    ],
     "inventory": {
       "transform": "forge:default-block"
     }

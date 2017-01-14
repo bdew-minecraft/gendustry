@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "gendustry:items/grafter"
+    "layer0": "items/stick"
   }
 }

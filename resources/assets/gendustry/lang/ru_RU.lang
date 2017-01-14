@@ -1,35 +1,35 @@
 # ==== BLOCKS ====
 
-tile.gendustry.MutagenProducer.name=Мутагенный производитель
-tile.gendustry.Mutatron.name=Мутатрон
-tile.gendustry.MutatronAdv.name=Продвинутый мутатрон
-tile.gendustry.IndustrialApiary.name=Промышленная пасека
-tile.gendustry.Imprinter.name=Генетический импринтер
-tile.gendustry.Sampler.name=Генетический пробоотборник
-tile.gendustry.Extractor.name=Экстрактор ДНК
-tile.gendustry.Liquifier.name=Протеиновый разжижитель
-tile.gendustry.Replicator.name=Генетический репликатор
-tile.gendustry.Transposer.name=Генетический транспозер
+tile.gendustry.mutagen_producer.name=Мутагенный производитель
+tile.gendustry.mutatron.name=Мутатрон
+tile.gendustry.mutatron_advanced.name=Продвинутый мутатрон
+tile.gendustry.industrial_apiary.name=Промышленная пасека
+tile.gendustry.imprinter.name=Генетический импринтер
+tile.gendustry.sampler.name=Генетический пробоотборник
+tile.gendustry.extractor.name=Экстрактор ДНК
+tile.gendustry.liquifier.name=Протеиновый разжижитель
+tile.gendustry.replicator.name=Генетический репликатор
+tile.gendustry.transposer.name=Генетический транспозер
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=Резервуар для мутагена
-item.gendustry.BeeReceptacle.name=Сосуд для пчелы
-item.gendustry.PowerModule.name=Модуль энергии
-item.gendustry.GeneticsProcessor.name=Генетический процессор
-item.gendustry.EnvProcessor.name=Экологический процессор
-item.gendustry.UpgradeFrame.name=Рамка улучшения
-item.gendustry.ClimateModule.name=Модуль «Климатический контроль»
-item.gendustry.Labware.name=Генетическая лабораторная посуда
-item.gendustry.GeneSample.name=Образец гена
-item.gendustry.GeneTemplate.name=Генетический шаблон
-item.gendustry.GeneSampleBlank.name=Образец пустого гена
-item.gendustry.Waste.name=Генетические отходы
+item.gendustry.mutagen_tank.name=Резервуар для мутагена
+item.gendustry.bee_receptacle.name=Сосуд для пчелы
+item.gendustry.power_module.name=Модуль энергии
+item.gendustry.genetics_processor.name=Генетический процессор
+item.gendustry.env_processor.name=Экологический процессор
+item.gendustry.upgrade_frame.name=Рамка улучшения
+item.gendustry.climate_module.name=Модуль «Климатический контроль»
+item.gendustry.labware.name=Генетическая лабораторная посуда
+item.gendustry.gene_sample.name=Образец гена
+item.gendustry.gene_template.name=Генетический шаблон
+item.gendustry.gene_sample_blank.name=Образец пустого гена
+item.gendustry.waste.name=Генетические отходы
 item.gendustry.grafter.name=Промышленный садовый нож
 item.gendustry.scoop.name=Скупоратор MX200 турбо
-item.gendustry.ImportCover.name=Item Import Cover
-item.gendustry.EjectCover.name=Item Eject Cover
-item.gendustry.PollenKit.name=Набор для сбора пыльцы
+item.gendustry.import_cover.name=Item Import Cover
+item.gendustry.eject_cover.name=Item Eject Cover
+item.gendustry.pollen_kit.name=Набор для сбора пыльцы
 
 # ==== FLUIDS ====
 

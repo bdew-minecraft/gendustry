@@ -16,7 +16,7 @@ import net.bdew.lib.items.BaseItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 
-object ImportCover extends BaseItem("ImportCover") with ItemCover {
+object ImportCover extends BaseItem("import_cover") with ItemCover {
   override def isCoverTicking: Boolean = true
 
   override def isValidTile(te: TileCoverable, side: EnumFacing, stack: ItemStack) =

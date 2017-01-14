@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gendustry:items/upgrades/desert"
+    "layer0": "gendustry:items/genetics_processor"
   }
 }

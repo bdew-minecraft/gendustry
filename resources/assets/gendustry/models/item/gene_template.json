@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gendustry:items/bucket/liquiddna"
+    "layer0": "gendustry:items/gene_template"
   }
 }

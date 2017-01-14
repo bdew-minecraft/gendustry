@@ -1,27 +1,27 @@
 #zh_TW
 
 tile.gendustry.mutagen.name=誘變劑
-tile.gendustry.MutagenProducer.name=誘變劑制造機
-tile.gendustry.Mutatron.name=突變方塊
-tile.gendustry.MutatronAdv.name=高級突變方塊
-tile.gendustry.IndustrialApiary.name=工業蜂箱
-tile.gendustry.Imprinter.name=基因復制機
-tile.gendustry.Sampler.name=基因拓模機
+tile.gendustry.mutagen_producer.name=誘變劑制造機
+tile.gendustry.mutatron.name=突變方塊
+tile.gendustry.mutatron_advanced.name=高級突變方塊
+tile.gendustry.industrial_apiary.name=工業蜂箱
+tile.gendustry.imprinter.name=基因復制機
+tile.gendustry.sampler.name=基因拓模機
 
 item.gendustry.mutagen.bucket.name=誘變劑桶
 item.gendustry.mutagen.can.name=誘變劑罐
 
-item.gendustry.MutagenTank.name=誘變劑儲罐
-item.gendustry.BeeReceptacle.name=蜜蜂插槽
-item.gendustry.PowerModule.name=能量模塊
-item.gendustry.GeneticsProcessor.name=基因加工儀
-item.gendustry.UpgradeFrame.name=升級框架
-item.gendustry.ClimateModule.name=氣候控制模塊
-item.gendustry.Labware.name=基因藥皿
-item.gendustry.GeneSample.name=基因樣本
-item.gendustry.GeneTemplate.name=基因模板
-item.gendustry.GeneSampleBlank.name=空白基因模板
-item.gendustry.Waste.name=基因無表達片段
+item.gendustry.mutagen_tank.name=誘變劑儲罐
+item.gendustry.bee_receptacle.name=蜜蜂插槽
+item.gendustry.power_module.name=能量模塊
+item.gendustry.genetics_processor.name=基因加工儀
+item.gendustry.upgrade_frame.name=升級框架
+item.gendustry.climate_module.name=氣候控制模塊
+item.gendustry.labware.name=基因藥皿
+item.gendustry.gene_sample.name=基因樣本
+item.gendustry.gene_template.name=基因模板
+item.gendustry.gene_sample_blank.name=空白基因模板
+item.gendustry.waste.name=基因無表達片段
 item.gendustry.grafter.name=工業剪枝器
 
 gendustry.upgrades.prod.name=產量升級

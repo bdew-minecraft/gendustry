@@ -21,9 +21,9 @@ class GuiSampler(val te: TileSampler, player: EntityPlayer) extends BaseScreen(n
 
   override def initGui() {
     super.initGui()
-    widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "Sampler"))
+    widgets.add(new WidgetProgressBarNEI(new Rect(63, 49, 66, 15), Textures.whiteProgress(66), te.progress, "sampler"))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.Sampler.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.sampler.name"), 8, 6, Color.darkGray))
 
     inventorySlots.getSlotFromInventory(te, te.slots.inSampleBlank).setBackgroundLocation(HintIcons.blankSample)
     inventorySlots.getSlotFromInventory(te, te.slots.inLabware).setBackgroundLocation(HintIcons.labware)

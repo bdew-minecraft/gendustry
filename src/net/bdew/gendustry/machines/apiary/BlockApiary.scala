@@ -21,7 +21,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 
-object BlockApiary extends BaseBlock("IndustrialApiary", MachineMaterial) with HasTE[TileApiary] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockApiary extends BaseBlock("industrial_apiary", MachineMaterial) with HasTE[TileApiary] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileApiary]
   lazy val guiId: Int = MachineApiary.guiId
 

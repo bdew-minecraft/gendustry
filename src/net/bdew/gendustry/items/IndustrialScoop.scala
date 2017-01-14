@@ -27,7 +27,7 @@ import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand, NonNullList}
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 
-object IndustrialScoop extends BaseTool("IndustrialScoop", Item.ToolMaterial.IRON) with BaseItemMixin with ItemPowered with IToolScoop {
+object IndustrialScoop extends BaseTool("industrial_scoop", Item.ToolMaterial.IRON) with BaseItemMixin with ItemPowered with IToolScoop {
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialScoop")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge

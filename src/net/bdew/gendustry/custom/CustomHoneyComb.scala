@@ -23,7 +23,7 @@ import net.minecraft.util.NonNullList
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
-object CustomHoneyComb extends BaseItem("HoneyComb") {
+object CustomHoneyComb extends BaseItem("honey_comb") {
 
   case class CombInfo(name: String, color1: Int, color2: Int)
 

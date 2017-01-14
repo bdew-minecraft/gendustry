@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gendustry:items/upgradeframe"
+    "layer0": "gendustry:items/power_module"
   }
 }

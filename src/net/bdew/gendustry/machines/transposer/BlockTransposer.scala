@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockTransposer extends BaseMachineBlock("Transposer") with HasTE[TileTransposer] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockTransposer extends BaseMachineBlock("transposer") with HasTE[TileTransposer] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileTransposer]
   lazy val guiId: Int = MachineTransposer.guiId
 

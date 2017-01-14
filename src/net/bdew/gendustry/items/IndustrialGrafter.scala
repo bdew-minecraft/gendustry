@@ -27,7 +27,7 @@ import net.minecraft.util.NonNullList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object IndustrialGrafter extends BaseTool("IndustrialGrafter", Item.ToolMaterial.IRON) with ItemPowered with IToolGrafter {
+object IndustrialGrafter extends BaseTool("industrial_grafter", Item.ToolMaterial.IRON) with ItemPowered with IToolGrafter {
   lazy val cfg = Tuning.getSection("Items").getSection("IndustrialGrafter")
   lazy val mjPerCharge = cfg.getInt("MjPerCharge")
   lazy val maxCharge = cfg.getInt("Charges") * mjPerCharge

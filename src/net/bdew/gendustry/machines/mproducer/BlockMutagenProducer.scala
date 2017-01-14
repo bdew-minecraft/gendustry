@@ -17,7 +17,7 @@ import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BlockMutagenProducer extends BaseMachineBlock("MutagenProducer") with HasTE[TileMutagenProducer] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
+object BlockMutagenProducer extends BaseMachineBlock("mutagen_producer") with HasTE[TileMutagenProducer] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileMutagenProducer]
   lazy val guiId = MachineMutagenProducer.guiId
 

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gendustry:items/bucket/mutagen"
+    "layer0": "gendustry:items/gene_sample_blank"
   }
 }

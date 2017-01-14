@@ -24,7 +24,7 @@ class GuiApiary(val te: TileApiary, player: EntityPlayer, cont: ContainerApiary)
     widgets.add(new WidgetError(155, 5, te))
     widgets.add(new WidgetPowerCustom(new Rect(8, 19, 16, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetApiaryProgress(new Rect(69, 22, 36, 15), te.guiProgress))
-    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.IndustrialApiary.name"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("tile.gendustry.industrial_apiary.name"), 8, 6, Color.darkGray))
     widgets.add(new WidgetRSModeButton(Point(137, 5), te, cont))
 
     te.slots.upgrades.foreach(inventorySlots.getSlot(_).setBackgroundLocation(HintIcons.upgrade))

@@ -19,9 +19,9 @@ import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.config.ItemManager
 
 object Items extends ItemManager(GendustryCreativeTabs.main) {
-  val labware = regSimpleItem("Labware")
-  val waste = regSimpleItem("Waste")
-  val geneSampleBlank = regSimpleItem("GeneSampleBlank")
+  val labware = regSimpleItem("labware")
+  val waste = regSimpleItem("waste")
+  val geneSampleBlank = regSimpleItem("gene_sample_blank")
 
   regItem(GeneSample).setCreativeTab(GendustryCreativeTabs.samples)
   regItem(GeneTemplate).setCreativeTab(GendustryCreativeTabs.templates)
@@ -34,13 +34,13 @@ object Items extends ItemManager(GendustryCreativeTabs.main) {
   regItem(CustomHoneyComb)
   regItem(CustomHoneyDrop)
 
-  regSimpleItem("MutagenTank")
-  regSimpleItem("BeeReceptacle")
-  regSimpleItem("PowerModule")
-  regSimpleItem("GeneticsProcessor")
-  regSimpleItem("EnvProcessor")
-  regSimpleItem("UpgradeFrame")
-  regSimpleItem("ClimateModule")
+  val mutagenTank = regSimpleItem("mutagen_tank")
+  val beeReceptacle = regSimpleItem("bee_receptacle")
+  val powerModule = regSimpleItem("power_module")
+  val geneticsProcessor = regSimpleItem("genetics_processor")
+  val environmentProcessor = regSimpleItem("env_processor")
+  val upgradeFrame = regSimpleItem("upgrade_frame")
+  val climateModule = regSimpleItem("climate_module")
 
   if (ForestryHelper.haveRoot("Trees")) {
     regItem(PollenKit)

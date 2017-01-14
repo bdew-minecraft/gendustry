@@ -1,12 +1,12 @@
 # author Team MMKP(puyo061 , whffktkw ,clayweb)
 # ==== BLOCKS ====
 
-tile.gendustry.MutagenProducer.name=뮤타젠 생성기
-tile.gendustry.Mutatron.name=뮤타트론
+tile.gendustry.mutagen_producer.name=뮤타젠 생성기
+tile.gendustry.mutatron.name=뮤타트론
 tile.gendustry.mutatron_adv.name=고급 뮤타트론
-tile.gendustry.IndustrialApiary.name=산업 양봉기
-tile.gendustry.Imprinter.name=유전자 각인기
-tile.gendustry.Sampler.name=유전자 샘플 추출기
+tile.gendustry.industrial_apiary.name=산업 양봉기
+tile.gendustry.imprinter.name=유전자 각인기
+tile.gendustry.sampler.name=유전자 샘플 추출기
 tile.gendustry.extractor.name=DNA 추출기
 tile.gendustry.liquifier.name=단백질 액화장치
 tile.gendustry.replicator.name=유전자 복제기
@@ -14,23 +14,23 @@ tile.gendustry.transposer.name=유전자 전환기
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=뮤타젠 탱크
+item.gendustry.mutagen_tank.name=뮤타젠 탱크
 item.gendustry.beeReceptacle.name=벌 소켓
-item.gendustry.PowerModule.name=동력 부품
-item.gendustry.GeneticsProcessor.name=유전자 가공기
-item.gendustry.EnvProcessor.name=환경 가공기
-item.gendustry.UpgradeFrame.name=업그레이드 틀
-item.gendustry.ClimateModule.name=기후 조정 부품
-item.gendustry.Labware.name=유전학 실험도구
-item.gendustry.GeneSample.name=유전자 샘플
-item.gendustry.GeneTemplate.name=유전자 템플릿
-item.gendustry.GeneSampleBlank.name=빈 유전자 샘플
-item.gendustry.Waste.name=유전자 폐기물
+item.gendustry.power_module.name=동력 부품
+item.gendustry.genetics_processor.name=유전자 가공기
+item.gendustry.env_processor.name=환경 가공기
+item.gendustry.upgrade_frame.name=업그레이드 틀
+item.gendustry.climate_module.name=기후 조정 부품
+item.gendustry.labware.name=유전학 실험도구
+item.gendustry.gene_sample.name=유전자 샘플
+item.gendustry.gene_template.name=유전자 템플릿
+item.gendustry.gene_sample_blank.name=빈 유전자 샘플
+item.gendustry.waste.name=유전자 폐기물
 item.gendustry.grafter.name=산업 접목기
 item.gendustry.scoop.name=스쿠퍼레이터 MX200 터보
-item.gendustry.ImportCover.name=아이템 주입 커버
-item.gendustry.EjectCover.name=아이템 추출 커버
-item.gendustry.PollenKit.name=폴른 콜랙터 키트
+item.gendustry.import_cover.name=아이템 주입 커버
+item.gendustry.eject_cover.name=아이템 추출 커버
+item.gendustry.pollen_kit.name=폴른 콜랙터 키트
 
 # ==== FLUIDS ====
 

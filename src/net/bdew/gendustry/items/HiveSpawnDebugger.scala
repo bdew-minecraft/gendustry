@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.world.World
 
-object HiveSpawnDebugger extends BaseItem("HiveSpawnDebugger") {
+object HiveSpawnDebugger extends BaseItem("hive_spawn_debugger") {
 
   class CheckResult(val isSuccess: Boolean)
 

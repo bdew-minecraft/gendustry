@@ -1,34 +1,34 @@
 # ==== BLOCKS ====
 
-tile.gendustry.MutagenProducer.name=Mutagen-Erzeuger
-tile.gendustry.Mutatron.name=Mutatron
-tile.gendustry.MutatronAdv.name=Erweitertes Mutatron
-tile.gendustry.IndustrialApiary.name=Industrieller Bienenstock
-tile.gendustry.Imprinter.name=Gen-Drucker
-tile.gendustry.Sampler.name=Gen-Abtaster
-tile.gendustry.Extractor.name=DNA-Extraktor
-tile.gendustry.Liquifier.name=Proteinverflüssiger
-tile.gendustry.Replicator.name=Genetischer Replikator
-tile.gendustry.Transposer.name=Genetischer Wandler
+tile.gendustry.mutagen_producer.name=Mutagen-Erzeuger
+tile.gendustry.mutatron.name=mutatron
+tile.gendustry.mutatron_advanced.name=Erweitertes mutatron
+tile.gendustry.industrial_apiary.name=Industrieller Bienenstock
+tile.gendustry.imprinter.name=Gen-Drucker
+tile.gendustry.sampler.name=Gen-Abtaster
+tile.gendustry.extractor.name=DNA-Extraktor
+tile.gendustry.liquifier.name=Proteinverflüssiger
+tile.gendustry.replicator.name=Genetischer Replikator
+tile.gendustry.transposer.name=Genetischer Wandler
 
 # ==== GENERAL ITEMS ====
 
-item.gendustry.MutagenTank.name=Mutagen-Tank
-item.gendustry.BeeReceptacle.name=Bienenbehälter
-item.gendustry.PowerModule.name=Energiemodul
-item.gendustry.GeneticsProcessor.name=Genetik-Prozessor
-item.gendustry.EnvProcessor.name=Umwelt-Prozessor
-item.gendustry.UpgradeFrame.name=Upgrade-Rahmen
-item.gendustry.ClimateModule.name=Klimakontrollmodul
-item.gendustry.Labware.name=Genlabor-Utensilien
-item.gendustry.GeneSample.name=Genprobe
-item.gendustry.GeneTemplate.name=Genetische Schablone
-item.gendustry.GeneSampleBlank.name=Leere Genprobe
-item.gendustry.Waste.name=Genetischer Abfall
+item.gendustry.mutagen_tank.name=Mutagen-Tank
+item.gendustry.bee_receptacle.name=Bienenbehälter
+item.gendustry.power_module.name=Energiemodul
+item.gendustry.genetics_processor.name=Genetik-Prozessor
+item.gendustry.env_processor.name=Umwelt-Prozessor
+item.gendustry.upgrade_frame.name=Upgrade-Rahmen
+item.gendustry.climate_module.name=Klimakontrollmodul
+item.gendustry.labware.name=Genlabor-Utensilien
+item.gendustry.gene_sample.name=Genprobe
+item.gendustry.gene_template.name=Genetische Schablone
+item.gendustry.gene_sample_blank.name=Leere Genprobe
+item.gendustry.waste.name=Genetischer Abfall
 item.gendustry.grafter.name=Industrielles Pfropfmesser
 item.gendustry.scoop.name=Scooporator MX200 Turbo
-item.gendustry.ImportCover.name=Item-Import-Blende
-item.gendustry.EjectCover.name=Item-Auswurf-Blende
+item.gendustry.import_cover.name=Item-Import-Blende
+item.gendustry.eject_cover.name=Item-Auswurf-Blende
 
 # ==== FLUIDS ====
 

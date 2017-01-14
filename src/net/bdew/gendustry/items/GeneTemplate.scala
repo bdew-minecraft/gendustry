@@ -25,7 +25,7 @@ import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.util.NonNullList
 import net.minecraft.util.text.TextFormatting
 
-object GeneTemplate extends BaseItem("GeneTemplate") {
+object GeneTemplate extends BaseItem("gene_template") {
   setMaxStackSize(1)
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.templates)

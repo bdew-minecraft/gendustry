@@ -23,7 +23,7 @@ import net.minecraft.util.NonNullList
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
-object CustomHoneyDrop extends BaseItem("HoneyDrop") {
+object CustomHoneyDrop extends BaseItem("honey_drop") {
 
   case class HoneyDropInfo(name: String, color1: Int, color2: Int)
 
