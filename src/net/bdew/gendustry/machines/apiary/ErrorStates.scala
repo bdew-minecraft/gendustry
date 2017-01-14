@@ -11,7 +11,7 @@ package net.bdew.gendustry.machines.apiary
 
 import forestry.api.core.{ForestryAPI, IErrorState}
 import net.bdew.gendustry.Gendustry
-import net.bdew.lib.{Client, Misc}
+import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
@@ -28,7 +28,7 @@ case class GendustryErrorState(name: String, id: Short) extends IErrorState {
 
   @SideOnly(Side.CLIENT)
   override def registerSprite(): Unit = {
-    icon = Client.textureMapBlocks.registerSprite(Misc.iconName(Gendustry.modId, "error", name))
+    icon = ForestryAPI.textureManager.registerGuiSprite(Misc.iconName(Gendustry.modId, "error", name))
   }
 }
 
@@ -41,7 +41,7 @@ object GendustryErrorStates {
 
 object ForestryErrorStates {
   val errorStates = ForestryAPI.errorStateRegistry
-  val noPower = errorStates.getErrorState("forestry:noPower")
-  val noRedstone = errorStates.getErrorState("forestry:noRedstone")
-  val disabledRedstone = errorStates.getErrorState("forestry:disabledRedstone")
+  val noPower = errorStates.getErrorState("forestry:no_power")
+  val noRedstone = errorStates.getErrorState("forestry:no_redstone")
+  val disabledRedstone = errorStates.getErrorState("forestry:disabled_redstone")
 }

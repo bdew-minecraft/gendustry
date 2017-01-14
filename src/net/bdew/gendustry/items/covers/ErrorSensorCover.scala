@@ -50,21 +50,21 @@ object ErrorSensors {
   val errorStateRegistry = ForestryAPI.errorStateRegistry
 
   val sensors = List(ErrorSensorAnyError, ErrorSensorNoError) ++ (List(
-    "forestry:tooHot",
-    "forestry:tooCold",
-    "forestry:tooArid",
-    "forestry:tooHumid",
-    "forestry:isRaining",
-    "forestry:notGloomy",
-    "forestry:notLucid",
-    "forestry:notDay",
-    "forestry:notNight",
-    "forestry:noFlower",
-    "forestry:noQueen",
-    "forestry:noDrone",
-    "forestry:noSky",
-    "forestry:noSpace",
-    "forestry:noPower"
+    "forestry:too_hot",
+    "forestry:too_cold",
+    "forestry:too_arid",
+    "forestry:too_humid",
+    "forestry:is_raining",
+    "forestry:not_gloomy",
+    "forestry:not_lucid",
+    "forestry:not_day",
+    "forestry:not_night",
+    "forestry:no_flower",
+    "forestry:no_queen",
+    "forestry:no_drone",
+    "forestry:no_sky",
+    "forestry:no_space",
+    "forestry:no_power"
   ) map (name => ErrorSensorForestry(errorStateRegistry.getErrorState(name))))
 
   val idMap = sensors.map(x => x.id -> x).toMap
@@ -115,7 +115,7 @@ object ErrorSensorCover extends BaseItem("error_sensor_cover") with ItemCover {
     clearErrorSensor(cover)
 
   override def clickCover(te: TileCoverable, side: EnumFacing, cover: ItemStack, player: EntityPlayer): Boolean = {
-    if (player.inventory.getCurrentItem != null) return false
+    if (!player.inventory.getCurrentItem.isEmpty) return false
     if (!player.world.isRemote) {
       val current = getErrorSensor(cover) getOrElse ErrorSensors.sensors.head
       val next = Misc.nextInSeq(ErrorSensors.sensors, current)
@@ -136,6 +136,6 @@ object ErrorSensorCover extends BaseItem("error_sensor_cover") with ItemCover {
 
   override def registerItemModels(): Unit = {
     super.registerItemModels()
-    ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation(new ResourceLocation(Gendustry.modId, "ErrorSensorCoverOn"), "inventory"))
+    ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation(new ResourceLocation(Gendustry.modId, "error_sensor_cover_on"), "inventory"))
   }
 }

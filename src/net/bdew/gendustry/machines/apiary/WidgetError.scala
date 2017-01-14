@@ -9,6 +9,7 @@
 
 package net.bdew.gendustry.machines.apiary
 
+import forestry.api.core.ForestryAPI
 import net.bdew.gendustry.gui.Textures
 import net.bdew.lib.gui.widgets.Widget
 import net.bdew.lib.gui.{Point, Rect, Texture}
@@ -31,7 +32,7 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
     if (apiary.errorConditions.isOk)
       parent.drawTexture(rect, Textures.errors.ok)
     else
-      parent.drawTexture(rect, Texture(Texture.BLOCKS, getDisplayedError.getSprite))
+      parent.drawTexture(rect, Texture(ForestryAPI.textureManager.getGuiTextureMap, getDisplayedError.getSprite))
   }
 
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) {
