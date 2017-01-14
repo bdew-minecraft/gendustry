@@ -126,6 +126,7 @@ object Gendustry {
       GendustryClient.postInit()
     }
     RegistriesApiImpl.mergeToMainRegistry()
+    Blocks.registerOldTeNames()
   }
 
   @EventHandler

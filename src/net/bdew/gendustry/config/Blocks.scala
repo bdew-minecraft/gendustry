@@ -9,10 +9,20 @@
 
 package net.bdew.gendustry.config
 
-import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.misc.GendustryCreativeTabs
+import net.bdew.gendustry.{Gendustry, OldNames}
+import net.bdew.lib.block.HasTE
 import net.bdew.lib.config.BlockManager
 
 object Blocks extends BlockManager(GendustryCreativeTabs.main) {
   Gendustry.logInfo("Blocks loaded")
+
+  def registerOldTeNames(): Unit = {
+    for ((oldName, obj) <- OldNames.map) {
+      obj match {
+        case x: HasTE[_] => registerLegacyTileEntity(Gendustry.modId + "." + oldName, x.TEClass)
+        case _ => //nothing
+      }
+    }
+  }
 }
