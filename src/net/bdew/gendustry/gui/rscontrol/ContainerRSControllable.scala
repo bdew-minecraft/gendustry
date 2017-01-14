@@ -26,7 +26,7 @@ trait ContainerRSControllable extends ContainerDataSlots {
   override def slotClick(slotNum: Int, button: Int, clickType: ClickType, player: EntityPlayer): ItemStack =
     if (slotNum == RSMODE_SLOT_NUM) {
       dataSource.rsmode := RSMode(button)
-      null
+      ItemStack.EMPTY
     } else {
       super.slotClick(slotNum, button, clickType, player)
     }
