@@ -40,10 +40,10 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
   def getSizeInventory = 2
 
   def canStart =
-    getStackInSlot(slots.inTemplate) != null &&
+    !getStackInSlot(slots.inTemplate).isEmpty &&
       proteinTank.getFluidAmount >= cfg.proteinPerItem &&
       dnaTank.getFluidAmount >= cfg.dnaPerItem &&
-      getStackInSlot(slots.outIndividual) == null
+      !getStackInSlot(slots.outIndividual).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {

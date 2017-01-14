@@ -58,7 +58,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
   def updateSelectors() {
     if (world != null && !world.isRemote && !isWorking) {
       for (slot <- slots.selectors)
-        inv(slot) = null
+        inv(slot) = ItemStack.EMPTY
       selectedMutation := -1
       val valid = GeneticsHelper.getValidMutations(getStackInSlot(slots.inIndividual1), getStackInSlot(slots.inIndividual2), fakeBeeHousing)
       if (valid.nonEmpty) {
@@ -70,22 +70,22 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
   }
 
   override def setMutation(mutation: Int) {
-    if (!isWorking && slots.selectors.contains(mutation) && inv(mutation) != null)
+    if (!isWorking && slots.selectors.contains(mutation) && !inv(mutation).isEmpty)
       selectedMutation := mutation
   }
 
   override def getPossibleMutations = {
     import scala.collection.JavaConverters._
-    (slots.selectors map (x => Integer.valueOf(x) -> inv(x)) filterNot (_._2 != null)).toMap.asJava
+    (slots.selectors map (x => Integer.valueOf(x) -> inv(x)) filterNot (_._2.isEmpty)).toMap.asJava
   }
 
   def canStart =
-    getStackInSlot(slots.inIndividual1) != null &&
-      getStackInSlot(slots.inIndividual2) != null &&
-      getStackInSlot(slots.inLabware) != null &&
+    !getStackInSlot(slots.inIndividual1).isEmpty &&
+      !getStackInSlot(slots.inIndividual2).isEmpty &&
+      !getStackInSlot(slots.inLabware).isEmpty &&
       tank.getFluidAmount >= cfg.mutagenPerItem &&
       slots.selectors.contains(selectedMutation.value) &&
-      inv(selectedMutation.value) != null
+      inv(selectedMutation.value).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {

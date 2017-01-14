@@ -52,9 +52,9 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
   }
 
   def canStart =
-    getStackInSlot(slots.inSampleBlank) != null &&
-      getStackInSlot(slots.inLabware) != null &&
-      getStackInSlot(slots.inIndividual) != null
+    !getStackInSlot(slots.inSampleBlank).isEmpty &&
+      !getStackInSlot(slots.inLabware).isEmpty &&
+      !getStackInSlot(slots.inIndividual).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {
@@ -69,7 +69,7 @@ class TileSampler extends TileItemProcessor with TileWorker with TilePowered wit
   }
 
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
-    if (stack == null || stack.getItem == null) return false
+    if (stack.isEmpty) return false
     slot match {
       case slots.inSampleBlank =>
         return stack.getItem == Items.geneSampleBlank

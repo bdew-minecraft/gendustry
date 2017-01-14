@@ -17,23 +17,25 @@ import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 
 class GeneRecipe extends IRecipe {
-  def matches(inv: InventoryCrafting, world: World): Boolean = getCraftingResult(inv) != null
+  def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
   def getCraftingResult(inv: InventoryCrafting): ItemStack = {
-    var template: ItemStack = null
+    var template: ItemStack = ItemStack.EMPTY
     var samples = Seq.empty[GeneSampleInfo]
     for (i <- 0 until 3; j <- 0 until 3) {
       val itm = inv.getStackInRowAndColumn(i, j)
-      if (itm != null && itm.getItem == GeneSample && itm.hasTagCompound)
-        samples :+= GeneSample.getInfo(itm)
-      else if (itm != null && itm.getItem == GeneTemplate && template == null)
-        template = itm
-      else if (itm != null)
-        return null
+      if (!itm.isEmpty) {
+        if (itm.getItem == GeneSample && itm.hasTagCompound)
+          samples :+= GeneSample.getInfo(itm)
+        else if (itm.getItem == GeneTemplate && template.isEmpty)
+          template = itm
+        else if (!itm.isEmpty)
+          return ItemStack.EMPTY
+      }
     }
-    if (samples.isEmpty || template == null) return null
+    if (samples.isEmpty || template.isEmpty) return ItemStack.EMPTY
     val out = template.copy()
     for (s <- samples) {
-      if (!GeneTemplate.addSample(out, s)) return null
+      if (!GeneTemplate.addSample(out, s)) return ItemStack.EMPTY
     }
     return out
   }

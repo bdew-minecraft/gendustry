@@ -42,7 +42,7 @@ class TileLiquifier extends TileBaseProcessor with TileWorker with TilePowered w
 
   def isWorking = output > 0
   def tryStart(): Boolean = {
-    if (getStackInSlot(slots.inMeat) != null) {
+    if (!getStackInSlot(slots.inMeat).isEmpty) {
       output := ProteinSources.getValue(getStackInSlot(0))
       decrStackSize(slots.inMeat, 1)
       return true

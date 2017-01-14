@@ -102,7 +102,7 @@ class BeeSpecies(cfg: ConfigSection, ident: String) extends IAlleleBeeSpecies {
 
   override def getResearchSuitability(itemStack: ItemStack): Float = {
     import scala.collection.JavaConversions._
-    if (itemStack == null || itemStack.getItem == null)
+    if (itemStack.isEmpty)
       return 0
     else if (products.keys.exists(itemStack.isItemEqual))
       return 1

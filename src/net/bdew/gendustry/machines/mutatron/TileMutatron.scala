@@ -52,9 +52,9 @@ class TileMutatron extends TileItemProcessor with TileWorker with TilePowered wi
   lazy val fakeBeeHousing = new FakeMutatronBeeHousing(this)
 
   def canStart =
-    getStackInSlot(slots.inIndividual1) != null &&
-      getStackInSlot(slots.inIndividual2) != null &&
-      getStackInSlot(slots.inLabware) != null &&
+    !getStackInSlot(slots.inIndividual1).isEmpty &&
+      !getStackInSlot(slots.inIndividual2).isEmpty &&
+      !getStackInSlot(slots.inLabware).isEmpty &&
       tank.getFluidAmount >= cfg.mutagenPerItem
 
   def tryStart(): Boolean = {

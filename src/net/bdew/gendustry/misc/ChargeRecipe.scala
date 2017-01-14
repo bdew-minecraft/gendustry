@@ -21,9 +21,9 @@ import net.minecraft.world.World
 class ChargeRecipe extends IRecipe {
   lazy val redstoneValue = Tuning.getSection("Power").getSection("RedstoneCharging").getInt("RedstoneValue")
 
-  def matches(inv: InventoryCrafting, world: World): Boolean = getCraftingResult(inv) != null
+  def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
   def getCraftingResult(inv: InventoryCrafting): ItemStack = {
-    var tool: ItemStack = null
+    var tool = ItemStack.EMPTY
     var redstone = 0
     for (i <- 0 until 3; j <- 0 until 3; stack <- Option(inv.getStackInRowAndColumn(i, j))) {
       if (stack.getItem.isInstanceOf[ItemPowered])
@@ -34,14 +34,14 @@ class ChargeRecipe extends IRecipe {
         redstone += 9
     }
 
-    if (tool == null || redstone == 0) return null
+    if (!tool.isEmpty || redstone == 0) return ItemStack.EMPTY
 
     val item = tool.getItem.asInstanceOf[ItemPowered]
     val charge = item.getCharge(tool)
 
     if ((item.maxCharge - charge) >= redstone * redstoneValue) {
       item.stackWithCharge(charge + (redstone * redstoneValue))
-    } else null
+    } else ItemStack.EMPTY
   }
 
   override def getRemainingItems(inv: InventoryCrafting): NonNullList[ItemStack] =

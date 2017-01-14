@@ -142,7 +142,7 @@ class Loader extends RecipeLoader with GenericConfigLoader with LootListLoader {
       Gendustry.logDebug("Adding squeezer recipe: %s => %s + %s", in, fluid, out)
 
       val inStack = getConcreteStackNoWildcard(in)
-      val outStack = if (out != null) getConcreteStackNoWildcard(out) else null
+      val outStack = if (out != null) getConcreteStackNoWildcard(out) else ItemStack.EMPTY
       val outFluid = resolveFluid(fluid)
 
       import scala.collection.JavaConversions._

@@ -48,8 +48,8 @@ class FluidSourceWrapper(fluidId: String, registry: FluidSourceRegistry) extends
   override def get(block: Block): Int = get(new ItemStack(block))
 
   override def add(item: ItemStack, value: Int): Boolean = {
-    if (item == null || item.getItem == null) {
-      Gendustry.logError("Ignoring invalid fluid source API call from %s - null item", Misc.getActiveModId)
+    if (item.isEmpty) {
+      Gendustry.logError("Ignoring invalid fluid source API call from %s - empty item", Misc.getActiveModId)
       false
     } else if (merged) {
       Gendustry.logError("Ignoring invalid fluid source API call from %s - registry cannot be modified after postInit", Misc.getActiveModId)

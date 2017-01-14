@@ -50,7 +50,7 @@ object CustomHives {
         ref <- list
         stack <- TuningLoader.loader.getAllConcreteStacks(ref)
       } yield {
-        if (stack == null || stack.getItem == null || !stack.getItem.isInstanceOf[ItemBlock]) {
+        if (stack.isEmpty || !stack.getItem.isInstanceOf[ItemBlock]) {
           Gendustry.logWarn("Error resolving filter %s - stackref %s does not resolve to a block", f, ref)
           None
         } else {

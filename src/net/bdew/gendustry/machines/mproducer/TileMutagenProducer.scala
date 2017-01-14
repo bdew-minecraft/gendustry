@@ -38,7 +38,7 @@ class TileMutagenProducer extends TileBaseProcessor with TileWorker with TilePow
 
   def isWorking = output > 0
   def tryStart(): Boolean = {
-    if (getStackInSlot(0) != null) {
+    if (getStackInSlot(0).isEmpty) {
       output := MutagenSources.getValue(getStackInSlot(0))
       decrStackSize(0, 1)
       return true

@@ -44,7 +44,7 @@ class TileExtractor extends TileBaseProcessor with TileWorker with TilePowered w
   def isWorking = output > 0
 
   def tryStart(): Boolean = {
-    if (getStackInSlot(slots.inIndividual) != null && getStackInSlot(slots.inLabware) != null) {
+    if (!getStackInSlot(slots.inIndividual).isEmpty && !getStackInSlot(slots.inLabware).isEmpty) {
       output := LiquidDNASources.getValue(getStackInSlot(0))
       if (world.rand.nextInt(100) < cfg.labwareConsumeChance)
         decrStackSize(slots.inLabware, 1)

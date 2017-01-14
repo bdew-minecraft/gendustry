@@ -54,7 +54,7 @@ object GeneticsHelper {
   def getValidMutations(fromStack: ItemStack, toStack: ItemStack, beeHousing: IBeeHousing): Seq[IMutation] = {
     val emptyMutations = Seq.empty[IMutation]
 
-    if (fromStack == null || toStack == null) return emptyMutations
+    if (fromStack.isEmpty || toStack.isEmpty) return emptyMutations
 
     val root = AlleleManager.alleleRegistry.getSpeciesRoot(fromStack)
     if (root == null || !root.isMember(toStack)) return emptyMutations
@@ -87,15 +87,15 @@ object GeneticsHelper {
   }
 
   def isPotentialMutationPair(fromStack: ItemStack, toStack: ItemStack, beeHousing: IBeeHousing): Boolean = {
-    if (fromStack == null && toStack == null) return false
-    if (toStack == null) return isValidItemForSlot(fromStack, 0)
-    if (fromStack == null) return isValidItemForSlot(toStack, 1)
+    if (fromStack.isEmpty && toStack.isEmpty) return false
+    if (toStack.isEmpty) return isValidItemForSlot(fromStack, 0)
+    if (fromStack.isEmpty) return isValidItemForSlot(toStack, 1)
     return getValidMutations(fromStack, toStack, beeHousing).nonEmpty
   }
 
   def getMutationResult(fromStack: ItemStack, toStack: ItemStack, beeHousing: IBeeHousing): ItemStack = {
     val valid = getValidMutations(fromStack, toStack, beeHousing)
-    if (valid.isEmpty) return null
+    if (valid.isEmpty) return ItemStack.EMPTY
 
     val selected = if (valid.size > 1) {
       val secret = valid.filter(_.isSecret)

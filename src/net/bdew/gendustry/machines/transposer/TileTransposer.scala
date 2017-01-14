@@ -35,9 +35,9 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
   def getSizeInventory = 4
 
   def canStart =
-    getStackInSlot(slots.inBlank) != null &&
-      getStackInSlot(slots.inLabware) != null &&
-      getStackInSlot(slots.inTemplate) != null
+    !getStackInSlot(slots.inBlank).isEmpty &&
+      !getStackInSlot(slots.inLabware).isEmpty &&
+      !getStackInSlot(slots.inTemplate).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {
@@ -59,11 +59,11 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
   }
 
   def isValidInputs(blank: ItemStack, template: ItemStack) = (blank, template) match {
-    case (IStack(Items.geneSampleBlank), null) => true
+    case (IStack(Items.geneSampleBlank), x) if x.isEmpty => true
     case (IStack(Items.geneSampleBlank), IStack(GeneSample)) => true
-    case (null, IStack(GeneSample)) => true
-    case (IStack(GeneTemplate), null) => true
-    case (null, IStack(GeneTemplate)) => GeneTemplate.getSpecies(template) != null
+    case (x, IStack(GeneSample)) if x.isEmpty => true
+    case (IStack(GeneTemplate), x) if x.isEmpty => true
+    case (x, IStack(GeneTemplate)) if x.isEmpty => GeneTemplate.getSpecies(template) != null
     case (IStack(GeneTemplate), IStack(GeneTemplate)) =>
       val bsp = GeneTemplate.getSpecies(blank)
       val tsp = GeneTemplate.getSpecies(template)
@@ -72,7 +72,7 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
   }
 
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
-    if (stack == null || stack.getItem == null) return false
+    if (stack.isEmpty) return false
     slot match {
       case slots.inLabware => stack.getItem == Items.labware
       case slots.inBlank => isValidInputs(stack, getStackInSlot(slots.inTemplate))
@@ -83,7 +83,7 @@ class TileTransposer extends TileItemProcessor with TileWorker with TilePowered 
 
   allowSided = true
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) =
-    slot == slots.outCopy || (slot == slots.inTemplate && inv(slots.inBlank) == null && output.isEmpty)
+    slot == slots.outCopy || (slot == slots.inTemplate && inv(slots.inBlank).isEmpty && output.isEmpty)
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

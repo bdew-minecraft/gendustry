@@ -38,9 +38,9 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   def getSizeInventory = 4
 
   def canStart =
-    getStackInSlot(slots.inTemplate) != null &&
-      getStackInSlot(slots.inLabware) != null &&
-      getStackInSlot(slots.inIndividual) != null
+    !getStackInSlot(slots.inTemplate).isEmpty &&
+      !getStackInSlot(slots.inLabware).isEmpty &&
+      !getStackInSlot(slots.inIndividual).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {
@@ -99,16 +99,16 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   }
 
   override def isItemValidForSlot(slot: Int, stack: ItemStack): Boolean = {
-    if (stack == null || stack.getItem == null) return false
+    if (stack.isEmpty) return false
     slot match {
       case slots.inTemplate =>
         return (stack.getItem == GeneTemplate) &&
-          (inv(slots.inIndividual) == null || GeneTemplate.getSpecies(stack) == AlleleManager.alleleRegistry.getSpeciesRoot(inv(slots.inIndividual)))
+          (inv(slots.inIndividual).isEmpty || GeneTemplate.getSpecies(stack) == AlleleManager.alleleRegistry.getSpeciesRoot(inv(slots.inIndividual)))
       case slots.inLabware =>
         return stack.getItem == Items.labware
       case slots.inIndividual =>
         return (AlleleManager.alleleRegistry.getIndividual(stack) != null) &&
-          (inv(slots.inTemplate) == null || GeneTemplate.getSpecies(inv(slots.inTemplate)) == AlleleManager.alleleRegistry.getSpeciesRoot(stack))
+          (inv(slots.inTemplate).isEmpty || GeneTemplate.getSpecies(inv(slots.inTemplate)) == AlleleManager.alleleRegistry.getSpeciesRoot(stack))
       case _ =>
         return false
     }
@@ -119,7 +119,7 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
   // can extract the template if input is empty and there's no operation in progress
   override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) =
     slot == slots.outIndividual ||
-      (slot == slots.inTemplate && inv(slots.inIndividual) == null && output.isEmpty)
+      (slot == slots.inTemplate && inv(slots.inIndividual).isEmpty && output.isEmpty)
 
   override def isValidCover(side: EnumFacing, cover: ItemStack) = true
 }

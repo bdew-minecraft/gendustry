@@ -19,7 +19,7 @@ class SlotSelector(inv: TileMutatronAdv, slot: Int, x: Int, y: Int) extends Slot
     if (button == 0 && clickType == ClickType.PICKUP && !inv.getWorld.isRemote && !inv.isWorking && getHasStack) {
       inv.setMutation(getSlotIndex)
     }
-    return null
+    return ItemStack.EMPTY
   }
   override def isItemValid(stack: ItemStack) = false
 }

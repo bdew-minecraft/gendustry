@@ -68,7 +68,7 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
     // If the click can be handled by something else - ignore it
     if (super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ)) return true
     if (player.isSneaking) {
-      val equipped = if (player.getActiveItemStack != null) player.getActiveItemStack.getItem else null
+      val equipped = player.getActiveItemStack.getItem
       // Todo: Re-enable when BC is available
       //      if (equipped.isInstanceOf[IToolWrench] && equipped.asInstanceOf[IToolWrench].canWrench(player, pos)) {
       //        if (!world.isRemote) world.destroyBlock(pos, true)

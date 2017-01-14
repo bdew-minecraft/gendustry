@@ -104,9 +104,9 @@ class TileApiary extends TileExtended
   }
 
   def doMovePrincess() {
-    for ((slot, stack) <- Misc.iterSomeEnum(inv, slots.output) if stack != null && beeRoot.isMember(stack, EnumBeeType.PRINCESS)) {
+    for ((slot, stack) <- Misc.iterSomeEnum(inv, slots.output) if !stack.isEmpty && beeRoot.isMember(stack, EnumBeeType.PRINCESS)) {
       setInventorySlotContents(slots.queen, stack)
-      setInventorySlotContents(slot, null)
+      setInventorySlotContents(slot, ItemStack.EMPTY)
       return
     }
   }
@@ -139,10 +139,10 @@ class TileApiary extends TileExtended
       }
     }
 
-    if (movePrincess && getStackInSlot(slots.queen) == null)
+    if (movePrincess && !getStackInSlot(slots.queen).isEmpty)
       doMovePrincess()
 
-    if (getQueen == null) {
+    if (getQueen.isEmpty) {
       guiProgress := 0
     } else {
       if (beeRoot.getType(getQueen) == EnumBeeType.PRINCESS)
@@ -219,7 +219,7 @@ class TileApiary extends TileExtended
 
   override def getUpgrades = {
     import scala.collection.JavaConversions._
-    slots.upgrades map inv filterNot (_ == null)
+    slots.upgrades map inv filterNot (_.isEmpty)
   }
 
   override def getModifiers = mods
