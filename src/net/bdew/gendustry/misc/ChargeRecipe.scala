@@ -25,16 +25,21 @@ class ChargeRecipe extends IRecipe {
   def getCraftingResult(inv: InventoryCrafting): ItemStack = {
     var tool = ItemStack.EMPTY
     var redstone = 0
-    for (i <- 0 until 3; j <- 0 until 3; stack <- Option(inv.getStackInRowAndColumn(i, j))) {
-      if (stack.getItem.isInstanceOf[ItemPowered])
-        tool = stack
-      else if (stack.getItem == Items.REDSTONE)
-        redstone += 1
-      else if (stack.getItem == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK))
-        redstone += 9
+    for (i <- 0 until 3; j <- 0 until 3) {
+      val stack = inv.getStackInRowAndColumn(i, j)
+      if (!stack.isEmpty) {
+        if (stack.getItem.isInstanceOf[ItemPowered])
+          tool = stack
+        else if (stack.getItem == Items.REDSTONE)
+          redstone += 1
+        else if (stack.getItem == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK))
+          redstone += 9
+        else
+          return ItemStack.EMPTY
+      }
     }
 
-    if (!tool.isEmpty || redstone == 0) return ItemStack.EMPTY
+    if (tool.isEmpty || redstone == 0) return ItemStack.EMPTY
 
     val item = tool.getItem.asInstanceOf[ItemPowered]
     val charge = item.getCharge(tool)
