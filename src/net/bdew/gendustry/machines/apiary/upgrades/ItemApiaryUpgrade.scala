@@ -16,11 +16,11 @@ import net.bdew.gendustry.api.ApiaryModifiers
 import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.{Client, Misc}
-import net.minecraft.client.renderer.block.model.ModelResourceLocation
+import net.minecraft.client.renderer.block.model.{ModelBakery, ModelResourceLocation}
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraft.util.NonNullList
+import net.minecraft.util.{NonNullList, ResourceLocation}
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
@@ -111,10 +111,15 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
 
   @SideOnly(Side.CLIENT)
   override def registerItemModels(): Unit = {
-    for ((id, upgrade) <- Upgrades.map) {
-      val model = "%s:%s/%s".format(Gendustry.modId, "upgrades", upgrade.name)
-      ModelLoader.setCustomModelResourceLocation(this, id, new ModelResourceLocation(model, "inventory"))
-      Client.minecraft.getRenderItem.getItemModelMesher.register(this, id, new ModelResourceLocation(model, "inventory"))
+    val models = for ((id, upgrade) <- Upgrades.map)
+      yield id -> new ResourceLocation(Gendustry.modId, "%s/%s".format("upgrades", upgrade.name))
+
+    for ((id, resource) <- models) {
+      val mrl = new ModelResourceLocation(resource, "inventory")
+      ModelLoader.setCustomModelResourceLocation(this, id, mrl)
+      Client.minecraft.getRenderItem.getItemModelMesher.register(this, id, mrl)
     }
+
+    ModelBakery.registerItemVariants(this, models.values.toSeq: _*)
   }
 }
