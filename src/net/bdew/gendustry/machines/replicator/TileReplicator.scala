@@ -43,7 +43,7 @@ class TileReplicator extends TileItemProcessor with TileWorker with TilePowered 
     !getStackInSlot(slots.inTemplate).isEmpty &&
       proteinTank.getFluidAmount >= cfg.proteinPerItem &&
       dnaTank.getFluidAmount >= cfg.dnaPerItem &&
-      !getStackInSlot(slots.outIndividual).isEmpty
+      getStackInSlot(slots.outIndividual).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {
