@@ -139,7 +139,7 @@ class TileApiary extends TileExtended
       }
     }
 
-    if (movePrincess && !getStackInSlot(slots.queen).isEmpty)
+    if (movePrincess && getStackInSlot(slots.queen).isEmpty)
       doMovePrincess()
 
     if (getQueen.isEmpty) {
