@@ -85,7 +85,7 @@ class TileMutatronAdv extends TileItemProcessor with TileWorker with TilePowered
       !getStackInSlot(slots.inLabware).isEmpty &&
       tank.getFluidAmount >= cfg.mutagenPerItem &&
       slots.selectors.contains(selectedMutation.value) &&
-      inv(selectedMutation.value).isEmpty
+      !inv(selectedMutation.value).isEmpty
 
   def tryStart(): Boolean = {
     if (canStart) {
