@@ -78,12 +78,12 @@ object GeneticsCache {
       } foreach { case (partner, results) =>
         // Combine result names
         val names = results map { mutation =>
-          mutation.getTemplate()(0).getName +
+          mutation.getTemplate()(0).getAlleleName +
             // Add * if there are special requirements
             (if (GeneticsHelper.safeMutationConditions(mutation).nonEmpty) "*" else "")
         } mkString ", "
         // And print it out
-        Gendustry.logDebug("%s + %s => [%s]", sp1.getName, partner.getName, names)
+        Gendustry.logDebug("%s + %s => [%s]", sp1.getAlleleName, partner.getAlleleName, names)
       }
     }
 

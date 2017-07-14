@@ -38,24 +38,24 @@ case class GeneSampleInfo(root: ISpeciesRoot, chromosome: Int, allele: IAllele) 
         if (Misc.hasLocal(k))
           Misc.toLocal(k)
         else
-          a.getName
+          a.getAlleleName
       case a: IAlleleBeeSpecies =>
         val k = "for.bees.custom.beealyzer.drone." + a.getUnlocalizedName.replace("bees.species.", "")
         if (Misc.hasLocal(k))
           Misc.toLocal(k)
         else
-          a.getName
+          a.getAlleleName
       case i: IAlleleInteger => chr match {
         case "GIRTH" => "%d x %d".format(i.getValue, i.getValue)
         case "FERTILITY" if !root.isInstanceOf[ITreeRoot] => i.getValue.toString
         case "CARBONIZATION" => i.getValue.toString
         case "COMBUSTIBILITY" => i.getValue.toString
         case "METABOLISM" => i.getValue.toString
-        case _ => i.getName
+        case _ => i.getAlleleName
       }
       case b: IAlleleBoolean => if (b.getValue) Misc.toLocal("gendustry.allele.true") else Misc.toLocal("gendustry.allele.false")
       case a: IAlleleButterflyCocoon => a.getCocoonName
-      case x => x.getName
+      case x => x.getAlleleName
     }
     if (str == "")
       return "%s: %s".format(Misc.toLocal("gendustry.chromosome." + chr), allele.getUID)

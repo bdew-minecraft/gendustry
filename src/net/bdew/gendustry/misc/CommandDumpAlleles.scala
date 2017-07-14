@@ -30,7 +30,7 @@ class CommandDumpAlleles extends CommandBase {
     try {
       dumpWriter.write("==== ALLELES ====\n")
       dumpWriter.write((AlleleManager.alleleRegistry.getRegisteredAlleles map { case (id, allele) =>
-        "%s (%s)".format(id, allele.getName)
+        "%s (%s)".format(id, allele.getAlleleName)
       }).toList.sorted.mkString("\n"))
       dumpWriter.write("\n\n")
       CommandBase.notifyCommandListener(sender, this, "Alleles dumped to " + dumpFile.getCanonicalPath)
