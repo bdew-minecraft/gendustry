@@ -75,8 +75,8 @@ repositories {
         url = "http://maven.ic2.player.to/"
     }
     maven {
-        name "waila"
-        url "http://mobiusstrip.eu/maven"
+        name "HWYLA"
+        url "http://tehnut.info/maven"
     }
     maven {
         name = "tesla"
@@ -84,21 +84,21 @@ repositories {
     }
     ivy {
         name "BuildCraft"
-        artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
+        artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision].[ext]"
     }
 }
 
 dependencies {
     compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
-//    compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
-//    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+    deobfCompile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}"
+    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
     compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
 
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
-//    deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
-//    compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
+    compile "net.darkhax.tesla:Tesla:${config.tesla.version}"
 }
 
 
