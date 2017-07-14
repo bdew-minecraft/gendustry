@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2013 - 2017
+ * Copyright (c) bdew, 2013 - 2016
  * https://github.com/bdew/gendustry
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -9,6 +9,12 @@
 
 package net.bdew.gendustry.power
 
+import net.bdew.gendustry.compat.PowerProxy
+import net.bdew.lib.capabilities.CapabilityProvider
 import net.bdew.lib.power.TilePoweredBase
 
-trait TilePowered extends TilePoweredBase with TilePoweredRF with TilePoweredEU with TilePoweredTesla with TilePoweredForge
+trait TilePoweredTesla extends TilePoweredBase with CapabilityProvider {
+  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
+    Tesla.injectTesla(this)
+  }
+}

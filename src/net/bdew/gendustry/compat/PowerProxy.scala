@@ -14,7 +14,7 @@ import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.Misc
 
 object PowerProxy {
-  final val IC2_MOD_ID = "IC2"
+  final val IC2_MOD_ID = "ic2"
   final val TE_MOD_ID = "CoFHAPI"
   final val TESLA_MOD_ID = "tesla"
 
