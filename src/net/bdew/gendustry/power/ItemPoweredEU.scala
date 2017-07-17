@@ -24,7 +24,7 @@ trait ItemPoweredEU extends ItemPoweredBase with ISpecialElectricItem {
 
   override def useCharge(stack: ItemStack, uses: Int, player: EntityLivingBase) = {
     if (PowerProxy.haveIC2)
-      ElectricItem.rawManager.chargeFromArmor(stack, player)
+      manager.chargeFromArmor(stack, player)
     super.useCharge(stack, uses, player)
   }
 
