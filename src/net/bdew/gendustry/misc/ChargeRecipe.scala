@@ -9,23 +9,27 @@
 
 package net.bdew.gendustry.misc
 
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
 import net.bdew.gendustry.power.ItemPowered
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraft.util.NonNullList
+import net.minecraft.util.{NonNullList, ResourceLocation}
 import net.minecraft.world.World
+import net.minecraftforge.registries.IForgeRegistryEntry
 
-class ChargeRecipe extends IRecipe {
+class ChargeRecipe extends IForgeRegistryEntry.Impl[IRecipe] with IRecipe {
+  setRegistryName(new ResourceLocation(Gendustry.modId, "charging"))
+
   lazy val redstoneValue = Tuning.getSection("Power").getSection("RedstoneCharging").getInt("RedstoneValue")
 
-  def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
-  def getCraftingResult(inv: InventoryCrafting): ItemStack = {
+  override def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
+  override def getCraftingResult(inv: InventoryCrafting): ItemStack = {
     var tool = ItemStack.EMPTY
     var redstone = 0
-    for (i <- 0 until 3; j <- 0 until 3) {
+    for (i <- 0 until inv.getWidth; j <- 0 until inv.getHeight) {
       val stack = inv.getStackInRowAndColumn(i, j)
       if (!stack.isEmpty) {
         if (stack.getItem.isInstanceOf[ItemPowered])
@@ -52,6 +56,6 @@ class ChargeRecipe extends IRecipe {
   override def getRemainingItems(inv: InventoryCrafting): NonNullList[ItemStack] =
     NonNullList.withSize(inv.getSizeInventory, ItemStack.EMPTY)
 
-  def getRecipeSize: Int = 9
-  def getRecipeOutput: ItemStack = new ItemStack(Blocks.FIRE)
+  override def canFit(width: Int, height: Int): Boolean = width > 1 || height > 1
+  override def getRecipeOutput: ItemStack = ItemStack.EMPTY
 }

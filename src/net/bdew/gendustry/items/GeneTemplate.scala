@@ -18,24 +18,25 @@ import net.bdew.gendustry.misc.GendustryCreativeTabs
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.{Client, Misc}
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.util.NonNullList
 import net.minecraft.util.text.TextFormatting
+import net.minecraft.world.World
 
 object GeneTemplate extends BaseItem("gene_template") {
   setMaxStackSize(1)
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.templates)
 
-  override def getSubItems(item: Item, tab: CreativeTabs, list: NonNullList[ItemStack]) {
+  override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
     import scala.collection.JavaConversions._
     tab match {
-      case GendustryCreativeTabs.main => list.add(new ItemStack(this))
+      case GendustryCreativeTabs.main => subItems.add(new ItemStack(this))
       case GendustryCreativeTabs.templates =>
-        list.addAll(
+        subItems.addAll(
           Misc.filterType(AlleleManager.alleleRegistry.getRegisteredAlleles.values(), classOf[IAlleleSpecies])
             .filter(sp => sp.getRoot.getTemplate(sp.getUID) != null)
             .toList.sortBy(_.getUID)
@@ -89,7 +90,7 @@ object GeneTemplate extends BaseItem("gene_template") {
     return true
   }
 
-  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+  override def addInformation(stack: ItemStack, world: World, tooltip: util.List[String], flags: ITooltipFlag): Unit = {
     import scala.collection.JavaConversions._
     val tag = stack.getTagCompound
     if (tag != null && tag.hasKey("species")) {

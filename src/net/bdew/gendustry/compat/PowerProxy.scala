@@ -15,7 +15,7 @@ import net.bdew.lib.Misc
 
 object PowerProxy {
   final val IC2_MOD_ID = "ic2"
-  final val TE_MOD_ID = "CoFHAPI"
+  final val TE_MOD_ID = "redstoneflux"
   final val TESLA_MOD_ID = "tesla"
 
   lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")

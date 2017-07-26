@@ -28,7 +28,7 @@ class WidgetError(x: Int, y: Int, apiary: TileApiary) extends Widget {
     errors.toList.sortBy(_.getID).apply(pos)
   }
 
-  override def draw(mouse: Point) {
+  override def draw(mouse: Point, partial: Float) {
     if (apiary.errorConditions.isOk)
       parent.drawTexture(rect, Textures.errors.ok)
     else

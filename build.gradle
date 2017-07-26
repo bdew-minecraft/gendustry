@@ -19,7 +19,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.7"
     }
 }
@@ -82,6 +82,10 @@ repositories {
         name = "tesla"
         url = "http://maven.epoxide.xyz"
     }
+    maven {
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
+    }
     ivy {
         name "BuildCraft"
         artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision].[ext]"
@@ -90,15 +94,15 @@ repositories {
 
 dependencies {
     compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
-    deobfCompile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}"
+//    deobfCompile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
     compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
 
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
     deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}"
 
-    compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
-    compile "net.darkhax.tesla:Tesla:${config.tesla.version}"
+    deobfCompile "cofh:RedstoneFlux:${config.minecraft.version}-${config.rfapi.version}:universal"
+    compile "net.darkhax.tesla:Tesla-${config.minecraft.version}:${config.tesla.version}"
 }
 
 

@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.ItemMeshDefinition
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
@@ -40,7 +40,7 @@ object CustomHoneyComb extends BaseItem("honey_comb") {
 
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
-  override def getSubItems(item: Item, tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
+  override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
     for ((id, name) <- data)
       subItems.add(new ItemStack(this, 1, id))
   }

@@ -18,7 +18,7 @@ class WidgetSelector(origin: Point, dSlot: DataSlotInt, slotOffset: Int) extends
   val rect = new Rect(origin, 0, 0)
   val texture = Textures.slotSelect
 
-  override def draw(mouse: Point) = {
+  override def draw(mouse: Point, partial: Float) = {
     if (dSlot > 0)
       parent.drawTexture(Rect(rect.origin.x + (dSlot.value + slotOffset) * 18, rect.origin.y, 18, 18), texture)
   }

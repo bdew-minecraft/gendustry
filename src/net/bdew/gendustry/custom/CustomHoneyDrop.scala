@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.ItemMeshDefinition
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
@@ -40,9 +40,9 @@ object CustomHoneyDrop extends BaseItem("honey_drop") {
 
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
-  override def getSubItems(item: Item, par2CreativeTabs: CreativeTabs, list: NonNullList[ItemStack]) {
+  override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
     for ((id, name) <- data)
-      list.add(new ItemStack(this, 1, id))
+      subItems.add(new ItemStack(this, 1, id))
   }
 
   override def getUnlocalizedName(stack: ItemStack) =

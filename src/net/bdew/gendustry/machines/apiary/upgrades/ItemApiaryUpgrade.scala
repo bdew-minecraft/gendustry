@@ -17,10 +17,11 @@ import net.bdew.gendustry.api.items.IApiaryUpgrade
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.{Client, Misc}
 import net.minecraft.client.renderer.block.model.{ModelBakery, ModelResourceLocation}
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.{NonNullList, ResourceLocation}
+import net.minecraft.world.World
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
@@ -81,7 +82,7 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
 
   def getStackingId(stack: ItemStack) = Item.getIdFromItem(this) * Int.MaxValue + stack.getItemDamage
 
-  override def addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+  override def addInformation(stack: ItemStack, world: World, tooltip: util.List[String], flags: ITooltipFlag): Unit = {
     tooltip.addAll(getDisplayDetails(stack))
   }
 
@@ -104,9 +105,9 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
     return "invalid"
   }
 
-  override def getSubItems(itemIn: Item, tab: CreativeTabs, list: NonNullList[ItemStack]): Unit = {
+  override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
     for ((id, name) <- Upgrades.map)
-      list.add(new ItemStack(this, 1, id))
+      subItems.add(new ItemStack(this, 1, id))
   }
 
   @SideOnly(Side.CLIENT)

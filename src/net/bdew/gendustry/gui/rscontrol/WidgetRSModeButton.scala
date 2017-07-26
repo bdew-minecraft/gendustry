@@ -29,7 +29,7 @@ class WidgetRSModeButton(p: Point, te: TileRSControllable, container: ContainerR
   var icon: Texture = null
   var hover: String = null
 
-  override def draw(mouse: Point) {
+  override def draw(mouse: Point, partial: Float) {
     if (rect.contains(mouse))
       parent.drawTexture(rect, Textures.button16.hover)
     else

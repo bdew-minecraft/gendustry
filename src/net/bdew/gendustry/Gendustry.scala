@@ -22,24 +22,24 @@ import net.bdew.gendustry.machines.apiary.GendustryErrorStates
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
 import net.minecraft.command.CommandHandler
+import net.minecraft.item.crafting.IRecipe
+import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event._
 import net.minecraftforge.fml.common.network.NetworkRegistry
-import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
-import net.minecraftforge.oredict.RecipeSorter
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:forestry@[5.0.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;after:MagicBees;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
 object Gendustry {
-  var log: Logger = null
+  var log: Logger = _
   var instance = this
 
   final val modId = "gendustry"
   final val channel = "bdew.gendustry"
 
-  var configDir: File = null
+  var configDir: File = _
 
   def logDebug(msg: String, args: Any*) = log.debug(msg.format(args: _*))
   def logInfo(msg: String, args: Any*) = log.info(msg.format(args: _*))
@@ -86,14 +86,6 @@ object Gendustry {
 
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
 
-    GameRegistry.addRecipe(new GeneRecipe)
-    RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
-
-    if (Tuning.getSection("Power").getSection("RedstoneCharging").getBoolean("Enabled")) {
-      GameRegistry.addRecipe(new ChargeRecipe)
-      RecipeSorter.register("gendustry:ChargeRecipe", classOf[ChargeRecipe], RecipeSorter.Category.SHAPELESS, "")
-    }
-
     Upgrades.init()
 
     if (ForestryHelper.haveRoot("Bees")) {
@@ -123,7 +115,6 @@ object Gendustry {
       GendustryClient.postInit()
     }
     RegistriesApiImpl.mergeToMainRegistry()
-    Blocks.registerOldTeNames()
   }
 
   @EventHandler
@@ -134,9 +125,14 @@ object Gendustry {
     commandHandler.registerCommand(new CommandDumpAlleles)
   }
 
-  @EventHandler
-  def missingMappings(event: FMLMissingMappingsEvent): Unit = {
-    import scala.collection.JavaConversions._
-    event.getAll.foreach(OldNames.checkRemap)
+  def registerRecipes(event: RegistryEvent.Register[IRecipe]): Unit = {
+    event.getRegistry.register(new GeneRecipe)
+    if (Tuning.getSection("Power").getSection("RedstoneCharging").getBoolean("Enabled")) {
+      event.getRegistry.register(new ChargeRecipe)
+    }
+    event.getRegistry.registerAll(TuningLoader.loader.recipes: _*)
+    // Apparently this goes away in 1.12?
+    //    RecipeSorter.register("gendustry:ChargeRecipe", classOf[ChargeRecipe], RecipeSorter.Category.SHAPELESS, "")
+    //    RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
   }
 }

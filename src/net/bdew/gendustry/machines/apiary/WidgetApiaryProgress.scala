@@ -23,7 +23,7 @@ class WidgetApiaryProgress(val rect: Rect, progress: DataSlotFloat) extends Widg
     tip += "%.0f%%".format(progress.value * 100)
   }
 
-  override def draw(mouse: Point) {
+  override def draw(mouse: Point, partial: Float) {
     if (progress.value > 0) {
       parent.drawTextureInterpolate(rect, texture, 0, 0, progress.value, 1)
     }

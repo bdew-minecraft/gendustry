@@ -14,14 +14,15 @@ import net.bdew.gendustry.machines.BaseMachineBlock
 import net.bdew.gendustry.misc.BlockTooltipHelper
 import net.bdew.lib.block.{BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
+import net.minecraft.world.World
 
 object BlockTransposer extends BaseMachineBlock("transposer") with HasTE[TileTransposer] with BlockCoverable with BlockGuiWrenchable with BlockTooltip with BlockKeepData {
   val TEClass = classOf[TileTransposer]
   lazy val guiId: Int = MachineTransposer.guiId
 
-  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
+  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[String] = {
     if (stack.hasTagCompound && stack.getTagCompound.hasKey("data")) {
       val data = stack.getTagCompound.getCompoundTag("data")
       List.empty ++

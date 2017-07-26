@@ -12,7 +12,7 @@ package net.bdew.gendustry.custom.hives
 import net.minecraft.block.Block
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameData
+import net.minecraftforge.fml.common.registry.ForgeRegistries
 
 trait BlockFilter {
   def matches(world: World, pos: BlockPos): Boolean
@@ -27,7 +27,7 @@ case class BlockFilterList(valid: Set[(Block, Int)]) extends BlockFilter {
     }
   override def getDescription: String = {
     val names = for ((block, meta) <- valid.toList) yield {
-      GameData.getBlockRegistry.getNameForObject(block) + (if (meta > 0) "@%d".format(meta) else "@*")
+      ForgeRegistries.BLOCKS.getKey(block).toString + (if (meta > 0) "@%d".format(meta) else "@*")
     }
     names.mkString(" OR ")
   }

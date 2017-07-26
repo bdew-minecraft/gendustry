@@ -9,19 +9,23 @@
 
 package net.bdew.gendustry.forestry
 
+import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
-import net.minecraft.util.NonNullList
+import net.minecraft.util.{NonNullList, ResourceLocation}
 import net.minecraft.world.World
+import net.minecraftforge.registries.IForgeRegistryEntry
 
-class GeneRecipe extends IRecipe {
-  def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
-  def getCraftingResult(inv: InventoryCrafting): ItemStack = {
+class GeneRecipe extends IForgeRegistryEntry.Impl[IRecipe] with IRecipe {
+  setRegistryName(new ResourceLocation(Gendustry.modId, "gene"))
+
+  override def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
+  override def getCraftingResult(inv: InventoryCrafting): ItemStack = {
     var template: ItemStack = ItemStack.EMPTY
     var samples = Seq.empty[GeneSampleInfo]
-    for (i <- 0 until 3; j <- 0 until 3) {
+    for (i <- 0 until inv.getWidth; j <- 0 until inv.getHeight) {
       val itm = inv.getStackInRowAndColumn(i, j)
       if (!itm.isEmpty) {
         if (itm.getItem == GeneSample && itm.hasTagCompound)
@@ -43,6 +47,7 @@ class GeneRecipe extends IRecipe {
   override def getRemainingItems(inv: InventoryCrafting): NonNullList[ItemStack] =
     NonNullList.withSize(inv.getSizeInventory, ItemStack.EMPTY)
 
-  def getRecipeSize: Int = 9
-  def getRecipeOutput: ItemStack = new ItemStack(GeneTemplate)
+  override def canFit(width: Int, height: Int): Boolean = width > 1 || height > 1
+
+  override def getRecipeOutput: ItemStack = ItemStack.EMPTY
 }

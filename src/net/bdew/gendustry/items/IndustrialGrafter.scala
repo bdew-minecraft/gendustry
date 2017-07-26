@@ -19,6 +19,7 @@ import net.bdew.lib.Misc
 import net.bdew.lib.items.BaseTool
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -75,13 +76,13 @@ object IndustrialGrafter extends BaseTool("industrial_grafter", Item.ToolMateria
 
   override def hitEntity(stack: ItemStack, target: EntityLivingBase, player: EntityLivingBase): Boolean = false
 
-  override def addInformation(stack: ItemStack, player: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+  override def addInformation(stack: ItemStack, world: World, tooltip: util.List[String], flags: ITooltipFlag): Unit = {
     tooltip.add(Misc.toLocalF("gendustry.label.charges", getCharge(stack) / mjPerCharge))
   }
 
-  override def getSubItems(item: Item, tabs: CreativeTabs, list: NonNullList[ItemStack]) {
-    list.add(new ItemStack(this))
-    list.add(stackWithCharge(maxCharge))
+  override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
+    subItems.add(new ItemStack(this))
+    subItems.add(stackWithCharge(maxCharge))
   }
 
   override def getItemEnchantability: Int = 0

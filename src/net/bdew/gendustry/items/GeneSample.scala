@@ -9,15 +9,13 @@
 
 package net.bdew.gendustry.items
 
-import java.util
-
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.misc.{GendustryCreativeTabs, GeneticsCache}
 import net.bdew.lib.Misc
 import net.bdew.lib.items.BaseItem
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.NonNullList
 
@@ -28,13 +26,12 @@ object GeneSample extends BaseItem("gene_sample") {
 
   override def getCreativeTabs = Array(GendustryCreativeTabs.main, GendustryCreativeTabs.samples)
 
-  override def getSubItems(item: Item, tab: CreativeTabs, list: NonNullList[ItemStack]) {
+  override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
     import scala.collection.JavaConversions._
-    val l = list.asInstanceOf[util.List[ItemStack]]
     tab match {
-      case GendustryCreativeTabs.main => l.add(new ItemStack(this))
+      case GendustryCreativeTabs.main => subItems.add(new ItemStack(this))
       case GendustryCreativeTabs.samples =>
-        l.addAll(GeneticsCache.geneSamples map newStack)
+        subItems.addAll(GeneticsCache.geneSamples map newStack)
       case _ =>
     }
   }

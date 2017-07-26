@@ -15,6 +15,7 @@ import net.bdew.gendustry.misc.BlockTooltipHelper
 import net.bdew.lib.block.{BaseBlock, BlockKeepData, BlockTooltip, HasTE}
 import net.bdew.lib.covers.BlockCoverable
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
@@ -36,7 +37,7 @@ object BlockApiary extends BaseBlock("industrial_apiary", MachineMaterial) with 
       return 0
   }
 
-  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
+  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[String] = {
     if (stack.hasTagCompound && stack.getTagCompound.hasKey("data")) {
       val data = stack.getTagCompound.getCompoundTag("data")
       val inv = BlockTooltipHelper.getInventory(data)

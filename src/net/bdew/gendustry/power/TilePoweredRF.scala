@@ -9,14 +9,14 @@
 
 package net.bdew.gendustry.power
 
-import cofh.api.energy.IEnergyReceiver
+import cofh.redstoneflux.api.IEnergyReceiver
 import net.bdew.gendustry.compat.PowerProxy
 import net.bdew.gendustry.config.Tuning
 import net.bdew.lib.power.TilePoweredBase
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fml.common.Optional
 
-@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.api.energy.IEnergyReceiver")
+@Optional.Interface(modid = PowerProxy.TE_MOD_ID, iface = "cofh.redstoneflux.api.IEnergyReceiver")
 trait TilePoweredRF extends TilePoweredBase with IEnergyReceiver {
   private lazy val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
