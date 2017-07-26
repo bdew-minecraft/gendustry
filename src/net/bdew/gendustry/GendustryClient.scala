@@ -19,6 +19,7 @@ object GendustryClient {
   def preInit(): Unit = {
     ResourceListener.init()
     ModelLoaderRegistry.registerLoader(ExtendedModelLoader)
+    ItemApiaryUpgrade.registerUpgradeModels()
   }
 
   def init(): Unit = {

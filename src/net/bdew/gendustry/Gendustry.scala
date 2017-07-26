@@ -72,6 +72,7 @@ object Gendustry {
     Blocks.load()
     Items.load()
     Machines.load()
+    Upgrades.init()
 
     if (event.getSide == Side.CLIENT) {
       GendustryClient.preInit()
@@ -85,7 +86,6 @@ object Gendustry {
 
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
 
-    Upgrades.init()
 
     ForgeRegistries.RECIPES.register(GeneRecipe)
     if (Tuning.getSection("Power").getSection("RedstoneCharging").getBoolean("Enabled")) {
