@@ -7,7 +7,7 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.gendustry.misc
+package net.bdew.gendustry.recipes
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.gendustry.config.Tuning
@@ -20,7 +20,7 @@ import net.minecraft.util.{NonNullList, ResourceLocation}
 import net.minecraft.world.World
 import net.minecraftforge.registries.IForgeRegistryEntry
 
-class ChargeRecipe extends IForgeRegistryEntry.Impl[IRecipe] with IRecipe {
+object ChargeRecipe extends IForgeRegistryEntry.Impl[IRecipe] with IRecipe {
   setRegistryName(new ResourceLocation(Gendustry.modId, "charging"))
 
   lazy val redstoneValue = Tuning.getSection("Power").getSection("RedstoneCharging").getInt("RedstoneValue")

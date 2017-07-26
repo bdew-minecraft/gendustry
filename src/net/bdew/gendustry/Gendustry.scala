@@ -17,17 +17,16 @@ import net.bdew.gendustry.compat.{ForestryHelper, PowerProxy}
 import net.bdew.gendustry.config._
 import net.bdew.gendustry.config.loader.TuningLoader
 import net.bdew.gendustry.custom._
-import net.bdew.gendustry.forestry.GeneRecipe
 import net.bdew.gendustry.machines.apiary.GendustryErrorStates
 import net.bdew.gendustry.machines.apiary.upgrades.Upgrades
 import net.bdew.gendustry.misc._
+import net.bdew.gendustry.recipes.{ChargeRecipe, GeneRecipe}
 import net.minecraft.command.CommandHandler
-import net.minecraft.item.crafting.IRecipe
-import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event._
 import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.Logger
 
@@ -88,6 +87,11 @@ object Gendustry {
 
     Upgrades.init()
 
+    ForgeRegistries.RECIPES.register(GeneRecipe)
+    if (Tuning.getSection("Power").getSection("RedstoneCharging").getBoolean("Enabled")) {
+      ForgeRegistries.RECIPES.register(ChargeRecipe)
+    }
+
     if (ForestryHelper.haveRoot("Bees")) {
       CustomContent.registerBranches()
       CustomContent.registerSpecies()
@@ -123,16 +127,5 @@ object Gendustry {
     commandHandler.registerCommand(new CommandGiveTemplate)
     commandHandler.registerCommand(new CommandGiveSample)
     commandHandler.registerCommand(new CommandDumpAlleles)
-  }
-
-  def registerRecipes(event: RegistryEvent.Register[IRecipe]): Unit = {
-    event.getRegistry.register(new GeneRecipe)
-    if (Tuning.getSection("Power").getSection("RedstoneCharging").getBoolean("Enabled")) {
-      event.getRegistry.register(new ChargeRecipe)
-    }
-    event.getRegistry.registerAll(TuningLoader.loader.recipes: _*)
-    // Apparently this goes away in 1.12?
-    //    RecipeSorter.register("gendustry:ChargeRecipe", classOf[ChargeRecipe], RecipeSorter.Category.SHAPELESS, "")
-    //    RecipeSorter.register("gendustry:GeneCopyRecipe", classOf[GeneRecipe], RecipeSorter.Category.SHAPELESS, "")
   }
 }

@@ -7,9 +7,10 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.gendustry.forestry
+package net.bdew.gendustry.recipes
 
 import net.bdew.gendustry.Gendustry
+import net.bdew.gendustry.forestry.GeneSampleInfo
 import net.bdew.gendustry.items.{GeneSample, GeneTemplate}
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
@@ -18,7 +19,7 @@ import net.minecraft.util.{NonNullList, ResourceLocation}
 import net.minecraft.world.World
 import net.minecraftforge.registries.IForgeRegistryEntry
 
-class GeneRecipe extends IForgeRegistryEntry.Impl[IRecipe] with IRecipe {
+object GeneRecipe extends IForgeRegistryEntry.Impl[IRecipe] with IRecipe {
   setRegistryName(new ResourceLocation(Gendustry.modId, "gene"))
 
   override def matches(inv: InventoryCrafting, world: World): Boolean = !getCraftingResult(inv).isEmpty
