@@ -75,8 +75,10 @@ object IndustrialScoop extends BaseTool("industrial_scoop", Item.ToolMaterial.IR
   }
 
   override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
-    subItems.add(new ItemStack(this))
-    subItems.add(stackWithCharge(maxCharge))
+    if (this.isInCreativeTab(tab)) {
+      subItems.add(new ItemStack(this))
+      subItems.add(stackWithCharge(maxCharge))
+    }
   }
 
   override def getItemEnchantability: Int = 0

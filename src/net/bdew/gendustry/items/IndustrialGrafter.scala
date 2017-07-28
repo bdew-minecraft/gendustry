@@ -81,8 +81,10 @@ object IndustrialGrafter extends BaseTool("industrial_grafter", Item.ToolMateria
   }
 
   override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
-    subItems.add(new ItemStack(this))
-    subItems.add(stackWithCharge(maxCharge))
+    if (this.isInCreativeTab(tab)) {
+      subItems.add(new ItemStack(this))
+      subItems.add(stackWithCharge(maxCharge))
+    }
   }
 
   override def getItemEnchantability: Int = 0

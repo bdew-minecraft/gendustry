@@ -41,8 +41,9 @@ object CustomHoneyComb extends BaseItem("honey_comb") {
   def getData(stack: ItemStack) = data.get(stack.getItemDamage)
 
   override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
-    for ((id, name) <- data)
-      subItems.add(new ItemStack(this, 1, id))
+    if (this.isInCreativeTab(tab))
+      for ((id, name) <- data)
+        subItems.add(new ItemStack(this, 1, id))
   }
 
   override def getUnlocalizedName(stack: ItemStack) =

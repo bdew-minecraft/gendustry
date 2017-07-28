@@ -106,8 +106,14 @@ object ItemApiaryUpgrade extends BaseItem("apiary.upgrade") with IApiaryUpgrade 
   }
 
   override def getSubItems(tab: CreativeTabs, subItems: NonNullList[ItemStack]): Unit = {
-    for ((id, name) <- Upgrades.map)
-      subItems.add(new ItemStack(this, 1, id))
+    if (this.isInCreativeTab(tab))
+      for ((id, name) <- Upgrades.map)
+        subItems.add(new ItemStack(this, 1, id))
+  }
+
+  @SideOnly(Side.CLIENT)
+  override def registerItemModels(): Unit = {
+    // Disable base implementation so it doesn't mess up the registration
   }
 
   @SideOnly(Side.CLIENT)
