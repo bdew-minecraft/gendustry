@@ -12,6 +12,7 @@ package net.bdew.gendustry.machines.imprinter
 import forestry.api.apiculture.{EnumBeeType, IBee, IBeeRoot}
 import forestry.api.genetics.AlleleManager
 import net.bdew.gendustry.apiimpl.TileWorker
+import net.bdew.gendustry.compat.ForestryHelper
 import net.bdew.gendustry.config.Items
 import net.bdew.gendustry.items.GeneTemplate
 import net.bdew.gendustry.power.TilePowered
@@ -107,7 +108,7 @@ class TileImprinter extends TileItemProcessor with TileWorker with TilePowered w
       case slots.inLabware =>
         return stack.getItem == Items.labware
       case slots.inIndividual =>
-        return (AlleleManager.alleleRegistry.getIndividual(stack) != null) &&
+        return (AlleleManager.alleleRegistry.getIndividual(stack) != null) && (ForestryHelper.getRoot("Bees").getType(stack) != EnumBeeType.QUEEN) &&
           (inv(slots.inTemplate).isEmpty || GeneTemplate.getSpecies(inv(slots.inTemplate)) == AlleleManager.alleleRegistry.getSpeciesRoot(stack))
       case _ =>
         return false
