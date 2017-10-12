@@ -275,7 +275,7 @@ class TileApiary extends TileExtended
     if (BiomeHelper.isBiomeHellish(getModifiedBiome))
       EnumTemperature.HELLISH
     else
-      EnumTemperature.getFromValue(getModifiedBiome.getTemperature + mods.temperature)
+      EnumTemperature.getFromValue(getModifiedBiome.getTemperature(pos) + mods.temperature)
 
   override def getHumidity = EnumHumidity.getFromValue(getModifiedBiome.getRainfall + mods.humidity)
   override def isRaining: Boolean = world.isRainingAt(pos.up)

@@ -101,8 +101,8 @@ dependencies {
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
     deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}"
 
-    deobfCompile "cofh:RedstoneFlux:${config.minecraft.version}-${config.rfapi.version}:universal"
-    compile "net.darkhax.tesla:Tesla-${config.minecraft.version}:${config.tesla.version}"
+    deobfCompile "cofh:RedstoneFlux:${config.rfapi.version}:universal"
+    compile "net.darkhax.tesla:Tesla-${config.tesla.version}"
 }
 
 
@@ -200,6 +200,8 @@ curseforge {
         changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
 
         addGameVersion config.minecraft.version
+        addGameVersion "1.12"
+        addGameVersion "1.12.1"
 
         mainArtifact(jar) {
             displayName = "Gendustry ${simpleVersion} (MC ${config.minecraft.version})"

@@ -38,15 +38,15 @@ object IndustrialScoop extends BaseTool("industrial_scoop", Item.ToolMaterial.IR
   setMaxStackSize(1)
   setMaxDamage(101)
 
-  efficiencyOnProperMaterial = 32
+  efficiency = 32
 
   setHarvestLevel("scoop", 3)
 
-  override def getStrVsBlock(stack: ItemStack, state: IBlockState): Float =
+  override def getDestroySpeed(stack: ItemStack, state: IBlockState): Float =
     if (!hasCharges(stack))
       0.1F
     else
-      super.getStrVsBlock(stack, state)
+      super.getDestroySpeed(stack, state)
 
   override def onItemUse(player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
     val stack = player.getHeldItem(hand)

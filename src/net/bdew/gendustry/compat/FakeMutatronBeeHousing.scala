@@ -75,7 +75,7 @@ class FakeMutatronBeeHousing(tile: TileEntity with IMutatron) extends IBeeHousin
 
   override def getBiome = getWorldObj.getBiome(getCoordinates)
   override def getHumidity: EnumHumidity = EnumHumidity.getFromValue(getBiome.getRainfall)
-  override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.getTemperature)
+  override def getTemperature: EnumTemperature = EnumTemperature.getFromValue(getBiome.getTemperature(tile.getPos))
 
   override def isRaining: Boolean = getWorldObj.isRainingAt(tile.getPos.up)
 

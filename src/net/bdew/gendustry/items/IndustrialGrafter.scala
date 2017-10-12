@@ -39,13 +39,13 @@ object IndustrialGrafter extends BaseTool("industrial_grafter", Item.ToolMateria
   setMaxStackSize(1)
   setMaxDamage(101)
 
-  efficiencyOnProperMaterial = 32
+  efficiency = 32
 
-  override def getStrVsBlock(stack: ItemStack, state: IBlockState): Float =
+  override def getDestroySpeed(stack: ItemStack, state: IBlockState): Float =
     if (!hasCharges(stack))
       0.1F
     else if (state.getBlock.getMaterial(state) == Material.LEAVES)
-      efficiencyOnProperMaterial
+      efficiency
     else
       0.1F
 

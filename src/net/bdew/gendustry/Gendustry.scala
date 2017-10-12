@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.Logger
 
-@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:forestry@[5.0.0.0,);after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:BinnieCore;after:ExtraBees;after:ExtraTrees;after:MineFactoryReloaded;after:MagicBees;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala")
+@Mod(modid = Gendustry.modId, version = "GENDUSTRY_VER", name = "Gendustry", dependencies = "required-after:forestry;after:ic2;after:redstoneflux;after:tesla;required-after:bdlib@[BDLIB_VER,)", modLanguage = "scala", acceptedMinecraftVersions = "[1.12,1.12.2]")
 object Gendustry {
   var log: Logger = _
   var instance = this

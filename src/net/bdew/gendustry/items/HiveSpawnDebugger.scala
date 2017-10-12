@@ -30,7 +30,7 @@ object HiveSpawnDebugger extends BaseItem("hive_spawn_debugger") {
     val biome = world.getBiome(pos)
     if (!hive.isGoodBiome(biome)) CheckResultFailed("Wrong Biome")
     else if (!hive.isGoodHumidity(EnumHumidity.getFromValue(biome.getRainfall))) CheckResultFailed("Wrong Humidity")
-    else if (!hive.isGoodTemperature(EnumTemperature.getFromValue(biome.getTemperature))) CheckResultFailed("Wrong Temperature")
+    else if (!hive.isGoodTemperature(EnumTemperature.getFromValue(biome.getTemperature(pos)))) CheckResultFailed("Wrong Temperature")
     else if (pos.getY > hive.yMax || pos.getY < hive.yMin) CheckResultFailed("Incorrect Y level")
     else {
       val failed = hive.conditions.find(!_.isValidLocation(world, pos))

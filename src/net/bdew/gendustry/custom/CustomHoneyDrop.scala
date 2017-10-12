@@ -56,7 +56,7 @@ object CustomHoneyDrop extends BaseItem("honey_drop") {
         new ModelResourceLocation(getRegistryName, "inventory")
     })
     ColorHandlers.register(this, new IItemColor {
-      override def getColorFromItemstack(stack: ItemStack, tintIndex: Int): Int = {
+      override def colorMultiplier(stack: ItemStack, tintIndex: Int): Int = {
         val data = getData(stack).getOrElse(return 0)
         tintIndex match {
           case 0 => data.color2
