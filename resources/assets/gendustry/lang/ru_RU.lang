@@ -21,7 +21,7 @@ item.gendustry.EnvProcessor.name=Экологический процессор
 item.gendustry.UpgradeFrame.name=Рамка улучшения
 item.gendustry.ClimateModule.name=Модуль «Климатический контроль»
 item.gendustry.Labware.name=Генетическая лабораторная посуда
-item.gendustry.GeneSample.name=Образец гена
+item.gendustry.GeneSample.name=Образец гена %s - %s
 item.gendustry.GeneTemplate.name=Генетический шаблон
 item.gendustry.GeneSampleBlank.name=Образец пустого гена
 item.gendustry.Waste.name=Генетические отходы
@@ -115,10 +115,10 @@ gendustry.label.mod.sieve=* Сбор пыльцы
 gendustry.label.mod.temperature=* Температура
 gendustry.label.mod.humidity=* Влажность
 
-gendustry.label.sample.rootBees=Взято из пчелы
-gendustry.label.sample.rootTrees=Взято из саженца
-gendustry.label.sample.rootButterflies=Взято из бабочки
-gendustry.label.sample.rootFlowers=Взято из цветка
+gendustry.label.sample.rootBees=пчелы
+gendustry.label.sample.rootTrees=саженца
+gendustry.label.sample.rootButterflies=бабочки
+gendustry.label.sample.rootFlowers=цветка
 
 gendustry.label.template.rootBees=Может примениться к пчеле
 gendustry.label.template.rootTrees=Может примениться к саженцу
