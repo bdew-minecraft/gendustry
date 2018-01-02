@@ -11,6 +11,7 @@ package net.bdew.gendustry.gui
 
 import net.bdew.gendustry.Gendustry
 import net.bdew.lib.capabilities.helpers.FluidHelper
+import net.bdew.lib.items.ItemUtils
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
@@ -51,14 +52,27 @@ trait BlockGuiWrenchable extends Block /*with IDismantleable*/ {
   //  override def canDismantle(player: EntityPlayer, world: World,pos: BlockPos): Boolean = true
 
   def tryFluidInteract(world: World, pos: BlockPos, player: EntityPlayer, side: EnumFacing): Boolean = {
+    val original = player.getHeldItemMainhand
+    if (original.isEmpty) return false
+    val copy = original.copy()
+    copy.setCount(1)
     for {
       tankHandler <- FluidHelper.getFluidHandler(world, pos, side)
-      itemHandler <- FluidHelper.getFluidHandler(player.getHeldItemMainhand)
+      itemHandler <- FluidHelper.getFluidHandler(copy)
     } {
       if (itemHandler.getTankProperties.exists(x => x.canFill && x.getContents == null)) {
-        if (FluidHelper.pushFluid(tankHandler, itemHandler) != null) return true
+        if (FluidHelper.pushFluid(tankHandler, itemHandler) != null) {
+          original.shrink(1)
+          ItemUtils.dropItemToPlayer(world, player, itemHandler.getContainer)
+          return true
+        }
       } else if (itemHandler.getTankProperties.exists(x => x.canDrain && x.getContents != null && x.getContents.amount > 0)) {
-        if (FluidHelper.pushFluid(itemHandler, tankHandler) != null) return true
+        if (FluidHelper.pushFluid(itemHandler, tankHandler) != null) {
+          original.shrink(1)
+          if (!itemHandler.getContainer.isEmpty)
+            ItemUtils.dropItemToPlayer(world, player, itemHandler.getContainer)
+          return true
+        }
       }
     }
     false
