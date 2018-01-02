@@ -225,7 +225,7 @@ curseforge {
             optionalLibrary 'waila'
             optionalLibrary 'buildcraft'
             optionalLibrary 'cofhcore'
-            optionalLibrary 'just-enough-items-jei'
+            optionalLibrary 'jei'
             optionalLibrary 'tesla'
         }
     }
