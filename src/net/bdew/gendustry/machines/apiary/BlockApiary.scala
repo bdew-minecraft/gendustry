@@ -31,6 +31,8 @@ object BlockApiary extends BaseBlock("industrial_apiary", MachineMaterial) with 
   override def getLightValue(state: IBlockState, world: IBlockAccess, pos: BlockPos): Int = {
     if (state.getBlock != this)
       return state.getBlock.getLightValue(state)
+    else if (world.getBlockState(pos).getBlock != this)
+      return 0
     else if (world.getTileEntity(pos) != null && getTE(world, pos).exists(_.hasLight))
       return 15
     else
