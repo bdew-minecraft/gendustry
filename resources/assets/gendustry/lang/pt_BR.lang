@@ -1,0 +1,292 @@
+# ==== BLOCKS ====
+
+tile.gendustry.mutagen_producer.name=Produtor de Mutagênico
+tile.gendustry.mutatron.name=Mutatron
+tile.gendustry.mutatron_advanced.name=Mutatron Avançado
+tile.gendustry.industrial_apiary.name=Apiário Industrial
+tile.gendustry.imprinter.name=Impressora Genética
+tile.gendustry.sampler.name=Coletor de Amostras
+tile.gendustry.extractor.name=Extrator de DNA
+tile.gendustry.liquifier.name=Liquidificador de Proteína
+tile.gendustry.replicator.name=Replicador Genético
+tile.gendustry.transposer.name=Transposicionador de Gênes
+
+# ==== GENERAL ITEMS ====
+
+item.gendustry.mutagen_tank.name=Tanque de Mutagênico
+item.gendustry.bee_receptacle.name=Receptáculo de Abelhas
+item.gendustry.power_module.name=Módulo de Energia
+item.gendustry.genetics_processor.name=Processador de Genética
+item.gendustry.env_processor.name=Processador Ambiental
+item.gendustry.upgrade_frame.name=Quadro de Atualização
+item.gendustry.climate_module.name=Módulo de Controle Climático
+item.gendustry.labware.name=Equipamento de Manipulação
+item.gendustry.gene_sample.name=%s Amostra - %s
+item.gendustry.gene_template.name=Modelo Genético
+item.gendustry.gene_sample_blank.name=Amostra de Gênes em Branco
+item.gendustry.waste.name=Lixo Genético
+item.gendustry.grafter.name=Enxerto Industrial
+item.gendustry.scoop.name=Puça Elétrica MX2000 Turbo
+item.gendustry.import_cover.name=Placa de Importação de Itens
+item.gendustry.eject_cover.name=Placa Ejetora de Itens
+item.gendustry.error_sensor_cover.name=Placa Sensora de Erro
+item.gendustry.pollen_kit.name=Kit Coletor de Pólem
+item.gendustry.hive_spawn_debugger.name=Desbugador de Spawn de Colméias
+
+# ==== FLUIDS ====
+
+fluid.gendustry.mutagen=Mutagênico
+fluid.gendustry.liquiddna=DNA Líquido
+fluid.gendustry.protein=Proteína
+
+tile.gendustry.mutagen.name=Mutagênico
+tile.gendustry.liquiddna.name=DNA Líquido
+tile.gendustry.protein.name=Proteína
+
+# ==== FLUID CONTAINERS ====
+
+item.gendustry.mutagen.bucket.name=Balde de Mutagênico
+item.gendustry.mutagen.can.name=Cápsula de Mutagênico
+item.gendustry.liquiddna.bucket.name=Balde de DNA Líquido
+item.gendustry.liquiddna.can.name=Cápsula de DNA Líquido
+item.gendustry.protein.bucket.name=Balde de Proteína
+item.gendustry.protein.can.name=Cápsula de Proteína
+
+
+# ==== UPGRADES ====
+
+gendustry.upgrades.prod.name=Melhoria de Produção
+gendustry.upgrades.life.name=Melhoria de Tempo de Vida
+gendustry.upgrades.flowering.name=Melhoria de Polenização
+gendustry.upgrades.territory.name=Melhoria de Território
+gendustry.upgrades.sealing.name=Melhoria de Selamento
+gendustry.upgrades.light.name=Melhoria de Iluminação
+gendustry.upgrades.sky.name=Melhoria de Céu Aberto
+gendustry.upgrades.hell.name=Simulador do Nether
+gendustry.upgrades.winter.name=Simulador de Inverno
+gendustry.upgrades.auto.name=Melhoria de Automação
+gendustry.upgrades.humidifier.name=Melhoria de Humidade
+gendustry.upgrades.dryer.name=Melhoria de Aridez
+gendustry.upgrades.heater.name=Melhoria de Aquecimento
+gendustry.upgrades.sieve.name=Melhoria com Peneira
+gendustry.upgrades.cooler.name=Melhoria de Resfriamento
+gendustry.upgrades.desert.name=Simulador de Deserto
+gendustry.upgrades.plains.name=Simulador de Planíces
+gendustry.upgrades.jungle.name=Simulador de Selva
+gendustry.upgrades.ocean.name=Simulador de Oceano
+gendustry.upgrades.stabilizer.name=Estabilizador Genético
+gendustry.upgrades.scrubber.name=Inibidor de Polenização
+
+# ==== GUI AND TOOLTIPS ====
+
+gendustry.label.template.crafting=Amostras genéticas podem ser adicionada à um modelo. Combine-os em qualquer bancada de trabalho. Múltiplas amostras podem ser adicionadas de uma vez.
+
+gendustry.label.charges=Cargas: %s
+gendustry.label.select=Selecione:
+gendustry.label.status=Status: %s
+gendustry.label.control=Controle: %s
+
+gendustry.label.breeding=Reproduzindo
+gendustry.label.working=Trabalhando
+gendustry.label.maxinstall=Máximo Permitido:
+gendustry.label.temperature=Temperatura: %s
+gendustry.label.humidity=Humidade: %s
+gendustry.label.energy=Energia Necessária: %s %s/t
+gendustry.label.lifespan=Tempo de Vida: %s
+gendustry.label.flowering=Polenização: %s
+gendustry.label.production=Produção: %s
+gendustry.label.territory=Território: %s
+
+gendustry.label.erase=Coloque em uma fornalha para apagar o conteúdo
+gendustry.label.recipes=Clique para ver receitas
+gendustry.label.consume=Chance de Consumo: %s%%
+gendustry.label.mutatron.death=Chance de morrer (ignóbil): %s%%
+gendustry.label.mutatron.degrade=Chance de degradação (imaculado): %s%%
+
+gendustry.label.mod.automated=* Automação
+gendustry.label.mod.biome=* Substituição de Bioma: %s
+gendustry.label.mod.sealed=* Proteção Contra Chuva
+gendustry.label.mod.selflighted=* Iluminação Interna
+gendustry.label.mod.sky=* Simulação de Céu Aberto
+gendustry.label.mod.energy=* Consumo de Energia:
+gendustry.label.mod.lifespan=* Tempo de Vida:
+gendustry.label.mod.flowering=* Polenização:
+gendustry.label.mod.geneticDecay=* Chance de Decadência Genética:
+gendustry.label.mod.mutation=* Chance de Mutação:
+gendustry.label.mod.production=* Produção:
+gendustry.label.mod.territory=* Território:
+gendustry.label.mod.sieve=* Polenização:
+gendustry.label.mod.temperature=* Temperatura:
+gendustry.label.mod.humidity=* Humidade:
+
+gendustry.label.sample.rootBees=Abelha
+gendustry.label.sample.rootTrees=Árvore
+gendustry.label.sample.rootButterflies=Borboleta
+gendustry.label.sample.rootFlowers=Flor
+
+gendustry.label.template.rootBees=Pode ser aplicado em uma abelha
+gendustry.label.template.rootTrees=Pode ser aplicado em uma muda
+gendustry.label.template.rootButterflies=Pode ser aplicado em uma borboleta
+gendustry.label.template.rootFlowers=Pode ser aplicado em uma flor
+gendustry.label.template.blank=Amostras genéticas podem ser adicionadas
+gendustry.label.template.missing=Faltando
+gendustry.label.template.chromosomes=%s/%s Cromossomos
+
+gendustry.rsmode.always=Sempre Ligado
+gendustry.rsmode.never=Desabilitado
+gendustry.rsmode.rs_on=Ativado com Sinal de Redstone
+gendustry.rsmode.rs_off=Desativado com Sinal de Redstone
+
+gendustry.label.items=%s Itens
+
+gendustry.label.shift=<Pressione SHIFT para mais informações>
+
+gendustry.cover.label=Placa: %s
+
+gendustry.cover.error.message=Emite sinal de redstone se %s for detectado
+gendustry.cover.error.hint=(Shift+Clique direito na placa para mudar)
+gendustry.cover.error.any=Qualquer erro
+gendustry.cover.error.none=No Error
+
+# ==== CHROMOSOMES (should match forestry) ====
+
+gendustry.chromosome.FLOWER_PROVIDER=Flores
+gendustry.chromosome.GIRTH=Circunferência
+gendustry.chromosome.SPEED=Velocidade
+gendustry.chromosome.YIELD=Produção
+gendustry.chromosome.HEIGHT=Altura
+gendustry.chromosome.GROWTH=Crescimento
+gendustry.chromosome.FLOWERING=Polenização
+gendustry.chromosome.METABOLISM=Metabolismo
+gendustry.chromosome.LIFESPAN=Tempo de Vida
+gendustry.chromosome.TERRITORY=Território
+gendustry.chromosome.FERTILITY=Fertilidade
+gendustry.chromosome.SIZE=Tamanho
+gendustry.chromosome.HUMIDITY=Humidade
+gendustry.chromosome.SPECIES=Espécie
+gendustry.chromosome.FIRE_RESIST=Resistência ao Fogo
+gendustry.chromosome.TEMPERATURE_TOLERANCE=Tolerância à Temperatura
+gendustry.chromosome.HUMIDITY_TOLERANCE=Tolerância à Humidade
+gendustry.chromosome.PLANT=Planta
+gendustry.chromosome.EFFECT=Efeitos
+gendustry.chromosome.CAVE_DWELLING=Cavernícola
+gendustry.chromosome.MATURATION=Amadurecimento
+gendustry.chromosome.NOCTURNAL=Noturna
+gendustry.chromosome.TOLERANT_FLYER=Inseto Tolerante
+gendustry.chromosome.FRUITS=Frutas
+gendustry.chromosome.SAPPINESS=Mudas
+gendustry.chromosome.COCOON=Casulo
+gendustry.chromosome.FIREPROOF=À Prova de Fogo
+gendustry.chromosome.CARBONIZATION=Carbonização
+gendustry.chromosome.COMBUSTIBILITY=Combustibilidade
+gendustry.chromosome.TOLERATES_RAIN=Tolera Chuvas
+gendustry.chromosome.NEVER_SLEEPS=Nunca Dorme
+
+// Botany
+
+gendustry.chromosome.PRIMARY=Primário
+gendustry.chromosome.SECONDARY=Secundário
+gendustry.chromosome.PH_TOLERANCE=Tolerância ao pH
+gendustry.chromosome.STEM=Tronco
+
+gendustry.allele.false=Falso
+gendustry.allele.true=Verdadeiro
+
+# ==== BC TRIGGERS ====
+
+gendustry.trigger.power0=Sem Energia
+gendustry.trigger.power25=Energia >= 25%
+gendustry.trigger.power50=Energia >= 50%
+gendustry.trigger.power75=Energia >= 75%
+gendustry.trigger.power100=Energia Cheia
+gendustry.trigger.working=Funcionando
+
+# ==== COMMANDS ====
+gendustry.givetemplate.usage=/givetemplate <uid>
+gendustry.givetemplate.success=Dá o modelo ganético %s para %s
+
+gendustry.givesample.usage=/givesample <espécie> <cromossomo> <alelo>
+gendustry.givesample.error.root=Espécie não encontrada: %s
+gendustry.givesample.error.allele=Alelo não encontrado: %s
+gendustry.givesample.error.chromosome=Cromossomo não encontrado: %s
+gendustry.givesample.error.invalid=Alelo inválido para o cromossomo desejado
+gendustry.givesample.success=Amostra dada (Espécie=%s, Cromossomos=%s, Alelo=%s) para %s
+
+# ==== MUTATION REQUIREMENTS ====
+gendustry.req.temperature=Temperatura Necessária: %s
+gendustry.req.humidity=Humidade Necessária: %s
+gendustry.req.biome=Bioma Necessário: %s
+gendustry.req.block=Bloco Necessário: %s
+
+gendustry.req.message=Requerimentos
+
+# ==== BEE SPECIES ====
+gendustry.bees.species.black=Preto
+gendustry.bees.species.red=Vermelho
+gendustry.bees.species.green=Verde
+gendustry.bees.species.brown=Marrom
+gendustry.bees.species.blue=Azul
+gendustry.bees.species.purple=Roxo
+gendustry.bees.species.cyan=Ciano
+gendustry.bees.species.silver=Cinza Claro
+gendustry.bees.species.gray=Cinza
+gendustry.bees.species.pink=Rosa
+gendustry.bees.species.lime=Verde-limão
+gendustry.bees.species.yellow=Amarelo
+gendustry.bees.species.lightblue=Azul Claro
+gendustry.bees.species.magenta=Lilás
+gendustry.bees.species.orange=Laranjado
+gendustry.bees.species.white=Branco
+
+gendustry.bees.species.derpious=Despreocupado(a)
+gendustry.bees.species.derpious.description=Uma espécie curiosa que parece estar mais preocupada em espalhar flores despreocupadamente.
+
+# ==== COMBS ====
+
+gendustry.honeycomb.black.name=Favo Colorido (Preto)
+gendustry.honeycomb.red.name=Favo Colorido (Vermelho)
+gendustry.honeycomb.green.name=Favo Colorido (Verde)
+gendustry.honeycomb.brown.name=Favo Colorido (Marrom)
+gendustry.honeycomb.blue.name=Favo Colorido (Azul)
+gendustry.honeycomb.purple.name=Favo Colorido (Roxo)
+gendustry.honeycomb.cyan.name=Favo Colorido (Ciano)
+gendustry.honeycomb.silver.name=Favo Colorido (Cinza Claro)
+gendustry.honeycomb.gray.name=Favo Colorido (Cinza)
+gendustry.honeycomb.pink.name=Favo Colorido (Rosa)
+gendustry.honeycomb.lime.name=Favo Colorido (Verde-limão)
+gendustry.honeycomb.yellow.name=Favo Colorido (Amarelo)
+gendustry.honeycomb.lightblue.name=Favo Colorido (Azul Claro)
+gendustry.honeycomb.magenta.name=Favo Colorido (Lilás)
+gendustry.honeycomb.orange.name=Favo Colorido (Laranjado)
+gendustry.honeycomb.white.name=Favo Colorido (Branco)
+
+gendustry.honeydrop.black.name=Gota de Mel Colorida (Preto)
+gendustry.honeydrop.red.name=Gota de Mel Colorida (Vermelho)
+gendustry.honeydrop.green.name=Gota de Mel Colorida (Verde)
+gendustry.honeydrop.brown.name=Gota de Mel Colorida (Marrom)
+gendustry.honeydrop.blue.name=Gota de Mel Colorida (Azul)
+gendustry.honeydrop.purple.name=Gota de Mel Colorida (Roxo)
+gendustry.honeydrop.cyan.name=Gota de Mel Colorida (Ciano)
+gendustry.honeydrop.silver.name=Gota de Mel Colorida (Cinza Claro)
+gendustry.honeydrop.gray.name=Gota de Mel Colorida (Cinza)
+gendustry.honeydrop.pink.name=Gota de Mel Colorida (Rosa)
+gendustry.honeydrop.lime.name=Gota de Mel Colorida (Verde-limão)
+gendustry.honeydrop.yellow.name=Gota de Mel Colorida (Amarelo)
+gendustry.honeydrop.lightblue.name=Gota de Mel Colorida (Azul Claro)
+gendustry.honeydrop.magenta.name=Gota de Mel Colorida (Lilás)
+gendustry.honeydrop.orange.name=Gota de Mel Colorida (Laranjado)
+gendustry.honeydrop.white.name=Gota de Mel Colorida (Branco)
+
+itemGroup.bdew.gendustry=Gendustry
+itemGroup.bdew.templates=Modelos Genéticos
+itemGroup.bdew.samples=Amostras Genéticas
+itemGroup.bdew.hives=Colmeias Personalizadas
+
+gendustry.errorstate.ok=No error
+
+gendustry.errorstate.disabled.description=Desabilitado
+gendustry.errorstate.disabled.help=Máquina desabilitada por sua configuração
+
+#this will be moved to bdlib at some point
+bdlib.label.empty=Vazio
+
