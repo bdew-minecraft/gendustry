@@ -32,10 +32,10 @@ object ResourceListener extends IResourceManagerReloadListener {
 
   override def onResourceManagerReload(rm: IResourceManager): Unit = {
     val newLang = Client.minecraft.getLanguageManager.getCurrentLanguage
-    Gendustry.logInfo("Resource manager reload, new language: %s", newLang.getLanguageCode)
+    if(newLang!=null) Gendustry.logInfo("Resource manager reload, new language: %s", newLang.getLanguageCode)
     val configFiles = Gendustry.configDir.list().sorted
     configFiles.filter(_.endsWith(".en_US.lang")).foreach(loadLangFile)
-    if (newLang.getLanguageCode != "en_US")
+    if(newLang!=null) if (newLang.getLanguageCode != "en_US")
       configFiles.filter(_.endsWith("." + newLang.getLanguageCode + ".lang")).foreach(loadLangFile)
   }
 }
